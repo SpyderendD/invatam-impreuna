@@ -1,0 +1,164 @@
+/* src/app/globals.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* ============================================== */
+  /*  DEFINIȚII CULORI TEMA: LUMINOS ȘI ÎNTUNECAT  */
+  /* ============================================== */
+
+  :root { /* Tema Luminoasă (Default) */
+    --background: 0 0% 100%; /* Alb pur */
+    --foreground: 222.2 47.4% 11.2%; /* Text aproape negru */
+    
+    --primary: 262 83% 58%; /* Un purpuriu vibrant */
+    --primary-foreground: 0 0% 98%; /* Text alb aproape */
+    
+    --secondary: 180 70% 45%; /* Un verde-albastru */
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 210 40% 96.1%; /* Gri foarte deschis (pentru fundalul toggle-ului, etc.) */
+    --muted-foreground: 215.4 16.3% 46.9%;
+    
+    --accent: 39 96% 50%; /* Portocaliu accent */
+    --accent-foreground: 222.2 47.4% 11.2%;
+    
+    --destructive: 0 84.2% 60.2%; /* Roșu pentru erori */
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 262 83% 58%;
+
+    --card: 0 0% 100%; /* Fundal carduri (aceeași culoare ca background default) */
+    --card-foreground: 222.2 47.4% 11.2%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+    
+    --radius: 0.75rem; /* Raza border-radius-ului pentru Shadcn */
+
+    /* Culorile specifice pentru materii (adaptează HSL la ce vrei) */
+    --color-romana: 252 59% 59%;
+    --color-matematica: 156 72% 39%;
+    --color-chimie: 39 96% 50%;
+    --color-informatica: 270 76% 63%;
+  }
+
+  .dark { /* Tema Întunecată */
+    --background: 220 18% 10%; /* <-- NEGRU-ALBASTRU ÎNCHIS PROFUND */
+    --foreground: 210 40% 96.1%; /* Text alb-cenușiu deschis */
+    
+    --primary: 262 83% 75%; /* <-- PURPURIU MAI DESCHIS ȘI VIBRANT PENTRU DARK MODE */
+    --primary-foreground: 0 0% 100%; /* Alb pur pentru text pe primary */
+    
+    --secondary: 180 70% 60%; /* <-- VERDE-ALBASTRU MAI DESCHIS PENTRU DARK MODE */
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 217.2 32.6% 17.5%; /* Gri închis */
+    --muted-foreground: 215 20.2% 65.1%;
+    
+    --accent: 39 96% 70%; /* Portocaliu accent mai deschis */
+    --accent-foreground: 210 40% 98%;
+    
+    --destructive: 0 62.8% 30.6%; /* Roșu închis pentru erori */
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    --card: 222.2 47.4% 11.2%; /* Culoarea cardurilor pe dark mode (la fel ca background default al toggle-ului) */
+    --card-foreground: 210 40% 96.1%;
+    --popover: 222.2 47.4% 11.2%;
+    --popover-foreground: 210 40% 96.1%;
+  }
+
+  /* Reseturi de bază și fonturi */
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-inter);
+    font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out; /* <-- TRANZIȚIE FLUIDĂ */
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-lora);
+    font-weight: bold;
+  }
+  p, li {
+    font-family: var(--font-inter);
+  }
+}
+
+/* ============================================== */
+/*  ANIMAȚII ȘI UTILITY-URI (PĂSTRATE CURAT)     */
+/* ============================================== */
+
+/* Text gradient */
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.gradient-primary {
+  background-image: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)));
+}
+
+/* Background grid și dots */
+.bg-grid {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+.bg-dots {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Floating animation (general) */
+@keyframes floating {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.floating { animation: floating 3s ease-in-out infinite; }
+
+/* Shine effect */
+.shine { position: relative; overflow: hidden; }
+.shine::after {
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+  transform: rotate(30deg); animation: shine 6s infinite linear; pointer-events: none;
+}
+@keyframes shine { from { transform: translateX(-100%) rotate(30deg); } to { transform: translateX(100%) rotate(30deg); } }
+
+/* Card hover effects */
+.card-hover { transition: all 0.3s ease; }
+.card-hover:hover { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); } /* Fără translateY aici */
+
+/* 3D Button effect */
+.btn-3d { transition: all 0.2s ease; box-shadow: 0 6px 0 0 rgba(0,0,0,0.1); transform: translateY(-2px); }
+.btn-3d:active { box-shadow: 0 2px 0 0 rgba(0,0,0,0.1); transform: translateY(2px); }
+
+/* Animated Underline */
+.animated-underline { position: relative; }
+.animated-underline::after {
+  content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0;
+  background-color: currentColor; transition: width 0.3s ease;
+}
+.animated-underline:hover::after { width: 100%; }
+
+/* Stiluri pentru ScrollProgress bar (dacă ai) */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background-color: hsl(var(--primary));
+  transform-origin: 0%;
+  z-index: 50;
+}
