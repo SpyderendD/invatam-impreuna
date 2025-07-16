@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { BookOpen, Facebook, Instagram, Mail, Youtube } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 
 // Iconița TikTok ca o componentă SVG
 const TiktokIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -16,12 +17,11 @@ const TiktokIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 
-// Datele pentru link-uri (centralizate pentru a fi ușor de modificat)
+// --- Datele pentru link-uri ---
 const footerLinks = {
   materii: [
     { href: '/materii/romana', label: 'Limba Română', hoverColor: 'hover:text-primary' },
     { href: '/materii/matematica', label: 'Matematică', hoverColor: 'hover:text-secondary' },
-    // Adaugă alte materii aici ușor
   ],
   resurse: [
     { href: '/contact', label: 'Contactează-ne' },
@@ -42,10 +42,10 @@ const socialLinks = [
   { href: 'https://www.tiktok.com/@spyderend3', icon: <TiktokIcon className="h-4 w-4" />, label: 'Tiktok' },
 ];
 
-// Componente mici, reutilizabile pentru un cod mai curat
+// --- Componente mici, reutilizabile ---
 const FooterLinkColumn = ({ title, links }: { title: string; links: Array<{ href: string; label: string; hoverColor?: string }> }) => (
   <div>
-    <h3 className="font-bold text-lg mb-4 text-foreground">{title}</h3> {/* text-foreground */}
+    <h3 className="font-bold text-lg mb-4 text-foreground">{title}</h3>
     <ul className="space-y-2">
       {links.map((link) => (
         <li key={link.href}>
@@ -53,7 +53,7 @@ const FooterLinkColumn = ({ title, links }: { title: string; links: Array<{ href
             href={link.href}
             className={cn(
               "text-muted-foreground hover:text-primary animated-underline inline-block",
-              link.hoverColor // Aplică clasa de hover specifică dacă există
+              link.hoverColor
             )}
           >
             {link.label}
@@ -70,7 +70,6 @@ const SocialIcon = ({ href, icon, label }: { href: string; icon: React.ReactNode
     target="_blank"
     rel="noopener noreferrer"
     aria-label={label}
-    // Folosim bg-card/10 și text-primary, care se adaptează temei
     className="h-9 w-9 rounded-lg bg-card/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all transform hover:scale-110"
   >
     {icon}
@@ -79,16 +78,63 @@ const SocialIcon = ({ href, icon, label }: { href: string; icon: React.ReactNode
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { toast } = useToast();
 
-  const handleNewsletterSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const email = event.currentTarget.email.value;
-    alert(`Mulțumim pentru abonare, ${email}!`);
-    event.currentTarget.reset();
+  const handleNewsletterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Oprim reîncărcarea paginii
+
+    // Accesăm elementul de input prin name, și verificăm dacă e HTMLInputElement
+    const emailInput = event.currentTarget.elements.namedItem('email');
+    const email = (emailInput instanceof HTMLInputElement) ? emailInput.value : null;
+    
+    if (!email) {
+        toast({
+            title: "Eroare la abonare",
+            description: "Te rugăm să introduci o adresă de email validă.",
+            variant: "destructive",
+        });
+        return;
+    }
+
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Dacă răspunsul nu este OK (status 4xx/5xx), aruncăm o eroare
+        throw new Error(data.error || 'A apărut o eroare necunoscută la server.');
+      }
+      
+      // Mesaj de succes
+      toast({
+          title: "Abonare reușită!",
+          description: data.message || "Mulțumim pentru abonare la newsletter!",
+          duration: 3000,
+      });
+
+      // Resetăm formularul doar dacă a avut succes
+      // Accesăm formularul direct cu event.currentTarget
+      if (event.currentTarget) { // Verificăm explicit dacă există
+          event.currentTarget.reset(); 
+      }
+
+    } catch (error: any) {
+      // Mesaj de eroare
+      toast({
+          title: "Eroare la abonare",
+          description: error.message || "A apărut o eroare. Te rugăm să încerci din nou.",
+          variant: "destructive",
+          duration: 5000,
+      });
+    }
   };
 
   return (
-    // Footer-ul va folosi bg-card și border-border
     <footer className="bg-card py-16 border-t border-border"> 
       <div className="container">
         <ScrollAnimation>
@@ -98,7 +144,7 @@ export function Footer() {
             <div className="md:col-span-1">
               <Link href="/" className="flex items-center space-x-2 mb-4">
                 <BookOpen className="h-6 w-6 text-primary" />
-                <span className="text-xl font-bold text-foreground">Învățăm Împreună</span> {/* text-foreground */}
+                <span className="text-xl font-bold text-foreground">Învățăm Împreună</span>
               </Link>
               <p className="text-muted-foreground text-sm mb-6">
                 Platforma educațională care îți aduce succesul la Evaluarea Națională.
@@ -114,12 +160,11 @@ export function Footer() {
             <FooterLinkColumn title="Resurse" links={footerLinks.resurse} />
 
             <div>
-              <h3 className="font-bold text-lg mb-4 text-foreground">Abonează-te la newsletter</h3> {/* text-foreground */}
+              <h3 className="font-bold text-lg mb-4 text-foreground">Abonează-te la newsletter</h3>
               <p className="text-muted-foreground text-sm mb-4">
                 Primește noutăți și resurse utile direct în inbox.
               </p>
-              <form onSubmit={handleNewsletterSubmit} className="flex space-x-2">
-                {/* Input-ul și butonul folosesc culorile temei automat */}
+              <form onSubmit={handleNewsletterSubmit} className="flex space-x-2" id="newsletter-form">
                 <Input name="email" type="email" placeholder="Email-ul tău" required className="bg-muted" /> 
                 <Button type="submit" className="shrink-0">Abonare</Button>
               </form>
