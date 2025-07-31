@@ -1,9 +1,11 @@
 /* src/app/globals.css */
 
+/* Directives Tailwind CSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Stratul de bază pentru variabilele CSS (culori, radius, etc.) */
 @layer base {
   /* ============================================== */
   /*  DEFINIȚII CULORI TEMA: LUMINOS ȘI ÎNTUNECAT  */
@@ -11,26 +13,26 @@
 
   :root { /* Tema Luminoasă (Default) */
     --background: 0 0% 100%; /* Alb pur */
-    --foreground: 222.2 47.4% 11.2%; /* Text aproape negru */
+    --foreground: 222.2 47.4% 11.2%; /* Text aproape negru (Dark Gray) */
     
-    --primary: 262 83% 58%; /* Un purpuriu vibrant */
-    --primary-foreground: 0 0% 98%; /* Text alb aproape */
+    --primary: 262 83% 58%; /* Un purpuriu vibrant (ex: hsl(262, 83%, 58%)) */
+    --primary-foreground: 0 0% 98%; /* Text alb aproape pe primary */
     
-    --secondary: 180 70% 45%; /* Un verde-albastru */
+    --secondary: 180 70% 45%; /* Un verde-albastru (Teal) */
     --secondary-foreground: 210 40% 98%;
     
-    --muted: 210 40% 96.1%; /* Gri foarte deschis (pentru fundalul toggle-ului, etc.) */
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 40% 96.1%; /* Gri foarte deschis (pentru fundaluri subtile, toggle) */
+    --muted-foreground: 215.4 16.3% 46.9%; /* Gri mediu pentru text estompat */
     
-    --accent: 39 96% 50%; /* Portocaliu accent */
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 39 96% 50%; /* Portocaliu accent vibrant */
+    --accent-foreground: 222.2 47.4% 11.2%; /* Text închis pe accent */
     
     --destructive: 0 84.2% 60.2%; /* Roșu pentru erori */
     --destructive-foreground: 210 40% 98%;
     
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 262 83% 58%;
+    --border: 214.3 31.8% 91.4%; /* Culoare borduri */
+    --input: 214.3 31.8% 91.4%; /* Culoare input-uri */
+    --ring: 262 83% 58%; /* Culoare inel de focus */
 
     --card: 0 0% 100%; /* Fundal carduri (aceeași culoare ca background default) */
     --card-foreground: 222.2 47.4% 11.2%;
@@ -44,16 +46,26 @@
     --color-matematica: 156 72% 39%;
     --color-chimie: 39 96% 50%;
     --color-informatica: 270 76% 63%;
+
+    /* Culori pentru GooeyNav în Light Mode (folosesc variabilele principale) */
+    --color-gooey-1: hsl(var(--primary));
+    --color-gooey-2: hsl(var(--secondary));
+    --color-gooey-3: hsl(var(--accent));
+    --color-gooey-4: 270 76% 63%; /* Un alt purpuriu/violet specific */
+
+    /* Culoare filtru GooeyNav (fundalul de sub efect) */
+    --gooey-filter-bg: 0 0% 100%; /* Alb (background-ul paginii) */
+    --gooey-filter-after-bg: 262 83% 58%; /* Primary (aceeași ca primary default) */
   }
 
   .dark { /* Tema Întunecată */
-    --background: 220 18% 10%; /* <-- NEGRU-ALBASTRU ÎNCHIS PROFUND */
+    --background: 220 18% 10%; /* NEGRU-ALBASTRU ÎNCHIS PROFUND (aproape negru) */
     --foreground: 210 40% 96.1%; /* Text alb-cenușiu deschis */
     
-    --primary: 262 83% 75%; /* <-- PURPURIU MAI DESCHIS ȘI VIBRANT PENTRU DARK MODE */
+    --primary: 262 83% 75%; /* PURPURIU MAI DESCHIS ȘI VIBRANT PENTRU DARK MODE */
     --primary-foreground: 0 0% 100%; /* Alb pur pentru text pe primary */
     
-    --secondary: 180 70% 60%; /* <-- VERDE-ALBASTRU MAI DESCHIS PENTRU DARK MODE */
+    --secondary: 180 70% 60%; /* VERDE-ALBASTRU MAI DESCHIS ȘI VIBRANT PENTRU DARK MODE */
     --secondary-foreground: 210 40% 98%;
     
     --muted: 217.2 32.6% 17.5%; /* Gri închis */
@@ -69,10 +81,20 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
 
-    --card: 222.2 47.4% 11.2%; /* Culoarea cardurilor pe dark mode (la fel ca background default al toggle-ului) */
+    --card: 222.2 47.4% 11.2%; /* Culoarea cardurilor pe dark mode (va fi și fundalul lunii din toggle) */
     --card-foreground: 210 40% 96.1%;
     --popover: 222.2 47.4% 11.2%;
     --popover-foreground: 210 40% 96.1%;
+
+    /* Culori pentru GooeyNav în Dark Mode */
+    --color-gooey-1: hsl(var(--primary));
+    --color-gooey-2: hsl(var(--secondary));
+    --color-gooey-3: hsl(var(--accent));
+    --color-gooey-4: 270 76% 73%; /* Un violet mai deschis pentru dark mode */
+
+    /* Culoare filtru GooeyNav */
+    --gooey-filter-bg: 220 18% 10%; /* Background-ul paginii în dark mode */
+    --gooey-filter-after-bg: 262 83% 75%; /* Primary (mai deschis pentru dark mode) */
   }
 
   /* Reseturi de bază și fonturi */
@@ -84,7 +106,7 @@
     color: hsl(var(--foreground));
     font-family: var(--font-inter);
     font-feature-settings: "rlig" 1, "calt" 1;
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out; /* <-- TRANZIȚIE FLUIDĂ */
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out; /* TRANZIȚIE FLUIDĂ */
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-lora);
@@ -96,8 +118,55 @@
 }
 
 /* ============================================== */
-/*  ANIMAȚII ȘI UTILITY-URI (PĂSTRATE CURAT)     */
+/*  ANIMAȚII ȘI UTILITY-URI (CONSOLIDATE)        */
 /* ============================================== */
+
+.auth-background {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient-animation 15s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Stiluri pentru efectul de text "Aurora Boreală" */
+@keyframes aurora {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-aurora {
+  background-size: 200% 200%;
+  animation: aurora 5s ease-in-out infinite alternate;
+}
+
+/* Stiluri pentru animația subtilă a glow-ului de pe carduri */
+@keyframes tilt {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(0.5deg);
+  }
+}
+
+.animate-tilt {
+    animation: tilt 10s infinite linear;
+}
 
 /* Text gradient */
 .text-gradient {
@@ -138,7 +207,7 @@
 
 /* Card hover effects */
 .card-hover { transition: all 0.3s ease; }
-.card-hover:hover { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); } /* Fără translateY aici */
+.card-hover:hover { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
 
 /* 3D Button effect */
 .btn-3d { transition: all 0.2s ease; box-shadow: 0 6px 0 0 rgba(0,0,0,0.1); transform: translateY(-2px); }
@@ -152,7 +221,7 @@
 }
 .animated-underline:hover::after { width: 100%; }
 
-/* Stiluri pentru ScrollProgress bar (dacă ai) */
+/* Stiluri pentru ScrollProgress bar */
 .scroll-progress-bar {
   position: fixed;
   top: 0;
@@ -161,4 +230,87 @@
   background-color: hsl(var(--primary));
   transform-origin: 0%;
   z-index: 50;
+}
+
+/* === Stiluri GooeyNav (Amplasate corect aici) === */
+/* Notă: Animațiile @keyframes (gooey-pill, gooey-particle, gooey-point)
+   sunt definite mai jos în acest fișier sau în componenta GooeyNav dacă sunt inline */
+
+@layer components {
+  .gooey-effect {
+    position: absolute;
+    opacity: 1;
+    pointer-events: none;
+    display: grid;
+    place-items: center;
+    z-index: 1;
+    transition: background 0.3s ease, filter 0.3s ease;
+  }
+  .gooey-effect.text {
+    color: hsl(var(--primary-foreground)); /* Textul efectului - alb pe primary */
+    transition: color 0.3s ease;
+  }
+  .gooey-effect.text.active {
+    color: hsl(var(--foreground)); /* Textul efectului în stare activă - foreground */
+  }
+  .gooey-effect.filter {
+    filter: url('#gooey-nav-filter');
+    /* Mix-blend-mode este eliminat pentru a nu crea efecte nedorite pe fundaluri luminoase */
+  }
+  .gooey-effect.filter::before {
+    content: "";
+    position: absolute;
+    inset: -75px; /* Spațiu în jurul elementului activ */
+    z-index: -2;
+    background: hsl(var(--gooey-filter-bg)); /* Fundalul filtrului (background-ul temei) */
+    border-radius: inherit; /* Păstrează forma elementului de dedesubt */
+  }
+  .gooey-effect.filter::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: hsl(var(--gooey-filter-after-bg)); /* Culoarea de umplere a efectului */
+    transform: scale(0);
+    opacity: 0;
+    z-index: -1;
+    border-radius: 9999px;
+  }
+  
+  /* Stiluri pentru particulele GooeyNav */
+  .gooey-particle, .gooey-point {
+    display: block; opacity: 0; width: 20px; height: 20px; border-radius: 9999px; transform-origin: center;
+  }
+  .gooey-particle { 
+    --time: 5s; /* Variabilă CSS */
+    position: absolute; top: calc(50% - 10px); left: calc(50% - 10px); 
+    animation: gooey-particle var(--time) ease 1 -350ms; 
+  }
+  .gooey-point { 
+    background: var(--color); /* Folosește variabila --color pasată din JS */
+    opacity: 1; 
+    animation: gooey-point var(--time) ease 1 -350ms; 
+  }
+  
+  /* Stiluri pentru elementul <li> activ din GooeyNav */
+  li.active-gooey {
+    color: hsl(var(--primary-foreground)); /* Textul devine alb pe primary background */
+    text-shadow: none; /* Elimină orice text-shadow dacă există */
+  }
+}
+
+/* Animații Keyframes (Plasate la final) */
+@keyframes rotate-center { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
+@keyframes gooey-pill { to { transform: scale(1); opacity: 1; } }
+@keyframes gooey-particle {
+  0% { transform: rotate(0deg) translate(var(--start-x), var(--start-y)); opacity: 1; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  70% { transform: rotate(calc(var(--rotate) * 0.5)) translate(calc(var(--end-x) * 1.2), calc(var(--end-y) * 1.2)); opacity: 1; animation-timing-function: ease; }
+  85% { transform: rotate(calc(var(--rotate) * 0.66)) translate(var(--end-x), var(--end-y)); opacity: 1; }
+  100% { transform: rotate(calc(var(--rotate) * 1.2)) translate(calc(var(--end-x) * 0.5), calc(var(--end-y) * 0.5)); opacity: 1; }
+}
+@keyframes gooey-point {
+  0% { transform: scale(0); opacity: 0; animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }
+  25% { transform: scale(calc(var(--scale) * 0.25)); } 38% { opacity: 1; }
+  65% { transform: scale(var(--scale)); opacity: 1; animation-timing-function: ease; }
+  85% { transform: scale(var(--scale)); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
 }

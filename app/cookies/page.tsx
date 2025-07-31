@@ -7,7 +7,6 @@ import { Cookie } from 'lucide-react'; // Folosim o iconiță diferită pentru v
 export default function PoliticaCookiesPage() {
   return (
     <>
-      <Navbar />
       <main className="container py-16 md:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <div className="inline-flex items-center justify-center rounded-full bg-primary/10 p-3 mb-4">

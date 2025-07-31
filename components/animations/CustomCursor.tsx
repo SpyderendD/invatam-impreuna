@@ -1,81 +1,111 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useSpring } from 'framer-motion';
 
-const CustomCursor = () => {
-  const [position, setPosition] = useState({ x: -100, y: -100 }); // Inițial în afara ecranului
-  const [isPointer, setIsPointer] = useState(false);
+export function CustomCursor() {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [cursorVariant, setCursorVariant] = useState('default');
+
+  // Setări de "spring" pentru animații fluide
+  const springConfig = { stiffness: 400, damping: 30 };
+  const cursorX = useSpring(0, springConfig);
+  const cursorY = useSpring(0, springConfig);
+
+  const followerX = useSpring(0, { stiffness: 200, damping: 25, mass: 0.8 });
+  const followerY = useSpring(0, { stiffness: 200, damping: 25, mass: 0.8 });
 
   useEffect(() => {
-    // Detectează dacă e dispozitiv touch pentru a dezactiva cursorul
-    const onTouchStart = () => {
-        setIsTouchDevice(true);
-        window.removeEventListener('touchstart', onTouchStart);
+    if (typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
+      setIsTouchDevice(true);
+      return;
     }
-    window.addEventListener('touchstart', onTouchStart, { once: true });
 
     const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+      followerX.set(e.clientX);
+      followerY.set(e.clientY);
+
       const target = e.target as HTMLElement;
-      // Verificăm dacă elementul sau unul dintre părinții săi este un link sau buton
-      if (
-        window.getComputedStyle(target).getPropertyValue('cursor') === 'pointer' ||
-        target.closest('a') ||
-        target.closest('button')
-      ) {
-        setIsPointer(true);
+      
+      // Verificăm ce tip de element este sub cursor
+      if (target.closest('a, button')) {
+        setCursorVariant('link');
+      } else if (target.closest('p, h1, h2, h3, h4, h5, h6, li, span')) {
+        setCursorVariant('text');
       } else {
-        setIsPointer(false);
+        setCursorVariant('default');
       }
     };
     
     window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchstart', onTouchStart);
-    };
-  }, []);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [cursorX, cursorY, followerX, followerY]);
 
   if (isTouchDevice) {
-    return null; // Nu randa nimic pe mobil/tabletă
+    return null;
   }
 
-  const cursorVariants = {
+  // Variantele de animație pentru cursor
+  const variants = {
     default: {
-      x: position.x - 8,
-      y: position.y - 8,
-      height: 16,
-      width: 16,
-      backgroundColor: 'hsl(var(--primary) / 0.2)', // Culoare semi-transparentă
-      border: '1px solid hsl(var(--primary))',
+      height: 20,       // <<< Mai mic
+      width: 20,
       scale: 1,
+      backgroundColor: 'rgba(59, 130, 246, 0.2)',
+      border: '1px solid rgba(59, 130, 246, 0.3)',
+      borderRadius: '50%', // Asigurăm că este un cerc
     },
-    pointer: {
-      x: position.x - 24,
-      y: position.y - 24,
-      height: 48,
-      width: 48,
-      backgroundColor: 'hsl(var(--primary) / 0.1)', // Foarte transparent
-      border: '1px solid hsl(var(--primary))',
+    text: {
+      height: 6,        // <<< Formă de "highlighter"
+      width: 120,       // <<< Mai îngustă
+      scale: 1,
+      backgroundColor: 'rgba(59, 130, 246, 0.15)',
+      border: '0px solid rgba(59, 130, 246, 0)', // Fără bordură vizibilă
+      borderRadius: '4px', // Rotunjim colțurile
+    },
+    link: {
+      height: 50,       // <<< Dimensiune rezonabilă pentru hover
+      width: 50,
       scale: 1.2,
+      backgroundColor: 'transparent',
+      border: '2px solid rgba(59, 130, 246, 0.5)',
+      borderRadius: '50%',
     },
   };
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 rounded-full z-[9999] pointer-events-none"
-      variants={cursorVariants}
-      animate={isPointer ? 'pointer' : 'default'}
-      transition={{ 
-        type: 'spring', 
-        stiffness: 500, // Mai reactiv
-        damping: 30       // Mai puțin "bouncy"
-      }}
-    />
+    <>
+      {/* Elementul "follower" - mai lent, creează efectul "gooey" */}
+      <motion.div
+        variants={variants}
+        animate={cursorVariant}
+        transition={{ type: 'spring', stiffness: 200, damping: 25 }}
+        className="fixed top-0 left-0 z-[9999] pointer-events-none"
+        style={{
+          translateX: followerX,
+          translateY: followerY,
+          x: '-50%', 
+          y: '-50%',
+        }}
+      />
+      {/* Elementul principal - mai rapid, direct pe cursor */}
+      <motion.div
+        variants={variants}
+        animate={cursorVariant}
+        transition={{ type: 'spring', ...springConfig }}
+        className="fixed top-0 left-0 z-[9999] pointer-events-none"
+        style={{
+          translateX: cursorX,
+          translateY: cursorY,
+          x: '-50%', 
+          y: '-50%',
+        }}
+      />
+    </>
   );
-};
+}
 
+// Folosim default export
 export default CustomCursor;

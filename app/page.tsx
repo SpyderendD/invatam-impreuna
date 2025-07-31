@@ -8,7 +8,7 @@ import { useRef } from 'react';
 import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { CardTitle } from '@/components/ui/card';
-import CustomCursor from '@/components/animations/CustomCursor';
+import  CustomCursor from '@/components/animations/CustomCursor';
 import { ConfettiButton } from '@/components/animations/confetti-button';
 
 // --- Iconițe ---

@@ -1,7 +1,9 @@
 // app/api/auth/login/route.ts
 import { NextResponse } from 'next/server';
 // Importăm admin normal, nu specific { adminAuth }
-import { admin } from '@/lib/firebaseAdmin'; 
+import admin from '@/lib/firebaseAdmin'; 
+
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
   console.log("\n--- [SERVER] A primit o cerere pe /api/auth/login ---");

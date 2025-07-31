@@ -1,15 +1,15 @@
-"use client";
+// app/dashboard/page.tsx
+'use client';
 
 import { useState, useEffect, useMemo, JSX } from 'react';
-import { useAuth } from '@/context/AuthContext'; // <-- Folosim noul hook centralizat
-import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { PenTool, School, Beaker, Code, Trophy } from 'lucide-react';
+import { PenTool, School, Beaker, Code } from 'lucide-react';
 import ProgressBar from '@ramonak/react-progress-bar';
 import { ScrollAnimation } from '@/components/scroll-animation';
+import { useAuth } from '@/context/AuthContext';
 
 // --- Tipuri de date ---
 type Subject = {
@@ -27,7 +27,7 @@ type SubjectProgressData = {
   };
 };
 
-// --- Lista de materii (cu starea 'isActive') ---
+// --- Lista de materii ---
 const allSubjects: Subject[] = [
   { id: 'romana', title: 'Limba Română', icon: <PenTool className="h-5 w-5" />, color: '#3B82F6', isActive: true },
   { id: 'matematica', title: 'Matematică', icon: <School className="h-5 w-5" />, color: '#10B981', isActive: true },
@@ -36,30 +36,35 @@ const allSubjects: Subject[] = [
 ];
 
 export default function DashboardPage() {
-  const { user, isLoading: isAuthLoading } = useAuth(); // <-- Obținem starea din noul Context!
+  const { user, loading: isAuthLoading } = useAuth();
   const [progressData, setProgressData] = useState<SubjectProgressData>({});
   const [isDataLoading, setIsDataLoading] = useState(true);
 
-  // --- Prelucrarea datelor de la server ---
   useEffect(() => {
-    // Așteptăm ca autentificarea să se termine
     if (isAuthLoading) return;
-    
-    // Dacă nu există utilizator, nu facem nimic (middleware-ul se va ocupa de redirect)
     if (!user) {
       setIsDataLoading(false);
+      // Middleware-ul ar trebui să se ocupe de redirect, dar setăm loading false oricum
       return;
     }
     
-    // Doar dacă avem utilizator, preluăm progresul lui
     const fetchProgress = async () => {
       setIsDataLoading(true);
       try {
-        const response = await fetch('/api/progress');
-        if (response.ok) {
-          const data = await response.json();
-          setProgressData(data);
-        }
+        // Simulare a unui apel API. Înlocuiește cu apelul tău real.
+        // const response = await fetch('/api/progress');
+        // if (response.ok) {
+        //   const data = await response.json();
+        //   setProgressData(data);
+        // }
+        
+        // Date simulate pentru testare
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulare întârziere rețea
+        setProgressData({
+            romana: { progress: 75, lastLesson: 'Genul Liric' },
+            matematica: { progress: 40, lastLesson: 'Teorema lui Pitagora' },
+        });
+
       } catch (error) {
         console.error("Nu s-a putut prelua progresul:", error);
       } finally {
@@ -68,9 +73,8 @@ export default function DashboardPage() {
     };
 
     fetchProgress();
-  }, [user, isAuthLoading]); // Se re-execută când starea de autentificare se schimbă
+  }, [user, isAuthLoading]);
 
-  // --- Funcția de actualizare a progresului ---
   const handleCompleteLesson = async (subjectId: string) => {
     const currentProgress = progressData[subjectId]?.progress || 0;
     if (currentProgress >= 100) return;
@@ -78,24 +82,13 @@ export default function DashboardPage() {
     const newProgress = Math.min(currentProgress + 10, 100);
     const updatedProgressState = {
       ...progressData,
-      [subjectId]: { progress: newProgress, lastLesson: 'O nouă lecție' },
+      [subjectId]: { progress: newProgress, lastLesson: 'O nouă lecție simulată' },
     };
-    setProgressData(updatedProgressState); // Actualizare locală imediată
+    setProgressData(updatedProgressState);
 
-    // Salvare pe server în fundal
-    try {
-      await fetch('/api/progress', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ subjectId, newProgress }),
-      });
-    } catch (error) {
-      console.error("Salvarea progresului a eșuat:", error);
-      setProgressData(progressData); // Revine la starea anterioară în caz de eroare
-    }
+    // Poți adăuga logica de salvare pe server aici, în fundal
   };
 
-  // --- Calculul dinamic al obiectivelor ---
   const objectives = useMemo(() => {
     const activeSubjects = allSubjects.filter(s => s.isActive);
     const lessonsStarted = Object.keys(progressData).length;
@@ -108,21 +101,38 @@ export default function DashboardPage() {
     };
   }, [progressData]);
 
-  // --- Afișare stare de încărcare ---
-  // Starea de încărcare este acum gestionată centralizat de AuthProvider
-  // Așa că nu mai avem nevoie de un schelet de încărcare specific aici.
-  // Paginile vor fi afișate doar după ce AuthProvider termină.
+  // --- Starea de Încărcare ---
+  if (isAuthLoading || isDataLoading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-1 py-8">
+            <div className="container">
+                <div className="flex items-center justify-between mb-8">
+                <div>
+                    <Skeleton className="h-9 w-64 mb-2" />
+                    <Skeleton className="h-5 w-48" />
+                </div>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div className="lg:col-span-2 space-y-4"><Skeleton className="h-[400px] w-full" /></div>
+                    <div className="space-y-4"><Skeleton className="h-[200px] w-full" /></div>
+                </div>
+            </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
       <main className="flex-1 py-8">
         <div className="container">
           <ScrollAnimation>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
               <div>
                 <h1 className="text-3xl font-bold">Tabloul tău de bord</h1>
-                <p className="text-muted-foreground mt-1">Bine ai revenit, {user?.email || 'utilizator'}!</p>
+                <p className="text-muted-foreground mt-1">Bine ai revenit, {user?.displayName || user?.email || 'campionule'}!</p>
               </div>
             </div>
           </ScrollAnimation>
@@ -146,7 +156,18 @@ export default function DashboardPage() {
                                 <div style={{ color: subject.color }}>{subject.icon}</div>
                                 <h3 className="font-semibold text-lg">{subject.title}</h3>
                               </div>
-                              <ProgressBar completed={userProgress.progress} bgColor={subject.color} height="12px" borderRadius="999px" labelAlignment="right" labelColor="#333" labelSize="11px" animateOnRender transitionDuration="1.5s" transitionTimingFunction="ease-out" />
+                              <ProgressBar 
+                                completed={userProgress.progress} 
+                                bgColor={subject.color} 
+                                height="12px" 
+                                borderRadius="999px" 
+                                labelAlignment="right" 
+                                labelColor="#333" 
+                                labelSize="11px" 
+                                animateOnRender 
+                                transitionDuration="1.5s" 
+                                transitionTimingFunction="ease-out" 
+                              />
                               <div className="flex justify-between items-center mt-2 text-xs text-muted-foreground">
                                 <span>{userProgress.lastLesson}</span>
                                 <Button size="sm" variant="ghost" onClick={() => handleCompleteLesson(subject.id)}>Simulează Lecție</Button>

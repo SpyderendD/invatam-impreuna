@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
-import { getAuth } from 'firebase-admin/auth';
+import admin from '@/lib/firebaseAdmin'; // Importăm default exportul
 import { FieldValue } from 'firebase-admin/firestore';
 import { adminDb } from '@/lib/firebaseAdmin';
 
-export const dynamic = 'force-dynamic'; 
+// Marcam ruta ca dinamică
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
     try {
@@ -19,12 +20,11 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'ID-ul lecției lipsește' }, { status: 400 });
         }
 
-        const decodedToken = await getAuth().verifyIdToken(token);
+        const decodedToken = await admin.auth().verifyIdToken(token);
         const userId = decodedToken.uid;
         
         const progressRef = adminDb.collection('progress').doc(userId);
         
-        // Folosim `set` cu `merge: true` pentru a crea documentul dacă nu există
         await progressRef.set({
             completedLessons: isCompleted 
                 ? FieldValue.arrayUnion(lessonId) 
