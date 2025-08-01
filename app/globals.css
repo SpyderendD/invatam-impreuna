@@ -97,6 +97,7 @@
     --gooey-filter-after-bg: 262 83% 75%; /* Primary (mai deschis pentru dark mode) */
   }
 
+
   /* Reseturi de bază și fonturi */
   * {
     border-color: hsl(var(--border));

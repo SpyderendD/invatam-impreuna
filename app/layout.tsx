@@ -1,18 +1,26 @@
+// app/layout.tsx
+
 import './globals.css';
 import { Inter, Lora } from 'next/font/google';
+import type { Metadata, Viewport } from 'next';
 import { cn } from '@/lib/utils';
 import { Navbar } from '@/components/layout/navbar';
 import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from '@/context/ThemeContext';
-import { CustomCursor } from '@/components/animations/CustomCursor'; // Asigură-te că importul e corect (named export)
+import { ThemeProvider } from '@/context/ThemeContext'; 
+import { ClientLogicWrapper } from '@/components/layout/ClientLogicWrapper'; // <-- NOU: Importăm wrapper-ul
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const lora = Lora({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-lora' });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Învăţăm Împreună | Platformă Educațională',
   description: 'Platformă personală pentru Evaluarea Națională.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -21,22 +29,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ro">
-      <body className={cn("bg-background text-foreground", inter.variable, lora.variable)}>
-        {/* Filtrul SVG pentru GooeyNav - Plasat aici pentru a fi disponibil global */}
-        <svg width="0" height="0" className="absolute"> {/* Hidden from view */}
-          <defs>
-            <filter id="gooey-nav-filter">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
-              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10" result="gooey" />
-              <feComposite in="SourceGraphic" in2="gooey" operator="atop" />
-            </filter>
-          </defs>
-        </svg>
-
+    <html lang="ro" suppressHydrationWarning> 
+      <body className={cn("bg-background text-foreground font-sans", inter.variable, lora.variable)}>
         <AuthProvider>
           <ThemeProvider>
-            <CustomCursor />
+            <ClientLogicWrapper />
+            
             <Navbar />
             <main>
               {children}
