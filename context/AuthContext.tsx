@@ -16,8 +16,7 @@ interface AuthContextType {
   setUser: Dispatch<SetStateAction<User | null>>;
 }
 
-// Creăm contextul cu tipul definit.
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Componenta Provider care va înveli întreaga aplicație.
 export const AuthProvider = ({ children }: { children: ReactNode }) => {

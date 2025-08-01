@@ -21,7 +21,6 @@ export default function PoliticaConfidentialitatePage() {
           </p>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

@@ -5,7 +5,6 @@ import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 
 // --- Componente ---
-import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { CardTitle } from '@/components/ui/card';
 import  CustomCursor from '@/components/animations/CustomCursor';
@@ -249,8 +248,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
-      <Footer />
     </>
   );
 }

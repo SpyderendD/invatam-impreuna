@@ -1,14 +1,11 @@
-// app/layout.tsx
+// app/layout.tsx (MODIFICAT și SIMPLIFICAT)
 
 import './globals.css';
 import { Inter, Lora } from 'next/font/google';
 import type { Metadata, Viewport } from 'next';
 import { cn } from '@/lib/utils';
+import { Providers } from '@/components/Providers';
 import { Navbar } from '@/components/layout/navbar';
-import { AuthProvider } from "@/context/AuthContext";
-import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from '@/context/ThemeContext'; 
-import { ClientLogicWrapper } from '@/components/layout/ClientLogicWrapper'; // <-- NOU: Importăm wrapper-ul
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const lora = Lora({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-lora' });
@@ -23,25 +20,13 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode; }) {
   return (
-    <html lang="ro" suppressHydrationWarning> 
-      <body className={cn("bg-background text-foreground font-sans", inter.variable, lora.variable)}>
-        <AuthProvider>
-          <ThemeProvider>
-            <ClientLogicWrapper />
-            
-            <Navbar />
-            <main>
-              {children}
-            </main>
-            <Toaster />
-          </ThemeProvider>
-        </AuthProvider>
+    <html lang="ro">
+      <body>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

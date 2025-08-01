@@ -1,16 +1,23 @@
-// components/layout/ClientLogicWrapper.tsx
 'use client';
 
+import { useAuth } from '@/context/AuthContext';
 import { useNewLessonNotifier } from '@/hooks/useNotifications';
 import { CustomCursor } from '@/components/animations/CustomCursor';
 
-// Această componentă va conține toate hook-urile și logica de client
-export function ClientLogicWrapper() {
-  // Activează verificarea pentru lecții noi în fundal
+// Componenta internă care va rula logica doar dacă există user
+function NotificationLogic() {
   useNewLessonNotifier();
+  return null; // Această componentă nu randează nimic vizibil
+}
+
+export function ClientLogicWrapper() {
+  const { user, loading } = useAuth();
 
   return (
-    // Putem plasa aici și alte componente globale de client, cum ar fi CustomCursor
-    <CustomCursor />
+    <>
+      <CustomCursor />
+      {/* Randăm componenta cu logica DOAR dacă încărcarea s-a terminat ȘI avem un utilizator */}
+      {!loading && user && <NotificationLogic />}
+    </>
   );
 }

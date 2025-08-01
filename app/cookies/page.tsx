@@ -21,7 +21,6 @@ export default function PoliticaCookiesPage() {
           </p>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

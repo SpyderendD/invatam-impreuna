@@ -247,7 +247,6 @@ export default function LessonPage({ params }: LessonPageParams) {
                     </motion.div>
                 </div>
             </main>
-            <Footer />
         </div>
     );
 }

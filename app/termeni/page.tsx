@@ -21,7 +21,6 @@ export default function TermeniConditiiPage() {
           </p>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

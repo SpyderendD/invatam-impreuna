@@ -206,7 +206,6 @@ export default function QuizPage() {
                     </AnimatePresence>
                 </div>
             </main>
-            <Footer />
         </div>
     );
 }
