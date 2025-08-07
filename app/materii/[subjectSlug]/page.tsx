@@ -1,30 +1,26 @@
-// app/materii/[subjectSlug]/page.tsx
 'use client'; 
 
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import React, { useRef, MouseEvent } from 'react';
-import { ALL_SUBJECTS, Chapter, Lesson } from '@/lib/lessons';
+import { ALL_SUBJECTS_OBJECT, Chapter, Lesson } from '@/lib/lessons'; 
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, BookText, PencilRuler } from 'lucide-react';
 import { Footer } from '@/components/layout/footer';
 import { ParticlesBackground } from '@/components/animations/ParticlesBackground';
 
+// Tipul pentru params trebuie să se potrivească cu cheile din obiectul nostru
 type SubjectPageParams = {
-  params: { subjectSlug: keyof typeof ALL_SUBJECTS };
+  params: { subjectSlug: keyof typeof ALL_SUBJECTS_OBJECT };
 };
 
-// ============================================================================
-// == Variante de Animație
-// ============================================================================
+// --- Variante de Animație ---
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 }}};
 const itemVariants = { hidden: { y: 20, opacity: 0, filter: 'blur(5px)' }, visible: { y: 0, opacity: 1, filter: 'blur(0px)', transition: { type: 'spring', stiffness: 100, damping: 12 }}};
 const titleVariants = { hidden: { y: 30, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { type: 'spring', damping: 15, stiffness: 100 }}};
 
-// ============================================================================
-// == Componenta Card Capitol cu Animație 3D
-// ============================================================================
+// --- Componenta Card Capitol cu Animație 3D ---
 const AnimatedChapterCard = ({ chapter, subjectSlug }: { chapter: Chapter; subjectSlug: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
@@ -94,8 +90,10 @@ const AnimatedChapterCard = ({ chapter, subjectSlug }: { chapter: Chapter; subje
   );
 };
 
+
+// --- COMPONENTA PRINCIPALĂ A PAGINII ---
 export default function SubjectPage({ params }: SubjectPageParams) {
-  const subjectData = ALL_SUBJECTS[params.subjectSlug];
+  const subjectData = ALL_SUBJECTS_OBJECT[params.subjectSlug];
 
   if (!subjectData) {
     notFound();
@@ -121,6 +119,7 @@ export default function SubjectPage({ params }: SubjectPageParams) {
           ))}
         </motion.div>
       </main>
+      <Footer />
     </div>
-  );
+  );   
 }

@@ -2,7 +2,7 @@
 
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { adminAuth, adminDb } from '@/lib/firebaseAdmin'; // Importăm uneltele de server
+import admin, { adminDb } from '@/lib/firebaseAdmin'; // Importăm uneltele de server
 
 /**
  * Această funcție gestionează cererile POST către /api/quiz.
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     }
 
     // Verificăm dacă cookie-ul este valid și obținem ID-ul utilizatorului
-    const decodedClaims = await adminAuth.verifySessionCookie(sessionCookie, true);
+    const decodedClaims = await admin.auth().verifySessionCookie(sessionCookie, true);
     const userId = decodedClaims.uid;
     
     // 2. Extragem datele trimise de la pagina de quiz

@@ -97,6 +97,12 @@
     --gooey-filter-after-bg: 262 83% 75%; /* Primary (mai deschis pentru dark mode) */
   }
 
+.bg-grid-pattern {
+    background-image: linear-gradient(to right, hsl(var(--border) / 0.5) 1px, transparent 1px),
+                      linear-gradient(to bottom, hsl(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
 
   /* Reseturi de bază și fonturi */
   * {

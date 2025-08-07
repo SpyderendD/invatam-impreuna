@@ -1,7 +1,7 @@
 // app/api/auth/me/route.ts
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { adminAuth } from '@/lib/firebaseAdmin';
+import adminAuth from '@/lib/firebaseAdmin';
 
 export async function GET() {
   try {
@@ -13,7 +13,7 @@ export async function GET() {
     }
 
     // Verificăm cookie-ul. Dacă e valid, primim datele decodate.
-    const decodedClaims = await adminAuth.verifySessionCookie(sessionCookie, true);
+    const decodedClaims = await adminAuth.auth().verifySessionCookie(sessionCookie, true);
 
     // Returnăm datele utilizatorului (sau doar un status de succes)
     return NextResponse.json({ userId: decodedClaims.uid, email: decodedClaims.email }, { status: 200 });

@@ -25,7 +25,7 @@ import { ThemeToggle } from '@/components/theme/ThemeToggle';
 const navLinksDesktop = [
   { href: '/#materii', label: 'Materii' },
   { href: '/teste', label: 'Modele teste E.N.' },
-  { href: '/monitorizare', label: 'Monitorizare' },
+  { href: '/dashboard', label: 'Monitorizare' },
   { href: '/quizuri', label: 'Quizuri' },
 ];
 
