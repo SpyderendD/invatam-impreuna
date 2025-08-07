@@ -1,4 +1,4 @@
-// lib/lessons.ts
+// lib/lessons.tsx
 
 import { JSX } from "react";
 import {

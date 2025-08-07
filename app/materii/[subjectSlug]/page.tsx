@@ -119,7 +119,6 @@ export default function SubjectPage({ params }: SubjectPageParams) {
           ))}
         </motion.div>
       </main>
-      <Footer />
     </div>
   );   
 }

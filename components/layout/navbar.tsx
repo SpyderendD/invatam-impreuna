@@ -33,7 +33,7 @@ const navLinksDesktop = [
 const mobileNavLinks = [
   { href: '/#materii', label: 'Materii', icon: BookMarked },
   { href: '/teste', label: 'Modele teste E.N.', icon: Calculator },
-  { href: '/monitorizare', label: 'Monitorizare', icon: LineChart },
+  { href: '/dashboard', label: 'Monitorizare', icon: LineChart },
   { href: '/quizuri', label: 'Quizuri', icon: Mail },
 ];
 
@@ -115,7 +115,7 @@ export function Navbar() {
               {user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild><button aria-label="Deschide meniul utilizatorului"><Avatar className="cursor-pointer h-9 w-9"><AvatarImage src={userImage} alt={userName} /><AvatarFallback>{userInitial}</AvatarFallback></Avatar></button></DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56"><DropdownMenuLabel><p className="font-semibold">{userName}</p><p className="text-xs text-muted-foreground font-normal">{userEmail}</p></DropdownMenuLabel><DropdownMenuSeparator /><DropdownMenuItem asChild><Link href="/dashboard"><User className="mr-2 h-4 w-4" /> Profil</Link></DropdownMenuItem><DropdownMenuItem asChild><Link href="/setari"><Settings className="mr-2 h-4 w-4" /> Setări</Link></DropdownMenuItem><DropdownMenuSeparator /><DropdownMenuItem onClick={logout} className="text-destructive focus:text-destructive focus:bg-destructive/10"><LogOut className="mr-2 h-4 w-4" /> Deconectare</DropdownMenuItem></DropdownMenuContent>
+                  <DropdownMenuContent align="end" className="w-56"><DropdownMenuLabel><p className="font-semibold">{userName}</p><p className="text-xs text-muted-foreground font-normal">{userEmail}</p></DropdownMenuLabel><DropdownMenuSeparator /><DropdownMenuItem asChild><Link href="/profil"><User className="mr-2 h-4 w-4" /> Profil</Link></DropdownMenuItem><DropdownMenuItem asChild><Link href="/setari"><Settings className="mr-2 h-4 w-4" /> Setări</Link></DropdownMenuItem><DropdownMenuSeparator /><DropdownMenuItem onClick={logout} className="text-destructive focus:text-destructive focus:bg-destructive/10"><LogOut className="mr-2 h-4 w-4" /> Deconectare</DropdownMenuItem></DropdownMenuContent>
                 </DropdownMenu>
               ) : (
                 <>
