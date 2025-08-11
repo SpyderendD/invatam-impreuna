@@ -1,53 +1,55 @@
-// src/contexts/ThemeContext.tsx
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type Theme = 'light' | 'dark';
+type Ctx = {
+theme: Theme;
+setTheme: (t: Theme) => void;
+toggleTheme: () => void;
+};
 
-interface ThemeContextType {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-  toggleTheme: () => void;
+const ThemeContext = createContext<Ctx | undefined>(undefined);
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+const [theme, setThemeState] = useState<Theme>('light');
+
+// La prima montare: dacă avem localStorage -> folosește-l; altfel detectează tema OS.
+useEffect(() => {
+try {
+const stored = (localStorage.getItem('theme') as Theme | null);
+const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+const initial: Theme = stored === 'light' || stored === 'dark'
+? stored
+: (prefersDark ? 'dark' : 'light');
+
+
+  setThemeState(initial);
+  document.documentElement.classList.toggle('dark', initial === 'dark');
+  document.documentElement.setAttribute('data-theme', initial);
+} catch {}
+}, []);
+
+const setTheme = (t: Theme) => {
+try {
+setThemeState(t);
+localStorage.setItem('theme', t);
+document.documentElement.classList.toggle('dark', t === 'dark');
+document.documentElement.setAttribute('data-theme', t);
+} catch {}
+};
+
+const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
+
+return (
+<ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
+{children}
+</ThemeContext.Provider>
+);
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setThemeState] = useState<Theme>('light');
-
-  // La prima montare, citim tema din localStorage
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') as Theme || 'light';
-    setThemeState(storedTheme);
-    // Aplicăm clasa 'dark' pe elementul <html> (document.documentElement)
-    document.documentElement.classList.toggle('dark', storedTheme === 'dark');
-  }, []);
-
-  // Funcția pentru a schimba tema și a o salva în localStorage
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
-    localStorage.setItem('theme', newTheme);
-    document.documentElement.classList.toggle('dark', newTheme === 'dark');
-  };
-
-  // Funcția helper pentru a comuta tema
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
-};
-
-// Hook custom pentru a folosi tema în componente
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-};
+export function useTheme() {
+const ctx = useContext(ThemeContext);
+if (!ctx) throw new Error('useTheme must be used within ThemeProvider');
+return ctx;
+}
