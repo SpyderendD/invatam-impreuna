@@ -24,9 +24,10 @@ import { ThemeToggle } from '@/components/theme/ThemeToggle';
 // Link-urile de navigație pentru desktop
 const navLinksDesktop = [
   { href: '/#materii', label: 'Materii' },
-  { href: '/teste', label: 'Modele teste E.N.' },
+  { href: '/modele-teste', label: 'Modele teste E.N.' },
   { href: '/dashboard', label: 'Monitorizare' },
   { href: '/quizuri', label: 'Quizuri' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 // Link-urile pentru meniul mobil

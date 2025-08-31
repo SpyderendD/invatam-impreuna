@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState, useEffect, useRef, useCallback } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, animate } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import { useTaskPlanner, Task, AchievementStats, achievementsList, AchievementId } from '@/hooks/useTaskPlanner';
@@ -23,11 +23,14 @@ import { Check, X, Plus, Trash2, Edit, ChevronLeft, ChevronRight, Settings as Se
 import { toast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-// Animații
+/* ========== Animații ========== */
 const containerVariants = { hidden: {}, visible: { transition: { staggerChildren: 0.07 } } };
-const itemVariants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 120, damping: 15 } } };
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 120, damping: 15 } },
+};
 
-// Detect touch
+/* ========== Detect touch ========== */
 function useIsTouch() {
   const [isTouch, setIsTouch] = useState(false);
   useEffect(() => {
@@ -64,7 +67,6 @@ export default function DashboardPage() {
     return { weekDates: dates, weekLabel: label, weekStartDate: start };
   }, [weekOffset]);
 
-  // Auto-aplică programul când schimbi săptămâna (dacă e activ)
   useEffect(() => {
     if (!planner.settings.autoApplySchedule) return;
     planner.applyScheduleToWeek(weekStartDate);
@@ -96,14 +98,16 @@ export default function DashboardPage() {
             <HelpBlock content="Planifică-ți săptămâna, urmărește progresul și bifează-ți obiectivele!" dataStep="1" disabled={showTutorial}>
               <div className="relative">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-lora tracking-tight">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-cyan-600 dark:from-violet-400 dark:to-cyan-400">Planificatorul Săptămânal</span>
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-cyan-600 dark:from-violet-400 dark:to-cyan-400">
+                    Planificatorul Săptămânal
+                  </span>
                 </h1>
                 <p className="text-muted-foreground mt-1">Organizează-ți obiectivele și devino mai productiv.</p>
               </div>
             </HelpBlock>
 
-            <div data-step="5" data-intro="Ajutor (tutorial), Istoric, Premii, Setări." className="flex gap-2 self-end sm:self-center">
-              <Button variant={showTutorial ? 'default' : 'outline'} size="icon" onClick={() => setShowTutorial(true)}><HelpCircle className="h-5 w-5" /></Button>
+            <div data-step="5" className="flex gap-2 self-end sm:self-center">
+              <Button aria-label="Deschide tutorial" variant={showTutorial ? 'default' : 'outline'} size="icon" onClick={() => setShowTutorial(true)}><HelpCircle className="h-5 w-5" /></Button>
               <HistoryDialog planner={planner} />
               <AchievementsDialog achievements={planner.achievements} />
               <SettingsDialog taskPlanner={planner} />
@@ -161,8 +165,7 @@ export default function DashboardPage() {
                   {/* Desktop */}
                   <motion.div
                     variants={itemVariants}
-                    className="hidden xl:grid gap-4"
-                    style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}
+                    className="hidden xl:grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]"
                   >
                     {weekDates.map(dateStr => (
                       <DayColumn key={dateStr} dateStr={dateStr} planner={planner} disableConfetti={showTutorial} />
@@ -188,7 +191,7 @@ export default function DashboardPage() {
 
               <HelpBlock content="Import/Export, reset și program recurent sunt în Setări." dataStep="7" disabled={showTutorial}>
                 <div className="text-xs text-muted-foreground bg-card/60 border rounded-xl p-3">
-                  Tips: dublu-click pentru editare, click pe pătrat pentru status, Enter pentru a adăuga rapid.
+                  Tips: dublu‑click pentru editare, click pe pătrat pentru status, Enter pentru a adăuga rapid.
                 </div>
               </HelpBlock>
             </aside>
@@ -199,7 +202,7 @@ export default function DashboardPage() {
   );
 }
 
-/* --------------- Helpers: tooltip wrapper cu disable în tutorial --------------- */
+/* ========== Help tooltip wrapper ========== */
 function HelpBlock({
   children,
   content,
@@ -229,7 +232,7 @@ function HelpBlock({
   );
 }
 
-/* ---------------- Card statistici 3D ---------------- */
+/* ========== Card statistici 3D ========== */
 function StatsCard3D({ planner }: { planner: ReturnType<typeof useTaskPlanner> }) {
   const isTouch = useIsTouch();
   const ref = useRef<HTMLDivElement>(null);
@@ -258,7 +261,7 @@ function StatsCard3D({ planner }: { planner: ReturnType<typeof useTaskPlanner> }
   }, [planner.plan]);
 
   const chartData = [
-    { name: 'Reușite', value: stats.completed, fill: 'hsl(var(--success))' },
+    { name: 'Reușite', value: stats.completed, fill: 'hsl(var(--success, 142 76% 36%))' },
     { name: 'Încercări', value: stats.failed, fill: 'hsl(var(--destructive))' },
     { name: 'În Așteptare', value: stats.pending, fill: 'hsl(var(--muted-foreground))' },
   ].filter(d => d.value > 0);
@@ -266,9 +269,15 @@ function StatsCard3D({ planner }: { planner: ReturnType<typeof useTaskPlanner> }
   const hasData = stats.completed + stats.failed + stats.pending > 0;
 
   return (
-    <motion.div ref={ref} onMouseMove={isTouch ? undefined : onMove} onMouseLeave={isTouch ? undefined : onLeave} style={isTouch ? undefined : { rotateX, rotateY, transformStyle: 'preserve-3d' }}>
-      <Card className="border-border/60 bg-gradient-to-br from-background to-background/60 backdrop-blur-sm shadow-lg" style={isTouch ? undefined : { transformStyle: 'preserve-3d' }}>
-        <div style={isTouch ? undefined : { transform: 'translateZ(36px)' }} className="p-6">
+    <motion.div
+      ref={ref}
+      onMouseMove={isTouch ? undefined : onMove}
+      onMouseLeave={isTouch ? undefined : onLeave}
+      style={isTouch ? undefined : { rotateX, rotateY }}
+      className={isTouch ? '' : 'preserve-3d'}
+    >
+      <Card className="border-border/60 bg-gradient-to-br from-background to-background/60 backdrop-blur-sm shadow-lg preserve-3d">
+        <div className="p-6 translate-z-36">
           <CardHeader className="p-0 mb-4">
             <CardTitle className="flex items-center gap-2"><BarChart2 className="h-5 w-5 text-primary" /> Statistici Generale</CardTitle>
           </CardHeader>
@@ -280,7 +289,7 @@ function StatsCard3D({ planner }: { planner: ReturnType<typeof useTaskPlanner> }
                     <Pie data={chartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} innerRadius={35} paddingAngle={5} cornerRadius={5}>
                       {chartData.map((entry, i) => <Cell key={i} fill={entry.fill} />)}
                     </Pie>
-                    <RechartsTooltip contentStyle={{ background: 'hsl(var(--popover))', border: '1px solid hsl(var(--border))', borderRadius: '0.5rem' }} />
+                    <RechartsTooltip />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -289,12 +298,18 @@ function StatsCard3D({ planner }: { planner: ReturnType<typeof useTaskPlanner> }
             )}
             <div className="grid grid-cols-3 md:grid-cols-1 gap-2 flex-grow">
               <AnimatedStat value={stats.completed} label="Reușite" icon={<Check className="h-6 w-6 text-green-500 mb-1" />} />
-              <AnimatedStat value={stats.failed} label="Încercări" icon={<X className="h-6 w-6 text-red-500 mb-1" />} />
+              <AnimatedStat value={stats.failed} label="Încercări" icon={<X className="h-6 w-6 text-rose-500 mb-1" />} />
               <AnimatedStat value={planner.achievements.unlocked.size} label="Premii" icon={<Trophy className="h-6 w-6 text-amber-500 mb-1" />} />
             </div>
           </CardContent>
         </div>
       </Card>
+
+      {/* Clase scoped pentru 3D fără inline-styles */}
+      <style jsx>{`
+        .preserve-3d { transform-style: preserve-3d; }
+        .translate-z-36 { transform: translateZ(36px); }
+      `}</style>
     </motion.div>
   );
 }
@@ -319,7 +334,7 @@ function AnimatedStat({ value, label, icon }: { value: number; label: string; ic
   );
 }
 
-/* ---------------- Day & Task ---------------- */
+/* ========== Day & Task ========== */
 function DayColumn({ dateStr, planner, disableConfetti = false }: { dateStr: string; planner: ReturnType<typeof useTaskPlanner>; disableConfetti?: boolean }) {
   const [newTaskDesc, setNewTaskDesc] = useState('');
   const [burst, setBurst] = useState(0);
@@ -374,8 +389,18 @@ function DayColumn({ dateStr, planner, disableConfetti = false }: { dateStr: str
 
         <div className="p-2 border-t mt-auto">
           <div className="flex gap-2">
-            <Input placeholder="Plan nou..." value={newTaskDesc} onChange={e => setNewTaskDesc(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleAddTask()} className="h-9 text-sm rounded-full" />
-            <Button size="sm" onClick={handleAddTask} disabled={!newTaskDesc.trim()} className="rounded-full"><Plus className="h-4 w-4 mr-1" /> Adaugă</Button>
+            <Label htmlFor={`new-${dateStr}`} className="sr-only">Plan nou</Label>
+            <Input
+              id={`new-${dateStr}`}
+              placeholder="Plan nou..."
+              value={newTaskDesc}
+              onChange={e => setNewTaskDesc(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleAddTask()}
+              className="h-9 text-sm rounded-full"
+            />
+            <Button size="sm" onClick={handleAddTask} disabled={!newTaskDesc.trim()} className="rounded-full">
+              <Plus className="h-4 w-4 mr-1" /> Adaugă
+            </Button>
           </div>
         </div>
 
@@ -385,7 +410,7 @@ function DayColumn({ dateStr, planner, disableConfetti = false }: { dateStr: str
   );
 }
 
-function TaskItem({ dateStr, task, planner, index }: { dateStr: string; task: Task; planner: ReturnType<typeof useTaskPlanner>; index: number }) {
+function TaskItem({ dateStr, task, planner }: { dateStr: string; task: Task; planner: ReturnType<typeof useTaskPlanner>; index: number }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(task.description);
 
@@ -405,8 +430,15 @@ function TaskItem({ dateStr, task, planner, index }: { dateStr: string; task: Ta
   };
 
   return (
-    <motion.div layout initial={{ opacity: 0, y: -8, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: 0.96 }} transition={{ type: 'spring', stiffness: 200, damping: 18 }} className={`group flex items-center gap-2 p-2 rounded-md border text-sm ${style}`}>
-      <button onClick={cycle} className="shrink-0 grid place-items-center h-6 w-6 rounded-md border hover:scale-105 transition">
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: -8, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.96 }}
+      transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+      className={`group flex items-center gap-2 p-2 rounded-md border text-sm ${style}`}
+    >
+      <button onClick={cycle} className="shrink-0 grid place-items-center h-6 w-6 rounded-md border hover:scale-105 transition" aria-label="Schimbă status">
         {task.status === 'completed' ? <Check className="h-4 w-4 text-emerald-500" /> : task.status === 'failed' ? <X className="h-4 w-4 text-rose-500" /> : <div className="h-3.5 w-3.5 rounded-sm border" />}
       </button>
 
@@ -417,8 +449,8 @@ function TaskItem({ dateStr, task, planner, index }: { dateStr: string; task: Ta
       )}
 
       <div className="flex opacity-0 group-hover:opacity-100 transition-opacity">
-        <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => setIsEditing(!isEditing)}><Edit className="h-3.5 w-3.5" /></Button>
-        <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => planner.deleteTask(dateStr, task.id)}><Trash2 className="h-3.5 w-3.5" /></Button>
+        <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => setIsEditing(!isEditing)} aria-label="Editează"><Edit className="h-3.5 w-3.5" /></Button>
+        <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => planner.deleteTask(dateStr, task.id)} aria-label="Șterge"><Trash2 className="h-3.5 w-3.5" /></Button>
       </div>
     </motion.div>
   );
@@ -435,6 +467,8 @@ function ConfettiBurst({ trigger, disabled = false }: { trigger: number; disable
   if (!show) return null;
 
   const pieces = new Array(18).fill(0).map((_, i) => i);
+  const colorClass = (i: number) => ['bg-cf-1', 'bg-cf-2', 'bg-cf-3', 'bg-cf-4', 'bg-cf-5'][i % 5];
+
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       {pieces.map(i => {
@@ -442,16 +476,29 @@ function ConfettiBurst({ trigger, disabled = false }: { trigger: number; disable
         const distance = 60 + Math.random() * 60;
         const x = Math.cos((angle * Math.PI) / 180) * distance;
         const y = Math.sin((angle * Math.PI) / 180) * distance;
-        const color = ['#A78BFA', '#22D3EE', '#34D399', '#F472B6', '#F59E0B'][i % 5];
         return (
-          <motion.span key={i} initial={{ opacity: 0, x: 0, y: 0, rotate: 0, scale: 0.6 }} animate={{ opacity: 1, x, y, rotate: 360, scale: 1 }} transition={{ duration: 0.9, ease: 'easeOut' }} className="absolute left-1/2 top-1/2 h-2 w-2 rounded-sm" style={{ backgroundColor: color }} />
+          <motion.span
+            key={i}
+            initial={{ opacity: 0, x: 0, y: 0, rotate: 0, scale: 0.6 }}
+            animate={{ opacity: 1, x, y, rotate: 360, scale: 1 }}
+            transition={{ duration: 0.9, ease: 'easeOut' }}
+            className={`absolute left-1/2 top-1/2 h-2 w-2 rounded-sm ${colorClass(i)}`}
+          />
         );
       })}
+
+      <style jsx>{`
+        .bg-cf-1 { background-color: #A78BFA; }
+        .bg-cf-2 { background-color: #22D3EE; }
+        .bg-cf-3 { background-color: #34D399; }
+        .bg-cf-4 { background-color: #F472B6; }
+        .bg-cf-5 { background-color: #F59E0B; }
+      `}</style>
     </div>
   );
 }
 
-/* ---------------- Unplanned / Setări / Istoric / Premii ---------------- */
+/* ========== Unplanned / Setări / Istoric / Premii ========== */
 function UnplannedTaskCard({ addTask }: { addTask: (desc: string, type: 'verde' | 'rosu') => void }) {
   const [desc, setDesc] = useState('');
   const onAdd = (type: 'verde' | 'rosu') => { const t = desc.trim(); if (!t) return; addTask(t, type); setDesc(''); };
@@ -462,7 +509,15 @@ function UnplannedTaskCard({ addTask }: { addTask: (desc: string, type: 'verde' 
         <CardDescription className="text-sm text-muted-foreground">Loghează rapid acțiuni care nu erau în plan.</CardDescription>
       </CardHeader>
       <CardContent className="p-0 space-y-2">
-        <Input placeholder="Descriere activitate..." value={desc} onChange={e => setDesc(e.target.value)} onKeyDown={e => e.key === 'Enter' && onAdd('verde')} className="h-9 text-sm rounded-full" />
+        <Label htmlFor="unplanned" className="sr-only">Descriere activitate</Label>
+        <Input
+          id="unplanned"
+          placeholder="Descriere activitate..."
+          value={desc}
+          onChange={e => setDesc(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && onAdd('verde')}
+          className="h-9 text-sm rounded-full"
+        />
         <div className="flex gap-2">
           <Button size="sm" onClick={() => onAdd('verde')} disabled={!desc.trim()} className="rounded-full"><Plus className="h-4 w-4 mr-1" /> Reușită</Button>
           <Button size="sm" variant="outline" onClick={() => onAdd('rosu')} disabled={!desc.trim()} className="rounded-full">Încercare</Button>
@@ -498,7 +553,7 @@ function SettingsDialog({ taskPlanner }: { taskPlanner: ReturnType<typeof useTas
 
   return (
     <Dialog>
-      <DialogTrigger asChild><Button variant="outline" size="icon"><SettingsIcon className="h-5 w-5" /></Button></DialogTrigger>
+      <DialogTrigger asChild><Button aria-label="Deschide setări" variant="outline" size="icon"><SettingsIcon className="h-5 w-5" /></Button></DialogTrigger>
       <DialogContent className="sm:max-w-xl">
         <DialogHeader><DialogTitle>Setări & Planificare</DialogTitle><DialogDescription>Personalizează experiența, programul recurent și datele.</DialogDescription></DialogHeader>
         <Tabs defaultValue="general" className="w-full">
@@ -511,7 +566,7 @@ function SettingsDialog({ taskPlanner }: { taskPlanner: ReturnType<typeof useTas
           <TabsContent value="general" className="py-4 space-y-4">
             <div className="space-y-2 p-4 rounded-lg border bg-card/50">
               <Label htmlFor="daily-goal" className="font-semibold">Țintă zilnică (reușite)</Label>
-              <Input id="daily-goal" type="number" min="1" max="1000" value={settings.dailyGoal} onChange={e => setSettings(s => ({ ...s, dailyGoal: Number(e.target.value) }))} />
+              <Input id="daily-goal" type="number" min={1} max={1000} value={settings.dailyGoal} onChange={e => setSettings(s => ({ ...s, dailyGoal: Number(e.target.value) }))} />
             </div>
             <div className="space-y-2 p-4 rounded-lg border bg-card/50">
               <div className="flex items-center justify-between">
@@ -532,16 +587,38 @@ function SettingsDialog({ taskPlanner }: { taskPlanner: ReturnType<typeof useTas
           <TabsContent value="schedule" className="py-4 space-y-4">
             <CardDescription>Configurează sarcini recurente pentru fiecare zi (poți insera mai multe, câte una pe linie).</CardDescription>
 
-            <div className="flex flex-col md:flex-row gap-3">
-              <select value={currentScheduleDay} onChange={e => setCurrentScheduleDay(Number(e.target.value))} className="flex-shrink-0 w-full md:w-auto p-2 border rounded-md bg-background text-foreground">
-                {days.map((d, i) => <option key={i} value={i}>{d}</option>)}
-              </select>
-              <Input placeholder={`Adaugă plan pentru ${days[currentScheduleDay].toLowerCase()}...`} value={newScheduleTaskDesc} onChange={e => setNewScheduleTaskDesc(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleAdd()} />
-              <Button onClick={handleAdd} disabled={!newScheduleTaskDesc.trim()}><Plus className="h-4 w-4 mr-1" /> Adaugă</Button>
+            <div className="flex flex-col md:flex-row gap-3 items-start">
+              <div className="w-full md:w-auto">
+                <Label htmlFor="schedule-day" className="sr-only">Alege ziua programului</Label>
+                <select
+                  id="schedule-day"
+                  name="schedule-day"
+                  aria-label="Alege ziua programului"
+                  title="Alege ziua programului"
+                  value={currentScheduleDay}
+                  onChange={e => setCurrentScheduleDay(Number(e.target.value))}
+                  className="flex-shrink-0 w-full md:w-auto h-10 rounded-md border bg-background px-3 text-sm"
+                >
+                  {days.map((d, i) => <option key={i} value={i}>{d}</option>)}
+                </select>
+              </div>
+
+              <div className="flex-1 w-full md:w-auto flex gap-2">
+                <Label htmlFor="schedule-input" className="sr-only">Adaugă plan</Label>
+                <Input
+                  id="schedule-input"
+                  placeholder={`Adaugă plan pentru ${days[currentScheduleDay].toLowerCase()}...`}
+                  value={newScheduleTaskDesc}
+                  onChange={e => setNewScheduleTaskDesc(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleAdd()}
+                />
+                <Button onClick={handleAdd} disabled={!newScheduleTaskDesc.trim()}><Plus className="h-4 w-4 mr-1" /> Adaugă</Button>
+              </div>
             </div>
 
             <div className="space-y-2">
-              <Textarea placeholder="Bulk add (câte una pe linie)..." onBlur={e => e.target.value && handleBulkAdd(e.target.value)} />
+              <Label htmlFor="schedule-bulk" className="sr-only">Adăugare în bloc</Label>
+              <Textarea id="schedule-bulk" placeholder="Bulk add (câte una pe linie)..." onBlur={e => e.target.value && handleBulkAdd(e.target.value)} />
               <p className="text-[11px] text-muted-foreground">Tip: lipește mai multe linii și fă blur pentru a le adăuga.</p>
             </div>
 
@@ -550,7 +627,7 @@ function SettingsDialog({ taskPlanner }: { taskPlanner: ReturnType<typeof useTas
                 taskPlanner.schedule[currentScheduleDay]!.map(task => (
                   <div key={task.id} className="flex items-center gap-2 text-sm p-2 bg-muted/50 rounded-md">
                     <span className="flex-grow">{task.description}</span>
-                    <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => taskPlanner.deleteRecurringTask(currentScheduleDay, task.id)}><Trash2 className="h-4 w-4" /></Button>
+                    <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => taskPlanner.deleteRecurringTask(currentScheduleDay, task.id)} aria-label="Șterge recurent"><Trash2 className="h-4 w-4" /></Button>
                   </div>
                 ))
               ) : (
@@ -565,9 +642,23 @@ function SettingsDialog({ taskPlanner }: { taskPlanner: ReturnType<typeof useTas
               <div className="grid grid-cols-2 gap-2">
                 <Button variant="secondary" onClick={taskPlanner.exportData}><Download className="mr-2 h-4 w-4" /> Exportă</Button>
                 <Button variant="secondary" onClick={() => (document.getElementById('planner-import') as HTMLInputElement)?.click()}><Upload className="mr-2 h-4 w-4" /> Importă</Button>
-                <input id="planner-import" type="file" onChange={e => e.target.files?.[0] && taskPlanner.importData(e.target.files[0])} className="hidden" accept=".json" />
+
+                {/* Label invizibil pentru inputul ascuns */}
+                <Label htmlFor="planner-import" className="sr-only">Importă fișier JSON</Label>
+                <input
+                  id="planner-import"
+                  name="planner-import"
+                  type="file"
+                  accept=".json"
+                  onChange={e => e.target.files?.[0] && taskPlanner.importData(e.target.files[0])}
+                  aria-label="Importă fișier JSON"
+                  title="Importă fișier JSON"
+                  hidden
+                  tabIndex={-1}
+                />
               </div>
             </div>
+
             <div className="space-y-2 p-4 rounded-lg border border-destructive/50 bg-destructive/5">
               <Label className="font-semibold text-destructive">Zonă de Pericol</Label>
               <Button variant="destructive" className="w-full" onClick={taskPlanner.resetAllData}><Trash2 className="mr-2 h-4 w-4" /> Resetează Toate Datele</Button>
@@ -586,7 +677,7 @@ function HistoryDialog({ planner }: { planner: ReturnType<typeof useTaskPlanner>
   const sortedDates = useMemo(() => Object.keys(planner.plan).sort((a, b) => b.localeCompare(a)), [planner.plan]);
   return (
     <Dialog>
-      <DialogTrigger asChild><Button variant="outline" size="icon"><History className="h-5 w-5" /></Button></DialogTrigger>
+      <DialogTrigger asChild><Button aria-label="Deschide istoric" variant="outline" size="icon"><History className="h-5 w-5" /></Button></DialogTrigger>
       <DialogContent className="max-w-xl">
         <DialogHeader><DialogTitle>Istoric Detaliat</DialogTitle><DialogDescription>Vezi activitățile din zilele anterioare.</DialogDescription></DialogHeader>
         <div className="max-h-[70vh] overflow-y-auto pr-4 space-y-6 py-4">
@@ -625,7 +716,7 @@ function AchievementsDialog({ achievements }: { achievements: AchievementStats }
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="relative">
+        <Button aria-label="Deschide premii" variant="outline" className="relative">
           <Trophy className="mr-2 h-5 w-5" /> Premii
           <AnimatePresence>
             {unlockedCount > 0 && (
@@ -655,19 +746,17 @@ function AchievementsDialog({ achievements }: { achievements: AchievementStats }
   );
 }
 
-/* ---------------- Tutorial: panou fix jos, highlight discret ---------------- */
+/* ========== Tutorial overlay ========== */
 function TutorialOverlay({ onFinish }: { onFinish: () => void }) {
   const [step, setStep] = useState(1);
   const [totalSteps, setTotalSteps] = useState(7);
   const nextRef = useRef<HTMLButtonElement>(null);
 
-  // Marchează documentul că turul e activ (ascundem tooltips Radix)
   useEffect(() => {
     document.documentElement.classList.add('tour-active');
     return () => document.documentElement.classList.remove('tour-active');
   }, []);
 
-  // Calculează numărul de pași din data-step
   useEffect(() => {
     const nodes = Array.from(document.querySelectorAll<HTMLElement>('[data-step]'))
       .map((el) => Number(el.getAttribute('data-step') || '0'))
@@ -675,7 +764,6 @@ function TutorialOverlay({ onFinish }: { onFinish: () => void }) {
     setTotalSteps(nodes.length ? Math.max(...nodes) : 7);
   }, []);
 
-  // Highlight + scroll la elementul curent + navigare cu săgeți
   useEffect(() => {
     const cls = 'highlighted-element';
     document.querySelectorAll('.' + cls).forEach((e) => e.classList.remove(cls));
@@ -712,55 +800,31 @@ function TutorialOverlay({ onFinish }: { onFinish: () => void }) {
   const text = stepTexts[step] ?? '';
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100]"
-    >
-      {/* IMPORTANT: fără blur pe fundal */}
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100]">
       <div className="absolute inset-0 bg-black/60 pointer-events-none" />
-
-      {/* Panou fix jos, mereu vizibil */}
       <div className="absolute left-1/2 -translate-x-1/2 bottom-4 w-[min(96vw,640px)] px-4 pointer-events-auto">
         <div className="rounded-xl border bg-background/95 shadow-xl p-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-[11px] text-muted-foreground">Ghid interactiv</span>
-            <span className="text-[11px] text-muted-foreground">
-              {Math.min(step, totalSteps)} / {totalSteps}
-            </span>
+            <span className="text-[11px] text-muted-foreground">{Math.min(step, totalSteps)} / {totalSteps}</span>
           </div>
 
           <p className="text-sm mb-3">{text}</p>
 
           <div className="flex justify-between items-center gap-2">
-            <Button variant="ghost" size="sm" onClick={onFinish}>
-              Sari
-            </Button>
+            <Button variant="ghost" size="sm" onClick={onFinish}>Sari</Button>
             <div className="ml-auto flex gap-2">
-              <Button
-                size="sm"
-                variant="outline"
-                disabled={step <= 1}
-                onClick={() => setStep((s) => Math.max(1, s - 1))}
-              >
-                Înapoi
-              </Button>
+              <Button size="sm" variant="outline" disabled={step <= 1} onClick={() => setStep((s) => Math.max(1, s - 1))}>Înapoi</Button>
               {step < totalSteps ? (
-                <Button ref={nextRef} size="sm" onClick={() => setStep((s) => s + 1)}>
-                  Următorul
-                </Button>
+                <Button ref={nextRef} size="sm" onClick={() => setStep((s) => s + 1)}>Următorul</Button>
               ) : (
-                <Button ref={nextRef} size="sm" onClick={onFinish}>
-                  Am înțeles
-                </Button>
+                <Button ref={nextRef} size="sm" onClick={onFinish}>Am înțeles</Button>
               )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Highlight style (merge în light și dark) */}
       <style jsx global>{`
         .highlighted-element {
           position: relative;
@@ -774,16 +838,13 @@ function TutorialOverlay({ onFinish }: { onFinish: () => void }) {
           box-shadow: 0 0 0 8px rgba(99, 102, 241, 0.1);
           outline-color: rgba(99, 102, 241, 0.75);
         }
-        /* Cât timp turul e activ, ascunde tooltips Radix ca să nu se suprapună */
-        .tour-active [data-radix-tooltip-content] {
-          display: none !important;
-        }
+        .tour-active [data-radix-tooltip-content] { display: none !important; }
       `}</style>
     </motion.div>
   );
 }
 
-/* Scroll inteligent (vertical + orizontal) până la elementul ghidat */
+/* Scroll inteligent la elementul ghidat */
 function smartScrollIntoView(el: HTMLElement) {
   // scroll vertical în cel mai apropiat părinte scrollabil
   let parent: HTMLElement | null = el.parentElement;
@@ -795,7 +856,7 @@ function smartScrollIntoView(el: HTMLElement) {
     }
     parent = parent.parentElement;
   }
-  // scroll orizontal (ex: containerul cu zile)
+  // scroll orizontal
   parent = el.parentElement;
   while (parent && parent !== document.body) {
     const st = getComputedStyle(parent);

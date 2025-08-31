@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { CardTitle } from '@/components/ui/card';
 import  CustomCursor from '@/components/animations/CustomCursor';
 import { ConfettiButton } from '@/components/animations/confetti-button';
+import HeartRating from '@/components/HeartRating';
 
 // --- Iconițe ---
 import { BookOpen, Code, Beaker, PenTool, Sparkles, Rocket, ArrowRight, BookOpenCheck, Calculator } from 'lucide-react';
@@ -182,6 +183,12 @@ export default function Home() {
               <InteractiveHeroIllustration />
             </div>
           </div>
+          <div className="mt-10 text-center">
+                                      <p className="text-sm text-muted-foreground mb-2">
+                                          Îți place proiectul? Dă-i o notă (1 = slab, 10 = foarte bun):
+                                      </p>
+                                      <HeartRating slug="contact-feedback" />
+                                  </div>
         </div>
       </section>
       

@@ -1,3 +1,4 @@
+// components/layout/footer.tsx
 'use client';
 
 import Link from 'next/link';
@@ -174,7 +175,7 @@ export function Footer() {
           {/* Partea de jos a footer-ului */}
           <div className="mt-16 pt-8 border-t border-border flex flex-col-reverse md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground text-center md:text-left">
-              © {currentYear} Învățăm Împreună. Construit cu ❤️ pentru viitorul României.
+              © 3 feb 2025 - {currentYear} Învățăm Împreună. Construit cu ❤️ pentru viitorul României.
             </p>
             <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center md:justify-end">
               {footerLinks.legal.map(link => (
