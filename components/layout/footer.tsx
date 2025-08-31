@@ -78,7 +78,15 @@ const SocialIcon = ({ href, icon, label }: { href: string; icon: React.ReactNode
 );
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
+  const launchDate = new Date(2025, 1, 3); // 3 feb 2025 (lunile sunt 0-indexate)
+  const now = new Date();
+  const fmtStart = new Intl.DateTimeFormat('ro-RO', { day: 'numeric', month: 'short', year: 'numeric' });
+  const fmtEnd = new Intl.DateTimeFormat('ro-RO', { month: 'short', year: 'numeric' });
+  const stripDots = (s: string) => s.replaceAll('.', '');
+
+  const startLabel = stripDots(fmtStart.format(launchDate)); // ex: “3 feb 2025”
+  const endLabel = stripDots(fmtEnd.format(now)); // ex: “sep 2025”
+
   const { toast } = useToast();
 
   const handleNewsletterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -87,14 +95,14 @@ export function Footer() {
     // Accesăm elementul de input prin name, și verificăm dacă e HTMLInputElement
     const emailInput = event.currentTarget.elements.namedItem('email');
     const email = (emailInput instanceof HTMLInputElement) ? emailInput.value : null;
-    
+
     if (!email) {
-        toast({
-            title: "Eroare la abonare",
-            description: "Te rugăm să introduci o adresă de email validă.",
-            variant: "destructive",
-        });
-        return;
+      toast({
+        title: "Eroare la abonare",
+        description: "Te rugăm să introduci o adresă de email validă.",
+        variant: "destructive",
+      });
+      return;
     }
 
     try {
@@ -110,38 +118,38 @@ export function Footer() {
         // Dacă răspunsul nu este OK (status 4xx/5xx), aruncăm o eroare
         throw new Error(data.error || 'A apărut o eroare necunoscută la server.');
       }
-      
+
       // Mesaj de succes
       toast({
-          title: "Abonare reușită!",
-          description: data.message || "Mulțumim pentru abonare la newsletter!",
-          duration: 3000,
+        title: "Abonare reușită!",
+        description: data.message || "Mulțumim pentru abonare la newsletter!",
+        duration: 3000,
       });
 
       // Resetăm formularul doar dacă a avut succes
       // Accesăm formularul direct cu event.currentTarget
       if (event.currentTarget) { // Verificăm explicit dacă există
-          event.currentTarget.reset(); 
+        event.currentTarget.reset();
       }
 
     } catch (error: any) {
       // Mesaj de eroare
       toast({
-          title: "Eroare la abonare",
-          description: error.message || "A apărut o eroare. Te rugăm să încerci din nou.",
-          variant: "destructive",
-          duration: 5000,
+        title: "Eroare la abonare",
+        description: error.message || "A apărut o eroare. Te rugăm să încerci din nou.",
+        variant: "destructive",
+        duration: 5000,
       });
     }
   };
 
   return (
-    <footer className="bg-card py-16 border-t border-border"> 
+    <footer className="bg-card py-16 border-t border-border">
       <div className="container">
         <ScrollAnimation>
           {/* Partea de sus a footer-ului */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            
+
             <div className="md:col-span-1">
               <Link href="/" className="flex items-center space-x-2 mb-4">
                 <BookOpen className="h-6 w-6 text-primary" />
@@ -166,7 +174,7 @@ export function Footer() {
                 Primește noutăți și resurse utile direct în inbox.
               </p>
               <form onSubmit={handleNewsletterSubmit} className="flex space-x-2" id="newsletter-form">
-                <Input name="email" type="email" placeholder="Email-ul tău" required className="bg-muted" /> 
+                <Input name="email" type="email" placeholder="Email-ul tău" required className="bg-muted" />
                 <Button type="submit" className="shrink-0">Abonare</Button>
               </form>
             </div>
@@ -174,14 +182,12 @@ export function Footer() {
 
           {/* Partea de jos a footer-ului */}
           <div className="mt-16 pt-8 border-t border-border flex flex-col-reverse md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground text-center md:text-left">
-              © 3 feb 2025 - {currentYear} Învățăm Împreună. Construit cu ❤️ pentru viitorul României.
-            </p>
+            <p className="text-sm text-muted-foreground text-center md:text-left"> © {startLabel} – {endLabel} Învățăm Împreună. Construit cu ❤️ pentru viitorul României. </p>
             <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center md:justify-end">
               {footerLinks.legal.map(link => (
-                 <Link key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                   {link.label}
-                 </Link>
+                <Link key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                  {link.label}
+                </Link>
               ))}
             </div>
           </div>
