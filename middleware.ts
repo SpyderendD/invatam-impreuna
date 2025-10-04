@@ -1,33 +1,36 @@
 // middleware.ts
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  
-  // Verificăm DOAR dacă cookie-ul 'session' există.
-  const sessionCookie = request.cookies.get('session');
+// Lista paginilor care necesită autentificare
+const PROTECTED_PAGES = ['/dashboard', '/profil', '/setari'];
 
-  const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/register');
-  const isProtectedPage = pathname.startsWith('/dashboard');
+// Lista paginilor de autentificare
+const AUTH_PAGES = ['/login', '/register'];
 
-  // Dacă utilizatorul este pe o pagină de autentificare și ARE deja o sesiune,
-  // îl redirecționăm la dashboard.
-  if (isAuthPage && sessionCookie) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+export function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  const hasSession = !!req.cookies.get('session')?.value;
+
+  const isProtectedPage = PROTECTED_PAGES.some((p) => pathname.startsWith(p));
+  const isAuthPage = AUTH_PAGES.includes(pathname);
+
+  // 1. Dacă NU ești logat și încerci să accesezi o pagină protejată
+  if (!hasSession && isProtectedPage) {
+    const loginUrl = new URL('/login', req.url);
+    loginUrl.searchParams.set('next', pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
-  // Dacă utilizatorul este pe o pagină protejată și NU ARE o sesiune,
-  // îl redirecționăm la login.
-  if (isProtectedPage && !sessionCookie) {
-    return NextResponse.redirect(new URL('/login', request.url));
+  // 2. Dacă ești logat și încerci să accesezi o pagină de login/register
+  if (hasSession && isAuthPage) {
+    return NextResponse.redirect(new URL('/dashboard', req.url));
   }
 
-  // În toate celelalte cazuri, permite accesul.
+  // 3. În TOATE celelalte cazuri (ex: ești pe /contact, /, etc.), te lăsăm în pace
   return NextResponse.next();
 }
 
-// Configurare: specifică rutele pe care se va aplica acest middleware.
 export const config = {
-  matcher: ['/dashboard/:path*', '/login', '/register'],
+  // Rulează pe toate rutele, cu excepția celor de sistem (api, _next, fișiere)
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };

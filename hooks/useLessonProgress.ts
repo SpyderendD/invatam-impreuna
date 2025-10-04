@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useAuth } from './useAuth';
+import { useAuth } from './AuthContext';
 import { toast } from './use-toast';
 import { getIdToken, User } from 'firebase/auth';
 

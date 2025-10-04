@@ -1,0 +1,183 @@
+/* Stiluri pentru pagina de lecții clasa a VIII-a */
+
+.clasa8-page-wrapper {
+    color: hsl(var(--foreground));
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.75;
+    padding-top: 80px;
+    padding-bottom: 40px;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient(125deg, hsl(var(--primary) / 0.05), hsl(var(--background)), hsl(var(--secondary) / 0.5));
+    background-size: 300% 300%;
+    animation: clasa8-animatedGradient 20s ease infinite;
+    transition: color 0.4s ease;
+}
+
+@keyframes clasa8-animatedGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.clasa8-page-wrapper *,
+.clasa8-page-wrapper *::before,
+.clasa8-page-wrapper *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.clasa8-page-wrapper .container {
+    max-width: 1000px;
+    margin: 30px auto;
+    background-color: hsl(var(--card));
+    border-radius: var(--radius);
+    padding: 45px 40px;
+    box-shadow: 0 15px 40px hsl(var(--primary) / 0.1);
+    overflow: hidden;
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    border-top: 4px solid hsl(var(--primary));
+}
+
+.dark .clasa8-page-wrapper .container {
+    box-shadow: 0 0 30px -5px hsl(var(--primary)), 0 10px 30px hsl(var(--foreground) / 0.1);
+}
+
+.clasa8-page-wrapper h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 3.6em;
+    background: linear-gradient(65deg, hsl(var(--primary)), hsl(var(--color-informatica)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    animation: clasa8-fadeInDown 1s ease-out;
+    text-shadow: 1px 1px 0px hsl(var(--foreground) / 0.05);
+}
+
+.clasa8-page-wrapper h1 .title-icon {
+    font-size: 0.9em;
+    color: hsl(var(--primary));
+    animation: clasa8-pulse 2.5s infinite ease-in-out 0.5s;
+}
+
+.clasa8-page-wrapper h2 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1.9em;
+    color: hsl(var(--muted-foreground));
+    text-align: center;
+    margin-bottom: 20px;
+    animation: clasa8-fadeInUp 1s ease-out 0.3s;
+    animation-fill-mode: backwards;
+}
+
+/* Folosim navigația standardizată */
+.clasa8-page-wrapper .class-selector-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+    padding: 8px;
+    background-color: hsl(var(--muted));
+    border-radius: 12px;
+    flex-wrap: wrap;
+}
+
+.clasa8-page-wrapper .class-selector-nav a {
+    padding: 10px 20px;
+    color: hsl(var(--muted-foreground));
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1em;
+    border-radius: 8px;
+    transition: all 0.25s ease-out;
+    border: 2px solid transparent;
+}
+
+.clasa8-page-wrapper .class-selector-nav a.active-class {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    box-shadow: 0 4px 12px hsl(var(--primary) / 0.3);
+    transform: translateY(-2px);
+}
+
+.clasa8-page-wrapper .class-selector-nav a:not(.active-class):hover {
+    background-color: hsl(var(--card));
+    color: hsl(var(--foreground));
+    border-color: hsl(var(--primary));
+}
+
+.clasa8-page-wrapper .lista-lectii {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 35px;
+}
+
+.clasa8-page-wrapper .lista-lectii li {
+    background-color: hsl(var(--card));
+    border-radius: var(--radius);
+    box-shadow: 0 8px 20px hsl(var(--foreground) / 0.04);
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease, border-color 0.35s ease;
+    overflow: hidden;
+    opacity: 0;
+    animation: clasa8-slideInUpwards 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation-delay: calc(0.5s + var(--item-index) * 0.09s);
+    border: 1px solid hsl(var(--border));
+}
+
+.clasa8-page-wrapper .lista-lectii li:hover {
+    transform: translateY(-12px) scale(1.04);
+    box-shadow: 0 18px 35px hsl(var(--primary) / 0.1);
+    border-color: hsl(var(--primary));
+}
+
+.dark .clasa8-page-wrapper .lista-lectii li:hover {
+    box-shadow: 0 18px 35px hsl(var(--foreground) / 0.1), 0 0 20px -2px hsl(var(--primary));
+}
+
+.clasa8-page-wrapper .lista-lectii a {
+    display: flex;
+    align-items: center;
+    padding: 22px 25px;
+    text-decoration: none;
+    color: hsl(var(--foreground));
+    font-weight: 700;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.clasa8-page-wrapper .lista-lectii i {
+    font-size: 1.9em;
+    margin-right: 20px;
+    width: 45px;
+    text-align: center;
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.35s ease, text-shadow 0.35s ease;
+    color: hsl(var(--muted-foreground));
+}
+
+.clasa8-page-wrapper .lista-lectii li:hover a {
+    color: hsl(var(--primary));
+}
+
+.clasa8-page-wrapper .lista-lectii li:hover i {
+    color: hsl(var(--primary));
+    transform: scale(1.25) rotate(8deg);
+}
+
+/* Redenumirea animațiilor */
+@keyframes clasa8-fadeInDown { from { opacity: 0; transform: translateY(-35px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes clasa8-fadeInUp { from { opacity: 0; transform: translateY(35px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes clasa8-pulse { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.12); opacity: 1; } }
+@keyframes clasa8-slideInUpwards { from { opacity: 0; transform: translateY(60px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }

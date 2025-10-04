@@ -1,24 +1,19 @@
-// app/api/auth/me/route.ts
-import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import adminAuth from '@/lib/firebaseAdmin';
+import admin from 'firebase-admin';
 
-export async function GET() {
-  try {
-    const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get('session')?.value;
-
-    if (!sessionCookie) {
-      return NextResponse.json({ error: 'Sesiune invalidă.' }, { status: 401 });
+if (!admin.apps.length) {
+  const serviceAccountKey = process.env.FIREBASE_PRIVATE_KEY;
+  if (serviceAccountKey) {
+    try {
+      const serviceAccount = JSON.parse(serviceAccountKey);
+      admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
+      console.log('Firebase Admin SDK a fost inițializat.');
+    } catch (e: any) {
+      console.error('Eroare la inițializarea Firebase Admin:', e.message);
     }
-
-    // Verificăm cookie-ul. Dacă e valid, primim datele decodate.
-    const decodedClaims = await adminAuth.auth().verifySessionCookie(sessionCookie, true);
-
-    // Returnăm datele utilizatorului (sau doar un status de succes)
-    return NextResponse.json({ userId: decodedClaims.uid, email: decodedClaims.email }, { status: 200 });
-
-  } catch (error) {
-    return NextResponse.json({ error: 'Sesiune invalidă sau expirată.' }, { status: 401 });
+  } else {
+    console.error('EROARE: FIREBASE_PRIVATE_KEY nu este setat în .env.local');
   }
 }
+
+// exportăm explicit instanța auth()
+export const adminAuth = admin.auth();

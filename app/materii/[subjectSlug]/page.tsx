@@ -53,12 +53,11 @@ const AnimatedChapterCard = ({ chapter, subjectSlug }: { chapter: Chapter; subje
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       variants={itemVariants}
     >
-        <div style={{ transform: "translateZ(75px)", transformStyle: "preserve-3d" }} className="absolute inset-4"/>
+        <div className="absolute inset-4 translate-z-75 preserve-3d" />
         <Card 
-          className="flex flex-col border-border/60 shadow-lg bg-card/80 dark:bg-card/40 backdrop-blur-sm transition-shadow duration-300 hover:shadow-primary/20"
-          style={{ transformStyle: "preserve-3d" }}
+          className="flex flex-col border-border/60 shadow-lg bg-card/80 dark:bg-card/40 backdrop-blur-sm transition-shadow duration-300 hover:shadow-primary/20 preserve-3d"
         >
-          <div className="p-6 flex items-center gap-4 border-b border-border/60" style={{ transform: "translateZ(40px)"}}>
+          <div className="p-6 flex items-center gap-4 border-b border-border/60 translate-z-40">
             <div className="flex-shrink-0 bg-primary/10 p-3 rounded-lg border border-primary/20">{chapter.icon}</div>
             <div>
               <h2 className="text-2xl font-bold text-foreground">{chapter.title}</h2>

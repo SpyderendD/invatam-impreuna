@@ -1,31 +1,20 @@
-// src/lib/firebaseAdmin.ts
 import admin from 'firebase-admin';
-import { getFirestore } from 'firebase-admin/firestore';
 
-// Verificăm dacă aplicația a fost deja inițializată
 if (!admin.apps.length) {
-  try {
-    if (
-      !process.env.FIREBASE_PROJECT_ID ||
-      !process.env.FIREBASE_CLIENT_EMAIL ||
-      !process.env.FIREBASE_PRIVATE_KEY
-    ) {
-      throw new Error('Variabilele de mediu pentru Firebase Admin nu sunt setate corect.');
+  const serviceAccountKey = process.env.FIREBASE_PRIVATE_KEY;
+  if (serviceAccountKey) {
+    try {
+      const serviceAccount = JSON.parse(serviceAccountKey);
+      admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+      });
+      console.log('✅ Firebase Admin SDK a fost inițializat.');
+    } catch (e: any) {
+      console.error('❌ EROARE la inițializarea Firebase Admin (JSON invalid):', e.message);
     }
-
-    admin.initializeApp({
-      credential: admin.credential.cert({
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-      }),
-    });
-    console.log('Firebase Admin SDK a fost inițializat.');
-  } catch (error: any) {
-    console.error('Eroare la inițializarea Firebase Admin SDK:', error.message);
+  } else {
+    console.warn('⚠️ AVERTISMENT: FIREBASE_PRIVATE_KEY lipsește. API-urile admin nu vor funcționa.');
   }
 }
 
-// Exportăm instanța Firestore și, de asemenea, obiectul `admin` însuși.
-export const adminDb = getFirestore();
-export default admin; // Exportăm default obiectul admin
+export const adminAuth = admin.apps.length ? admin.auth() : null;
