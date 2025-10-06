@@ -12,10 +12,9 @@ import { ConfettiButton } from '@/components/animations/confetti-button';
 import HeartRating from '@/components/HeartRating';
 
 // --- Iconițe ---
-// ATENȚIE: Am adăugat Lightbulb și FlaskConical la importuri
 import { 
-    BookOpen, Code, Beaker, PenTool, Sparkles, Rocket, ArrowRight, 
-    BookOpenCheck, Calculator, Lightbulb, FlaskConical 
+    BookOpen, Code, PenTool, Sparkles, Rocket, ArrowRight, 
+    BookOpenCheck, Calculator, Lightbulb, FlaskConical, Leaf, ScrollText 
 } from 'lucide-react'; 
 
 // --- Varianțe de animație reutilizabile ---
@@ -34,6 +33,64 @@ const staggerContainer = {
     transition: { staggerChildren: 0.1, delayChildren: 0.2 },
   },
 };
+
+// =======================================================================
+// Date Centralizate pentru o gestionare mai ușoară
+// =======================================================================
+
+const featuresData = [
+  { 
+    title: "Conținut Structurat", 
+    description: "Lecții clare, la obiect, care urmăresc exact programa școlară.", 
+    icon: <BookOpenCheck className="h-8 w-8 text-primary" /> 
+  },
+  { 
+    title: "Metode Interactive", 
+    description: "Teste, quiz-uri și exerciții practice pentru a-ți consolida cunoștințele.", 
+    icon: <Sparkles className="h-8 w-8 text-primary" /> 
+  },
+  { 
+    title: "Flexibilitate Totală", 
+    description: "Învață în propriul tău ritm, oricând și de oriunde.", 
+    icon: <Rocket className="h-8 w-8 text-primary" /> 
+  },
+];
+
+const subjectsData = [
+  { 
+    title: "Limba Română", 
+    icon: <PenTool className="h-8 w-8" />, 
+    href: "/materii/romana", 
+    isActive: true 
+  },
+  { 
+    title: "Matematică", 
+    icon: <Calculator className="h-8 w-8" />, 
+    href: "/materii/matematica", 
+    isActive: true 
+  },
+  { 
+    title: "Informatică", 
+    icon: <Code className="h-8 w-8" />, 
+    href: "/materii/informatica", 
+    isActive: true 
+  },
+  { 
+    title: "Chimie", 
+    icon: <FlaskConical className="h-8 w-8" />, 
+    href: "https://www.fizichim.ro/docs/chimie/clasa7/capitolul1-chimia-stiinta-a-naturii/I-1-ce-este-chimia/", 
+    isActive: true, 
+    openInNewTab: true 
+  },
+  { 
+    title: "Fizică", 
+    icon: <Lightbulb className="h-8 w-8" />,  
+    href: "https://www.fizichim.ro/docs/fizica/clasa6/capitolul1-introducere-in-studiul-fizicii/I-1-ce-este-fizica", 
+    isActive: true, 
+    openInNewTab: true 
+  },
+];
+
 
 // =======================================================================
 // 1. Componenta InteractiveHeroIllustration
@@ -60,19 +117,10 @@ function InteractiveHeroIllustration() {
 
   
  const icons = [
-    // 1. Română (PenTool) - Stânga Sus
     { id: 1, icon: <PenTool size={24} />, color: 'text-amber-500', pos: 'top-[15%] left-[20%]', dist: 30, duration: 10 },
-    
-    // 2. Informatică (Code) - Stânga Mijloc
     { id: 2, icon: <Code size={24} />, color: 'text-sky-500', pos: 'top-[40%] left-[5%]', dist: 40, duration: 12 },
-    
-    // 3. Fizică (Lightbulb) - Stânga Jos
     { id: 3, icon: <Lightbulb size={24} />, color: 'text-yellow-500', pos: 'bottom-[15%] left-[25%]', dist: 25, duration: 11 },
-    
-    // 4. Matematică (Calculator) - Dreapta Sus
     { id: 4, icon: <Calculator size={24} />, color: 'text-emerald-500', pos: 'top-[10%] right-[20%]', dist: 35, duration: 9 },
-
-    // 5. Chimie (FlaskConical) - Dreapta Jos
     { id: 5, icon: <FlaskConical size={24} />, color: 'text-red-500', pos: 'bottom-[10%] right-[25%]', dist: 20, duration: 13 }
   ];
 
@@ -90,7 +138,6 @@ function InteractiveHeroIllustration() {
         <div className="w-full h-full bg-gradient-to-tr from-primary/10 to-secondary/10 rounded-full blur-3xl" />
       </motion.div>
 
-      {/* Cartea Centrală */}
       <motion.div
         className="absolute inset-0 flex items-center justify-center"
         style={{ x: parallax(mouseX, 15), y: parallax(mouseY, 15) }}
@@ -106,7 +153,6 @@ function InteractiveHeroIllustration() {
         <BookOpen className="h-36 w-36 text-primary" />
       </motion.div>
 
-      {/* Iconițele din jur */}
       {icons.map((item, i) => (
         <motion.div
           key={item.id}
@@ -135,7 +181,7 @@ function InteractiveHeroIllustration() {
 
 
 // =======================================================================
-// 2. Componenta SubjectCard (Corectată pentru Props și Logică)
+// 2. Componenta SubjectCard
 // =======================================================================
 interface SubjectCardProps {
   title: string;
@@ -147,10 +193,8 @@ interface SubjectCardProps {
 }
 
 const SubjectCard = ({ title, icon, href, isActive, delay, openInNewTab = false }: SubjectCardProps) => {
-
   const isExternal = openInNewTab || href.startsWith('http') || href.startsWith('https');
 
-  // Conținutul vizual al cardului 
   const CardContent = (
     <motion.div
       whileHover={{ y: -8, scale: 1.03 }}
@@ -170,7 +214,6 @@ const SubjectCard = ({ title, icon, href, isActive, delay, openInNewTab = false 
     </motion.div>
   );
   
-  // Varianța de animație customizată care folosește delay-ul
   const delayedFadeIn = {
       hidden: { opacity: 0, y: 30 },
       visible: {
@@ -187,7 +230,6 @@ const SubjectCard = ({ title, icon, href, isActive, delay, openInNewTab = false 
   return (
     <motion.div variants={delayedFadeIn} className="h-full">
       {isExternal ? (
-        // Link extern: folosim <a> cu target="_blank"
         <a 
           href={href} 
           className={`block group h-full ${!isActive ? 'pointer-events-none' : ''}`}
@@ -197,7 +239,6 @@ const SubjectCard = ({ title, icon, href, isActive, delay, openInNewTab = false 
           {CardContent}
         </a>
       ) : (
-        // Link intern: folosim Next.js Link
         <Link 
           href={isActive ? href : '#'} 
           className={`block group h-full ${!isActive ? 'pointer-events-none' : ''}`}
@@ -233,9 +274,11 @@ export default function Home() {
               >
                 Pregătire <br className="hidden md:block" /> pentru Succes
               </motion.h1>
+              
               <motion.p variants={sectionFadeIn} className="mt-6 text-lg text-muted-foreground max-w-lg mx-auto lg:mx-0">
-                Platforma ta personală pentru a excela la Evaluarea Națională. Lecții interactive, teste și suport, toate într-un singur loc.
+                Explorează, învață și excelează. Resurse complete pentru Evaluare Națională și alte materii esențiale.
               </motion.p>
+              
               <motion.div variants={sectionFadeIn} className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button asChild size="lg" className="shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all transform hover:-translate-y-1">
                   <Link href="/register"><Rocket className="mr-2 h-5 w-5" /> Începe Gratuit</Link>
@@ -264,14 +307,11 @@ export default function Home() {
         <div className="container">
           <motion.div className="text-center mb-16 max-w-3xl mx-auto" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={sectionFadeIn}>
             <h2 className="text-4xl font-extrabold tracking-tighter sm:text-5xl text-foreground">O Experiență de Învățare Completă</h2>
-            <p className="mt-4 text-lg text-muted-foreground">Oferim toate instrumentele de care ai nevoie pentru a învăța eficient și a obține rezultate maxime.</p>
+            <p className="mt-4 text-lg text-muted-foreground">Oferim instrumentele de care ai nevoie pentru a învăța eficient și a obține rezultate maxime.</p>
           </motion.div>
+          
           <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={staggerContainer}>
-            {[
-              { title: "Conținut Structurat", description: "Lecții clare, la obiect, care urmăresc exact programa școlară.", icon: <BookOpenCheck className="h-8 w-8 text-primary" /> },
-              { title: "Metode Interactive", description: "Teste, quiz-uri și exerciții practice pentru a-ți consolida cunoștințele.", icon: <Sparkles className="h-8 w-8 text-primary" /> },
-              { title: "Flexibilitate Totală", description: "Învață în propriul tău ritm, oricând și de oriunde.", icon: <Rocket className="h-8 w-8 text-primary" /> },
-            ].map((feature) => (
+            {featuresData.map((feature) => (
               <motion.div key={feature.title} variants={sectionFadeIn}
                 className="group relative p-8 rounded-xl transition-shadow duration-300 bg-card shadow-md shadow-foreground/10 text-center h-full overflow-hidden">
                 <motion.div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.1), transparent 70%)', transform: 'scale(2.5)' }} />
@@ -294,20 +334,18 @@ export default function Home() {
             <p className="mt-4 text-lg text-muted-foreground">Fiecare materie este o nouă aventură. Începe cu cea care te pasionează cel mai mult.</p>
           </motion.div>
           
-          <motion.div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={staggerContainer}>
-            
-            {/* Română */}
-            <SubjectCard title="Limba Română" icon={<PenTool className="h-8 w-8" />} href="/materii/romana" isActive={true} delay={0} />
-            
-            {/* Matematică */}
-            <SubjectCard title="Matematică" icon={<Calculator className="h-8 w-8" />} href="/materii/matematica" isActive={true} delay={100} />
-            
-            {/* Informatică */}
-            <SubjectCard title="Informatică" icon={<Code className="h-8 w-8" />} href="/materii/informatica" isActive={true} delay={200} />
-            
-            {/* CHIMIE (Iconiță nouă: FlaskConical) */}
-            <SubjectCard title="Chimie" icon={<FlaskConical className="h-8 w-8" />} href="https://www.fizichim.ro/docs/chimie/clasa7/capitolul1-chimia-stiinta-a-naturii/I-1-ce-este-chimia/" isActive={true} delay={300} openInNewTab={true} />
-            <SubjectCard title="Fizică" icon={<Lightbulb className="h-8 w-8" />}  href="https://www.fizichim.ro/docs/fizica/clasa6/capitolul1-introducere-in-studiul-fizicii/I-1-ce-este-fizica" isActive={true} delay={400} openInNewTab={true}/>
+          <motion.div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={staggerContainer}>
+            {subjectsData.map((subject, index) => (
+              <SubjectCard 
+                key={subject.title}
+                title={subject.title} 
+                icon={subject.icon} 
+                href={subject.href} 
+                isActive={subject.isActive} 
+                delay={index * 100}
+                openInNewTab={subject.openInNewTab}
+              />
+            ))}
           </motion.div>
         </div>
       </section>
