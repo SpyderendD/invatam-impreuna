@@ -85,7 +85,7 @@ export default function ContactForm() {
               </form>
               <div className="mt-8 text-center text-sm text-muted-foreground">
                 <p>Sau contactează-mă direct la adresa:</p>
-                <a href="mailto:spyderend@gmail.com" className="font-semibold text-primary hover:underline">spyderend@gmail.com</a> <br />
+                <a href="mailto:spyderend@gmail.com" className="font-semibold text-primary hover:underline">spyderend0@gmail.com</a> <br />
                 <p>VĂ ROG FĂRĂ SPAM!</p>
               </div>
             </CardContent>
