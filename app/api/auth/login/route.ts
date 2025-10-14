@@ -1,3 +1,4 @@
+// app/api/auth/login/route.ts
 import { NextResponse, type NextRequest } from 'next/server';
 import { adminAuth } from '@/lib/firebaseAdmin';
 

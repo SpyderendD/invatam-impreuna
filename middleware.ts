@@ -1,36 +1,48 @@
 // middleware.ts
 import { NextResponse, type NextRequest } from 'next/server';
 
-// Lista paginilor care necesită autentificare
-const PROTECTED_PAGES = ['/dashboard', '/profil', '/setari'];
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  const sessionCookie = request.cookies.get('session')?.value;
 
-// Lista paginilor de autentificare
-const AUTH_PAGES = ['/login', '/register'];
+  // --- MODELUL "WHITELIST" ---
+  // Definește AICI toate paginile care NU necesită autentificare.
+  // Orice altceva va fi considerat protejat.
+  const publicPages = [
+    '/', // Pagina de start
+    '/login',
+    '/register',
+    '/auth/reset-password',
+    // Adaugă aici alte pagini publice, ex: '/contact', '/termeni'
+  ];
 
-export function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
-  const hasSession = !!req.cookies.get('session')?.value;
-
-  const isProtectedPage = PROTECTED_PAGES.some((p) => pathname.startsWith(p));
-  const isAuthPage = AUTH_PAGES.includes(pathname);
-
-  // 1. Dacă NU ești logat și încerci să accesezi o pagină protejată
-  if (!hasSession && isProtectedPage) {
-    const loginUrl = new URL('/login', req.url);
+  // Verificăm dacă pagina curentă este una publică
+  // Folosim `startsWith` pentru a acoperi și sub-rute dacă e cazul
+  const isPublicPage = publicPages.some(page => pathname === page || (page !== '/' && pathname.startsWith(page)));
+  
+  // CAZUL 1: Utilizator neautentificat încearcă să acceseze o pagină protejată
+  // Dacă pagina NU este publică ȘI nu există un cookie de sesiune, îl trimitem la login.
+  if (!isPublicPage && !sessionCookie) {
+    const loginUrl = new URL('/login', request.url);
+    // Adăugăm pagina la care voia să ajungă ca parametru, pentru a-l redirecta corect după login
     loginUrl.searchParams.set('next', pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  // 2. Dacă ești logat și încerci să accesezi o pagină de login/register
-  if (hasSession && isAuthPage) {
-    return NextResponse.redirect(new URL('/dashboard', req.url));
+  // CAZUL 2: Utilizator autentificat încearcă să acceseze /login sau /register
+  // Dacă există un cookie de sesiune ȘI pagina este una de autentificare, îl trimitem la dashboard.
+  if (sessionCookie && (pathname === '/login' || pathname === '/register')) {
+    return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
-  // 3. În TOATE celelalte cazuri (ex: ești pe /contact, /, etc.), te lăsăm în pace
+  // Dacă niciuna din condițiile de mai sus nu e îndeplinită, permitem accesul.
   return NextResponse.next();
 }
 
+// Configurare: specifică rutele pe care se aplică acest middleware.
+// Aceasta este configurația standard și corectă pentru a exclude asset-urile și rutele API.
 export const config = {
-  // Rulează pe toate rutele, cu excepția celor de sistem (api, _next, fișiere)
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
-};
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
+};  
