@@ -1,5 +1,6 @@
 // lib/firebaseAdmin.ts
 import admin from 'firebase-admin';
+import { getFirestore } from 'firebase-admin/firestore'; // Importă getFirestore
 
 // Verificăm dacă avem variabilele necesare
 const hasFirebaseAdminConfig = 
@@ -14,7 +15,6 @@ if (!admin.apps.length) {
         credential: admin.credential.cert({
           projectId: process.env.FIREBASE_PROJECT_ID,
           clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-          // Aici este cheia: înlocuim secvența de caractere \\n cu un newline real
           privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, '\n'),
         }),
       });
@@ -27,6 +27,6 @@ if (!admin.apps.length) {
   }
 }
 
-// Exportăm `adminAuth` doar dacă inițializarea a reușit.
-// Acest `null` va fi verificat în rutele API pentru a preveni erorile.
+// Exportăm `adminAuth` și `adminDb` doar dacă inițializarea a reușit.
 export const adminAuth = admin.apps.length ? admin.auth() : null;
+export const adminDb = admin.apps.length ? getFirestore() : null; // AICI ESTE ADAUGAREA CRUCIALĂ
