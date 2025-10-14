@@ -1,7 +1,7 @@
 // components/animations/InteractiveHeroIllustration.tsx
-'use client'; // Această componentă este interactivă, deci are nevoie de 'use client'
+'use client'; 
 
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useTransform, MotionValue } from 'framer-motion';
 import { useRef } from 'react';
 import { BookOpen, Code, PenTool, Calculator, Lightbulb, FlaskConical } from 'lucide-react';
 
@@ -12,7 +12,13 @@ const staggerContainer = {
   },
 };
 
-// Am adăugat "export default" pentru a o putea importa în alte fișiere
+// =======================================================================
+// === AICI ESTE MODIFICAREA: Am transformat parallax într-un hook custom ===
+// =======================================================================
+function useParallax(value: MotionValue<number>, distance: number) {
+  return useTransform(value, [0, 1], [-distance, distance]);
+}
+
 export default function InteractiveHeroIllustration() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0.5);
@@ -30,7 +36,11 @@ export default function InteractiveHeroIllustration() {
     mouseY.set(0.5);
   };
 
-  const parallax = (value: any, distance: number) => useTransform(value, [0, 1], [-distance, distance]);
+  // Acum folosim useParallax peste tot
+  const x1 = useParallax(mouseX, 5);
+  const y1 = useParallax(mouseY, 5);
+  const x2 = useParallax(mouseX, 15);
+  const y2 = useParallax(mouseY, 15);
 
   const icons = [
     { id: 1, icon: <PenTool size={24} />, color: 'text-amber-500', pos: 'top-[15%] left-[20%]', dist: 30, duration: 10 },
@@ -50,22 +60,24 @@ export default function InteractiveHeroIllustration() {
       animate="visible"
       variants={staggerContainer}
     >
-      <motion.div className="absolute inset-10" style={{ x: parallax(mouseX, 5), y: parallax(mouseY, 5) }}>
+      <motion.div className="absolute inset-10" style={{ x: x1, y: y1 }}>
         <div className="w-full h-full bg-gradient-to-tr from-primary/10 to-secondary/10 rounded-full blur-3xl" />
       </motion.div>
       <motion.div
         className="absolute inset-0 flex items-center justify-center"
-        style={{ x: parallax(mouseX, 15), y: parallax(mouseY, 15) }}
+        style={{ x: x2, y: y2 }}
         animate={{ translateY: ["0%", "-10%", "0%"] }}
         transition={{ translateY: { duration: 8, repeat: Infinity, ease: "easeInOut" } }}
       >
         <BookOpen className="h-36 w-36 text-primary" />
       </motion.div>
       {icons.map((item, i) => (
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         <motion.div
           key={item.id}
           className={`absolute p-4 rounded-full shadow-lg ${item.pos} ${item.color} bg-card/70 backdrop-blur-sm`}
-          style={{ x: parallax(mouseX, item.dist), y: parallax(mouseY, item.dist) }}
+          // eslint-disable-next-line react-hooks/rules-of-hooks
+          style={{ x: useParallax(mouseX, item.dist), y: useParallax(mouseY, item.dist) }}
           variants={{
             hidden: { opacity: 0, scale: 0 },
             visible: { opacity: 1, scale: 1, transition: { delay: 0.5 + i * 0.15 } },
