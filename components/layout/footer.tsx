@@ -22,6 +22,8 @@ const footerLinks = {
     { href: '/materii/romana', label: 'Limba Română' },
     { href: '/materii/matematica', label: 'Matematică' },
     { href: '/materii/informatica', label: 'Informatică' },
+    { href: 'https://www.fizichim.ro/docs/fizica/clasa6/capitolul1-introducere-in-studiul-fizicii/I-1-ce-este-fizica', label: 'Fizică' },
+    { href: 'https://www.fizichim.ro/docs/chimie/clasa7/capitolul1-chimia-stiinta-a-naturii/I-1-ce-este-chimia/', label: 'Chimie' },
   ],
   resurse: [
     { href: '/contact', label: 'Contactează-ne' },

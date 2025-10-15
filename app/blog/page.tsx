@@ -156,7 +156,7 @@ export default function BlogPage() {
                 Apasă butonul de mai jos pentru a te abona direct pe YouTube și a fi la curent cu toate noutățile.
               </p>
               <Button asChild size="lg" variant="secondary" className="mt-6">
-                <a href="https://www.youtube.com/channel/UCge2BVDGytK1o_OLwZadUEA?sub_confirmation=1" target="_blank" rel="noopener noreferrer">
+                <a href="https://youtube.com/@Spyderend_?sub_confirmation=1" target="_blank" rel="noopener noreferrer">
                   <Sparkles className="mr-2 h-5 w-5" />
                   Abonează-te la Canal
                 </a>
