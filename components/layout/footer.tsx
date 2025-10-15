@@ -25,7 +25,7 @@ const footerLinks = {
   ],
   resurse: [
     { href: '/contact', label: 'Contactează-ne' },
-    { href: '/despre', label: 'Despre noi' },
+    { href: '/contact', label: 'Despre mine' },
     { href: '/blog', label: 'Blog' },
   ],
   legal: [
