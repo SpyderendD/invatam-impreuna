@@ -13,7 +13,7 @@ interface PdfViewerPageProps {
 }
 
 const fileMap: { [key: string]: string } = {
-    'sistem-de-calcul': 'Sistem de calcul.pdf',
+    'sistem-de-calcul': 'sistem de calcul.pdf',
     'istoric-calculatoare': 'Sisteme de calcul_Istoric.pdf',
     'dispozitive-de-intrare': 'Dispozitive de intrare.pdf',
     'dispozitive-de-iesire': 'Dispozitive_de_iesire.pdf',
