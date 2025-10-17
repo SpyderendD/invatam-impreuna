@@ -183,3 +183,41 @@
     0%, 100% { transform: scale(1); opacity: 0.8; }
     50% { transform: scale(1.25); opacity: 1; }
 }
+
+.lesson-item {
+    display: flex; /* Permite alinierea elementelor pe orizontală */
+    justify-content: space-between; /* Împinge elementele la capete */
+    align-items: center; /* Aliniază pe verticală */
+    padding: 0; /* Eliminăm padding-ul de pe <li> */
+}
+
+.lesson-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem; /* Mutăm padding-ul aici */
+    flex-grow: 1; /* Link-ul va ocupa tot spațiul disponibil */
+    color: inherit;
+    text-decoration: none;
+    border-radius: 0.75rem;
+}
+
+/* NOU: Stilizarea butonului de descărcare */
+.download-button {
+    padding: 1rem 1.5rem;
+    margin-left: auto; /* Asigură că stă lipit de dreapta */
+    font-size: 1.1rem;
+    color: var(--color-muted-foreground);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    border-radius: 0.75rem;
+}
+
+.download-button:hover {
+    color: var(--color-primary);
+    transform: scale(1.1);
+}
+
+.lesson-item:hover .download-button {
+    color: var(--color-primary);
+}

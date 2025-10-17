@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* =============================== */
 /*     THEME TOKENS (LIGHT/DARK)   */
 /* =============================== */
@@ -123,6 +124,13 @@
 /* =============================== */
 /*           UTILITIES             */
 /* =============================== */
+@layer utilities {
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+}
+
 @layer utilities {
   /* Pattern grid (folosește token-ul border) */
   .bg-grid-pattern {

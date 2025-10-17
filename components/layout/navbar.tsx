@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,7 +11,6 @@ import { CommandMenu } from '@/components/search/CommandMenu';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-// NOU: Am importat iconița pentru noul link
 import { BookOpen, Menu, X, Instagram, Facebook, LogOut, User, Settings, Calculator, BookMarked, LineChart, HelpCircle, Youtube, Search, Bot } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -21,7 +20,6 @@ const navLinks = [
   { href: '/modele-teste', label: 'Modele teste E.N.', icon: Calculator },
   { href: '/dashboard', label: 'Monitorizare', icon: LineChart },
   { href: '/quizuri', label: 'Quizuri', icon: HelpCircle },
-  // NOU: Am adăugat link-ul către pagina de Studiu Inteligent
   { href: '/studiu-inteligent', label: 'Studiu Inteligent', icon: Bot },
   { href: '/contact', label: 'Contact', icon: HelpCircle },
 ] as const;
@@ -41,7 +39,6 @@ export function Navbar() {
   const [openCommand, setOpenCommand] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
-  // Efect pentru blocarea scroll-ului și shortcut-uri
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
     
@@ -58,7 +55,6 @@ export function Navbar() {
     };
   }, [isOpen]);
 
-  // Efect pentru stilul la scroll
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 8);
     onScroll();
@@ -92,7 +88,6 @@ export function Navbar() {
             <span className="hidden sm:inline">Învățăm Împreună</span>
           </Link>
 
-          {/* Navigație Desktop cu "Magic Link" Effect */}
           <div 
             className="hidden lg:flex items-center gap-2 bg-card/50 border border-border rounded-full px-2 shadow-sm"
             onMouseLeave={() => setHoveredLink(null)}
@@ -104,16 +99,32 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   onMouseEnter={() => setHoveredLink(link.href)}
-                  className={cn('relative text-sm font-medium px-4 py-2 rounded-full transition-colors', isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground')}
+                  className={cn('relative text-sm font-medium px-4 py-2 rounded-full transition-colors duration-300', isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground')}
                 >
                   {isActive || hoveredLink === link.href ? (
                     <motion.div
                       layoutId="active-link-pill"
-                      className="absolute inset-0 bg-primary rounded-full z-0"
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                    />
+                      className="absolute inset-0 z-0 rounded-full
+                                 bg-white/[.06] dark:bg-white/[.06]
+                                 backdrop-blur-md
+                                 shadow-lg shadow-black/10
+                                 ring-1 ring-inset ring-white/10"
+                      transition={{ type: 'spring', stiffness: 400, damping: 40 }}
+                    >
+                      <span
+                        className="absolute inset-0 rounded-full
+                                   [--conic-gradient:conic-gradient(from_180deg_at_50%_50%,#ff2975_0%,#3366ff_50%,#ff2975_100%)]
+                                   bg-[length:100%_100%] bg-no-repeat bg-[image:var(--conic-gradient)]
+                                   blur-lg opacity-30 dark:opacity-50
+                                   [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]"
+                      ></span>
+                      <span
+                        className="absolute inset-[2px] rounded-full
+                                   bg-gradient-to-b from-white/20 to-transparent"
+                      ></span>
+                    </motion.div>
                   ) : null}
-                  <span className="relative z-10 transition-colors duration-300">
+                  <span className="relative z-10">
                     {link.label}
                   </span>
                 </Link>
@@ -122,9 +133,7 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" onClick={() => setOpenCommand(true)} aria-label="Deschide căutarea">
-              <Search className="h-5 w-5" />
-            </Button>
+            <Button variant="ghost" size="icon" onClick={() => setOpenCommand(true)} aria-label="Deschide căutarea"><Search className="h-5 w-5" /></Button>
             <ThemeToggle />
             
             <div className="hidden lg:flex items-center">
@@ -132,38 +141,21 @@ export function Navbar() {
                 <Skeleton className="h-10 w-24 rounded-full" />
               ) : user ? (
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button aria-label="Deschide meniul utilizatorului">
-                      <Avatar className="cursor-pointer h-9 w-9 border-2 border-transparent hover:border-primary transition-colors"><AvatarImage src={user.photoURL || ''} alt={user.displayName || ''} /><AvatarFallback>{(user.displayName || 'U').charAt(0)}</AvatarFallback></Avatar>
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuLabel><p className="font-semibold">{user.displayName}</p><p className="text-xs text-muted-foreground font-normal">{user.email}</p></DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild><Link href="/profil"><User className="mr-2 h-4 w-4" /> Profil</Link></DropdownMenuItem>
-                    <DropdownMenuItem asChild><Link href="/setari"><Settings className="mr-2 h-4 w-4" /> Setări</Link></DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive focus:bg-destructive/10"><LogOut className="mr-2 h-4 w-4" /> Deconectare</DropdownMenuItem>
-                  </DropdownMenuContent>
+                  <DropdownMenuTrigger asChild><button aria-label="Deschide meniul utilizatorului"><Avatar className="cursor-pointer h-9 w-9 border-2 border-transparent hover:border-primary transition-colors"><AvatarImage src={user.photoURL || ''} alt={user.displayName || ''} /><AvatarFallback>{(user.displayName || 'U').charAt(0)}</AvatarFallback></Avatar></button></DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56"><DropdownMenuLabel><p className="font-semibold">{user.displayName}</p><p className="text-xs text-muted-foreground font-normal">{user.email}</p></DropdownMenuLabel><DropdownMenuSeparator /><DropdownMenuItem asChild><Link href="/profil"><User className="mr-2 h-4 w-4" /> Profil</Link></DropdownMenuItem><DropdownMenuItem asChild><Link href="/setari"><Settings className="mr-2 h-4 w-4" /> Setări</Link></DropdownMenuItem><DropdownMenuSeparator /><DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive focus:bg-destructive/10"><LogOut className="mr-2 h-4 w-4" /> Deconectare</DropdownMenuItem></DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <>
-                  <Button variant="ghost" asChild><Link href="/login">Autentificare</Link></Button>
-                  <Button asChild><Link href="/register">Înregistrare</Link></Button>
-                </>
+                <><Button variant="ghost" asChild><Link href="/login">Autentificare</Link></Button><Button asChild><Link href="/register">Înregistrare</Link></Button></>
               )}
             </div>
 
             <div className="lg:hidden">
-              <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)} aria-label="Deschide meniul">
-                <Menu className="h-6 w-6" />
-              </Button>
+              <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)} aria-label="Deschide meniul"><Menu className="h-6 w-6" /></Button>
             </div>
           </div>
         </nav>
       </motion.header>
 
-      {/* Meniu Mobil */}
       <AnimatePresence>
         {isOpen && (
           <motion.div key="mobile-menu" className="fixed inset-0 z-50 lg:hidden">

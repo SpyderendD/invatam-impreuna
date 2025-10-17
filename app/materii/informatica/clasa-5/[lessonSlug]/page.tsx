@@ -3,6 +3,8 @@
 
 import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
+// NOU: Am importat o iconiță pentru buton
+import { Download } from 'lucide-react';
 
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
@@ -12,6 +14,10 @@ interface PdfViewerPageProps {
     };
 }
 
+// NOU: Nu mai este nevoie de fileMap aici, deoarece informația este în pagina principală.
+// Vom construi calea PDF direct, dar pentru a păstra funcționalitatea
+// paginii, este mai sigur să o păstrăm sau să refactorizăm ambele pagini
+// pentru a citi dintr-un fișier comun. Păstrăm fileMap deocamdată pentru simplitate.
 const fileMap: { [key: string]: string } = {
     'sistem-de-calcul': 'sistem de calcul.pdf',
     'istoric-calculatoare': 'Sisteme de calcul_Istoric.pdf',
@@ -39,14 +45,12 @@ const fileMap: { [key: string]: string } = {
     'recapitulare-finala': 'recapitulare_finală.pdf',
 };
 
-
 export default function PdfViewerPage({ params }: PdfViewerPageProps) {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [error, setError] = useState<string | null>(null);
 
   const { lessonSlug } = params; 
-
   const fileName = fileMap[lessonSlug] || null;
 
   if (!fileName) {
@@ -58,7 +62,6 @@ export default function PdfViewerPage({ params }: PdfViewerPageProps) {
       );
   }
 
-  // AICI ESTE CORECȚIA CRITICĂ: Calea trebuie să fie absolută (să înceapă cu /)
   const pdfPath = `/lectii/informatica/clasa-5/${fileName}`; 
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
@@ -76,9 +79,7 @@ export default function PdfViewerPage({ params }: PdfViewerPageProps) {
     if (numPages) {
         setPageNumber(prevPageNumber => {
             const newPage = (prevPageNumber || 1) + offset;
-            if (newPage >= 1 && newPage <= numPages) {
-                return newPage;
-            }
+            if (newPage >= 1 && newPage <= numPages) { return newPage; }
             return prevPageNumber || 1;
         });
     }
@@ -91,9 +92,21 @@ export default function PdfViewerPage({ params }: PdfViewerPageProps) {
 
   return (
     <div className="pdf-viewer-page p-5 md:p-10 bg-background min-h-screen flex flex-col items-center">
-      <h1 className="text-2xl md:text-3xl font-bold text-primary mb-6 text-center">
-        Lecție: {formattedTitle}
-      </h1>
+      
+      {/* NOU: Am grupat titlul și butonul de descărcare */}
+      <div className="w-full max-w-4xl flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+        <h1 className="text-2xl md:text-3xl font-bold text-primary text-center sm:text-left">
+          Lecție: {formattedTitle}
+        </h1>
+        <a 
+          href={pdfPath} 
+          download 
+          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-lg shadow-md transition-transform hover:scale-105"
+        >
+          <Download className="h-5 w-5" />
+          Descarcă PDF
+        </a>
+      </div>
 
       {error && (
         <div className="text-red-600 border border-red-600 bg-red-50 p-3 rounded-md mb-6 text-center w-full max-w-2xl">
@@ -102,37 +115,20 @@ export default function PdfViewerPage({ params }: PdfViewerPageProps) {
       )}
 
       <div className="flex justify-center mb-4 gap-4">
-          <button 
-              onClick={previousPage} 
-              disabled={pageNumber <= 1}
-              className="px-4 py-2 bg-secondary text-secondary-foreground font-semibold rounded-lg transition-colors hover:bg-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+          <button onClick={previousPage} disabled={pageNumber <= 1} className="px-4 py-2 bg-secondary text-secondary-foreground font-semibold rounded-lg transition-colors hover:bg-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed">
               &larr; Pagina anterioară
           </button>
           <span className="px-4 py-2 text-foreground font-medium">
               Pagina {pageNumber} din {numPages || '--'}
           </span>
-          <button 
-              onClick={nextPage} 
-              disabled={pageNumber >= (numPages || 1)}
-              className="px-4 py-2 bg-secondary text-secondary-foreground font-semibold rounded-lg transition-colors hover:bg-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+          <button onClick={nextPage} disabled={pageNumber >= (numPages || 1)} className="px-4 py-2 bg-secondary text-secondary-foreground font-semibold rounded-lg transition-colors hover:bg-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed">
               Pagina următoare &rarr;
           </button>
       </div>
 
       <div className="border border-border shadow-xl mb-10">
-          <Document
-            file={pdfPath}
-            onLoadSuccess={onDocumentLoadSuccess}
-            onLoadError={onDocumentLoadError}
-            loading={<div className="p-20 text-center text-muted-foreground">Se încarcă documentul...</div>}
-            error={error ? null : "Eroare la încărcare."}
-          >
-            <Page 
-                pageNumber={pageNumber} 
-                width={typeof window !== 'undefined' ? Math.min(window.innerWidth * 0.9, 900) : 900} 
-            />
+          <Document file={pdfPath} onLoadSuccess={onDocumentLoadSuccess} onLoadError={onDocumentLoadError} loading={<div className="p-20 text-center text-muted-foreground">Se încarcă documentul...</div>} error={error ? null : "Eroare la încărcare."}>
+            <Page pageNumber={pageNumber} width={typeof window !== 'undefined' ? Math.min(window.innerWidth * 0.9, 900) : 900} />
           </Document>
       </div>
     </div>

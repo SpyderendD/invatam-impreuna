@@ -181,3 +181,59 @@
 @keyframes clasa8-fadeInUp { from { opacity: 0; transform: translateY(35px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes clasa8-pulse { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.12); opacity: 1; } }
 @keyframes clasa8-slideInUpwards { from { opacity: 0; transform: translateY(60px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* NOU: Facem containerul `li` pregătit pentru animație */
+.lesson-item {
+    position: relative; /* Necesar pentru poziționarea absolută a butonului */
+    overflow: hidden;   /* Ascunde butonul când este în afara ecranului */
+}
+
+/* NOU: Redenumim link-ul principal pentru a fi specific */
+.lesson-item .lesson-link-c8 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.2rem 2rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+/* NOU: Stilul și animația pentru butonul de descărcare */
+.download-link-c8 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 70px; /* Lățimea butonului */
+    
+    display: grid;
+    place-items: center;
+    
+    /* Fundal gradient vibrant */
+    background: linear-gradient(135deg, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black));
+    color: var(--background-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    
+    /* Starea inițială: ascuns în dreapta */
+    transform: translateX(100%);
+    opacity: 0;
+    
+    /* Tranziție elastică și fluidă */
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Când facem hover pe lecție, butonul glisează în poziție */
+.lesson-item:hover .download-link-c8 {
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+/* Efect suplimentar la hover direct pe buton */
+.download-link-c8:hover {
+    filter: brightness(1.2);
+    transform: scale(1.1) !important; /* Asigură prioritatea transformării */
+}

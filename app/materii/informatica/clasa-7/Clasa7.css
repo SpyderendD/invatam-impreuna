@@ -183,3 +183,54 @@
 @keyframes clasa7-fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes clasa7-scaleInUp { from { opacity: 0; transform: translateY(40px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @keyframes clasa7-pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.15); opacity: 1; } }
+
+.lesson-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; /* Necesar pentru alinierea corectă a elementelor */
+}
+
+/* Redenumim link-ul principal pentru a evita conflicte */
+.lesson-item .lesson-link-main {
+    flex-grow: 1; /* Asigură că link-ul ocupă spațiul disponibil */
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+
+/* NOU: Stilizarea și animația pentru butonul de descărcare */
+.download-link-animated {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 1rem;
+    border-radius: 50%;
+    background-color: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary-color);
+    font-size: 1rem;
+    cursor: pointer;
+    
+    /* Starea inițială: ascuns și deplasat */
+    opacity: 0;
+    transform: translateX(20px) scale(0.8);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Starea la hover: butonul devine vizibil și intră în poziție */
+.lesson-item:hover .download-link-animated {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+.download-link-animated:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    transform: scale(1.1) !important; /* Asigură că efectul de hover pe buton este prioritar */
+}

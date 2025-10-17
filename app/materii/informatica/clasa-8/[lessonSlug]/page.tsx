@@ -1,11 +1,13 @@
+// app/materii/informatica/clasa-8/[lessonSlug]/page.tsx
 'use client';
 
 import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
+// NOU: Am importat iconița pentru buton
+import { Download } from 'lucide-react';
 
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
-// MAPA CORECTĂ PENTRU CLASA A 8-A
 const fileMap: { [slug: string]: string } = {
     'test-initial': 'TEST_DE_EVALUARE_INIȚIALĂ_a_8-a.pdf',
     'aplicatia-calcul-tabelar': 'Aplicatia de calcul tabelar.pdf',
@@ -34,7 +36,6 @@ const fileMap: { [slug: string]: string } = {
 
 export default function PdfViewerPageClasa8({ params }: { params: { lessonSlug: string } }) {
     const { lessonSlug } = params;
-
     const [numPages, setNumPages] = useState<number | null>(null);
     const [pageNumber, setPageNumber] = useState(1);
     const [error, setError] = useState<string | null>(null);
@@ -63,7 +64,13 @@ export default function PdfViewerPageClasa8({ params }: { params: { lessonSlug: 
     }
 
     const changePage = (offset: number) => {
-        setPageNumber(prev => (prev || 1) + offset);
+        if (numPages) {
+            setPageNumber(prevPageNumber => {
+                const newPage = (prevPageNumber || 1) + offset;
+                if (newPage >= 1 && newPage <= numPages) { return newPage; }
+                return prevPageNumber || 1;
+            });
+        }
     };
 
     const previousPage = () => changePage(-1);
@@ -73,9 +80,20 @@ export default function PdfViewerPageClasa8({ params }: { params: { lessonSlug: 
 
     return (
         <div className="pdf-viewer-page p-5 md:p-10 bg-background min-h-screen flex flex-col items-center">
-            <h1 className="text-2xl md:text-3xl font-bold text-primary mb-6 text-center">
-                Lecție: {formattedTitle}
-            </h1>
+            
+            <div className="w-full max-w-4xl flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+              <h1 className="text-2xl md:text-3xl font-bold text-primary text-center sm:text-left">
+                  Lecție: {formattedTitle}
+              </h1>
+              <a 
+                href={pdfPath} 
+                download 
+                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-lg shadow-md transition-transform hover:scale-105"
+              >
+                <Download className="h-5 w-5" />
+                Descarcă PDF
+              </a>
+            </div>
 
             {error && <div className="text-red-600 border border-red-600 bg-red-50 p-3 rounded-md mb-6 text-center w-full max-w-2xl">{error}</div>}
 
