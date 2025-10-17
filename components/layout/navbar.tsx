@@ -6,12 +6,13 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
-import { CommandMenu } from '@/components/search/CommandMenu'; // NOU: Importăm bara de căutare
+import { CommandMenu } from '@/components/search/CommandMenu';
 
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { BookOpen, Menu, X, Instagram, Facebook, LogOut, User, Settings, Calculator, BookMarked, LineChart, HelpCircle, Youtube, Search } from 'lucide-react';
+// NOU: Am importat iconița pentru noul link
+import { BookOpen, Menu, X, Instagram, Facebook, LogOut, User, Settings, Calculator, BookMarked, LineChart, HelpCircle, Youtube, Search, Bot } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -20,6 +21,8 @@ const navLinks = [
   { href: '/modele-teste', label: 'Modele teste E.N.', icon: Calculator },
   { href: '/dashboard', label: 'Monitorizare', icon: LineChart },
   { href: '/quizuri', label: 'Quizuri', icon: HelpCircle },
+  // NOU: Am adăugat link-ul către pagina de Studiu Inteligent
+  { href: '/studiu-inteligent', label: 'Studiu Inteligent', icon: Bot },
   { href: '/contact', label: 'Contact', icon: HelpCircle },
 ] as const;
 
