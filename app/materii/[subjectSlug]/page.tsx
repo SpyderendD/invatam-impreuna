@@ -1,4 +1,7 @@
+// app/materii/[subjectSlug]/page.tsx
 'use client'; 
+
+// Nu mai avem nevoie de importurile pentru Navbar și Footer aici.
 
 import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
@@ -7,20 +10,19 @@ import React, { useRef, MouseEvent } from 'react';
 import { ALL_SUBJECTS_OBJECT, Chapter, Lesson } from '@/lib/lessons'; 
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, BookText, PencilRuler } from 'lucide-react';
-import { Footer } from '@/components/layout/footer';
 import { ParticlesBackground } from '@/components/animations/ParticlesBackground';
 
-// Tipul pentru params trebuie să se potrivească cu cheile din obiectul nostru
+// Tipul pentru params (rămâne la fel)
 type SubjectPageParams = {
   params: { subjectSlug: keyof typeof ALL_SUBJECTS_OBJECT };
 };
 
-// --- Variante de Animație ---
+// Variante de Animație (rămân la fel)
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 }}};
 const itemVariants = { hidden: { y: 20, opacity: 0, filter: 'blur(5px)' }, visible: { y: 0, opacity: 1, filter: 'blur(0px)', transition: { type: 'spring', stiffness: 100, damping: 12 }}};
 const titleVariants = { hidden: { y: 30, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { type: 'spring', damping: 15, stiffness: 100 }}};
 
-// --- Componenta Card Capitol cu Animație 3D ---
+// Componenta Card Capitol (rămâne la fel)
 const AnimatedChapterCard = ({ chapter, subjectSlug }: { chapter: Chapter; subjectSlug: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
@@ -100,10 +102,17 @@ export default function SubjectPage({ params }: SubjectPageParams) {
 
   const { title, chapters } = subjectData;
 
+  // Varianta finală. `Navbar` și `Footer` sunt adăugate automat de `Providers`.
+  // `pt-16` a fost scos de aici pentru că este gestionat în `Providers` pe tag-ul `<main>`.
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="bg-background relative">
       <ParticlesBackground />
-      <main className="container mx-auto px-4 py-16 md:py-24 relative z-10">
+      {/* 
+        Am eliminat `<main>` de aici. Pagina este acum doar conținutul care va fi injectat
+        în interiorul `<main>`-ului definit în `Providers.tsx`.
+        De asemenea, `min-h-screen` nu mai este necesar aici.
+      */}
+      <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
         <motion.div initial="hidden" animate="visible" variants={containerVariants} className="text-center mb-20">
           <motion.h1 variants={titleVariants} className="text-5xl md:text-7xl font-bold font-lora bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
             {title}
@@ -117,7 +126,7 @@ export default function SubjectPage({ params }: SubjectPageParams) {
             <AnimatedChapterCard key={chapter.id} chapter={chapter} subjectSlug={params.subjectSlug} />
           ))}
         </motion.div>
-      </main>
+      </div>
     </div>
   );   
 }

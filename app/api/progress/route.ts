@@ -1,8 +1,8 @@
 // app/api/progress/route.ts
+
 import { NextResponse, type NextRequest } from 'next/server';
-import { adminAuth } from '@/lib/firebaseAdmin';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase'; // Firestore client-side, dar îl putem folosi aici
+// ATENȚIE: Importă AMBELE, adminAuth pentru token și adminDb pentru baza de date
+import { adminAuth, adminDb } from '@/lib/firebaseAdmin'; 
 
 export const dynamic = 'force-dynamic';
 
@@ -14,7 +14,7 @@ async function verifyToken(req: NextRequest) {
   const token = authHeader.split('Bearer ')[1];
   
   if (!adminAuth) {
-    console.error('[API/PROGRESS] Firebase Admin SDK nu este inițializat.');
+    console.error('[API/PROGRESS] Firebase Admin SDK (Auth) nu este inițializat.');
     return null;
   }
 
@@ -34,13 +34,21 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Neautorizat' }, { status: 401 });
   }
 
-  try {
-    const progressRef = doc(db, 'progress', uid);
-    const docSnap = await getDoc(progressRef);
+  // Verifică dacă și adminDb este inițializat
+  if (!adminDb) {
+      console.error('[API/PROGRESS] Firebase Admin SDK (Firestore) nu este inițializat.');
+      return NextResponse.json({ error: 'Eroare de configurare server' }, { status: 500 });
+  }
 
-    if (docSnap.exists()) {
+  try {
+    // --- MODIFICARE CHEIE: Folosim `adminDb` în loc de `db` ---
+    const progressRef = adminDb.collection('progress').doc(uid);
+    const docSnap = await progressRef.get(); // Metoda .get() pentru Admin SDK
+
+    if (docSnap.exists) {
       const data = docSnap.data();
-      return NextResponse.json({ completedLessons: data.completedLessons || [] });
+      // Asigură-te că returnezi un array gol dacă `completedLessons` nu există
+      return NextResponse.json({ completedLessons: data?.completedLessons || [] });
     } else {
       // Dacă utilizatorul nu are progres, returnăm un array gol
       return NextResponse.json({ completedLessons: [] });

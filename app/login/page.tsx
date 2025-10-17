@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'; // Verifică acest
 import { motion } from 'framer-motion';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, User } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { toast } from '@/hooks/use-toast';
+import { toast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';

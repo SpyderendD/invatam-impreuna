@@ -1,11 +1,13 @@
 // app/api/complete-lesson/route.ts
 import { NextResponse, type NextRequest } from 'next/server';
-import { adminAuth } from '@/lib/firebaseAdmin';
-import { toggleLessonCompletion } from '@/lib/firebase'; // Reutilizăm logica ta
+import { adminAuth, adminDb } from '@/lib/firebaseAdmin';
+// Importăm tipurile necesare din admin SDK
+import { FieldValue } from 'firebase-admin/firestore';
 
 export const dynamic = 'force-dynamic';
 
 async function verifyToken(req: NextRequest) {
+  // ... funcția ta de verificare token rămâne la fel
   const authHeader = req.headers.get('Authorization');
   if (!authHeader || !authHeader.startsWith('Bearer ')) return null;
   const token = authHeader.split('Bearer ')[1];
@@ -20,8 +22,8 @@ async function verifyToken(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const uid = await verifyToken(req);
 
-  if (!uid) {
-    return NextResponse.json({ error: 'Neautorizat' }, { status: 401 });
+  if (!uid || !adminDb) {
+    return NextResponse.json({ error: 'Neautorizat sau server neconfigurat' }, { status: 401 });
   }
 
   try {
@@ -30,9 +32,19 @@ export async function POST(req: NextRequest) {
     if (!lessonId) {
       return NextResponse.json({ error: 'lessonId este necesar' }, { status: 400 });
     }
+    
+    const progressRef = adminDb.collection('progress').doc(uid);
 
-    // Aici chemăm funcția ta care face update în Firestore
-    await toggleLessonCompletion(uid, lessonId, isCompleted);
+    // Folosim `arrayUnion` și `arrayRemove` din Admin SDK via `FieldValue`
+    if (isCompleted) {
+        await progressRef.set({
+            completedLessons: FieldValue.arrayUnion(lessonId)
+        }, { merge: true }); // `merge: true` adaugă câmpul fără a suprascrie documentul
+    } else {
+        await progressRef.update({
+            completedLessons: FieldValue.arrayRemove(lessonId)
+        });
+    }
 
     return NextResponse.json({ status: 'success' });
 

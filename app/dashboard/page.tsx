@@ -20,7 +20,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Switch } from '@/components/ui/switch';
 import { Check, X, Plus, Trash2, Edit, ChevronLeft, ChevronRight, Settings as SettingsIcon, History, Trophy, Download, Upload, Info, BarChart2, HelpCircle, Sparkles } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
+import { toast } from '@/components/ui/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 /* ========== Animații ========== */
@@ -67,10 +67,12 @@ export default function DashboardPage() {
     return { weekDates: dates, weekLabel: label, weekStartDate: start };
   }, [weekOffset]);
 
+  const { settings: { autoApplySchedule }, applyScheduleToWeek } = planner;
+
   useEffect(() => {
-    if (!planner.settings.autoApplySchedule) return;
-    planner.applyScheduleToWeek(weekStartDate);
-  }, [weekStartDate, planner.settings.autoApplySchedule, planner.applyScheduleToWeek]);
+    if (!autoApplySchedule) return;
+    applyScheduleToWeek(weekStartDate);
+  }, [weekStartDate, autoApplySchedule, applyScheduleToWeek]);
 
   if (isAuthLoading || planner.isLoading) return <DashboardSkeleton />;
 

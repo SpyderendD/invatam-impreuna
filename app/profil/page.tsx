@@ -8,18 +8,8 @@ import { db } from '@/lib/firebase';
 import { doc, onSnapshot, Timestamp } from 'firebase/firestore';
 import { ALL_SUBJECTS_OBJECT, Chapter, Lesson } from '@/lib/lessons';
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip as RechartsTooltip,
-  ResponsiveContainer,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
+  ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar
 } from 'recharts';
 
 // UI & Icons
@@ -30,23 +20,20 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
-  Edit,
-  BookCheck,
-  Target,
-  Award,
-  Star,
-  Shield,
-  Crown,
-  TrendingUp,
-  Medal,
-  BrainCircuit,
-  Sparkles,
-  Download,
-  Trophy,
+  Edit, BookCheck, Target, Award, Star, Shield, Crown,
+  TrendingUp, Medal, BrainCircuit, Sparkles, Download, Trophy
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// Tipuri Firestore progres
+// --- Importăm noile componente pentru statistici ---
+import { StatCard } from '@/components/StatCard';
+import { StatRing } from '@/components/StatRing';
+
+// ============================================================================
+// == COMPONENTE AJUTĂTOARE (rămân în același fișier)
+// ============================================================================
+
+// Tipuri Firestore
 type TestResult = {
   testId: string;
   score: number;
@@ -58,7 +45,7 @@ type UserProgress = {
   testResults: TestResult[];
 };
 
-// Animated number (smooth)
+// Număr animat
 function AnimatedNumber({ value }: { value: number }) {
   const ref = useRef<HTMLSpanElement | null>(null);
   const inView = useInView(ref, { once: true, margin: '-50px' });
@@ -70,68 +57,17 @@ function AnimatedNumber({ value }: { value: number }) {
   return <motion.span ref={ref}>{display}</motion.span>;
 }
 
-// Inel statistic “conic-gradient”
-function StatRing({
-  value,
-  label,
-  size = 120,
-  accent = 'hsl(var(--primary))',
-  track = 'hsl(var(--muted))',
-  children,
-}: {
-  value: number; // 0-100
-  label: string;
-  size?: number;
-  accent?: string;
-  track?: string;
-  children?: React.ReactNode; // conținut în centru (ex: număr)
-}) {
-  const clamped = Math.max(0, Math.min(100, value));
-  const angle = clamped * 3.6;
-  const ringStyle: React.CSSProperties = {
-    width: size,
-    height: size,
-    borderRadius: '999px',
-    background: `conic-gradient(${accent} ${angle}deg, ${track} ${angle}deg 360deg)`,
-  };
-  return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="relative" style={{ width: size, height: size }}>
-        <div className="rounded-full" style={ringStyle} />
-        <div
-          className="absolute inset-3 rounded-full grid place-items-center bg-background/95 border"
-          style={{ boxShadow: 'inset 0 0 0 1px hsl(var(--border))' }}
-        >
-          <div className="text-3xl font-bold">{children}</div>
-        </div>
-      </div>
-      <p className="text-xs text-muted-foreground">{label}</p>
-    </div>
-  );
-}
-
+// Badge pentru nivel
 function ProgressBadge({ level }: { level: 'Începător' | 'Avansat' | 'Expert' }) {
-  const cfg =
-    {
-      'Începător': {
-        icon: <Star className="h-4 w-4" />,
-        cls: 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300',
-      },
-      'Avansat': {
-        icon: <Shield className="h-4 w-4" />,
-        cls: 'bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300',
-      },
-      'Expert': {
-        icon: <Crown className="h-4 w-4" />,
-        cls: 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300',
-      },
-    }[level] || {
-      icon: <Star className="h-4 w-4" />,
-      cls: 'bg-muted text-foreground',
-    };
-  return <Badge className={cn('border-transparent gap-2', cfg.cls)}>{cfg.icon}<span>{level}</span></Badge>;
+  const cfg = {
+    'Începător': { icon: <Star className="h-4 w-4" />, cls: 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300' },
+    'Avansat': { icon: <Shield className="h-4 w-4" />, cls: 'bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300' },
+    'Expert': { icon: <Crown className="h-4 w-4" />, cls: 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300' },
+  }[level] || { icon: <Star className="h-4 w-4" />, cls: 'bg-muted text-foreground' };
+  return <Badge className={cn('border-transparent gap-2 px-3 py-1', cfg.cls)}>{cfg.icon}<span>{level}</span></Badge>;
 }
 
+// Tooltip pentru grafice
 function CustomTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
@@ -142,13 +78,16 @@ function CustomTooltip({ active, payload, label }: any) {
   );
 }
 
+// ============================================================================
+// == COMPONENTA PRINCIPALĂ A PAGINII
+// ============================================================================
 export default function ProfilePage() {
   const { user, loading: isAuthLoading } = useAuth();
   const [progress, setProgress] = useState<UserProgress | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
 
-  // Realtime progress din Firestore
+  // Preluare progres în timp real din Firestore
   useEffect(() => {
     if (isAuthLoading) return;
     if (!user) {
@@ -168,25 +107,18 @@ export default function ProfilePage() {
     return () => unsub();
   }, [user, isAuthLoading]);
 
-  // Derivare statistici
+  // Calcularea statisticilor
   const stats = useMemo(() => {
     if (!progress) {
       return {
-        lessonsCompleted: 0,
-        avgScore: 0,
-        level: 'Începător' as const,
-        perfectTests: 0,
-        chartData: [] as { name: string; progres: number }[],
-        radarData: [] as { subject: string; value: number }[],
-        recentTests: [] as { id: string; percent: number; date: string }[],
+        lessonsCompleted: 0, avgScore: 0, level: 'Începător' as const, perfectTests: 0,
+        chartData: [], radarData: [], recentTests: [],
       };
     }
     const lessonsCompleted = progress.completedLessons?.length || 0;
-
     const tests = progress.testResults || [];
     const percents = tests.map((t) => (t.totalQuestions > 0 ? (t.score / t.totalQuestions) * 100 : 0));
     const avgScore = tests.length ? Math.round(percents.reduce((a, b) => a + b, 0) / tests.length) : 0;
-
     const perfectTests = tests.filter((t) => t.totalQuestions > 0 && t.score === t.totalQuestions).length;
 
     let level: 'Începător' | 'Avansat' | 'Expert' = 'Începător';
@@ -200,9 +132,6 @@ export default function ProfilePage() {
       return { name: subject.title.split(' ')[0], progres: percent };
     });
 
-    // pentru radar (aceleași valori, altă vizualizare)
-    const radarData = chartData.map((d) => ({ subject: d.name, value: d.progres }));
-
     const recentTests = [...tests]
       .sort((a, b) => (b.completedAt?.toMillis?.() || 0) - (a.completedAt?.toMillis?.() || 0))
       .slice(0, 5)
@@ -212,9 +141,10 @@ export default function ProfilePage() {
         date: t.completedAt?.toDate?.().toLocaleString?.('ro-RO') || '',
       }));
 
-    return { lessonsCompleted, avgScore, level, perfectTests, chartData, radarData, recentTests };
+    return { lessonsCompleted, avgScore, level, perfectTests, chartData, radarData: chartData.map(d => ({ subject: d.name, value: d.progres })), recentTests };
   }, [progress]);
 
+  // Funcție export
   const handleExport = () => {
     try {
       const dataStr = JSON.stringify(progress || { completedLessons: [], testResults: [] }, null, 2);
@@ -227,26 +157,18 @@ export default function ProfilePage() {
     } catch {}
   };
 
+  // Stare de încărcare
   if (isAuthLoading || isLoading) {
     return (
-      <div className="container max-w-5xl mx-auto px-4 py-16">
-        <div className="flex items-center gap-6 mb-12">
-          <Skeleton className="h-32 w-32 rounded-full" />
-          <div className="space-y-2">
-            <Skeleton className="h-8 w-64" />
-            <Skeleton className="h-5 w-80" />
-          </div>
-        </div>
+      <div className="container max-w-6xl mx-auto px-4 py-16">
+        <div className="flex items-center gap-6 mb-12"><Skeleton className="h-32 w-32 rounded-full" /><div className="space-y-2"><Skeleton className="h-8 w-64" /><Skeleton className="h-5 w-80" /></div></div>
         <Skeleton className="h-10 w-full mb-8" />
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <Skeleton className="h-28 w-full" />
-          <Skeleton className="h-28 w-full" />
-          <Skeleton className="h-28 w-full" />
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6"><Skeleton className="h-64 w-full" /><Skeleton className="h-64 w-full" /><Skeleton className="h-64 w-full" /></div>
       </div>
     );
   }
 
+  // Utilizator neautentificat
   if (!user) {
     return (
       <div className="flex flex-col min-h-[70vh] items-center justify-center text-center">
@@ -258,8 +180,6 @@ export default function ProfilePage() {
   }
 
   const initial = (user.displayName || user.email || '?').charAt(0)?.toUpperCase() || '?';
-
-  // Recompense dinamice
   const rewards = [
     { id: 'first_lesson', label: 'Primii Pași', desc: 'Ai finalizat prima lecție.', icon: <Star className="mx-auto h-10 w-10 text-amber-500" />, unlocked: stats.lessonsCompleted >= 1 },
     { id: 'perfect_test', label: 'Perfecționist', desc: 'Primul test perfect.', icon: <Medal className="mx-auto h-10 w-10 text-yellow-600" />, unlocked: stats.perfectTests >= 1 },
@@ -271,98 +191,71 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-background">
       <main className="container max-w-6xl mx-auto px-4 py-12 md:py-16">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          {/* Hero / Header profil */}
-          <motion.div
-            initial={{ y: -18, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ type: 'spring', stiffness: 220, damping: 22 }}
-            className="relative mb-12 rounded-2xl border bg-card p-8 overflow-hidden"
-          >
-            {/* decorații subtile, fără blur global */}
+          
+          {/* Header Profil */}
+          <motion.div initial={{ y: -18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: 'spring', stiffness: 220, damping: 22 }} className="relative mb-12 rounded-2xl border bg-card p-8 overflow-hidden">
             <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-gradient-to-tr from-violet-500/15 to-cyan-500/15" />
             <div className="pointer-events-none absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-gradient-to-tr from-rose-500/15 to-amber-400/15" />
             <div className="flex flex-col sm:flex-row items-center gap-6 relative z-10">
               <motion.div whileHover={{ scale: 1.04 }} transition={{ type: 'spring', stiffness: 260 }}>
-                <div className="relative">
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/30 to-primary/0 blur-2xl" aria-hidden />
-                  <Avatar className="h-32 w-32 ring-4 ring-primary/20 shadow-lg">
-                    <AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'Avatar'} />
-                    <AvatarFallback className="text-5xl">{initial}</AvatarFallback>
-                  </Avatar>
-                </div>
+                <div className="relative"><div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary/30 to-primary/0 blur-2xl" aria-hidden /><Avatar className="h-32 w-32 ring-4 ring-primary/20 shadow-lg"><AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'Avatar'} /><AvatarFallback className="text-5xl">{initial}</AvatarFallback></Avatar></div>
               </motion.div>
-
-              <div className="text-center sm:text-left">
-                <h1 className="text-4xl font-bold font-lora tracking-tight">{user.displayName || 'Utilizator'}</h1>
-                <p className="mt-1 text-muted-foreground">{user.email}</p>
-                {user.metadata?.creationTime && (
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Membru din: {new Date(user.metadata.creationTime).toLocaleDateString('ro-RO')}
-                  </p>
-                )}
-              </div>
-
-              <div className="flex gap-2 sm:ml-auto mt-4 sm:mt-0">
-                <Button variant="outline" asChild><Link href="/setari"><Edit className="mr-2 h-4 w-4" /> Editează Profilul</Link></Button>
-                <Button variant="secondary" onClick={handleExport}><Download className="mr-2 h-4 w-4" /> Export progres</Button>
-              </div>
+              <div className="text-center sm:text-left"><h1 className="text-4xl font-bold font-lora tracking-tight">{user.displayName || 'Utilizator'}</h1><p className="mt-1 text-muted-foreground">{user.email}</p>{user.metadata?.creationTime && (<p className="text-xs text-muted-foreground mt-2">Membru din: {new Date(user.metadata.creationTime).toLocaleDateString('ro-RO')}</p>)}</div>
+              <div className="flex gap-2 sm:ml-auto mt-4 sm:mt-0"><Button variant="outline" asChild><Link href="/setari"><Edit className="mr-2 h-4 w-4" /> Editează Profilul</Link></Button><Button variant="secondary" onClick={handleExport}><Download className="mr-2 h-4 w-4" /> Export progres</Button></div>
             </div>
           </motion.div>
 
           {/* Tabs */}
           <Tabs defaultValue="overview" className="w-full" onValueChange={(v) => setActiveTab(v)}>
-            <TabsList className="grid w-full grid-cols-3 bg-muted/50">
-              <TabsTrigger value="overview">Prezentare Generală</TabsTrigger>
-              <TabsTrigger value="progress">Progres Detaliat</TabsTrigger>
-              <TabsTrigger value="rewards">Recompense</TabsTrigger>
-            </TabsList>
-
+            <TabsList className="grid w-full grid-cols-3 bg-muted/50"><TabsTrigger value="overview">Prezentare Generală</TabsTrigger><TabsTrigger value="progress">Progres Detaliat</TabsTrigger><TabsTrigger value="rewards">Recompense</TabsTrigger></TabsList>
             <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.2 }}
-              >
-                {/* Overview: inele + nivel */}
-                <TabsContent value="overview" className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  <Card className="col-span-1">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2"><BookCheck className="h-5 w-5" /> Lecții finalizate</CardTitle>
-                      <CardDescription>Tot ce ai marcat ca „complet”.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex justify-center">
-                      <StatRing value={Math.min(100, (stats.lessonsCompleted / 50) * 100)} label="dintr-un obiectiv de 50">
+              <motion.div key={activeTab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
+                
+                {/* ========================================================= */}
+                {/* == TAB 1: PREZENTARE GENERALĂ (refăcut complet) == */}
+                {/* ========================================================= */}
+                <TabsContent value="overview" className="mt-8">
+                  <motion.div 
+                    className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+                  >
+                    <StatCard
+                      icon={<BookCheck className="h-5 w-5" />}
+                      title="Lecții finalizate"
+                      description="Tot ce ai marcat ca „complet”."
+                    >
+                      <StatRing value={Math.min(100, (stats.lessonsCompleted / 50) * 100)}>
                         <AnimatedNumber value={stats.lessonsCompleted} />
                       </StatRing>
-                    </CardContent>
-                  </Card>
+                      <p className="text-xs text-muted-foreground mt-2">dintr-un obiectiv de 50</p>
+                    </StatCard>
 
-                  <Card className="col-span-1">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2"><Target className="h-5 w-5" /> Scor mediu</CardTitle>
-                      <CardDescription>Media procentajelor la teste.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex justify-center">
-                      <StatRing value={stats.avgScore} label="procent">
+                    <StatCard
+                      icon={<Target className="h-5 w-5" />}
+                      title="Scor mediu"
+                      description="Media procentajelor la teste."
+                    >
+                      <StatRing value={stats.avgScore}>
                         <span><AnimatedNumber value={stats.avgScore} />%</span>
                       </StatRing>
-                    </CardContent>
-                  </Card>
+                      <p className="text-xs text-muted-foreground mt-2">procent</p>
+                    </StatCard>
 
-                  <Card className="col-span-1">
-                    <CardHeader className="text-center">
-                      <CardTitle className="flex items-center justify-center gap-2"><Award className="h-5 w-5" /> Nivel curent</CardTitle>
-                      <CardDescription>Stabilit după scor și lecții.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="grid place-items-center">
+                    <StatCard
+                      icon={<Award className="h-5 w-5" />}
+                      title="Nivel curent"
+                      description="Stabilit după scor și lecții."
+                    >
                       <ProgressBadge level={stats.level} />
-                    </CardContent>
-                  </Card>
+                    </StatCard>
+                  </motion.div>
                 </TabsContent>
 
-                {/* Progress: bar + radar + teste recente */}
+                {/* ========================================================= */}
+                {/* == TAB 2: PROGRES DETALIAT (cod complet) == */}
+                {/* ========================================================= */}
                 <TabsContent value="progress" className="mt-8 grid grid-cols-1 xl:grid-cols-2 gap-6">
                   <Card>
                     <CardHeader>
@@ -370,7 +263,7 @@ export default function ProfilePage() {
                       <CardDescription>Procentul de lecții finalizate la fiecare materie.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      {stats.chartData.length ? (
+                      {stats.chartData.length > 0 ? (
                         <ResponsiveContainer width="100%" height={300}>
                           <BarChart data={stats.chartData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                             <defs>
@@ -387,7 +280,7 @@ export default function ProfilePage() {
                           </BarChart>
                         </ResponsiveContainer>
                       ) : (
-                        <p className="text-sm text-muted-foreground">Nu există date încă.</p>
+                        <p className="text-sm text-muted-foreground text-center py-10">Nu există date încă.</p>
                       )}
                     </CardContent>
                   </Card>
@@ -398,23 +291,17 @@ export default function ProfilePage() {
                       <CardDescription>Unde stai mai bine, ca procent de lecții finalizate.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      {stats.radarData.length ? (
+                      {stats.radarData.length > 0 ? (
                         <ResponsiveContainer width="100%" height={300}>
                           <RadarChart data={stats.radarData}>
                             <PolarGrid stroke="hsl(var(--border))" />
                             <PolarAngleAxis dataKey="subject" stroke="hsl(var(--muted-foreground))" />
                             <PolarRadiusAxis stroke="hsl(var(--muted-foreground))" />
-                            <Radar
-                              name="Progres"
-                              dataKey="value"
-                              stroke="hsl(var(--primary))"
-                              fill="hsl(var(--primary))"
-                              fillOpacity={0.25}
-                            />
+                            <Radar name="Progres" dataKey="value" stroke="hsl(var(--primary))" fill="hsl(var(--primary))" fillOpacity={0.25} />
                           </RadarChart>
                         </ResponsiveContainer>
                       ) : (
-                        <p className="text-sm text-muted-foreground">Nu există date încă.</p>
+                        <p className="text-sm text-muted-foreground text-center py-10">Nu există date încă.</p>
                       )}
                     </CardContent>
                   </Card>
@@ -425,7 +312,7 @@ export default function ProfilePage() {
                       <CardDescription>Ultimele 5 teste finalizate.</CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-3 md:grid-cols-2">
-                      {stats.recentTests.length ? (
+                      {stats.recentTests.length > 0 ? (
                         stats.recentTests.map((t) => (
                           <div key={t.id} className="flex items-center justify-between rounded-md border p-3">
                             <div className="flex flex-col">
@@ -433,23 +320,21 @@ export default function ProfilePage() {
                               <span className="text-xs text-muted-foreground">{t.date}</span>
                             </div>
                             <div className="flex items-center gap-2">
-                              {t.percent === 100 && (
-                                <Badge className="bg-green-600/15 text-green-600 dark:text-green-400 border-green-600/30">
-                                  Perfect
-                                </Badge>
-                              )}
+                              {t.percent === 100 && <Badge className="bg-green-600/15 text-green-600 dark:text-green-400 border-green-600/30">Perfect</Badge>}
                               <span className="font-semibold">{t.percent}%</span>
                             </div>
                           </div>
                         ))
                       ) : (
-                        <p className="text-sm text-muted-foreground">Nu ai încă teste finalizate.</p>
+                        <p className="text-sm text-muted-foreground text-center py-4">Nu ai încă teste finalizate.</p>
                       )}
                     </CardContent>
                   </Card>
                 </TabsContent>
 
-                {/* Rewards */}
+                {/* ========================================================= */}
+                {/* == TAB 3: RECOMPENSE (cod complet) == */}
+                {/* ========================================================= */}
                 <TabsContent value="rewards" className="mt-8">
                   <Card>
                     <CardHeader>
@@ -462,18 +347,10 @@ export default function ProfilePage() {
                           key={r.id}
                           whileHover={{ y: r.unlocked ? -4 : 0, scale: r.unlocked ? 1.02 : 1 }}
                           transition={{ type: 'spring', stiffness: 200, damping: 18 }}
-                          className={cn(
-                            'p-4 rounded-lg border transition-all group',
-                            r.unlocked ? 'bg-accent shadow-lg border-transparent' : 'bg-muted opacity-70 grayscale'
-                          )}
+                          className={cn('p-4 rounded-lg border transition-all group', r.unlocked ? 'bg-accent shadow-lg border-transparent' : 'bg-muted opacity-70 grayscale')}
                         >
                           <div className="relative">
-                            <Sparkles
-                              className={cn(
-                                'absolute inset-0 h-full w-full text-amber-400 opacity-0 transition-opacity duration-300',
-                                r.unlocked && 'group-hover:opacity-100'
-                              )}
-                            />
+                            <Sparkles className={cn('absolute inset-0 h-full w-full text-amber-400 opacity-0 transition-opacity duration-300', r.unlocked && 'group-hover:opacity-100')} />
                             {r.icon}
                           </div>
                           <p className="font-semibold mt-2 text-sm">{r.label}</p>
@@ -483,6 +360,7 @@ export default function ProfilePage() {
                     </CardContent>
                   </Card>
                 </TabsContent>
+
               </motion.div>
             </AnimatePresence>
           </Tabs>

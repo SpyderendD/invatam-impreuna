@@ -1,40 +1,35 @@
 // components/Providers.tsx
+'use client';
 
-'use client'; // <-- Cheia succesului
-
-// Importăm tot ce avem nevoie pentru layout-ul global
+// Importăm providerii de context
 import { AuthProvider } from "@/context/AuthContext";
-import { ThemeProvider } from "@/context/ThemeContext"; // Presupunând că aveți și un ThemeProvider
+import { ThemeProvider } from "next-themes";
+
+// Importăm componentele de layout
 import { Navbar } from '@/components/layout/navbar';
-import { Footer } from '@/components/layout/footer'; // Asigurați-vă că importați și footer-ul
+import { Footer } from '@/components/layout/footer';
 import { Toaster } from "@/components/ui/toaster";
-import { ClientLogicWrapper } from '@/components/layout/ClientLogicWrapper';
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ children }: { children: React.Node }) {
   return (
-    // Începem cu providerii de context, care sunt invizibili
-    <AuthProvider>
-      <ThemeProvider>
-        
-        {/* Aici plasăm logica globală care rulează pe client */}
-        <ClientLogicWrapper />
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <AuthProvider>
 
-        {/* Acum definim structura vizuală a paginii */}
+        {/* Acum definim structura vizuală a paginii ÎNTR-UN SINGUR LOC */}
         <div className="flex flex-col min-h-screen">
-          <Navbar /> {/* <-- NAVBAR-UL ESTE AICI, O SINGURĂ DATĂ */}
+          <Navbar />
           
-          <main className="flex-grow pt-16"> {/* Am adăugat pt-16 (padding-top) pentru a compensa înălțimea navbar-ului fix */}
-            {/* '{children}' este locul unde va apărea conținutul specific fiecărei pagini */}
+          {/* pt-16 compensează înălțimea navbar-ului care este fix (h-16) */}
+          <main className="flex-grow pt-16">
             {children}
           </main>
           
-          <Footer /> {/* <-- FOOTER-UL ESTE AICI, O SINGURĂ DATĂ */}
+          <Footer />
         </div>
 
-        {/* Toaster-ul pentru notificări stă în afara structurii flex */}
         <Toaster />
 
-      </ThemeProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }

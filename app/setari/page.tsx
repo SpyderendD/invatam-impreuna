@@ -14,7 +14,7 @@ import {
   sendEmailVerification,
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { toast } from '@/hooks/use-toast';
+import { toast } from '@/components/ui/use-toast';
 
 // UI
 import { Button } from '@/components/ui/button';

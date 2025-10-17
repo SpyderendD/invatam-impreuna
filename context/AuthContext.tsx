@@ -1,45 +1,73 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import React, { 
+  createContext, 
+  useContext, 
+  useEffect, 
+  useState, 
+  ReactNode 
+} from 'react';
 import { useRouter } from 'next/navigation';
 import { auth } from '@/lib/firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { toast } from '@/hooks/use-toast';
-import { Skeleton } from '@/components/ui/skeleton'; // Opțional, dar recomandat
+import { toast } from '@/components/ui/use-toast';
+import { Skeleton } from '@/components/ui/skeleton';
 
-// 1. Definim tipul pentru context
-interface AuthContextType {
+// ============================================================================
+// PASUL 1: Definirea Formei (Tipului) Contextului
+// Aici îi spunem lui TypeScript ce date și funcții vor fi disponibile
+// oricui folosește acest context.
+// ============================================================================
+export interface AuthContextType {
   user: User | null;
   loading: boolean;
   logout: () => Promise<void>;
+  /**
+   * Permite actualizarea manuală a obiectului `user` în starea globală a aplicației.
+   * Util pentru "actualizări optimiste", de ex., după ce un utilizator își schimbă numele.
+   */
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
-// 2. Creăm contextul și ÎL EXPORTĂM
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// ============================================================================
+// PASUL 2: Crearea Contextului cu o Valoare Inițială
+// Această valoare este folosită doar dacă o componentă încearcă să acceseze
+// contextul fără a fi în interiorul unui Provider.
+// ============================================================================
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// 3. Creăm Provider-ul care va înveli aplicația
+// ============================================================================
+// PASUL 3: Crearea Componentei Provider
+// Aceasta este componenta care va "ține" starea (user, loading) și va
+// înveli întreaga aplicație (sau o parte din ea) în `layout.tsx`.
+// ============================================================================
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true); // Începe cu true
+  const [loading, setLoading] = useState(true); // Începe mereu cu `true` pentru a verifica starea de autentificare
   const router = useRouter();
 
+  // Acest efect rulează o singură dată la încărcarea aplicației.
+  // `onAuthStateChanged` este un listener de la Firebase care ne anunță
+  // automat de fiecare dată când starea de autentificare se schimbă.
   useEffect(() => {
-    // onAuthStateChanged se ocupă de sincronizarea stării user-ului
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
-      setLoading(false);
+      setLoading(false); // Am terminat verificarea, ascundem scheletul
     });
-    // Curățăm listener-ul la unmount
+
+    // Curățăm listener-ul când componenta este "demontată" pentru a evita memory leaks.
     return () => unsubscribe();
   }, []);
 
+  // Funcția de logout, centralizată aici pentru a fi reutilizabilă
   const logout = async () => {
     try {
-      // Spunem serverului să șteargă cookie-ul de sesiune
+      // Spunem serverului să șteargă cookie-ul de sesiune (dacă folosești așa ceva)
       await fetch('/api/auth/logout', { method: 'POST' });
-      // Delogăm utilizatorul de pe client
+      // Delogăm utilizatorul de pe client, folosind SDK-ul Firebase
       await auth.signOut();
       toast({ title: 'Deconectare reușită!' });
+      // Redirectăm utilizatorul către pagina principală
       router.replace('/');
     } catch (error) {
       console.error("Eroare la logout:", error);
@@ -47,31 +75,48 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const value = { user, loading, logout };
+  // Obiectul `value` care va fi pasat tuturor componentelor copil.
+  // Acesta trebuie să corespundă tipului `AuthContextType` definit mai sus.
+  const value = { 
+    user, 
+    loading, 
+    logout, 
+    setUser // Am adăugat `setUser` aici pentru a-l face accesibil global
+  };
 
   return (
     <AuthContext.Provider value={value}>
+      {/* Cât timp se verifică starea de autentificare, afișăm un schelet.
+          Altfel, afișăm conținutul normal al aplicației. */}
       {loading ? <AppSkeleton /> : children}
     </AuthContext.Provider>
   );
 };
 
-// 4. Creăm și exportăm hook-ul custom din același fișier
+// ============================================================================
+// PASUL 4: Crearea Hook-ului Custom
+// Acesta este un "shortcut" pentru a accesa contextul mai ușor și mai sigur
+// din orice componentă client.
+// ============================================================================
 export const useAuth = () => {
   const context = useContext(AuthContext);
+  // Verificare de siguranță: aruncăm o eroare dacă hook-ul este folosit
+  // în afara unui `AuthProvider`.
   if (context === undefined) {
     throw new Error('useAuth trebuie folosit în interiorul unui AuthProvider');
   }
   return context;
 };
 
-// Un schelet simplu pentru a umple golul vizual cât se încarcă starea de autentificare
+// ============================================================================
+// (Componentă ajutătoare) Un schelet vizual pentru starea de încărcare
+// ============================================================================
 function AppSkeleton() {
   return (
     <div className="container py-8">
       <Skeleton className="h-10 w-1/4 mb-4" />
       <Skeleton className="h-6 w-1/2" />
-      <div className="mt-8 grid grid-cols-3 gap-4">
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
         <Skeleton className="h-24" />
         <Skeleton className="h-24" />
         <Skeleton className="h-24" />

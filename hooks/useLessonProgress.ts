@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { toast } from './use-toast';
+import { toast } from '../components/ui/use-toast';
 import { getIdToken, User } from 'firebase/auth';
 
 export function useLessonProgress() {
