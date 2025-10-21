@@ -10,11 +10,13 @@ import LessonClientPage from './LessonClientPage'; // Componenta Client pe care 
 import { Alert } from '@/components/mdx/Alert';
 import { StepByStep } from '@/components/mdx/StepByStep';
 import { ExampleBlock } from '@/components/mdx/ExampleBlock';
+import { EmailBlock } from '@/components/mdx/EmailBlock';
 
 const mdxComponents = {
     Alert,
     StepByStep,
     ExampleBlock,
+    EmailBlock,
 };
 
 // ============================================================================

@@ -107,11 +107,6 @@ export default function SubjectPage({ params }: SubjectPageParams) {
   return (
     <div className="bg-background relative">
       <ParticlesBackground />
-      {/* 
-        Am eliminat `<main>` de aici. Pagina este acum doar conținutul care va fi injectat
-        în interiorul `<main>`-ului definit în `Providers.tsx`.
-        De asemenea, `min-h-screen` nu mai este necesar aici.
-      */}
       <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
         <motion.div initial="hidden" animate="visible" variants={containerVariants} className="text-center mb-20">
           <motion.h1 variants={titleVariants} className="text-5xl md:text-7xl font-bold font-lora bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
