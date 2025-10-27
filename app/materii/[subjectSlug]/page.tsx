@@ -1,76 +1,43 @@
-// app/materii/[subjectSlug]/page.tsx
 'use client'; 
-
-// Nu mai avem nevoie de importurile pentru Navbar și Footer aici.
 
 import Link from 'next/link';
 import { notFound, useParams } from 'next/navigation';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import React, { useRef, MouseEvent } from 'react';
+import { motion } from 'framer-motion';
+import React from 'react';
 import { ALL_SUBJECTS_OBJECT, Chapter, Lesson } from '@/lib/lessons'; 
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, BookText, PencilRuler } from 'lucide-react';
 import { ParticlesBackground } from '@/components/animations/ParticlesBackground';
 
-// Tipul pentru params (rămâne la fel)
+// Tipul pentru params
 type SubjectPageParams = {
   params: { subjectSlug: keyof typeof ALL_SUBJECTS_OBJECT };
 };
 
-// Variante de Animație (rămân la fel)
-const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 }}};
-const itemVariants = { hidden: { y: 20, opacity: 0, filter: 'blur(5px)' }, visible: { y: 0, opacity: 1, filter: 'blur(0px)', transition: { type: 'spring', stiffness: 100, damping: 12 }}};
-const titleVariants = { hidden: { y: 30, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { type: 'spring', damping: 15, stiffness: 100 }}};
+// Variante de Animație
+const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 }}};
+const itemVariants = { hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 }}};
+const titleVariants = { hidden: { y: 30, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { type: 'spring', damping: 15 }}};
 
-// Componenta Card Capitol (rămâne la fel)
+// ============================================================================
+// == COMPONENTA CARD CAPITOL (SIMPLIFICATĂ, FĂRĂ 3D)
+// ============================================================================
 const AnimatedChapterCard = ({ chapter, subjectSlug }: { chapter: Chapter; subjectSlug: string }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30, restDelta: 0.001 });
-  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30, restDelta: 0.001 });
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['10deg', '-10deg']);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-10deg', '10deg']);
-
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const { width, height, left, top } = rect;
-    const mouseX = e.clientX - left;
-    const mouseY = e.clientY - top;
-    x.set(mouseX / width - 0.5);
-    y.set(mouseY / height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-  
   return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      variants={itemVariants}
-    >
-        <div className="absolute inset-4 translate-z-75 preserve-3d" />
-        <Card 
-          className="flex flex-col border-border/60 shadow-lg bg-card/80 dark:bg-card/40 backdrop-blur-sm transition-shadow duration-300 hover:shadow-primary/20 preserve-3d"
-        >
-          <div className="p-6 flex items-center gap-4 border-b border-border/60 translate-z-40">
+    <motion.div variants={itemVariants}>
+        <Card className="flex flex-col border-border/60 shadow-lg bg-card/80 dark:bg-card/40 backdrop-blur-sm transition-shadow duration-300 hover:shadow-primary/20">
+          <div className="p-6 flex items-center gap-4 border-b border-border/60">
             <div className="flex-shrink-0 bg-primary/10 p-3 rounded-lg border border-primary/20">{chapter.icon}</div>
             <div>
               <h2 className="text-2xl font-bold text-foreground">{chapter.title}</h2>
               <p className="text-muted-foreground">{chapter.description}</p>
             </div>
           </div>
-          <CardContent className="p-2" style={{ transform: "translateZ(20px)"}}>
+          <CardContent className="p-2">
             <ul className="divide-y divide-border/60">
               {chapter.lessons.map((lesson: Lesson) => (
                 <li key={lesson.id}>
-                  <Link href={`/materii/${subjectSlug}/${lesson.slug}`} className="group flex items-center justify-between p-4 transition-colors duration-200 hover:bg-accent rounded-md">
+                  <Link href={`/materii/${subjectSlug}/${lesson.slug}`} className="group w-full flex items-center justify-between p-4 transition-colors duration-200 hover:bg-accent rounded-md">
                     <div className="flex items-center gap-4">
                       {lesson.type === 'Teorie' ? <BookText className="h-5 w-5 text-muted-foreground flex-shrink-0" /> : <PencilRuler className="h-5 w-5 text-muted-foreground flex-shrink-0" />}
                       <div className="flex flex-col">
@@ -91,8 +58,9 @@ const AnimatedChapterCard = ({ chapter, subjectSlug }: { chapter: Chapter; subje
   );
 };
 
-
-// --- COMPONENTA PRINCIPALĂ A PAGINII ---
+// ============================================================================
+// == COMPONENTA PRINCIPALĂ A PAGINII
+// ============================================================================
 export default function SubjectPage({ params }: SubjectPageParams) {
   const subjectData = ALL_SUBJECTS_OBJECT[params.subjectSlug];
 
@@ -102,12 +70,12 @@ export default function SubjectPage({ params }: SubjectPageParams) {
 
   const { title, chapters } = subjectData;
 
-  // Varianta finală. `Navbar` și `Footer` sunt adăugate automat de `Providers`.
-  // `pt-16` a fost scos de aici pentru că este gestionat în `Providers` pe tag-ul `<main>`.
   return (
     <div className="bg-background relative">
       <ParticlesBackground />
-      <div className="container mx-auto px-4 py-16 md:py-24 relative z-10">
+      <div className="container max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10">
+        
+        {/* Titlul paginii */}
         <motion.div initial="hidden" animate="visible" variants={containerVariants} className="text-center mb-20">
           <motion.h1 variants={titleVariants} className="text-5xl md:text-7xl font-bold font-lora bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
             {title}
@@ -116,11 +84,24 @@ export default function SubjectPage({ params }: SubjectPageParams) {
             Alege un capitol pentru a începe. Parcurge teoria și testează-ți cunoștințele.
           </motion.p>
         </motion.div>
-        <motion.div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-20" style={{ perspective: "1200px" }} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={containerVariants}>
+        
+        {/* ========================================================= */}
+        {/* == LAYOUT MASONRY CU CSS COLUMNS (FĂRĂ SPAȚII GOALE) == */}
+        {/* ========================================================= */}
+        <motion.div 
+          className="columns-1 lg:columns-2 gap-x-12 [&>*]:break-inside-avoid-column" 
+          initial="hidden" 
+          whileInView="visible" 
+          viewport={{ once: true, amount: 0.1 }} 
+          variants={containerVariants}
+        >
           {chapters.map((chapter: Chapter) => (
-            <AnimatedChapterCard key={chapter.id} chapter={chapter} subjectSlug={params.subjectSlug} />
+            <div key={chapter.id} className="mb-12">
+              <AnimatedChapterCard chapter={chapter} subjectSlug={params.subjectSlug} />
+            </div>
           ))}
         </motion.div>
+
       </div>
     </div>
   );   

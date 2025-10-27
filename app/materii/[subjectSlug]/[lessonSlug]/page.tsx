@@ -11,12 +11,14 @@ import { Alert } from '@/components/mdx/Alert';
 import { StepByStep } from '@/components/mdx/StepByStep';
 import { ExampleBlock } from '@/components/mdx/ExampleBlock';
 import { EmailBlock } from '@/components/mdx/EmailBlock';
+import { TransformationBlock } from '@/components/mdx/TransformationBlock';
 
 const mdxComponents = {
     Alert,
     StepByStep,
     ExampleBlock,
     EmailBlock,
+    TransformationBlock,
 };
 
 // ============================================================================

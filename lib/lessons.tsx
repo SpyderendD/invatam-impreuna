@@ -3,7 +3,7 @@
 import { JSX } from "react";
 import {
   PenSquare, BookOpen, Languages, Waypoints, Calculator, InfinityIcon,
-  Ruler, Cuboid, Sparkles, Drama, Mic, Heart, Scale, ClipboardList
+  Ruler, Cuboid, Sparkles, Drama, Mic, Heart, Scale, ClipboardList, SpellCheck
 } from "lucide-react";
 
 // ============================================================================
@@ -41,63 +41,39 @@ export interface Subject {
 // ============================================================================
 
 const romanaChapters: Chapter[] = [
+  // ========================================================================
+  // PILONUL 1: FUNDAȚIA LIMBII
+  // ========================================================================
   {
-    id: "redactare",
-    title: "Redactare și Tipuri de Text",
-    description: "Învață să structurezi și să redactezi diverse tipuri de compuneri.",
-    icon: <PenSquare className="h-8 w-8 text-primary" />,
+    id: "fonetica-ortografie",
+    title: "Fonetică și Ortografie",
+    description: "Înțelege sunetele, literele, silabele și regulile de scriere corectă.",
+    icon: <Languages className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "red-01", title: "Redactarea Rezumatului", slug: "redactarea-rezumatului", duration: "10 min", type: "Teorie", quizSlug: "test-rezumat", worksheetSlug: "fisa-rezumatul" },
-      { id: "red-02", title: "Redactarea Paginii de Jurnal", slug: "redactarea-paginii-de-jurnal", duration: "10 min", type: "Teorie", quizSlug: "test-jurnal" },
-      { id: "red-03", title: "Redactarea Scrisorii", slug: "redactarea-scrisorii", duration: "10 min", type: "Teorie", quizSlug: "test-scrisoare" },
-      { id: "red-04", title: "Redactarea E-mailului", slug: "redactarea-emailului", duration: "5 min", type: "Teorie", quizSlug: "test-email" },
-      { id: "red-05", title: "Textul Narativ: Teorie și Redactare", slug: "textul-narativ", duration: "20 min", type: "Teorie", quizSlug: "test-narativ", worksheetSlug: "fisa-text-narativ" },
-      { id: "red-06", title: "Textul Descriptiv: Teorie și Redactare", slug: "textul-descriptiv", duration: "15 min", type: "Teorie", quizSlug: "test-descriptiv", worksheetSlug: "fisa-text-descriptiv" },
-      { id: "red-07", title: "Textul Dialogat (Dialogul)", slug: "textul-dialogat", duration: "10 min", type: "Teorie", quizSlug: "test-dialogat", worksheetSlug: "fisa-text-dialogat" },
-      { id: "red-08", title: "Textul Argumentativ (Argumentarea)", slug: "textul-argumentativ", duration: "15 min", type: "Teorie", quizSlug: "test-argumentativ", worksheetSlug: "fisa-text-argumentativ" },
-      { id: "red-09", title: "Textul Explicativ", slug: "textul-explicativ", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-text-explicativ" },
-      { id: "red-10", title: "Textul Multimodal", slug: "textul-multimodal", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-text-multimodal" },
+      { id: "com-01", title: "Ortografie și Ortoepie", slug: "ortografie-si-ortoepie", duration: "20 min", type: "Teorie" },
+      { id: "com-02", title: "Semne de Ortoepie și Punctuație", slug: "semne-ortografie-punctuatie", duration: "15 min", type: "Teorie" },
     ],
   },
   {
-    id: "literatura-teorie",
-    title: "Teoria Literaturii",
-    description: "Concepte fundamentale despre textul literar, nonliterar și genuri.",
-    icon: <Sparkles className="h-8 w-8 text-primary" />,
+    id: "vocabular",
+    title: "Vocabular (Lexic)",
+    description: "Explorează universul cuvintelor, de la formare la relațiile de sens.",
+    icon: <SpellCheck className="h-8 w-8 text-primary" />, // Iconiță nouă și relevantă
     lessons: [
-      { id: "lit-01", title: "Textul Literar vs. Nonliterar", slug: "textul-literar-vs-nonliterar", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-text-literar-nonliterar" },
-      { id: "lit-02", title: "Genul Epic", slug: "genul-epic", duration: "20 min", type: "Teorie", worksheetSlug: "fisa-genul-epic" },
-      { id: "lit-03", title: "Genul Liric", slug: "genul-liric", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-genul-liric" },
-      { id: "lit-04", title: "Genul Dramatic", slug: "genul-dramatic", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-genul-dramatic" },
+      { id: "com-03", title: "Mijloace de Îmbogățire a Vocabularului", slug: "vocabularul", duration: "25 min", type: "Teorie" },
+      { id: "com-04", title: "Categorii Semantice (Sinonime, etc.)", slug: "categorii-semantice", duration: "20 min", type: "Teorie" },
     ],
   },
-  {
-    id: "figuri-stil",
-    title: "Figuri de Stil și Imagini Artistice",
-    description: "Descoperă instrumentele care dau expresivitate textului literar.",
-    icon: <Heart className="h-8 w-8 text-primary" />,
-    lessons: [
-      { id: "fs-01", title: "Figuri de Stil (Epitete, Personificări, etc.)", slug: "figuri-de-stil", duration: "20 min", type: "Teorie" },
-      { id: "fs-02", title: "Imagini Artistice (Vizuale, Auditive, etc.)", slug: "imagini-artistice", duration: "15 min", type: "Teorie" },
-    ],
-  },
-  {
-    id: "prozodie",
-    title: "Elemente de Prozodie",
-    description: "Înțelege muzicalitatea poeziei: rimă, ritm, măsură și strofă.",
-    icon: <Mic className="h-8 w-8 text-primary" />,
-    lessons: [
-      { id: "proz-01", title: "Versificația: Strofa, Măsura, Ritmul", slug: "versificatia", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-elemente-prozodie" },
-      { id: "proz-02", title: "Tipuri de Rimă", slug: "tipuri-de-rima", duration: "10 min", type: "Teorie" },
-    ],
-  },
+
+  // ========================================================================
+  // PILONUL 2: CONSTRUCȚIA PROPOZIȚIILOR
+  // ========================================================================
   {
     id: "morfologie",
     title: "Morfologie",
-    description: "Aprofundează părțile de vorbire și caracteristicile lor.",
+    description: "Stăpânește părțile de vorbire și caracteristicile lor gramaticale.",
     icon: <BookOpen className="h-8 w-8 text-primary" />,
     lessons: [
-      // Aici poți adăuga fișe de lucru pe măsură ce le creezi
       { id: "morf-01", title: "Verbul", slug: "verbul", duration: "25 min", type: "Teorie", quizSlug: "test-verbul" },
       { id: "morf-02", title: "Substantivul", slug: "substantivul", duration: "20 min", type: "Teorie", quizSlug: "test-substantivul" },
       { id: "morf-03", title: "Articolul", slug: "articolul", duration: "10 min", type: "Teorie" },
@@ -111,21 +87,60 @@ const romanaChapters: Chapter[] = [
   {
     id: "sintaxa",
     title: "Sintaxa",
-    description: "Înțelege cum se combină cuvintele pentru a forma propoziții și fraze.",
+    description: "Învață cum se combină cuvintele pentru a forma propoziții și fraze corecte.",
     icon: <Waypoints className="h-8 w-8 text-primary" />,
     lessons: [
+      // Lecțiile tale de sintaxă vor veni aici
       { id: "sin-01", title: "Vorbirea directă și indirectă", slug: "vorbirea-directa-indirecta", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-vorbirea-directa" },
-      // Aici poți adăuga alte lecții de sintaxă din manual, dacă există
+    ],
+  },
+
+  // ========================================================================
+  // PILONUL 3: ARTA SCRISULUI ȘI A ANALIZEI
+  // ========================================================================
+  {
+    id: "teoria-literaturii",
+    title: "Teoria Literaturii și a Textului",
+    description: "Diferențiază tipurile de text și înțelege marile genuri literare.",
+    icon: <Sparkles className="h-8 w-8 text-primary" />,
+    lessons: [
+      { id: "lit-01", title: "Textul Literar vs. Nonliterar", slug: "textul-literar-vs-nonliterar", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-text-literar-nonliterar" },
+      { id: "gen-01", title: "Genul Epic", slug: "genul-epic", duration: "20 min", type: "Teorie", worksheetSlug: "fisa-genul-epic" },
+      { id: "gen-02", title: "Genul Liric", slug: "genul-liric", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-genul-liric" },
+      { id: "gen-03", title: "Genul Dramatic", slug: "genul-dramatic", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-genul-dramatic" },
     ],
   },
   {
-    id: "idei-plan",
-    title: "Analiza Textului",
-    description: "Extrage ideile principale și secundare și creează un plan de idei.",
-    icon: <ClipboardList className="h-8 w-8 text-primary" />,
+    id: "tehnici-redactare",
+    title: "Tehnici de Redactare",
+    description: "Învață să structurezi și să scrii corect diverse tipuri de compuneri.",
+    icon: <PenSquare className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "plan-01", title: "Planul simplu și dezvoltat de idei", slug: "planul-de-idei", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-planul-de-idei" },
-    ]
+      { id: "red-01", title: "Planul simplu și dezvoltat de idei", slug: "planul-de-idei", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-planul-de-idei" },
+      { id: "red-02", title: "Redactarea Rezumatului", slug: "redactarea-rezumatului", duration: "10 min", type: "Teorie", quizSlug: "test-rezumat", worksheetSlug: "fisa-rezumatul" },
+      { id: "red-03", title: "Redactarea Paginii de Jurnal", slug: "redactarea-paginii-de-jurnal", duration: "10 min", type: "Teorie", quizSlug: "test-jurnal" },
+      { id: "red-04", title: "Redactarea Scrisorii", slug: "redactarea-scrisorii", duration: "10 min", type: "Teorie", quizSlug: "test-scrisoare" },
+      { id: "red-05", title: "Redactarea E-mailului", slug: "redactarea-emailului", duration: "5 min", type: "Teorie", quizSlug: "test-email" },
+      { id: "red-06", title: "Textul Narativ", slug: "textul-narativ", duration: "20 min", type: "Teorie", quizSlug: "test-narativ", worksheetSlug: "fisa-text-narativ" },
+      { id: "red-07", title: "Textul Descriptiv", slug: "textul-descriptiv", duration: "15 min", type: "Teorie", quizSlug: "test-descriptiv", worksheetSlug: "fisa-text-descriptiv" },
+      { id: "red-08", title: "Textul Dialogat", slug: "textul-dialogat", duration: "10 min", type: "Teorie", quizSlug: "test-dialogat", worksheetSlug: "fisa-text-dialogat" },
+      { id: "red-09", title: "Textul Argumentativ", slug: "textul-argumentativ", duration: "15 min", type: "Teorie", quizSlug: "test-argumentativ", worksheetSlug: "fisa-text-argumentativ" },
+      { id: "red-10", title: "Textul Explicativ", slug: "textul-explicativ", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-text-explicativ" },
+      { id: "red-11", title: "Textul Multimodal", slug: "textul-multimodal", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-text-multimodal" },
+    ],
+  },
+  {
+    id: "instrumente-stilistice",
+    title: "Instrumente Stilistice",
+    description: "Explorează uneltele care aduc expresivitate și emoție textelor literare.",
+    icon: <Heart className="h-8 w-8 text-primary" />,
+    lessons: [
+      { id: "stil-01", title: "Figuri de Stil", slug: "figuri-de-stil", duration: "20 min", type: "Teorie", worksheetSlug: "fisa-figuri-de-stil" },
+      { id: "stil-02", title: "Imagini Artistice", slug: "imagini-artistice", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-imagini-artistice" },
+      { id: "proz-01", title: "Elemente de Prozodie (Rima, Ritm)", slug: "elemente-de-prozodie", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-elemente-prozodie" },
+      { id: "stil-03", title: "Variante Stilistice ale Limbii", slug: "variante-stilistice", duration: "15 min", type: "Teorie" },
+      { id: "stil-04", title: "Calitățile Stilului", slug: "calitatile-stilului", duration: "15 min", type: "Teorie" },
+    ],
   },
 ];
 // ============================================================================
