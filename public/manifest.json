@@ -1,30 +1,27 @@
 {
+  "name": "Învățăm Împreună",
+  "short_name": "Învățăm",
+  "description": "Platformă educațională online pentru pregătire la Evaluarea Națională.",
+  "lang": "ro-RO",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone",
-  "scope": "/",
-  "start_url": "/",
-  "name": "Numele Aplicatiei Tale",
-  "short_name": "Nume Scurt",
-  "description": "O descriere a aplicației tale",
   "icons": [
     {
-      "src": "/icon-192x192.png",
+      "src": "/public/images/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "/icon-256x256.png",
-      "sizes": "256x256",
-      "type": "image/png"
-    },
-    {
-      "src": "/icon-384x384.png",
+      "src": "/public/images/icon-384x384.png",
       "sizes": "384x384",
       "type": "image/png"
     },
     {
-      "src": "/icon-512x512.png",
+      "src": "/public/images/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
