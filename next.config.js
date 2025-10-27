@@ -2,34 +2,34 @@
  * @type {import('next').NextConfig}
  */
 
-// Pasul 1: Importă funcția 'withPWA' din pachetul instalat.
-// Acum, constanta 'withPWA' conține funcția necesară.
-const withPWA = require('@ducanh2912/next-pwa');
+// =======================================================================
+// PASUL 1: Importă și configurează PWA
+// Se importă pachetul, se accesează funcția din `.default` și se APELEAZĂ imediat
+// cu opțiunile PWA. Aceasta returnează o nouă funcție (un "wrapper").
+// =======================================================================
+const withPWA = require('@ducanh2912/next-pwa').default({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development',
+});
 
-// Pasul 2: Definește configurația ta standard pentru Next.js.
-// Acestea sunt setările pe care le aveai deja.
+// =======================================================================
+// PASUL 2: Definește configurația ta pentru Next.js
+// Aici rămân setările tale normale.
+// =======================================================================
 const nextConfig = {
-  reactStrictMode: true, // Activează modul strict React
-  swcMinify: true,       // Folosește compilatorul SWC pentru a minifica codul mai rapid
-  output: 'standalone',  // Optimizează output-ul pentru deployment-uri standalone (ex: Docker)
+  reactStrictMode: true,
+  swcMinify: true,
+  output: 'standalone',
   typescript: {
-    // Ignoră erorile de TypeScript în timpul build-ului.
-    // Recomandat să fie 'false' în producția finală pentru a prinde erori.
     ignoreBuildErrors: true,
   },
 };
 
-// Pasul 3: Exportă configurația finală, combinată.
-// Apelăm funcția 'withPWA' și îi dăm un obiect de configurare.
-// Acest obiect conține atât opțiunile pentru PWA, cât și configurația ta Next.js.
-module.exports = withPWA({
-  // --- ÎNCEPUT Configurare PWA ---
-  dest: 'public', // Directorul unde vor fi generate fișierele PWA (ex: sw.js)
-  register: true, // Înregistrează automat Service Worker-ul în browserul clientului
-  skipWaiting: true, // Forțează noul Service Worker să se activeze imediat după instalare
-  disable: process.env.NODE_ENV === 'development', // Dezactivează PWA în mediul de dezvoltare pentru a evita probleme de cache
-  // --- SFÂRȘIT Configurare PWA ---
-
-  // Aici includem restul configurației tale Next.js folosind "spread operator" (...)
-  ...nextConfig,
-});
+// =======================================================================
+// PASUL 3: Exportă configurația finală "îmbrăcată"
+// Aici apelăm funcția "wrapper" creată la Pasul 1 și îi dăm ca parametru
+// configurația ta Next.js.
+// =======================================================================
+module.exports = withPWA(nextConfig);
