@@ -1,11 +1,23 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
-nextConfig.reactStrictMode = true; // Activați modul strict React pentru a ajuta la identificarea problemelor în aplicație
-nextConfig.swcMinify = true; // Activați minificarea SWC pentru a reduce dimensiunea bundle-ului JavaScript
-nextConfig.output = 'standalone'; // Asigurați-vă că aplicația este pregătită pentru a fi rulată în mod standalone
-nextConfig.typescript = {
-  ignoreBuildErrors: true, // Ignoră erorile de tip TypeScript în  
-  // timpul construcției, util pentru dezvoltare, dar nu recomandat în producție
+
+// Mai întâi, importăm funcția de configurare PWA din pachetul instalat
+const withPWA = require('@ducanh2912/next-pwa')({
+  dest: 'public', // Directorul unde vor fi generate fișierele PWA (service worker, etc.)
+  register: true, // Înregistrează automat service worker-ul
+  skipWaiting: true, // Forțează service worker-ul să se activeze imediat
+  // Poți dezactiva PWA pentru mediul de dezvoltare pentru a evita probleme de caching
+  disable: process.env.NODE_ENV === 'development', 
+});
+
+// Aici este configurația ta existentă
+const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  output: 'standalone',
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
-module.exports = nextConfig;
+// La final, exportăm configurația "îmbrăcată" în withPWA
+module.exports = withPWA(nextConfig);

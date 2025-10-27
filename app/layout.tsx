@@ -19,6 +19,10 @@ const lora = Lora({ subsets: ['latin'], weight: ['400', '500', '600', '700'], va
 // Codul tău de aici este excelent.
 // =======================================================================
 export const metadata: Metadata = {
+  // ADAUGAT: Această linie este esențială pentru a activa PWA.
+  // Îi spune browserului unde să găsească fișierul de configurare al aplicației.
+  manifest: '/manifest.json',
+
   metadataBase: new URL('https://invatam-impreuna.vercel.app'),
   title: {
     default: 'Învățăm Împreună | Platformă Educațională',
@@ -27,6 +31,12 @@ export const metadata: Metadata = {
   description: 'Platformă educațională online pentru pregătire la Evaluarea Națională, Bacalaureat și alte materii. Lecții interactive, teste și resurse.',
   // Poți adăuga înapoi restul metadatelor tale (keywords, openGraph, etc.) aici.
   // Le-am scos pentru a păstra codul mai scurt, dar structura ta era corectă.
+
+  // ADAUGAT (Opțional, dar Recomandat): Acesta specifică iconița care va fi
+  // folosită când un utilizator adaugă aplicația pe ecranul de pornire pe iOS.
+  icons: {
+    apple: '/icon-192x192.png',
+  },
 };
 
 // =======================================================================
