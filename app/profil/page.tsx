@@ -251,7 +251,7 @@ export default function ProfilePage() {
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
-    } catch {}
+    } catch { }
   };
 
   // Stare de încărcare
@@ -492,154 +492,66 @@ export default function ProfilePage() {
                 {/* ========================================================= */}
                 {/* == TAB 2: PROGRES DETALIAT (cod complet) == */}
                 {/* ========================================================= */}
-                <TabsContent
-                  value="progress"
-                  className="mt-8 grid grid-cols-1 xl:grid-cols-2 gap-6"
-                >
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Progres pe Materii</CardTitle>
-                      <CardDescription>
-                        Procentul de lecții finalizate la fiecare materie.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      {stats.chartData.length > 0 ? (
-                        <ResponsiveContainer width="100%" height={300}>
-                          <BarChart
-                            data={stats.chartData}
-                            margin={{ top: 5, right: 20, left: -10, bottom: 5 }}
-                          >
-                            <defs>
-                              <linearGradient
-                                id="colorUv"
-                                x1="0"
-                                y1="0"
-                                x2="0"
-                                y2="1"
-                              >
-                                <stop
-                                  offset="5%"
-                                  stopColor="hsl(var(--primary))"
-                                  stopOpacity={0.85}
-                                />
-                                <stop
-                                  offset="95%"
-                                  stopColor="hsl(var(--primary))"
-                                  stopOpacity={0.15}
-                                />
-                              </linearGradient>
-                            </defs>
-                            <CartesianGrid
-                              strokeDasharray="3 3"
-                              opacity={0.2}
-                              vertical={false}
-                            />
-                            <XAxis
-                              dataKey="name"
-                              stroke="hsl(var(--muted-foreground))"
-                              fontSize={12}
-                              tickLine={false}
-                              axisLine={false}
-                            />
-                            <YAxis
-                              stroke="hsl(var(--muted-foreground))"
-                              fontSize={12}
-                              tickLine={false}
-                              axisLine={false}
-                            />
-                            <RechartsTooltip
-                              cursor={{ fill: "hsl(var(--accent))" }}
-                              content={<CustomTooltip />}
-                            />
-                            <Bar
-                              dataKey="progres"
-                              fill="url(#colorUv)"
-                              radius={[6, 6, 0, 0]}
-                            />
-                          </BarChart>
-                        </ResponsiveContainer>
-                      ) : (
-                        <p className="text-sm text-muted-foreground text-center py-10">
-                          Nu există date încă.
-                        </p>
-                      )}
-                    </CardContent>
-                  </Card>
+                <TabsContent value="overview" className="mt-8">
+                  <motion.div
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      visible: { transition: { staggerChildren: 0.1 } }
+                    }}
+                  >
+                    {/* Definim varianta de animație o singură dată */}
+                    {(() => {
+                      const itemVariants = {
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100 } }
+                      };
 
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Puncte forte (Radar)</CardTitle>
-                      <CardDescription>
-                        Unde stai mai bine, ca procent de lecții finalizate.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      {stats.radarData.length > 0 ? (
-                        <ResponsiveContainer width="100%" height={300}>
-                          <RadarChart data={stats.radarData}>
-                            <PolarGrid stroke="hsl(var(--border))" />
-                            <PolarAngleAxis
-                              dataKey="subject"
-                              stroke="hsl(var(--muted-foreground))"
-                            />
-                            <PolarRadiusAxis stroke="hsl(var(--muted-foreground))" />
-                            <Radar
-                              name="Progres"
-                              dataKey="value"
-                              stroke="hsl(var(--primary))"
-                              fill="hsl(var(--primary))"
-                              fillOpacity={0.25}
-                            />
-                          </RadarChart>
-                        </ResponsiveContainer>
-                      ) : (
-                        <p className="text-sm text-muted-foreground text-center py-10">
-                          Nu există date încă.
-                        </p>
-                      )}
-                    </CardContent>
-                  </Card>
-
-                  <Card className="xl:col-span-2">
-                    <CardHeader>
-                      <CardTitle>Teste recente</CardTitle>
-                      <CardDescription>
-                        Ultimele 5 teste finalizate.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="grid gap-3 md:grid-cols-2">
-                      {stats.recentTests.length > 0 ? (
-                        stats.recentTests.map((t) => (
-                          <div
-                            key={t.id}
-                            className="flex items-center justify-between rounded-md border p-3"
-                          >
-                            <div className="flex flex-col">
-                              <span className="font-medium">{t.id}</span>
-                              <span className="text-xs text-muted-foreground">
-                                {t.date}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              {t.percent === 100 && (
-                                <Badge className="bg-green-600/15 text-green-600 dark:text-green-400 border-green-600/30">
-                                  Perfect
-                                </Badge>
-                              )}
-                              <span className="font-semibold">
-                                {t.percent}%
-                              </span>
-                            </div>
-                          </div>
-                        ))
-                      ) : (
-                        <p className="text-sm text-muted-foreground text-center py-4">
-                          Nu ai încă teste finalizate.
-                        </p>
-                      )}
-                    </CardContent>
-                  </Card>
+                      return [
+                        (
+                          <motion.div key="stat-lessons" variants={itemVariants}>
+                            <StatCard
+                              icon={<BookCheck className="h-5 w-5" />}
+                              title="Lecții finalizate"
+                              description="Tot ce ai marcat ca „complet”."
+                            >
+                              <StatRing value={Math.min(100, (stats.lessonsCompleted / 50) * 100)}>
+                                <AnimatedNumber value={stats.lessonsCompleted} />
+                              </StatRing>
+                              <p className="text-xs text-muted-foreground mt-2">dintr-un obiectiv de 50</p>
+                            </StatCard>
+                          </motion.div>
+                        ),
+                        (
+                          <motion.div key="stat-score" variants={itemVariants}>
+                            <StatCard
+                              icon={<Target className="h-5 w-5" />}
+                              title="Scor mediu"
+                              description="Media procentajelor la teste."
+                            >
+                              <StatRing value={stats.avgScore}>
+                                <span><AnimatedNumber value={stats.avgScore} />%</span>
+                              </StatRing>
+                              <p className="text-xs text-muted-foreground mt-2">procent</p>
+                            </StatCard>
+                          </motion.div>
+                        ),
+                        (
+                          <motion.div key="stat-level" variants={itemVariants}>
+                            <StatCard
+                              icon={<Award className="h-5 w-5" />}
+                              title="Nivel curent"
+                              description="Stabilit după scor și lecții."
+                            >
+                              {/* Am scos div-ul suplimentar de aici, nu mai e nevoie */}
+                              <ProgressBadge level={stats.level} />
+                            </StatCard>
+                          </motion.div>
+                        )
+                      ];
+                    })()}
+                  </motion.div>
                 </TabsContent>
 
                 {/* ========================================================= */}
