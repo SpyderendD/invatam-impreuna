@@ -13,7 +13,8 @@ export async function middleware(request: NextRequest) {
     '/login',
     '/register',
     '/auth/reset-password',
-    // Adaugă aici alte pagini publice, ex: '/contact', '/termeni'
+    '/contact',
+    '/termeni'
   ];
 
   // Verificăm dacă pagina curentă este una publică
@@ -39,10 +40,22 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
+// =======================================================================
+// MODIFICAREA CRITICĂ ESTE AICI
+// =======================================================================
 // Configurare: specifică rutele pe care se aplică acest middleware.
-// Aceasta este configurația standard și corectă pentru a exclude asset-urile și rutele API.
+// Am adăugat excepții pentru fișierele PWA (sw.js, manifest.json, .png)
+// pentru a nu fi blocate de logica de autentificare.
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    /*
+     * Rulează pe toate rutele, CU EXCEPȚIA celor care:
+     * - încep cu /api (rute API)
+     * - încep cu /_next/static (fișiere statice Next.js)
+     * - încep cu /_next/image (optimizări de imagine)
+     * - sunt fișiere exacte: favicon.ico, sw.js, manifest.json
+     * - se termină cu .png (pentru iconițele din manifest)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|sw.js|manifest.json|.*\\.png$).*)',
   ],
-};  
+};
