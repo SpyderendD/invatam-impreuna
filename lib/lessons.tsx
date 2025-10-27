@@ -148,7 +148,62 @@ const romanaChapters: Chapter[] = [
 // ============================================================================
 
 const matematicaChapters: Chapter[] = [
-  // ... capitolele tale de matematică rămân aici ...
+  {
+    id: "algebra-fundamente",
+    title: "Algebră: Fundamente și Numere",
+    description: "Explorează mulțimile numerice, divizibilitatea și operațiile de bază.",
+    icon: <InfinityIcon className="h-8 w-8 text-primary" />,
+    lessons: [
+      { id: "alg-01", title: "Mulțimi numerice (ℕ, ℤ, ℚ, ℝ)", slug: "multimi-numerice", duration: "15 min", type: "Teorie" },
+      { id: "alg-02", title: "Divizibilitate în ℕ", slug: "divizibilitate", duration: "20 min", type: "Teorie" },
+      { id: "alg-03", title: "Fracții ordinare și zecimale", slug: "fractii", duration: "15 min", type: "Teorie" },
+      { id: "alg-04", title: "Rapoarte, Proporții, Procente", slug: "rapoarte-proportii-procente", duration: "15 min", type: "Formule" },
+      { id: "alg-05", title: "Puteri și Radicali", slug: "puteri-si-radicali", duration: "20 min", type: "Formule" },
+      { id: "alg-06", title: "Calcul cu numere reale", slug: "calcul-numere-reale", duration: "20 min", type: "Exerciții" },
+    ],
+  },
+  {
+    id: "algebra-calcul",
+    title: "Algebră: Calcul Algebric și Funcții",
+    description: "De la formule de calcul la ecuații, sisteme și funcții.",
+    icon: <Calculator className="h-8 w-8 text-primary" />,
+    lessons: [
+      { id: "alg-07", title: "Formule de calcul prescurtat", slug: "formule-calcul-prescurtat", duration: "15 min", type: "Formule" },
+      { id: "alg-08", title: "Descompunerea în factori", slug: "descompunere-factori", duration: "15 min", type: "Exerciții" },
+      { id: "alg-09", title: "Ecuații și inecuații de gradul I", slug: "ecuatii-inecuatii-grad-1", duration: "25 min", type: "Teorie" },
+      { id: "alg-10", title: "Ecuația de gradul II", slug: "ecuatia-grad-2", duration: "15 min", type: "Teorie" },
+      { id: "alg-11", title: "Sisteme de ecuații", slug: "sisteme-de-ecuatii", duration: "20 min", type: "Exerciții" },
+      { id: "alg-12", title: "Funcții și elemente de grafic", slug: "functii-si-grafice", duration: "20 min", type: "Teorie" },
+    ],
+  },
+  {
+    id: "geometrie-plan",
+    title: "Geometrie în Plan",
+    description: "Proprietățile figurilor geometrice plane, de la unghiuri la poligoane.",
+    icon: <Ruler className="h-8 w-8 text-primary" />,
+    lessons: [
+      { id: "geo-01", title: "Unghiuri și Drepte paralele", slug: "unghiuri-drepte-paralele", duration: "15 min", type: "Teorie" },
+      { id: "geo-02", title: "Triunghiul: Clasificare și proprietăți", slug: "triunghiul-proprietati", duration: "20 min", type: "Teorie" },
+      { id: "geo-03", title: "Linii importante în triunghi", slug: "linii-importante-triunghi", duration: "20 min", type: "Teorie" },
+      { id: "geo-04", title: "Relații metrice în triunghiul dreptunghic", slug: "relatii-metrice-triunghi", duration: "25 min", type: "Formule" },
+      { id: "geo-05", title: "Asemănarea triunghiurilor", slug: "asemanarea-triunghiurilor", duration: "15 min", type: "Teorie" },
+      { id: "geo-06", title: "Patrulatere: Proprietăți și arii", slug: "patrulatere", duration: "20 min", type: "Formule" },
+      { id: "geo-07", title: "Cercul și Poligoane regulate", slug: "cercul-si-poligoane", duration: "15 min", type: "Formule" },
+    ],
+  },
+  {
+    id: "geometrie-spatiu",
+    title: "Geometrie în Spațiu",
+    description: "Calculează arii și volume pentru principalele corpuri geometrice.",
+    icon: <Cuboid className="h-8 w-8 text-primary" />,
+    lessons: [
+      { id: "geo-08", title: "Puncte, drepte, plane", slug: "puncte-drepte-plane-spatiu", duration: "15 min", type: "Teorie" },
+      { id: "geo-09", title: "Prisma: Arie și Volum", slug: "prisma", duration: "15 min", type: "Formule" },
+      { id: "geo-10", title: "Piramida: Arie și Volum", slug: "piramida", duration: "20 min", type: "Formule" },
+      { id: "geo-11", title: "Trunchiul de piramidă", slug: "trunchi-piramida", duration: "15 min", type: "Formule" },
+      { id: "geo-12", title: "Corpuri rotunde (Cilindru, Con, Sferă)", slug: "corpuri-rotunde", duration: "20 min", type: "Formule" },
+    ],
+  },
 ];
 
 // ============================================================================
