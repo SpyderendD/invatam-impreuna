@@ -48,14 +48,6 @@ export async function middleware(request: NextRequest) {
 // pentru a nu fi blocate de logica de autentificare.
 export const config = {
   matcher: [
-    /*
-     * Rulează pe toate rutele, CU EXCEPȚIA celor care:
-     * - încep cu /api (rute API)
-     * - încep cu /_next/static (fișiere statice Next.js)
-     * - încep cu /_next/image (optimizări de imagine)
-     * - sunt fișiere exacte: favicon.ico, sw.js, manifest.json
-     * - se termină cu .png (pentru iconițele din manifest)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico|sw.js|manifest.json|.*\\.png$).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|sw.js|workbox-.*\\.js|manifest.json|.*\\.png$).*)',
   ],
 };
