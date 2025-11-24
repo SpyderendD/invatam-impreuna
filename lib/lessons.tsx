@@ -3,7 +3,7 @@
 import { JSX } from "react";
 import {
   PenSquare, BookOpen, Languages, Waypoints, Calculator, InfinityIcon,
-  Ruler, Cuboid, Sparkles, Drama, Mic, Heart, Scale, ClipboardList, SpellCheck
+  Ruler, Cuboid, Sparkles, Drama, Mic, Heart, Scale, ClipboardList, SpellCheck, Link2, AudioWaveform, Network, Quote, Gem
 } from "lucide-react";
 
 // ============================================================================
@@ -42,107 +42,152 @@ export interface Subject {
 
 const romanaChapters: Chapter[] = [
   // ========================================================================
-  // PILONUL 1: FUNDAȚIA LIMBII
+  // CAPITOL: FONETICĂ
   // ========================================================================
   {
-    id: "fonetica-ortografie",
-    title: "Fonetică și Ortografie",
-    description: "Înțelege sunetele, literele, silabele și regulile de scriere corectă.",
-    icon: <Languages className="h-8 w-8 text-primary" />,
+    id: "fonetica",
+    title: "Fonetică",
+    description: "Studiul sunetelor limbii române: vocale, consoane, diftongi și silabe.",
+    icon: <AudioWaveform className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "com-01", title: "Ortografie și Ortoepie", slug: "ortografie-si-ortoepie", duration: "20 min", type: "Teorie" },
-      { id: "com-02", title: "Semne de Ortoepie și Punctuație", slug: "semne-ortografie-punctuatie", duration: "15 min", type: "Teorie" },
+      { id: "fon-01", title: "Vocale, Consoane, Semivocale, I șoptit", slug: "fonetica-sunete", duration: "15 min", type: "Teorie" },
+      { id: "fon-02", title: "Diftong, Triftong, Hiat", slug: "fonetica-grupuri-de-sunete", duration: "10 min", type: "Teorie" },
+      { id: "fon-03", title: "Reguli de Despărțire în Silabe", slug: "fonetica-silaba", duration: "15 min", type: "Teorie" },
+      { id: "fon-04", title: "Accentul și Excepții", slug: "fonetica-accentul", duration: "10 min", type: "Teorie" },
     ],
   },
+  
+  // ========================================================================
+  // CAPITOL: RESPECTAREA NORMELOR DE ORTOGRAFIE ȘI PUNCTUAȚIE
+  // ========================================================================
+  {
+    id: "ortografie-punctuatie",
+    title: "Ortografie și Punctuație",
+    description: "Ghid complet pentru scrierea corectă, de la cratimă la utilizarea virgulei.",
+    icon: <Quote className="h-8 w-8 text-primary" />,
+    lessons: [
+      { id: "norm-01", title: "Semnele de Ortografie si punctuatie", slug: "semne-de-ortografie si punctuatie", duration: "15 min", type: "Teorie" },
+    ],
+  },
+  
+  // ========================================================================
+  // CAPITOL: VOCABULAR
+  // ========================================================================
   {
     id: "vocabular",
-    title: "Vocabular (Lexic)",
-    description: "Explorează universul cuvintelor, de la formare la relațiile de sens.",
-    icon: <SpellCheck className="h-8 w-8 text-primary" />, // Iconiță nouă și relevantă
+    title: "Vocabular",
+    description: "Înțelege cum se formează cuvinte noi și relațiile de sens dintre ele.",
+    icon: <SpellCheck className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "com-03", title: "Mijloace de Îmbogățire a Vocabularului", slug: "vocabularul", duration: "25 min", type: "Teorie" },
-      { id: "com-04", title: "Categorii Semantice (Sinonime, etc.)", slug: "categorii-semantice", duration: "20 min", type: "Teorie" },
+      { id: "vocab-01", title: "Derivare", slug: "derivare", duration: "10 min", type: "Teorie" },
+      { id: "vocab-02", title: "Compunere", slug: "compunere", duration: "10 min", type: "Teorie" },
+      { id: "vocab-03", title: "Conversiune", slug: "conversiune", duration: "10 min", type: "Teorie" },
+      { id: "vocab-04", title: "Imprumuturi", slug: "imprumuturi", duration: "10 min", type: "Teorie" },
     ],
   },
 
   // ========================================================================
-  // PILONUL 2: CONSTRUCȚIA PROPOZIȚIILOR
+  // CAPITOL: MORFOLOGIE
   // ========================================================================
   {
     id: "morfologie",
     title: "Morfologie",
-    description: "Stăpânește părțile de vorbire și caracteristicile lor gramaticale.",
+    description: "Analiza detaliată a fiecărei părți de vorbire și a caracteristicilor sale.",
     icon: <BookOpen className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "morf-01", title: "Verbul", slug: "verbul", duration: "25 min", type: "Teorie", quizSlug: "test-verbul" },
-      { id: "morf-02", title: "Substantivul", slug: "substantivul", duration: "20 min", type: "Teorie", quizSlug: "test-substantivul" },
-      { id: "morf-03", title: "Articolul", slug: "articolul", duration: "10 min", type: "Teorie" },
-      { id: "morf-04", title: "Pronumele și Adjectivul Pronominal", slug: "pronumele", duration: "30 min", type: "Teorie" },
-      { id: "morf-05", title: "Adjectivul", slug: "adjectivul", duration: "15 min", type: "Teorie", quizSlug: "test-adjectivul" },
-      { id: "morf-06", title: "Numeralul", slug: "numeralul", duration: "15 min", type: "Teorie" },
-      { id: "morf-07", title: "Adverbul", slug: "adverbul", duration: "10 min", type: "Teorie" },
-      { id: "morf-08", title: "Părți de vorbire neflexibile", slug: "parti-de-vorbire-neflexibile", duration: "15 min", type: "Teorie" },
+      { id: "morf-01", title: "Verbul", slug: "verbul", duration: "25 min", type: "Teorie", worksheetSlug: "fisa-verbul" },
+      { id: "morf-02", title: "Substantivul și Articolul", slug: "substantivul-si-articolul", duration: "25 min", type: "Teorie", worksheetSlug: "fisa-substantivul" },
+      { id: "morf-03", title: "Adjectivul și Gradele de Comparație", slug: "adjectivul", duration: "20 min", type: "Teorie", worksheetSlug: "fisa-adjectivul" },
+      { id: "morf-04", title: "Pronumele și Adjectivul Pronominal", slug: "pronumele-si-adjectivul-pronominal", duration: "30 min", type: "Teorie", worksheetSlug: "fisa-pronumele" },
+      { id: "morf-05", title: "Numeralul", slug: "numeralul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-numeralul" },
+      { id: "morf-06", title: "Adverbul", slug: "adverbul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-adverbul" },
+      { id: "morf-07", title: "Prepoziția", slug: "prepozitia", duration: "10 min", type: "Teorie" },
+      { id: "morf-08", title: "Conjuncția", slug: "conjunctia", duration: "10 min", type: "Teorie" },
+      { id: "morf-09", title: "Interjecția", slug: "interjectia", duration: "10 min", type: "Teorie" },
     ],
   },
+  
+  // ========================================================================
+  // CAPITOL: SINTAXA
+  // ========================================================================
   {
     id: "sintaxa",
     title: "Sintaxa",
-    description: "Învață cum se combină cuvintele pentru a forma propoziții și fraze corecte.",
+    description: "Învață despre propoziții, fraze, relații și construcții sintactice.",
     icon: <Waypoints className="h-8 w-8 text-primary" />,
     lessons: [
-      // Lecțiile tale de sintaxă vor veni aici
-      { id: "sin-01", title: "Vorbirea directă și indirectă", slug: "vorbirea-directa-indirecta", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-vorbirea-directa" },
+      { id: "sin-01", title: "Tipuri de propozitii si enunturi", slug: "sintaxa-propozitia", duration: "20 min", type: "Teorie" },
+      { id: "sin-02", title: "Relatii sinctactice", slug: "relatii-sintactice", duration: "15 min", type: "Teorie" },
+      { id: "sin-03", title: "Constructii", slug: "constructii", duration: "15 min", type: "Teorie" },
+      { id: "sin-04", title: "Apozitia", slug: "apozitia", duration: "15 min", type: "Teorie" },
+    ],
+  },
+  
+  // ========================================================================
+  // CAPITOL: FUNCȚII SINTACTICE
+  // ========================================================================
+  {
+    id: "functii-sintactice",
+    title: "Funcții Sintactice și Realizările Lor",
+    description: "Analiza părților de propoziție și a propozițiilor subordonate corespondente.",
+    icon: <Network className="h-8 w-8 text-primary" />,
+    lessons: [
+      { id: "fs-01", title: "Predicatul si fraza", slug: "functii-sintactice-predicatul", duration: "15 min", type: "Teorie" },
+      { id: "fs-02", title: "Subiectul", slug: "functii-sintactice-subiectul", duration: "15 min", type: "Teorie" },
+      { id: "fs-03", title: "Atributul și Propoziția Atributivă", slug: "functii-sintactice-atributul", duration: "15 min", type: "Teorie" },
+      { id: "fs-04", title: "Complementul și Propozițiile Completive", slug: "functii-sintactice-complementul", duration: "25 min", type: "Teorie" },
+      { id: "fs-05", title: "Circumstanțialul și Propozițiile Circumstanțiale", slug: "functii-sintactice-circumstantialul", duration: "25 min", type: "Teorie" },
     ],
   },
 
   // ========================================================================
-  // PILONUL 3: ARTA SCRISULUI ȘI A ANALIZEI
+  // CAPITOL: REDACTARE
   // ========================================================================
   {
-    id: "teoria-literaturii",
-    title: "Teoria Literaturii și a Textului",
-    description: "Diferențiază tipurile de text și înțelege marile genuri literare.",
-    icon: <Sparkles className="h-8 w-8 text-primary" />,
-    lessons: [
-      { id: "lit-01", title: "Textul Literar vs. Nonliterar", slug: "textul-literar-vs-nonliterar", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-text-literar-nonliterar" },
-      { id: "gen-01", title: "Genul Epic", slug: "genul-epic", duration: "20 min", type: "Teorie", worksheetSlug: "fisa-genul-epic" },
-      { id: "gen-02", title: "Genul Liric", slug: "genul-liric", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-genul-liric" },
-      { id: "gen-03", title: "Genul Dramatic", slug: "genul-dramatic", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-genul-dramatic" },
-    ],
-  },
-  {
-    id: "tehnici-redactare",
-    title: "Tehnici de Redactare",
-    description: "Învață să structurezi și să scrii corect diverse tipuri de compuneri.",
+    id: "redactare",
+    title: "Redactare, Stil și Teorie Literară",
+    description: "Ghid complet pentru a scrie, analiza și înțelege diverse tipuri de texte.",
     icon: <PenSquare className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "red-01", title: "Planul simplu și dezvoltat de idei", slug: "planul-de-idei", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-planul-de-idei" },
-      { id: "red-02", title: "Redactarea Rezumatului", slug: "redactarea-rezumatului", duration: "10 min", type: "Teorie", quizSlug: "test-rezumat", worksheetSlug: "fisa-rezumatul" },
-      { id: "red-03", title: "Redactarea Paginii de Jurnal", slug: "redactarea-paginii-de-jurnal", duration: "10 min", type: "Teorie", quizSlug: "test-jurnal" },
-      { id: "red-04", title: "Redactarea Scrisorii", slug: "redactarea-scrisorii", duration: "10 min", type: "Teorie", quizSlug: "test-scrisoare" },
-      { id: "red-05", title: "Redactarea E-mailului", slug: "redactarea-emailului", duration: "5 min", type: "Teorie", quizSlug: "test-email" },
-      { id: "red-06", title: "Textul Narativ", slug: "textul-narativ", duration: "20 min", type: "Teorie", quizSlug: "test-narativ", worksheetSlug: "fisa-text-narativ" },
-      { id: "red-07", title: "Textul Descriptiv", slug: "textul-descriptiv", duration: "15 min", type: "Teorie", quizSlug: "test-descriptiv", worksheetSlug: "fisa-text-descriptiv" },
-      { id: "red-08", title: "Textul Dialogat", slug: "textul-dialogat", duration: "10 min", type: "Teorie", quizSlug: "test-dialogat", worksheetSlug: "fisa-text-dialogat" },
-      { id: "red-09", title: "Textul Argumentativ", slug: "textul-argumentativ", duration: "15 min", type: "Teorie", quizSlug: "test-argumentativ", worksheetSlug: "fisa-text-argumentativ" },
-      { id: "red-10", title: "Textul Explicativ", slug: "textul-explicativ", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-text-explicativ" },
-      { id: "red-11", title: "Textul Multimodal", slug: "textul-multimodal", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-text-multimodal" },
+      { id: "red-01", title: "Tipuri de Texte (Narativ, Descriptiv, etc.)", slug: "tipuri-de-texte", duration: "15 min", type: "Teorie" },
+      { id: "red-02", title: "Planul de Idei", slug: "planul-de-idei", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-planul-de-idei" },
+      { id: "red-03", title: "Redactarea unui Rezumat", slug: "redactarea-rezumatului", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-rezumatul" },
+      { id: "red-04", title: "Caracterizarea Personajului", slug: "caracterizarea-personajului", duration: "15 min", type: "Teorie" },
+      { id: "red-05", title: "Scrisoarea, E-mailul, Jurnalul", slug: "scrisoare-email-jurnal", duration: "15 min", type: "Teorie" },
+      { id: "red-06", title: "Cererea și Stilul", slug: "cererea-si-stilul", duration: "10 min", type: "Teorie" },
     ],
   },
+  
+  // ========================================================================
+  // CAPITOL: VALORI CULTURALE / MORALE
+  // ========================================================================
   {
-    id: "instrumente-stilistice",
-    title: "Instrumente Stilistice",
-    description: "Explorează uneltele care aduc expresivitate și emoție textelor literare.",
-    icon: <Heart className="h-8 w-8 text-primary" />,
+    id: "valori-culturale",
+    title: "Valori Culturale și Morale",
+    description: "Analiza ideilor și valorilor transmise prin texte literare.",
+    icon: <Gem className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "stil-01", title: "Figuri de Stil", slug: "figuri-de-stil", duration: "20 min", type: "Teorie", worksheetSlug: "fisa-figuri-de-stil" },
-      { id: "stil-02", title: "Imagini Artistice", slug: "imagini-artistice", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-imagini-artistice" },
-      { id: "proz-01", title: "Elemente de Prozodie (Rima, Ritm)", slug: "elemente-de-prozodie", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-elemente-prozodie" },
-      { id: "stil-03", title: "Variante Stilistice ale Limbii", slug: "variante-stilistice", duration: "15 min", type: "Teorie" },
-      { id: "stil-04", title: "Calitățile Stilului", slug: "calitatile-stilului", duration: "15 min", type: "Teorie" },
+      { id: "val-01", title: "Identificarea Valorilor în Text", slug: "valori-culturale-morale", duration: "15 min", type: "Teorie" },
     ],
   },
+
+// ========================================================================
+  // CAPITOL: CATEGORII SEMANTICE
+  // ========================================================================
+  {
+    id: "categorii-semantice",
+    title: "Categorii Semantice",
+    description: "Explorează relațiile de sens dintre cuvinte: sinonime, antonime, omonime etc.",
+    icon: <Link2 className="h-8 w-8 text-primary" />,
+    lessons: [
+      { id: "sem-01", title: "Sinonime, Antonime, Omonime, Omofone, Omografe, Paronime, Pleonasmul, Campul lexical, Locutiunea", slug: "categorii-semantice", duration: "20 min", type: "Teorie" },
+    ],
+  },
+
+
 ];
+
+
 // ============================================================================
 // == DATELE PENTRU MATERIA "MATEMATICĂ" (rămân neschimbate)
 // ============================================================================

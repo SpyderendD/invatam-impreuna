@@ -97,8 +97,10 @@ export default function Clasa7Page() {
                             </li>
                         ))}
                     </ol>
+                    <a>#Prof. Cosin Daniel</a>
                 </div>
             </main>
+            
         </div>
     );
 }

@@ -9,12 +9,14 @@ export async function middleware(request: NextRequest) {
   // Definește AICI toate paginile care NU necesită autentificare.
   // Orice altceva va fi considerat protejat.
   const publicPages = [
-    '/', // Pagina de start
+    '/',
     '/login',
     '/register',
     '/auth/reset-password',
     '/contact',
-    '/termeni'
+    '/termeni',
+    '/politica-confidentialitate',
+    '/cookies',
   ];
 
   // Verificăm dacă pagina curentă este una publică

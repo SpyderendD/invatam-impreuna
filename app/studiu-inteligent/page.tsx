@@ -1,5 +1,3 @@
-// app/studiu-inteligent/page.tsx
-
 'use client';
 
 import Link from 'next/link';
@@ -26,7 +24,8 @@ import {
     ChevronRight,
     Settings,
     CheckCircle,
-    BookMarked
+    BookMarked,
+    Presentation // <-- Am adăugat iconița nouă
 } from 'lucide-react'; 
 
 // --- Varianțe de animație reutilizabile ---
@@ -106,6 +105,28 @@ const aiToolsData = [
       "Care sunt avantajele și dezavantajele energiei nucleare?",
       "Planifică o excursie de 3 zile la Brașov cu un buget de 500 RON.",
     ]
+  },
+  // =======================================================================
+  // --- INSERȚIE NOUĂ --- Instrumentul adăugat pe baza link-ului
+  // =======================================================================
+  {
+    id: "aidocmaker",
+    name: "AI Doc Maker",
+    tagline: "Generatorul tău de prezentări și documente.",
+    description: "Transformă o simplă idee într-o prezentare PowerPoint (PPT) sau un document Word (DOC) complet, în doar câteva secunde. Scrie despre ce vrei să fie materialul, iar AI-ul va genera structura, textul și chiar imaginile potrivite.",
+    href: "https://www.aidocmaker.com/ai-powerpoint-generator",
+    icon: <Presentation className="h-6 w-6" />,
+    steps: [
+      { title: "Descrie Subiectul", description: "Scrie o instrucțiune clară despre tema dorită.", icon: <Sparkles className="h-5 w-5"/> },
+      { title: "Alege Formatul", description: "Selectează dacă vrei o prezentare (PPT) sau un document (DOC).", icon: <FileText className="h-5 w-5"/> },
+      { title: "Descarcă Rezultatul", description: "Downloadează fișierul generat și personalizează-l.", icon: <Download className="h-5 w-5"/> },
+    ],
+    prompts: [
+      "O prezentare despre Revoluția Franceză în 10 slide-uri.",
+      "Creează un document Word care explică ciclul apei în natură.",
+      "Generează o prezentare despre importanța reciclării pentru ora de ecologie.",
+      "Fă un scurt rezumat al romanului 'Ion' de Liviu Rebreanu într-un format de document.",
+    ]
   }
 ];
 
@@ -156,7 +177,8 @@ export default function StudiuInteligentPage() {
           </motion.div>
 
           <Tabs defaultValue="notebooklm" className="w-full max-w-5xl mx-auto">
-            <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 h-auto sm:h-20 p-2">
+             {/* --- MODIFICARE --- Am ajustat grila pentru 4 elemente */}
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto sm:h-20 p-2">
               {aiToolsData.map(tool => (
                 <TabsTrigger key={tool.id} value={tool.id} className="text-base sm:text-sm h-full py-3 sm:py-0 flex flex-col sm:flex-row gap-2 items-center justify-center">
                   {tool.icon} {tool.name}

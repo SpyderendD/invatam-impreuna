@@ -95,8 +95,10 @@ export default function Clasa8Page() {
                             </li>
                         ))}
                     </ol>
+                    <a>#Prof. Cosin Daniel</a>
                 </div>
             </main>
+            
         </div>
     );
 }

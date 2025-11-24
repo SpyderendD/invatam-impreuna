@@ -101,6 +101,7 @@ export default function Clasa5Page() {
                         ))}
                     </ul>
                 </main>
+                <a>#Prof. Cosin Daniel</a>
             </div>
         </div>
     );
