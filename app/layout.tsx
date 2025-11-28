@@ -3,7 +3,7 @@ import './globals.css';
 import { Inter, Lora } from 'next/font/google';
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Providers } from '@/components/Providers';
 
 // =======================================================================
@@ -98,7 +98,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           {children}
         </Providers>
-        
         <SpeedInsights />
       </body>
     </html>
