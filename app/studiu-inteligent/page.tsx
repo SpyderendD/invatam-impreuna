@@ -1,4 +1,3 @@
-// app/studiu-inteligent/page.tsx 
 'use client';
 
 import Link from 'next/link';
@@ -22,13 +21,11 @@ import {
     ChevronRight,
     Settings,
     CheckCircle,
-    BookMarked,
-    Presentation,
-    BookCopy // <-- Am adăugat iconița nouă
+    BookCopy,
+    Presentation
 } from 'lucide-react'; 
 
-// ... (restul datelor tale `aiToolsData` și variantele de animație rămân la fel)
-// ... (copiază-le aici din fișierul tău original)
+// Variante animații
 const sectionFadeIn = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -36,17 +33,17 @@ const sectionFadeIn = {
       y: 0,
       transition: { duration: 0.8, ease: "circOut" }
     },
-  };
+};
   
-  const staggerContainer = {
+const staggerContainer = {
     hidden: {},
     visible: {
       transition: { staggerChildren: 0.1, delayChildren: 0.2 },
     },
-  };
-  
-  const aiToolsData = [
-    // ... datele tale ...
+};
+
+// Datele pentru uneltele AI
+const aiToolsData = [
     {
       id: "notebooklm",
       name: "Google NotebookLM",
@@ -123,11 +120,8 @@ const sectionFadeIn = {
         "Fă un scurt rezumat al romanului 'Ion' de Liviu Rebreanu într-un format de document.",
       ]
     }
-  ];
+];
 
-// =======================================================================
-// Componenta principală a paginii "Studiu Inteligent"
-// =======================================================================
 export default function StudiuInteligentPage() {
   return (
     <>
@@ -182,18 +176,78 @@ export default function StudiuInteligentPage() {
                 </TabsTrigger>
               ))}
             </TabsList>
+
+            {/* AICI ESTE PARTEA CARE LIPSEA - GENERAREA CONȚINUTULUI */}
             {aiToolsData.map(tool => (
-              <TabsContent key={tool.id} value={tool.id} className="mt-8">
-                {/* ... conținutul tab-urilor tale ... (nu se schimbă) */}
+              <TabsContent key={tool.id} value={tool.id} className="mt-8 focus-visible:outline-none">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="rounded-3xl border bg-card/80 backdrop-blur-sm p-6 md:p-10 shadow-2xl"
+                >
+                  {/* Header Area */}
+                  <div className="flex flex-col md:flex-row gap-8 items-start justify-between mb-12 border-b border-border pb-8">
+                    <div className="max-w-2xl">
+                      <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">{tool.tagline}</h3>
+                      <p className="text-muted-foreground text-lg leading-relaxed">{tool.description}</p>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <Button size="lg" className="w-full md:w-auto" asChild>
+                        <a href={tool.href} target="_blank" rel="noopener noreferrer">
+                          Încearcă {tool.name} <ArrowRight className="ml-2 h-4 w-4" />
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    {/* Stânga: Pașii */}
+                    <div className="space-y-6">
+                      <h4 className="text-xl font-semibold flex items-center gap-2">
+                        <Settings className="h-5 w-5 text-primary" /> Cum funcționează?
+                      </h4>
+                      <div className="grid gap-6">
+                        {tool.steps.map((step, idx) => (
+                          <div key={idx} className="flex gap-4 p-4 rounded-xl bg-muted/50 border border-transparent hover:border-primary/20 transition-colors">
+                            <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-background text-primary shadow-sm">
+                              {step.icon}
+                            </div>
+                            <div>
+                              <h5 className="font-semibold text-foreground">{step.title}</h5>
+                              <p className="text-sm text-muted-foreground mt-1">{step.description}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Dreapta: Prompt-uri */}
+                    <div className="space-y-6">
+                      <h4 className="text-xl font-semibold flex items-center gap-2">
+                        <Sparkles className="h-5 w-5 text-primary" /> Ce să-i ceri? (Exemple)
+                      </h4>
+                      <div className="grid gap-3">
+                        {tool.prompts.map((prompt, idx) => (
+                          <div key={idx} className="group flex items-start gap-3 rounded-lg border border-border bg-background p-4 transition-all hover:bg-primary/5 hover:border-primary/50">
+                            <ChevronRight className="h-5 w-5 mt-0.5 text-muted-foreground group-hover:text-primary transition-colors" />
+                            <p className="text-sm text-foreground/80 group-hover:text-foreground font-medium italic">
+                              &ldquo;{prompt}&rdquo;
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
               </TabsContent>
             ))}
+
           </Tabs>
         </div>
       </section>
 
-      {/* ======================================================================= */}
-      {/* =================== SECȚIUNEA NOUĂ PENTRU FLASHCARDS ================== */}
-      {/* ======================================================================= */}
+      {/* Secțiunea Flashcarduri */}
       <section id="instrumente-studiu" className="py-24 bg-background">
         <div className="container">
           <motion.div 
@@ -245,9 +299,14 @@ export default function StudiuInteligentPage() {
         </div>
       </section>
 
-      {/* Secțiunea CTA finală */}
-      <section className="py-20 bg-background">
-        {/* ... secțiunea ta CTA existentă (nu se schimbă) ... */}
+      {/* Secțiunea CTA */}
+      <section className="py-20 bg-background border-t border-border">
+        <div className="container text-center">
+            <h2 className="text-3xl font-bold tracking-tight mb-6">Gata să înveți mai inteligent?</h2>
+            <Button size="lg" asChild className="rounded-full px-8 text-lg">
+                <Link href="/register">Creează Cont Gratuit</Link>
+            </Button>
+        </div>
       </section>
     </>
   );
