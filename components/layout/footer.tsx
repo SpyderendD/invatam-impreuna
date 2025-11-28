@@ -48,14 +48,15 @@ const FooterLinkColumn = ({ title, links }: { title: string; links: Array<{ href
   <div>
     <h3 className="font-bold text-lg mb-4 text-foreground">{title}</h3>
     <ul className="space-y-2">
-      {links.map((link) => (
-        <li key={link.href}>
-          <Link href={link.href} className="text-muted-foreground hover:text-primary animated-underline inline-block">
-            {link.label}
-          </Link>
-        </li>
-      ))}
-    </ul>
+  {links.map((link) => (
+    
+    <li key={link.label}> 
+      <Link href={link.href} className="text-muted-foreground hover:text-primary animated-underline inline-block">
+        {link.label}
+      </Link>
+    </li>
+  ))}
+</ul>
   </div>
 );
 

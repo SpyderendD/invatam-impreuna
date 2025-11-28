@@ -79,7 +79,7 @@ const romanaChapters: Chapter[] = [
     description: "Înțelege cum se formează cuvinte noi și relațiile de sens dintre ele.",
     icon: <SpellCheck className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "vocab-01", title: "Derivare", slug: "derivare", duration: "10 min", type: "Teorie" },
+      { id: "vocab-01", title: "Derivare", slug: "derivare", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-derivare" },
       { id: "vocab-02", title: "Compunere", slug: "compunere", duration: "10 min", type: "Teorie" },
       { id: "vocab-03", title: "Conversiune", slug: "conversiune", duration: "10 min", type: "Teorie" },
       { id: "vocab-04", title: "Imprumuturi", slug: "imprumuturi", duration: "10 min", type: "Teorie" },
