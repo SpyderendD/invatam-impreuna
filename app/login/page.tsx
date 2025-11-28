@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react'; // <--- Am adăugat Suspense
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation'; // Verifică acest import
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, User } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
@@ -13,9 +13,10 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BookOpen, Eye, EyeOff, Mail, Lock, Loader2 } from 'lucide-react';
 
-export default function LoginPage() {
+// Aceasta este componenta internă care conține logica (și useSearchParams)
+function LoginForm() {
   const router = useRouter();
-  const searchParams = useSearchParams(); // Hook pentru a citi parametrii din URL
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -34,10 +35,17 @@ export default function LoginPage() {
     toast({ title: 'Autentificare reușită!' });
     await createSessionCookie(user);
     const nextUrl = searchParams.get('next');
-    router.replace(nextUrl || '/dashboard'); // Aici e logica importantă
+    router.replace(nextUrl || '/dashboard');
   }
   
-  // ... restul funcțiilor (handleAuthError, handleSubmit, handleGoogleSignIn) rămân la fel
+  function handleAuthError(error: any, provider: string) {
+    console.error(`Eroare la login cu ${provider}:`, error);
+    toast({
+      title: 'Eroare de autentificare',
+      description: 'Datele introduse sunt incorecte. Verifică emailul și parola.',
+      variant: 'destructive',
+    });
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,7 +55,7 @@ export default function LoginPage() {
       const cred = await signInWithEmailAndPassword(auth, email, password);
       await handleAuthSuccess(cred.user);
     } catch (error) {
-      //... handleAuthError
+      handleAuthError(error, 'Email/Password');
     } finally {
       setIsLoading(false);
     }
@@ -60,24 +68,13 @@ export default function LoginPage() {
       const cred = await signInWithPopup(auth, new GoogleAuthProvider());
       await handleAuthSuccess(cred.user);
     } catch (error) {
-      //... handleAuthError
+      handleAuthError(error, 'Google');
     } finally {
       setIsLoading(false);
     }
   };
 
-  function handleAuthError(error: any, provider: string) {
-    console.error(`Eroare la login cu ${provider}:`, error);
-    toast({
-      title: 'Eroare de autentificare',
-      description: 'Datele introduse sunt incorecte. Verifică emailul și parola.',
-      variant: 'destructive',
-    });
-  }
-
-
   return (
-    // ... restul JSX-ului tău (e corect)
     <div className="min-h-screen flex flex-col auth-background">
       <main className="flex-1 flex items-center justify-center p-4">
         <motion.div
@@ -141,5 +138,18 @@ export default function LoginPage() {
         </motion.div>
       </main>
     </div>
+  );
+}
+
+// Aceasta este componenta exportată care satisface cerințele Next.js de Suspense
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center auth-background">
+        <Loader2 className="h-10 w-10 animate-spin text-primary" />
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   );
 }
