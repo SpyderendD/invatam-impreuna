@@ -20,20 +20,40 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // Poți adăuga și alte câmpuri, de ex. nume
-  // const [displayName, setDisplayName] = useState('');
+
+  // --- ADAUGĂ ACEASTĂ FUNCȚIE (Copiată din Login) ---
+  async function createSessionCookie(user: any) {
+    const idToken = await user.getIdToken(true);
+    await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idToken }),
+    });
+  }
+  // --------------------------------------------------
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      // AuthProvider va detecta noul user și va crea sesiunea
+      // 1. Creează contul în Firebase (Client)
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      
+      // 2. --- PAS CRITIC ADĂUGAT ---
+      // Creează sesiunea pe server (Cookie)
+      await createSessionCookie(userCredential.user);
+      // -----------------------------
+
       toast({ title: "Cont creat cu succes!", description: "Vei fi redirecționat..." });
-      router.push('/dashboard');
+      
+      // 3. Acum poți naviga, serverul va vedea cookie-ul
+      router.push('/dashboard'); 
+      router.refresh(); // Recomandat pentru a actualiza Server Components
+      
     } catch (error: any) {
-      let description = 'A apărut o eroare. Te rugăm să încerci din nou.';
+      // ... gestionarea erorilor rămâne la fel
+      let description = 'A apărut o eroare.';
       if (error.code === 'auth/email-already-in-use') { description = 'Această adresă de email este deja folosită.'; }
       else if (error.code === 'auth/weak-password') { description = 'Parola trebuie să aibă cel puțin 6 caractere.'; }
       toast({ title: 'Eroare la înregistrare', description, variant: 'destructive' });

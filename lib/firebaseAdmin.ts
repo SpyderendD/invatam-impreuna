@@ -29,4 +29,4 @@ if (!admin.apps.length) {
 
 // Exportăm `adminAuth` și `adminDb` doar dacă inițializarea a reușit.
 export const adminAuth = admin.apps.length ? admin.auth() : null;
-export const adminDb = admin.apps.length ? getFirestore() : null; // AICI ESTE ADAUGAREA CRUCIALĂ
+export const adminDb = admin.apps.length ? getFirestore() : null;

@@ -60,15 +60,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   // Funcția de logout, centralizată aici pentru a fi reutilizabilă
-  const logout = async () => {
+ const logout = async () => {
     try {
-      // Spunem serverului să șteargă cookie-ul de sesiune (dacă folosești așa ceva)
+      // 1. Șterge cookie server
       await fetch('/api/auth/logout', { method: 'POST' });
-      // Delogăm utilizatorul de pe client, folosind SDK-ul Firebase
+      
+      // 2. Delogare client
       await auth.signOut();
+      
       toast({ title: 'Deconectare reușită!' });
-      // Redirectăm utilizatorul către pagina principală
-      router.replace('/');
+      
+      // 3. MODIFICARE: Forțează reîncărcarea completă a paginii
+      // Aceasta curăță orice cache de client Next.js și resetează starea complet.
+      window.location.href = '/'; 
+      
     } catch (error) {
       console.error("Eroare la logout:", error);
       toast({ title: 'Eroare la deconectare', variant: 'destructive' });
