@@ -43,19 +43,23 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // ============================================================================
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true); // Începe mereu cu `true` pentru a verifica starea de autentificare
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // Acest efect rulează o singură dată la încărcarea aplicației.
-  // `onAuthStateChanged` este un listener de la Firebase care ne anunță
-  // automat de fiecare dată când starea de autentificare se schimbă.
   useEffect(() => {
+    // Adaugă un console.log să vedem dacă pornește Firebase
+    console.log("AuthProvider: Initializing Firebase listener...");
+    
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      console.log("AuthProvider: Auth State Changed!", firebaseUser?.email);
       setUser(firebaseUser);
-      setLoading(false); // Am terminat verificarea, ascundem scheletul
+      setLoading(false);
+    }, (error) => {
+      // Prinde erorile de inițializare
+      console.error("AuthProvider Error:", error);
+      setLoading(false); // Oprim loading-ul chiar și la eroare ca să nu rămână gri
     });
 
-    // Curățăm listener-ul când componenta este "demontată" pentru a evita memory leaks.
     return () => unsubscribe();
   }, []);
 
@@ -91,9 +95,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {/* Cât timp se verifică starea de autentificare, afișăm un schelet.
-          Altfel, afișăm conținutul normal al aplicației. */}
-      {loading ? <AppSkeleton /> : children}
+      {children}
     </AuthContext.Provider>
   );
 };
