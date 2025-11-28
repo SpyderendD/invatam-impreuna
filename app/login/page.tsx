@@ -133,6 +133,7 @@ function LoginForm() {
                 </Button>
               </div>
               <div className="mt-6 text-center text-sm"><span className="text-muted-foreground">Nu ai un cont? </span><Link href="/register" className="font-medium text-primary underline-offset-4 hover:underline">Înregistrare</Link></div>
+              <a>După ce te conectezi, așteaptă 5-6 secunde, apoi dă refresh la pagina.</a>
             </CardContent>
           </Card>
         </motion.div>
