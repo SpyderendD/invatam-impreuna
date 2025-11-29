@@ -1,4 +1,4 @@
-//hooks/use-toast.ts
+// components/ui/use-toast.ts
 'use client';
 
 // Inspired by react-hot-toast library
