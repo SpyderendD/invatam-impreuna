@@ -50,7 +50,7 @@ const romanaChapters: Chapter[] = [
     description: "Studiul sunetelor limbii române: vocale, consoane, diftongi și silabe.",
     icon: <AudioWaveform className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "fon-01", title: "Vocale, Consoane, Semivocale, I șoptit", slug: "fonetica-sunete", duration: "15 min", type: "Teorie" },
+      { id: "fon-01", title: "Vocale, Consoane, Semivocale, I șoptit", slug: "fonetica-sunete", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-sunete" },
       { id: "fon-02", title: "Diftong, Triftong, Hiat", slug: "fonetica-grupuri-de-sunete", duration: "10 min", type: "Teorie" },
       { id: "fon-03", title: "Reguli de Despărțire în Silabe", slug: "fonetica-silaba", duration: "15 min", type: "Teorie" },
       { id: "fon-04", title: "Accentul și Excepții", slug: "fonetica-accentul", duration: "10 min", type: "Teorie" },
@@ -80,9 +80,9 @@ const romanaChapters: Chapter[] = [
     icon: <SpellCheck className="h-8 w-8 text-primary" />,
     lessons: [
       { id: "vocab-01", title: "Derivare", slug: "derivare", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-derivare" },
-      { id: "vocab-02", title: "Compunere", slug: "compunere", duration: "10 min", type: "Teorie" },
-      { id: "vocab-03", title: "Conversiune", slug: "conversiune", duration: "10 min", type: "Teorie" },
-      { id: "vocab-04", title: "Imprumuturi", slug: "imprumuturi", duration: "10 min", type: "Teorie" },
+      { id: "vocab-02", title: "Compunere", slug: "compunere", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-compunere" },
+      { id: "vocab-03", title: "Conversiune", slug: "conversiune", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-conversiune" },
+      { id: "vocab-04", title: "Imprumuturi", slug: "imprumuturi", duration: "10 min", type: "Teorie",  worksheetSlug: "fisa-imprumuturi" },
     ],
   },
 

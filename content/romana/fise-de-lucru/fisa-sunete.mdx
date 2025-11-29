@@ -1,0 +1,151 @@
+
+<div className="w-full max-w-3xl mx-auto font-sans text-slate-800 dark:text-slate-200">
+
+  {/* HEADER */}
+  <div className="text-center mb-12">
+    <div className="inline-block p-3 rounded-full bg-indigo-100 dark:bg-indigo-900/30 mb-4 text-3xl">🎧</div>
+    <h1 className="text-4xl font-extrabold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 m-0">
+      Laboratorul de Sunete
+    </h1>
+    <div className="text-slate-600 dark:text-slate-400 text-lg">
+      Ascultă cu atenție cuvintele și clasifică sunetele.
+    </div>
+  </div>
+
+  {/* EXERCIȚIUL 1 */}
+  <div className="mb-8">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+        Nivelul 1
+      </span>
+      <h2 className="text-xl font-bold text-slate-800 dark:text-white m-0">
+        Vocală sau Consoană?
+      </h2>
+    </div>
+
+    <div className="rounded-xl border shadow-sm p-6 bg-white border-slate-200 dark:bg-slate-800 dark:border-slate-700">
+      <div className="mb-6 text-lg font-medium text-slate-700 dark:text-slate-300">
+        Analizează cuvântul: <span className="text-blue-600 dark:text-blue-400 font-bold text-2xl">"va-ră"</span>
+      </div>
+
+      <div className="space-y-3">
+        {/* Q1 */}
+        <details className="group rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 open:bg-blue-50 dark:open:bg-blue-900/20 transition-all duration-200">
+          <summary className="flex cursor-pointer items-center justify-between p-4 font-medium text-slate-700 dark:text-slate-200">
+            <span>1. Ce este sunetul "v"?</span>
+            <span className="transition group-open:rotate-180">▼</span>
+          </summary>
+          <div className="px-4 pb-4 pt-0 text-slate-600 dark:text-slate-300 border-t border-slate-200 dark:border-slate-700 pt-4 mt-2">
+            Este o <strong>Consoană</strong>. <br/>
+            <span className="text-sm opacity-75">Explicație: Nu se poate rosti fără ajutorul vocalei "a" și nu formează silabă singur.</span>
+          </div>
+        </details>
+
+        {/* Q2 */}
+        <details className="group rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 open:bg-blue-50 dark:open:bg-blue-900/20 transition-all duration-200">
+          <summary className="flex cursor-pointer items-center justify-between p-4 font-medium text-slate-700 dark:text-slate-200">
+            <span>2. Ce sunt sunetele "a" și "ă"?</span>
+            <span className="transition group-open:rotate-180">▼</span>
+          </summary>
+          <div className="px-4 pb-4 pt-0 text-slate-600 dark:text-slate-300 border-t border-slate-200 dark:border-slate-700 pt-4 mt-2">
+            Sunt <strong>Vocale</strong>. <br/>
+            <span className="text-sm opacity-75">Explicație: Ele sunt nucleul silabelor (va-ră).</span>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  {/* EXERCIȚIUL 2 */}
+  <div className="mb-8">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300">
+        Nivelul 2
+      </span>
+      <h2 className="text-xl font-bold text-slate-800 dark:text-white m-0">
+        Detectivul de Semivocale 🔍
+      </h2>
+    </div>
+
+    <div className="rounded-xl border shadow-sm p-6 bg-white border-slate-200 dark:bg-slate-800 dark:border-slate-700">
+      <div className="mb-6 text-lg font-medium text-slate-700 dark:text-slate-300">
+        Analizează diftongul din cuvântul: <span className="text-purple-600 dark:text-purple-400 font-bold text-2xl">"sea-ră"</span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+          <div className="text-sm text-slate-500 uppercase font-bold mb-2">Sunetul "e"</div>
+          <details className="group">
+            <summary className="cursor-pointer text-purple-600 dark:text-purple-400 font-bold select-none hover:underline">Arată Răspunsul</summary>
+            <div className="mt-2 text-slate-800 dark:text-white font-bold bg-purple-100 dark:bg-purple-900/50 p-2 rounded">SEMIVOCALĂ</div>
+          </details>
+        </div>
+
+        <div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+          <div className="text-sm text-slate-500 uppercase font-bold mb-2">Sunetul "a"</div>
+          <details className="group">
+            <summary className="cursor-pointer text-purple-600 dark:text-purple-400 font-bold select-none hover:underline">Arată Răspunsul</summary>
+            <div className="mt-2 text-slate-800 dark:text-white font-bold bg-purple-100 dark:bg-purple-900/50 p-2 rounded">VOCALĂ</div>
+          </details>
+        </div>
+      </div>
+      <div className="text-xs text-slate-500 dark:text-slate-400 mt-4 italic">
+        *Hint: Vocala este sunetul care se aude cel mai tare și poate fi prelungit.
+      </div>
+    </div>
+  </div>
+
+  {/* EXERCIȚIUL 3 - BOSS FIGHT */}
+  <div className="mb-12">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300">
+        Nivelul 3
+      </span>
+      <h2 className="text-xl font-bold text-slate-800 dark:text-white m-0">
+        Capcana de la Examen 🤫
+      </h2>
+    </div>
+
+    <div className="relative rounded-xl overflow-hidden p-8 shadow-2xl bg-slate-900 text-white">
+      <div className="relative z-10">
+        <div className="text-lg mb-6 leading-relaxed font-medium">
+          Alege varianta corectă pentru sunetul final din cuvântul <span className="text-amber-400 font-mono text-2xl">"POMI"</span>:
+        </div>
+        
+        <div className="flex flex-col gap-3 mb-8">
+          {['A. Este vocală (formează silabă)', 'B. Este semivocală', 'C. Este "i" șoptit / asilabic'].map((option, idx) => (
+            <div key={idx} className="p-4 rounded-lg border border-slate-700 bg-slate-800/50 text-slate-300 hover:bg-slate-800 transition-colors">
+              {option}
+            </div>
+          ))}
+        </div>
+
+        <details className="group">
+          <summary className="inline-flex items-center gap-2 cursor-pointer px-6 py-3 rounded-lg font-bold bg-amber-500 text-slate-900 hover:bg-amber-400 transition-all shadow-lg hover:shadow-amber-500/20">
+            <span>Verifică Răspunsul</span>
+            <span className="transition-transform group-open:rotate-180">▼</span>
+          </summary>
+          
+          <div className="mt-6 p-6 rounded-xl border border-amber-500/30 bg-slate-800/80 backdrop-blur-sm">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-3xl">🏆</span>
+              <h3 className="text-xl font-bold text-amber-400 m-0">Răspuns Corect: C</h3>
+            </div>
+            <div className="text-slate-300 leading-relaxed">
+              În cuvântul <em>pomi</em> (o singură silabă), vocala este <strong>O</strong>. 
+              Sunetul "i" de la final este scurt, abia se aude și nu face silabă nouă.
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <div className="text-center p-8 rounded-2xl bg-gradient-to-b from-transparent to-slate-100 dark:to-slate-900">
+    <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-2 m-0">🎉 Felicitări!</h3>
+    <div className="text-slate-500 dark:text-slate-400">
+      Ai învățat să eviți cele mai mari capcane din fonetică!
+    </div>
+  </div>
+
+</div>

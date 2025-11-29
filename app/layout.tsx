@@ -5,6 +5,7 @@ import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Providers } from '@/components/Providers';
+import { CustomCursor } from '@/components/animations/CustomCursor';
 
 // =======================================================================
 // 1. FONTURI
@@ -97,6 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             de Autentificare și Temă pentru întreaga aplicație. */}
         <Providers>
           {children}
+          <CustomCursor />
         </Providers>
         <SpeedInsights />
       </body>
