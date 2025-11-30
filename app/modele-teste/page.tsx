@@ -7,8 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Globe, ExternalLink, Copy, Check, Search, Link as LinkIcon, ShieldAlert } from 'lucide-react';
+// --- IMPORT PENTRU CRONOMETRU ---
+import { CountdownTimer } from '@/components/ui/countdown-timer';
 
 type SiteLink = {
   id: string;
@@ -25,7 +26,7 @@ type SiteGroup = {
   links: SiteLink[];
 };
 
-// Surse recomandate (poți ajusta titlurile/URL-urile)
+// --- LISTA TA ACTUALIZATĂ DE SURSE ---
 const SOURCES: SiteGroup[] = [
   {
     id: 'subiecte',
@@ -33,9 +34,10 @@ const SOURCES: SiteGroup[] = [
     label: 'Subiecte.edu.ro (Ministerul Educației)',
     description: 'Arhivele anuale cu subiecte și bareme pentru Evaluarea Națională.',
     links: [
-      { id: 'sub-2024', title: 'Arhivă 2024 – EN', url: 'https://subiecte.edu.ro/2024/', tags: ['oficial', 'arhivă', '2024'] },
-      { id: 'sub-2023', title: 'Arhivă 2023 – EN', url: 'https://subiecte.edu.ro/2023/', tags: ['oficial', 'arhivă', '2023'] },
-      { id: 'sub-2022', title: 'Arhivă 2022 – EN', url: 'https://subiecte.edu.ro/2022/', tags: ['oficial', 'arhivă', '2022'] },
+      { id: 'sub-2026', title: 'Arhivă 2026 – EN', url: 'https://subiecte.edu.ro/2026/', tags: ['oficial', 'arhivă', '2026'] },
+      { id: 'sub-root', title: 'Arhiva 2025 – EN', url: 'http://subiecte2025.edu.ro/2025/', tags: ['oficial', 'arhiva', '2025'] },
+      { id: 'sub-2024', title: 'Arhivă 2024 – EN', url: 'http://subiecte2024.edu.ro/2024/', tags: ['oficial', 'arhivă', '2024'] },
+      { id: 'sub-2023', title: 'Arhivă 2023 – EN', url: 'http://subiecte2023.edu.ro/2023/', tags: ['oficial', 'arhivă', '2023'] },
     ],
   },
   {
@@ -45,28 +47,27 @@ const SOURCES: SiteGroup[] = [
     description: 'Informații oficiale despre examene și calendare pentru EN.',
     links: [
       { id: 'edu-root', title: 'Pagina principală – informații EN', url: 'https://www.edu.ro/', tags: ['oficial', 'informații'] },
-      // Poți adăuga aici pagini specifice pentru EN, dacă ai URL-uri directe.
     ],
   },
   {
     id: 'heiprofu',
     domain: 'heiprofu.ro',
-    label: 'HeiProfu – Subiecte EN VIII (Matematică)',
-    description: 'Colecție utilă de linkuri pentru subiecte EN8 la Matematică.',
+    label: 'HeiProfu – Subiecte EN VIII (Matematică și Română)',
+    description: 'Colecție utilă de linkuri pentru subiecte EN.',
     links: [
       {
-        id: 'heiprofu-en8',
-        title: 'Subiecte EN8 – Matematică',
+        id: 'heiprofu-en',
+        title: 'Subiecte EN',
         url: 'https://heiprofu.ro/examene-matematica/evaluare-nationala-clasa-a-8-a/subiecte-en8/',
-        tags: ['matematică', 'subiecte', 'barem'],
+        tags: ['matematică', 'subiecte', 'barem', 'română'], 
       },
     ],
   },
   {
     id: 'e3',
     domain: 'www.e3.ro',
-    label: 'E3 – Resurse Evaluarea Națională',
-    description: 'Materiale și resurse utile pentru EN.',
+    label: 'E3 – Resurse Evaluarea Națională - Matematică',
+    description: 'Materiale și resurse utile pentru EN - Matematică.',
     links: [
       { id: 'e3-root', title: 'E3 – Pagina principală', url: 'https://www.e3.ro/', tags: ['resurse', 'materiale'] },
     ],
@@ -76,6 +77,9 @@ const SOURCES: SiteGroup[] = [
 export default function ModeleTesteLinksPage() {
   const [q, setQ] = useState('');
   const [copied, setCopied] = useState<string | null>(null);
+
+  // !! --- DATA ȚINTĂ PENTRU EXAMEN ---
+  const examDate = useMemo(() => new Date('2026-06-22T09:00:00'), []);
 
   const filtered = useMemo(() => {
     const text = q.trim().toLowerCase();
@@ -107,12 +111,23 @@ export default function ModeleTesteLinksPage() {
   return (
     <div className="min-h-screen bg-background">
       <main className="container max-w-5xl mx-auto px-4 py-12">
-        {/* Header */}
-        <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
+        {/* Header - L-am centrat pentru un aspect mai bun cu cronometrul dedesubt */}
+        <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} className="mb-12 text-center">
           <h1 className="text-3xl md:text-4xl font-bold font-lora tracking-tight">Modele teste Evaluarea Națională</h1>
-          <p className="text-muted-foreground mt-1">
-            Găsești mai jos linkuri direct către site-urile sursă (subiecte + bareme). Descarci de acolo varianta corectă.
+          <p className="text-muted-foreground mt-1 max-w-2xl mx-auto">
+            Găsești mai jos linkuri direct către sursele oficiale, plus timpul rămas până la examen.
           </p>
+        </motion.div>
+        
+        {/* SECȚIUNEA PENTRU CRONOMETRU REINTEGRATĂ AICI */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mb-12 rounded-xl border bg-card p-6 md:p-8"
+        >
+            <h2 className="text-center text-xl md:text-2xl font-semibold mb-6">Timp rămas până la Evaluarea Națională 2026</h2>
+            <CountdownTimer targetDate={examDate} />
         </motion.div>
 
         {/* Căutare */}
@@ -127,7 +142,7 @@ export default function ModeleTesteLinksPage() {
           </div>
           <div className="md:col-span-4 flex items-center justify-end text-xs text-muted-foreground gap-2">
             <ShieldAlert className="h-4 w-4" />
-            Dacă un link nu mai funcționează, intră pe pagina principală a site-ului și navighează la secțiunea Evaluarea Națională.
+            Dacă un link nu mai funcționează, intră pe pagina principală a site-ului.
           </div>
         </div>
 

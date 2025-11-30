@@ -14,7 +14,7 @@ import HeartRating from '@/components/HeartRating';
 // AICI ESTE IMPORTUL CORECTAT
 import InteractiveHeroIllustration from '@/components/animations/InteractiveHeroIllustration';
 
-// ... restul codului rămâne la fel ...
+
 const sectionFadeIn = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "circOut" } }, };
 const staggerContainer = { hidden: {}, visible: { transition: { staggerChildren: 0.15, delayChildren: 0.2 } }, };
 
@@ -51,11 +51,13 @@ export default function ContactForm() {
         <motion.div variants={sectionFadeIn} className="space-y-6 lg:col-span-1">
           <h2 className="text-3xl font-bold text-foreground">Un proiect născut din luptă</h2>
           <div className="text-lg text-muted-foreground leading-relaxed space-y-5 font-lora">
-            <p>„Acest site nu a apărut peste noapte. În spatele lui sunt ore lungi de muncă, momente de oboseală, frustrare și gânduri de a renunța. Dar, de fiecare dată, mi-am amintit de ce am început.</p>
-            <p>Am vrut să creez un loc unde învățarea să fie mai clară și mai ușoară, nu doar pentru mine, ci și pentru oricine are nevoie. Pentru mine, fiecare rând scris aici, fiecare pagină creată, a însemnat o luptă între a mă simți pierdut și dorința de a reuși.</p>
-            <p>Poate nu este un site perfect, dar este plin de suflet. Este o parte din mine, din dorința mea de a face bine și de a lăsa ceva care să rămână și după ce eu nu voi mai fi doar „un elev”.</p>
-            <p>Dacă citești asta, înseamnă că ai ajuns într-un loc construit cu multă trudă și cu speranța că va ajuta, măcar puțin. Și dacă te-a atins cumva, te rog să duci mai departe acest mesaj: să fim mai buni unii cu alții, să nu fim răi, să nu uităm că fiecare om poartă o luptă pe care ceilalți nu o văd.</p>
-            <p>Acest site e dovada mea că, oricât de greu ar fi, poți să transformi durerea și efortul în ceva frumos. Și dacă într-o zi cineva îl va promova, nu va fi despre mine, ci despre ideea că și din lupta unui singur om poate să se nască o lumină pentru alții. <Star className="inline-block h-5 w-5 text-yellow-500 fill-yellow-500 -mt-1" />”</p>
+            <p>Acest site nu s-a născut într-o clipă. Nu e un simplu proiect apărut din plictiseală. Este rezultatul unor nopți în care somnul mi-a tremurat între gene, unor ore lungi în care m-am simțit epuizat, confuz, și unor momente în care mi-am pus întrebarea: „De ce mai continui?”</p>
+            <p>Au fost zile în care eram răcit, cu febră, cu gâtul în flăcări, în care corpul îmi spunea să mă opresc. Și totuși, cu ochii înroșiți și degetele tremurând, am continuat să lucrez la acest site. Nu pentru că era ușor, ci pentru că simțeam că altfel m-aș trăda pe mine însumi.</p>
+            <p>Am pornit de la un vis simplu: să fac învățarea mai limpede. Mai umană. Nu doar pentru mine, ci pentru oricine are nevoie să fie ghidat, încurajat, văzut.</p>
+            <p>Fiecare rând scris, fiecare pagină construită, a fost o bătălie între îndoială și speranță. De multe ori am simțit că mă înec în greșeli, că nu sunt suficient, dar de fiecare dată m-am ridicat cu aceeași întrebare în minte: „Oare pot să fac ceva care să ajute?”</p>
+            <p>Poate nu e un site perfect. Nu e un copil al programatorilor profesioniști, nu e finanțat de companii mari. Este un colț de suflet. O bucățică din dorința mea de a face bine, de a lăsa în urmă ceva care să conteze, un semn că am existat cu adevărat, nu doar ca „un elev”, ci ca cineva care a ales să construiască, nu să renunțe.</p>
+            <p>Dacă citești aceste rânduri, înseamnă că ai ajuns într-un loc născut din trudă, sacrificiu și tăcerea unor lupte pe care nimeni nu le vede. Și dacă simți măcar un fir de emoție, te rog să păstrezi acest gând: fii bun cu oamenii. Fiecare dintre noi duce în spate povara unor zile grele, a unor vise fragile, a unor lacrimi ascunse.</p>
+            <p>Acest site este dovada mea că durerea, boala, oboseala și frustrarea pot fi transformate în lumină. Și dacă într-o zi cineva îl va promova, nu vreau să fie despre mine. Vreau să fie despre ideea că, din lupta unui singur om, se poate naște o punte pentru mii. <Star className="inline-block h-5 w-5 text-yellow-500 fill-yellow-500 -mt-1" /></p>
           </div>
         </motion.div>
         <motion.div variants={sectionFadeIn} className="hidden lg:flex items-center justify-center lg:col-span-1">
