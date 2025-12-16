@@ -1,0 +1,137 @@
+---
+title: "Antrenament - Grupuri de Sunete"
+description: "Exerciții interactive pentru Diftong, Triftong și Hiat."
+subject: "Limba și literatura română"
+grade: "Clasa a VIII-a"
+category: "Exerciții"
+---
+
+<div className="w-full max-w-3xl mx-auto font-sans">
+
+  {/* HEADER */}
+  <div style={{textAlign: 'center', marginBottom: '48px'}}>
+    <h1 style={{fontSize: '2.5rem', marginBottom: '12px', background: '-webkit-linear-gradient(45deg, #0891b2, #2563eb)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: '800', margin: 0}}>
+      Sala de Antrenament
+    </h1>
+    <div style={{color: '#94a3b8', fontSize: '1.1rem'}}>
+      Testează-ți urechea muzicală și cunoștințele fonetice.
+    </div>
+  </div>
+
+  {/* LEVEL 1: Card Alb cu Accente Portocalii */}
+  <div style={{marginBottom: '32px'}}>
+    <div style={{display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px'}}>
+      <span style={{padding: '4px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase', backgroundColor: '#ffedd5', color: '#c2410c'}}>
+        Nivelul 1
+      </span>
+      <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', margin: 0, color: '#e2e8f0'}}>
+        Diftong sau Hiat?
+      </h2>
+    </div>
+
+    <div style={{backgroundColor: 'white', borderRadius: '12px', padding: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'}}>
+      <div style={{marginBottom: '16px', color: '#475569', fontWeight: '500'}}>Analizează perechile de vocale colorate:</div>
+
+      <div style={{display: 'flex', flexDirection: 'column', gap: '12px'}}>
+        {/* Q1 */}
+        <details style={{backgroundColor: '#fff7ed', borderRadius: '8px', padding: '16px', cursor: 'pointer', border: '1px solid #fed7aa', color: '#334155'}}>
+          <summary style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 'bold'}}>
+            <span>1. C<span style={{color: '#ea580c'}}>oa</span>-lă</span>
+            <span style={{fontSize: '0.9rem', color: '#94a3b8'}}>Vezi răspuns</span>
+          </summary>
+          <div style={{marginTop: '12px', paddingTop: '12px', borderTop: '1px solid #fed7aa', color: '#9a3412'}}>
+            <strong>Diftong ✅</strong> - Sunt în aceeași silabă. (o=semivocală, a=vocală)
+          </div>
+        </details>
+
+        {/* Q2 */}
+        <details style={{backgroundColor: '#f0fdfa', borderRadius: '8px', padding: '16px', cursor: 'pointer', border: '1px solid #ccfbf1', color: '#334155'}}>
+          <summary style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 'bold'}}>
+            <span>2. A-l<span style={{color: '#0d9488'}}>e-e</span></span>
+            <span style={{fontSize: '0.9rem', color: '#94a3b8'}}>Vezi răspuns</span>
+          </summary>
+          <div style={{marginTop: '12px', paddingTop: '12px', borderTop: '1px solid #ccfbf1', color: '#115e59'}}>
+             <strong>Hiat ⚡</strong> - Vocalele sunt în silabe diferite: <em>A-l<strong>e</strong>-<strong>e</strong></em>.
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  {/* LEVEL 2: Card Alb cu Accente Mov */}
+  <div style={{marginBottom: '32px'}}>
+    <div style={{display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px'}}>
+      <span style={{padding: '4px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase', backgroundColor: '#f3e8ff', color: '#7e22ce'}}>
+        Nivelul 2
+      </span>
+      <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', margin: 0, color: '#e2e8f0'}}>
+        Vânătorul de Triftongi 🏹
+      </h2>
+    </div>
+
+    <div style={{backgroundColor: 'white', borderRadius: '12px', padding: '24px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'}}>
+      <div style={{marginBottom: '16px', color: '#475569', fontWeight: '500'}}>
+        Care dintre următoarele cuvinte conține un <span style={{color: '#9333ea', fontWeight: 'bold'}}>triftong</span>?
+      </div>
+
+      <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px'}}>
+        {/* Option A */}
+        <div style={{backgroundColor: '#f1f5f9', padding: '16px', borderRadius: '8px', border: '1px solid #e2e8f0', color: '#64748b', textAlign: 'center'}}>
+          <div style={{fontSize: '1.2rem', fontFamily: 'monospace', marginBottom: '8px'}}>Poezie</div>
+          <div style={{fontSize: '0.8rem', color: '#ef4444'}}>❌ Hiat (po-e-zi-e)</div>
+        </div>
+
+        {/* Option B */}
+        <div style={{backgroundColor: '#faf5ff', padding: '16px', borderRadius: '8px', border: '2px solid #a855f7', color: '#334155', textAlign: 'center', boxShadow: '0 4px 10px rgba(168, 85, 247, 0.2)'}}>
+          <div style={{fontSize: '1.2rem', fontFamily: 'monospace', marginBottom: '8px', fontWeight: 'bold', color: '#7e22ce'}}>Leoaică</div>
+          <div style={{fontSize: '0.8rem', color: '#16a34a', fontWeight: 'bold'}}>✅ Triftong (e-oai)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* LEVEL 3: Card Dark (Boss) - Contrast Fix */}
+  <div style={{marginBottom: '48px'}}>
+    <div style={{display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px'}}>
+      <span style={{padding: '4px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase', backgroundColor: '#fee2e2', color: '#b91c1c'}}>
+        Boss Level
+      </span>
+      <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', margin: 0, color: '#e2e8f0'}}>
+        Atenție la "I" inițial!
+      </h2>
+    </div>
+
+    <div style={{backgroundColor: '#1e293b', borderRadius: '12px', padding: '32px', color: 'white', boxShadow: '0 10px 20px rgba(0,0,0,0.4)', border: '1px solid #334155'}}>
+      <div style={{fontSize: '1.2rem', marginBottom: '24px', lineHeight: '1.5'}}>
+        Cuvântul <span style={{color: '#fbbf24', fontFamily: 'monospace', fontSize: '1.5rem', fontWeight: 'bold'}}> "EL" </span> conține vreun grup de sunete?
+      </div>
+      
+      <details style={{cursor: 'pointer'}}>
+        <summary style={{display: 'inline-block', padding: '12px 24px', backgroundColor: '#f59e0b', color: '#1e293b', borderRadius: '8px', fontWeight: 'bold', border: 'none'}}>
+          Verifică Răspunsul ▼
+        </summary>
+        
+        <div style={{marginTop: '24px', padding: '24px', backgroundColor: '#0f172a', borderRadius: '12px', border: '1px solid #f59e0b'}}>
+          <div style={{display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px'}}>
+            <span style={{fontSize: '2rem'}}>🤯</span>
+            <h3 style={{margin: 0, fontSize: '1.3rem', color: '#fbbf24'}}>Da, conține Diftong!</h3>
+          </div>
+          <div style={{color: '#cbd5e1', lineHeight: '1.6'}}>
+            Deși scriem <strong>El</strong>, pronunțăm <strong>[Iel]</strong>. 
+            <br/>
+            Astfel, avem diftongul pronunțat <strong>[ie]</strong>.
+            <div style={{marginTop: '12px', fontSize: '0.9rem', color: '#94a3b8', fontStyle: 'italic'}}>
+              (Valabil și pentru: eu, ea, ei, ele, este, eram).
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div style={{textAlign: 'center', padding: '32px', backgroundColor: '#f8fafc', borderRadius: '16px', color: '#334155'}}>
+    <h3 style={{fontSize: '1.5rem', margin: '0 0 8px 0', color: '#0f172a'}}>🎉 Felicitări!</h3>
+    <div>Stăpânești magia grupurilor de sunete!</div>
+  </div>
+
+</div>

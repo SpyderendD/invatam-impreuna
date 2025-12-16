@@ -10,7 +10,7 @@ export default function NotFound() {
       <main className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center px-4 py-12">
         <div className="w-full rounded-3xl border bg-card p-6 shadow-sm sm:p-10">
           <div className="text-center">
-            <h1 className="text-6xl font-black tracking-tight md:text-7xl">404</h1>
+            <h1 className="text-6xl font-black tracking-tight md:text-7xl">--Eroare 404--</h1>
             <p className="mt-3 text-lg sm:text-xl text-muted-foreground">
               Ups! Pagina aceasta nu există. Hai înapoi la învățare.
             </p>

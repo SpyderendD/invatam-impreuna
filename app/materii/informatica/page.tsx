@@ -91,6 +91,9 @@ export default function InformaticaHomePage() {
 
     // NOU: Lista de resurse cu iconițele corectate
     const learningResources = [
+        { name: 'PBinfo', href: 'https://pbinfo.ro', Icon: SiSololearn, color: 'bg-blue-600 text-white' },
+        { name: 'FreeCodeCamp', href: 'https://www.freecodecamp.org/learn', Icon: FaBook, color: 'bg-green-600 text-white' },
+        { name: 'Codecademy', href: 'https://www.codecademy.com/learn/learn-html', Icon: FaBook, color: 'bg-blue-600 text-white' },
         { name: 'W3Schools', href: 'https://www.w3schools.com', Icon: FaBook, color: 'bg-green-600 text-white' },
         { name: 'HTML', href: 'https://www.html.com', Icon: SiHtml5, color: 'bg-orange-600 text-white' },
         { name: 'CSS', href: 'https://www.codecademy.com/learn/learn-css', Icon: SiCss3, color: 'bg-blue-600 text-white' },

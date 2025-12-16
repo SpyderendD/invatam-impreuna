@@ -42,11 +42,11 @@ const SOURCES: SiteGroup[] = [
   },
   {
     id: 'edu',
-    domain: 'www.edu.ro',
+    domain: 'https://www.edu.ro/evaluare_nationala_ENVIII',
     label: 'Edu.ro (Ministerul Educației)',
     description: 'Informații oficiale despre examene și calendare pentru EN.',
     links: [
-      { id: 'edu-root', title: 'Pagina principală – informații EN', url: 'https://www.edu.ro/', tags: ['oficial', 'informații'] },
+      { id: 'edu-root', title: 'Pagina principală – informații EN', url: 'https://www.edu.ro/evaluare_nationala_ENVIII', tags: ['oficial', 'informații'] },
     ],
   },
   {
@@ -72,7 +72,17 @@ const SOURCES: SiteGroup[] = [
       { id: 'e3-root', title: 'E3 – Pagina principală', url: 'https://www.e3.ro/', tags: ['resurse', 'materiale'] },
     ],
   },
+  {
+    id: 'edupedu',
+    domain: 'www.edupedu.ro',
+    label: 'Informații privind învățământul',
+    description: 'Site cu informații generale despre învățământ și examene.',
+    links: [
+      { id: 'edupedu-root', title: 'Edupedu – Pagina principală', url: 'www.edupedu.ro/', tags: ['informatii'] },
+    ],
+  },
 ];
+
 
 export default function ModeleTesteLinksPage() {
   const [q, setQ] = useState('');

@@ -51,7 +51,7 @@ const romanaChapters: Chapter[] = [
     icon: <AudioWaveform className="h-8 w-8 text-primary" />,
     lessons: [
       { id: "fon-01", title: "Vocale, Consoane, Semivocale, I șoptit", slug: "fonetica-sunete", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-sunete" },
-      { id: "fon-02", title: "Diftong, Triftong, Hiat", slug: "fonetica-grupuri-de-sunete", duration: "10 min", type: "Teorie" },
+      { id: "fon-02", title: "Diftong, Triftong, Hiat", slug: "diftong-triftong-hiat", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-diftong-triftong-hiat" },
       { id: "fon-03", title: "Reguli de Despărțire în Silabe", slug: "fonetica-silaba", duration: "15 min", type: "Teorie" },
       { id: "fon-04", title: "Accentul și Excepții", slug: "fonetica-accentul", duration: "10 min", type: "Teorie" },
     ],
