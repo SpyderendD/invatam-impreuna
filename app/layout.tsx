@@ -80,6 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         Aceasta este soluția care rezolvă eroarea de hidratare pe care o primeai.
       */}
       <head>
+        <meta name="google-site-verification" content="sOjUUt5BdjJ2F4A64Tw9HkCX8kxANp8fKncbXCoXnvA" />
         <Script
           id="json-ld-website"
           type="application/ld+json"
