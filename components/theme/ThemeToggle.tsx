@@ -37,10 +37,11 @@ export default function ThemeToggle() {
           id="theme-toggle" 
           className="sr-only peer" 
           checked={isDark}
+          // SCHIMBARE SIMPLĂ ȘI SIGURĂ - FĂRĂ ViewTransitions care blochează mobilul
           onChange={() => setTheme(isDark ? 'light' : 'dark')} 
         />
         
-        {/* SVG Container */}
+        {/* SVG Container - Animația Butonului Rămâne */}
         <div className="w-full h-full transition-all duration-300">
             <svg 
               viewBox="0 0 69.667 44" 
@@ -101,8 +102,7 @@ export default function ThemeToggle() {
                 <g 
                     fill="#def8ff" 
                     transform="translate(3.585 1.325)" 
-                    className={`transition-all duration-500 ${isDark ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-50 rotate-90'}`}
-                    style={{ transformOrigin: 'center' }}
+                    className={`transition-all duration-500 ${isDark ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-50 rotate-90'} origin-center`}
                 >
                   <path transform="matrix(-1, 0.017, -0.017, -1, 24.231, 3.055)" d="M.774,0,.566.559,0,.539.458.933.25,1.492l.485-.361.458.394L1.024.953,1.509.592.943.572Z"></path>
                   <path transform="matrix(-0.777, 0.629, -0.629, -0.777, 23.185, 12.358)" d="M1.341.529.836.472.736,0,.505.46,0,.4.4.729l-.231.46L.605.932l.4.326L.9.786Z"></path>
