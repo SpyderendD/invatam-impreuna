@@ -25,7 +25,7 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
-import { ThemeToggle } from '@/components/theme/ThemeToggle';
+import  ThemeToggle  from '@/components/theme/ThemeToggle';
 import { Switch } from '@/components/ui/switch';
 
 // Icons
