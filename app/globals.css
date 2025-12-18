@@ -1,69 +1,48 @@
-/* Tailwind base/components/utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* =============================== */
-/*     THEME TOKENS (LIGHT/DARK)   */
-/* =============================== */
+/* ========================================= */
+/* 1. THEME CONFIGURATION (Base Layer)       */
+/* ========================================= */
 @layer base {
   :root {
-    /* --- PALETA SAPPHIRE VEIL (LIGHT MODE) --- */
-    
-    /* Fundal: Alb pur sau o tentă foarte fină de albastru (opțional) */
+    /* --- LIGHT MODE --- */
     --background: 0 0% 100%;
-    
-    /* Text: Folosim #0D2440 (Navy) în loc de negru pentru un look premium */
     --foreground: 213 66% 15%; 
 
-    /* Carduri */
     --card: 0 0% 100%;
     --card-foreground: 213 66% 15%;
     --popover: 0 0% 100%;
     --popover-foreground: 213 66% 15%;
 
-    /* Primary: #2E5E99 (Sapphire Blue) - Culoarea principală de brand */
     --primary: 213 54% 39%;
-    --primary-foreground: 212 50% 94%; /* Text deschis pe buton */
+    --primary-foreground: 212 50% 94%;
 
-    /* Secondary: #E7F0FA (Ice Blue) - Pentru fundaluri secundare */
     --secondary: 212 50% 94%;
     --secondary-foreground: 213 66% 15%;
 
-    /* Muted: O nuanță subtilă între alb și Ice Blue */
     --muted: 212 50% 96%;
     --muted-foreground: 213 40% 40%;
 
-    /* Accent: #7BA4D0 (Medium Blue) */
-    --accent: 212 50% 94%; /* Folosit des la hover */
+    --accent: 212 50% 94%;
     --accent-foreground: 213 54% 39%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    /* Border: O nuanță deschisă din #7BA4D0 */
     --border: 211 48% 85%;
     --input: 211 48% 85%;
-    
-    /* Ring: Sapphire Blue */
     --ring: 213 54% 39%;
-
     --radius: 0.5rem;
 
-    /* Culori speciale (materii) - Păstrate sau ajustate ușor */
+    /* Culori Materii */
     --color-romana: 252 59% 59%;
     --color-matematica: 156 72% 39%;
     --color-chimie: 39 96% 50%;
     --color-informatica: 270 76% 63%;
-
-    /* Chart palette (light) - Ajustate spre albastru */
-    --chart-1: 213 54% 39%; /* Sapphire */
-    --chart-2: 211 48% 65%; /* Medium Blue */
-    --chart-3: 213 66% 15%; /* Navy */
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-
-    /* GooeyNav Colors */
+    
+    /* Gooey Nav Light */
     --color-gooey-1: hsl(var(--primary));
     --color-gooey-2: hsl(var(--secondary));
     --color-gooey-3: 211 48% 65%;
@@ -73,25 +52,18 @@
   }
 
   .dark {
-    /* --- PALETA SAPPHIRE VEIL (DARK MODE) --- */
-
-    /* Fundal: #0D2440 (Deep Navy) - Foarte elegant */
+    /* --- DARK MODE --- */
     --background: 213 66% 15%;
-    
-    /* Text: #E7F0FA (Ice Blue) - Contrast excelent și odihnitor */
     --foreground: 212 50% 94%;
 
-    /* Carduri: O nuanță puțin mai deschisă decât fundalul sau ușor transparentă */
     --card: 213 55% 18%;
     --card-foreground: 212 50% 94%;
     --popover: 213 66% 15%;
     --popover-foreground: 212 50% 94%;
 
-    /* Primary: #7BA4D0 (Medium Blue) - Pe fundal închis, folosim albastrul mediu pentru a "sări" în ochi */
     --primary: 211 48% 65%;
-    --primary-foreground: 213 66% 15%; /* Text închis pe buton */
+    --primary-foreground: 213 66% 15%;
 
-    /* Secondary: Un Navy mai deschis */
     --secondary: 213 50% 25%;
     --secondary-foreground: 212 50% 94%;
 
@@ -106,80 +78,72 @@
 
     --border: 213 50% 25%;
     --input: 213 50% 25%;
-    
     --ring: 211 48% 65%;
 
-    /* Chart palette (dark) */
-    --chart-1: 211 48% 65%;
-    --chart-2: 212 50% 94%;
-    --chart-3: 213 54% 39%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-
-    /* GooeyNav Dark */
+    /* Gooey Nav Dark */
     --color-gooey-1: hsl(var(--primary));
     --color-gooey-2: hsl(var(--secondary));
     --color-gooey-3: 212 50% 94%;
     --color-gooey-4: 213 54% 39%;
-    --gooey-filter-bg: 213 66% 12%; /* Puțin mai închis decât bg */
+    --gooey-filter-bg: 213 66% 12%;
     --gooey-filter-after-bg: 211 48% 65%;
   }
 
-  /* Reset & fonts */
-  * { border-color: hsl(var(--border)); }
-  html { color-scheme: light dark; }
+  /* RESET GLOBAL (CRITIC PENTRU MOBIL) */
+  html {
+    scroll-behavior: smooth;
+    /* Nu pune height: 100% aici, strică mobilul */
+  }
+
   body {
+    /* Folosim 100dvh pentru telefoane (Samsung/Chrome) */
+    min-height: 100dvh;
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
-    transition: background-color .25s ease, color .25s ease;
+    overflow-x: hidden;
+    position: relative; /* Necesar pentru view transitions */
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
+
   h1,h2,h3,h4,h5,h6 {
-    font-family: var(--font-lora), ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+    font-family: var(--font-lora), ui-serif, serif;
     font-weight: 700;
   }
-  /* Selection color matching Sapphire theme */
+  
+  * { border-color: hsl(var(--border)); }
   ::selection { background: hsl(var(--primary) / .25); color: hsl(var(--foreground)); }
 }
 
 
-/* =============================== */
-/*           UTILITIES             */
-/* =============================== */
-
+/* ========================================= */
+/* 3. UTILITIES & ANIMATIONS                 */
+/* ========================================= */
 @layer utilities {
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-}
-
-@layer utilities {
-  /* Pattern grid */
   .bg-grid-pattern {
     background-image:
       linear-gradient(to right, hsl(var(--border) / .5) 1px, transparent 1px),
       linear-gradient(to bottom, hsl(var(--border) / .5) 1px, transparent 1px);
     background-size: 40px 40px;
   }
-
   .bg-grid {
     background-image:
       linear-gradient(to right, rgb(0 0 0 / .05) 1px, transparent 1px),
       linear-gradient(to bottom, rgb(0 0 0 / .05) 1px, transparent 1px);
     background-size: 40px 40px;
   }
-
   .bg-dots {
     background-image: radial-gradient(rgb(0 0 0 / .1) 1px, transparent 1px);
     background-size: 20px 20px;
   }
-
   .text-gradient { -webkit-background-clip: text; background-clip: text; color: transparent; }
-  /* Updated gradient to match Sapphire Palette */
   .gradient-primary { background-image: linear-gradient(90deg, hsl(var(--primary)), hsl(211 48% 65%)); }
-
+  .auth-background {
+    background: linear-gradient(-45deg, #0D2440, #2E5E99, #7BA4D0, #E7F0FA);
+    background-size: 400% 400%;
+    animation: gradient-animation 15s ease infinite;
+  }
   .shine { position: relative; overflow: hidden; }
   .shine::after {
     content: ""; position: absolute; inset: -50% -50% auto auto; width: 200%; height: 200%;
@@ -187,55 +151,27 @@
     transform: rotate(30deg) translateX(-100%); animation: shine 6s linear infinite;
     pointer-events: none;
   }
-
   .card-hover { transition: transform .2s ease, box-shadow .2s ease; }
   .card-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -8px hsl(var(--primary) / .15); }
-
   .btn-3d { transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 6px 0 0 hsl(var(--primary) / .3); }
   .btn-3d:active { transform: translateY(2px); box-shadow: 0 2px 0 0 hsl(var(--primary) / .3); }
-
   .animated-underline { position: relative; }
   .animated-underline::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
     background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .25s ease;
   }
   .animated-underline:hover::after { transform: scaleX(1); }
-
   .scroll-progress-bar {
     position: fixed; top: 0; left: 0; height: 4px;
-    background-color: hsl(var(--primary)); transform-origin: 0%;
-    z-index: 50;
+    background-color: hsl(var(--primary)); transform-origin: 0%; z-index: 50;
   }
-
   .floating { animation: floating 3s ease-in-out infinite; }
-  /* Aurora updated for Blue tones */
   .animate-aurora { background-size: 200% 200%; animation: aurora 5s ease-in-out infinite alternate; }
   .animate-tilt { animation: tilt 10s linear infinite; }
+  .animate-blob { animation: blob 7s infinite; }
+  .animate-gradient { animation: gradient-x 15s ease infinite; }
 }
 
-/* =============================== */
-/*            KEYFRAMES            */
-/* =============================== */
-@keyframes gradient-animation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.auth-background {
-  /* Updated to Sapphire gradients */
-  background: linear-gradient(-45deg, #0D2440, #2E5E99, #7BA4D0, #E7F0FA);
-  background-size: 400% 400%;
-  animation: gradient-animation 15s ease infinite;
-}
-
-@keyframes aurora { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
-@keyframes tilt { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(.5deg); } }
-@keyframes floating { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
-@keyframes shine { from { transform: rotate(30deg) translateX(-100%); } to { transform: rotate(30deg) translateX(100%); } }
-
-/* =============================== */
-/*      GOOEY NAV UTIL CLASSES     */
-/* =============================== */
 @layer components {
   .gooey-effect {
     position: absolute; display: grid; place-items: center;
@@ -253,55 +189,30 @@
     content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 9999px;
     background: hsl(var(--gooey-filter-after-bg)); transform: scale(0); opacity: 0;
   }
-
   .gooey-particle, .gooey-point { width: 20px; height: 20px; border-radius: 9999px; opacity: 0; transform-origin: center; }
   .gooey-particle {
     --time: 5s; position: absolute; top: calc(50% - 10px); left: calc(50% - 10px);
     animation: gooey-particle var(--time) ease 1 -350ms;
   }
   .gooey-point { background: var(--color); opacity: 1; animation: gooey-point var(--time) ease 1 -350ms; }
-
   li.active-gooey { color: hsl(var(--primary-foreground)); text-shadow: none; }
-
-/* Stiluri pentru Feed-ul de Întrebări TikTok-style */
   .questions-feed {
-    height: 100vh;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    scrollbar-width: none;
+    height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none;
   }
-
-  .questions-feed::-webkit-scrollbar {
-      display: none;
-  }
-
+  .questions-feed::-webkit-scrollbar { display: none; }
   .question-card {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      scroll-snap-align: start;
-      border-bottom: 1px solid hsl(var(--border));
-      padding: 2rem;
-      box-sizing: border-box;
-      text-align: center;
+      height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      scroll-snap-align: start; border-bottom: 1px solid hsl(var(--border)); padding: 2rem; box-sizing: border-box; text-align: center;
   }
 }
 
-@keyframes rotate-center { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
-@keyframes gooey-pill { to { transform: scale(1); opacity: 1; } }
-@keyframes gooey-particle {
-  0% { transform: rotate(0) translate(var(--start-x), var(--start-y)); opacity: 1; animation-timing-function: cubic-bezier(.55,0,1,.45); }
-  70% { transform: rotate(calc(var(--rotate)*.5)) translate(calc(var(--end-x)*1.2), calc(var(--end-y)*1.2)); opacity: 1; }
-  85% { transform: rotate(calc(var(--rotate)*.66)) translate(var(--end-x), var(--end-y)); opacity: 1; }
-  100% { transform: rotate(calc(var(--rotate)*1.2)) translate(calc(var(--end-x)*.5), calc(var(--end-y)*.5)); opacity: 1; }
-}
-@keyframes gooey-point {
-  0% { transform: scale(0); opacity: 0; animation-timing-function: cubic-bezier(.55,0,1,.45); }
-  25% { transform: scale(calc(var(--scale)*.25)); }
-  38% { opacity: 1; }
-  65% { transform: scale(var(--scale)); opacity: 1; }
-  85% { transform: scale(var(--scale)); opacity: 1; }
-  100% { transform: scale(0); opacity: 0; }
-}
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes gradient-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes aurora { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+@keyframes tilt { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(.5deg); } }
+@keyframes floating { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
+@keyframes shine { from { transform: rotate(30deg) translateX(-100%); } to { transform: rotate(30deg) translateX(100%); } }
+@keyframes blob { 0% { transform: translate(0px, 0px) scale(1); } 33% { transform: translate(30px, -50px) scale(1.1); } 66% { transform: translate(-20px, 20px) scale(0.9); } 100% { transform: translate(0px, 0px) scale(1); } }
+@keyframes gradient-x { 0%, 100% { background-size: 200% 200%; background-position: left center; } 50% { background-size: 200% 200%; background-position: right center; } }
+@keyframes gooey-particle { 0% { transform: rotate(0) translate(var(--start-x), var(--start-y)); opacity: 1; animation-timing-function: cubic-bezier(.55,0,1,.45); } 70% { transform: rotate(calc(var(--rotate)*.5)) translate(calc(var(--end-x)*1.2), calc(var(--end-y)*1.2)); opacity: 1; } 85% { transform: rotate(calc(var(--rotate)*.66)) translate(var(--end-x), var(--end-y)); opacity: 1; } 100% { transform: rotate(calc(var(--rotate)*1.2)) translate(calc(var(--end-x)*.5), calc(var(--end-y)*.5)); opacity: 1; } }
+@keyframes gooey-point { 0% { transform: scale(0); opacity: 0; animation-timing-function: cubic-bezier(.55,0,1,.45); } 25% { transform: scale(calc(var(--scale)*.25)); } 38% { opacity: 1; } 65% { transform: scale(var(--scale)); opacity: 1; } 85% { transform: scale(var(--scale)); opacity: 1; } 100% { transform: scale(0); opacity: 0; } }

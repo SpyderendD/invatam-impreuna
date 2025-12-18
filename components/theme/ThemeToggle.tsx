@@ -7,30 +7,77 @@ export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Așteptăm montarea componentei pentru a evita erorile de hidratare
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  const toggleTheme = (e: React.MouseEvent<HTMLLabelElement>) => {
+    // 1. Definim noua temă
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+
+    // 2. Verificăm dacă browserul suportă animația
+    // @ts-ignore
+    if (!document.startViewTransition) {
+      setTheme(newTheme);
+      return;
+    }
+
+    // 3. Executăm animația
+    const x = e.clientX;
+    const y = e.clientY;
+
+    const endRadius = Math.hypot(
+      Math.max(x, innerWidth - x),
+      Math.max(y, innerHeight - y)
+    );
+
+    // @ts-ignore
+    const transition = document.startViewTransition(() => {
+      setTheme(newTheme);
+    });
+
+    transition.ready.then(() => {
+      // Animăm ÎNTOTDEAUNA cercul să CREASCĂ
+      // Deoarece în CSS ::view-transition-new e setat cu z-index mare,
+      // noua temă va "inunda" ecranul de la punctul click-ului.
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 1000, // 1 secundă
+          easing: 'ease-in-out',
+          pseudoElement: '::view-transition-new(root)',
+        }
+      );
+    });
+  };
+
   if (!mounted) return null;
 
   return (
-    <div className="relative inline-block">
-      <label id="theme-toggle-button" htmlFor="toggle" className="flex items-center cursor-pointer relative">
+    <div className="relative inline-block z-50">
+      <label 
+        id="theme-toggle-button" 
+        htmlFor="toggle" 
+        className="flex items-center cursor-pointer relative select-none"
+        onClick={toggleTheme}
+      >
         <input 
           type="checkbox" 
           id="toggle" 
-          className="sr-only peer" // sr-only ascunde inputul standard
+          className="sr-only peer" 
           checked={theme === 'dark'}
-          onChange={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          onChange={() => {}} 
         />
         
         {/* SVG Container */}
-        <div className="w-[7em] h-[44px] transition-all duration-300">
+        <div className="w-[5em] h-[30px] md:w-[7em] md:h-[44px] transition-all duration-300">
             <svg viewBox="0 0 69.667 44" xmlns="http://www.w3.org/2000/svg">
             <g transform="translate(3.5 3.5)" data-name="Component 15 – 1" id="Component_15_1">
-                
-                {/* Container Fundal */}
                 <g transform="matrix(1, 0, 0, 1, -3.5, -3.5)">
                 <rect 
                     fill={theme === 'dark' ? "#2b4360" : "#83cbd8"} 
@@ -43,15 +90,11 @@ export default function ThemeToggle() {
                     className="transition-colors duration-500 ease-in-out"
                 ></rect>
                 </g>
-                
-                {/* Butonul care se mișcă (Soare/Lună) */}
                 <g 
                     transform={theme === 'dark' ? "translate(28 2.333)" : "translate(2.333 2.333)"} 
                     id="button"
                     className="transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1)"
                 >
-                
-                {/* SOARELE */}
                 <g data-name="sun" id="sun" className={`transition-opacity duration-300 ${theme === 'dark' ? 'opacity-0' : 'opacity-100'}`}>
                     <g transform="matrix(1, 0, 0, 1, -5.83, -5.83)">
                     <circle fill="#f8e664" transform="translate(5.83 5.83)" r="15.167" cy="15.167" cx="15.167" data-name="sun-outer" id="sun-outer-2"></circle>
@@ -61,8 +104,6 @@ export default function ThemeToggle() {
                     </g>
                     <circle fill="#fcf4b9" transform="translate(8.167 8.167)" r="7" cy="7" cx="7" id="sun-inner"></circle>
                 </g>
-                
-                {/* LUNA */}
                 <g data-name="moon" id="moon" className={`transition-opacity duration-300 ${theme === 'dark' ? 'opacity-100' : 'opacity-0'}`}>
                     <g transform="matrix(1, 0, 0, 1, -31.5, -5.83)">
                     <circle fill="#cce6ee" transform="translate(31.5 5.83)" r="15.167" cy="15.167" cx="15.167" data-name="moon" id="moon-3"></circle>
@@ -77,16 +118,12 @@ export default function ThemeToggle() {
                     </g>
                 </g>
                 </g>
-                
-                {/* NORII (Vizibili doar pe Light) */}
                 <g 
                     transform="matrix(1, 0, 0, 1, -3.5, -3.5)" 
                     className={`transition-opacity duration-300 ${theme === 'dark' ? 'opacity-0' : 'opacity-100'}`}
                 >
                 <path fill="#fff" transform="translate(-3466.47 -160.94)" d="M3512.81,173.815a4.463,4.463,0,0,1,2.243.62.95.95,0,0,1,.72-1.281,4.852,4.852,0,0,1,2.623.519c.034.02-.5-1.968.281-2.716a2.117,2.117,0,0,1,2.829-.274,1.821,1.821,0,0,1,.854,1.858c.063.037,2.594-.049,3.285,1.273s-.865,2.544-.807,2.626a12.192,12.192,0,0,1,2.278.892c.553.448,1.106,1.992-1.62,2.927a7.742,7.742,0,0,1-3.762-.3c-1.28-.49-1.181-2.65-1.137-2.624s-1.417,2.2-2.623,2.2a4.172,4.172,0,0,1-2.394-1.206,3.825,3.825,0,0,1-2.771.774c-3.429-.46-2.333-3.267-2.2-3.55A3.721,3.721,0,0,1,3512.81,173.815Z" data-name="cloud" id="cloud"></path>
                 </g>
-
-                {/* STELELE (Vizibile doar pe Dark) */}
                 <g 
                     fill="#def8ff" 
                     transform="translate(3.585 1.325)" 

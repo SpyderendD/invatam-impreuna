@@ -154,6 +154,9 @@ export default function StudiuInteligentPage() {
                 <Button asChild size="lg" variant="outline">
                   <Link href="#instrumente-studiu">Flashcarduri & Timer</Link>
                 </Button>
+                <Button asChild size="lg" variant="secondary">
+                  <Link href="/metode-invatare">Metode de învățare</Link>
+                </Button>
               </motion.div>
             </motion.div>
           </div>
