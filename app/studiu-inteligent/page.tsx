@@ -147,14 +147,14 @@ export default function StudiuInteligentPage() {
                 Descoperă instrumente AI și unelte de studiu personalizate pentru a învăța mai rapid și mai eficient.
               </motion.p>
               
-              <motion.div variants={sectionFadeIn} className="mt-10 flex items-center justify-center gap-4">
-                <Button asChild size="lg">
+              <motion.div variants={sectionFadeIn} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Button asChild size="lg" className="w-full sm:w-auto">
                   <Link href="#instrumente-ai">Unelte AI</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline">
+                <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
                   <Link href="#instrumente-studiu">Flashcarduri & Timer</Link>
                 </Button>
-                <Button asChild size="lg" variant="secondary">
+                <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
                   <Link href="/metode-invatare">Metode de învățare</Link>
                 </Button>
               </motion.div>
@@ -165,22 +165,28 @@ export default function StudiuInteligentPage() {
 
       {/* Secțiunea cu Tab-uri pentru Instrumente AI */}
       <section id="instrumente-ai" className="py-24 bg-background border-y border-border">
-        <div className="container">
+        <div className="container px-4 md:px-6">
           <motion.div className="text-center mb-16 max-w-3xl mx-auto" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={sectionFadeIn}>
             <h2 className="text-4xl font-extrabold tracking-tighter sm:text-5xl text-foreground">Alege-ți Asistentul AI</h2>
             <p className="mt-4 text-lg text-muted-foreground">Fiecare unealtă are un scop diferit. Descoperă care ți se potrivește cel mai bine.</p>
           </motion.div>
 
           <Tabs defaultValue="notebooklm" className="w-full max-w-5xl mx-auto">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto sm:h-20 p-2">
+            {/* FIX PENTRU MOBIL: Am schimbat grid-ul să fie pe o coloană pe mobil și 4 pe desktop */}
+            <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-4 h-auto p-2 gap-2 bg-muted/50 rounded-xl">
               {aiToolsData.map(tool => (
-                <TabsTrigger key={tool.id} value={tool.id} className="text-base sm:text-sm h-full py-3 sm:py-0 flex flex-col sm:flex-row gap-2 items-center justify-center">
-                  {tool.icon} {tool.name}
+                <TabsTrigger 
+                  key={tool.id} 
+                  value={tool.id} 
+                  className="w-full h-14 sm:h-auto flex items-center justify-center gap-2 data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm rounded-lg transition-all"
+                >
+                  <span className="shrink-0">{tool.icon}</span>
+                  <span className="truncate">{tool.name}</span>
                 </TabsTrigger>
               ))}
             </TabsList>
 
-            {/* AICI ESTE PARTEA CARE LIPSEA - GENERAREA CONȚINUTULUI */}
+            {/* GENERAREA CONȚINUTULUI */}
             {aiToolsData.map(tool => (
               <TabsContent key={tool.id} value={tool.id} className="mt-8 focus-visible:outline-none">
                 <motion.div
@@ -195,7 +201,7 @@ export default function StudiuInteligentPage() {
                       <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">{tool.tagline}</h3>
                       <p className="text-muted-foreground text-lg leading-relaxed">{tool.description}</p>
                     </div>
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 w-full md:w-auto">
                       <Button size="lg" className="w-full md:w-auto" asChild>
                         <a href={tool.href} target="_blank" rel="noopener noreferrer">
                           Încearcă {tool.name} <ArrowRight className="ml-2 h-4 w-4" />
