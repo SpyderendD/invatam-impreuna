@@ -131,7 +131,10 @@
     position: fixed; top: 0; left: 0; height: 4px;
     background-color: hsl(var(--primary)); transform-origin: 0%; z-index: 50;
   }
-  .animate-blob { animation: blob 7s infinite; }
+   .animate-blob {
+    animation: blob 7s infinite;
+    will-change: transform; /* Spune browserului că se va mișca */
+    transform: translateZ(0); /* Forțează GPU rendering */
   .animate-gradient { animation: gradient-x 15s ease infinite; }
 }
 
