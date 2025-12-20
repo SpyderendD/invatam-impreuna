@@ -8,7 +8,7 @@ import { format, addDays, startOfWeek, isToday, isPast } from 'date-fns';
 import { ro } from 'date-fns/locale';
 import { useInView } from 'react-intersection-observer';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts';
-
+import { QuoteOfTheDay } from '@/components/dashboard/QuoteOfTheDay';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -114,6 +114,10 @@ export default function DashboardPage() {
               <AchievementsDialog achievements={planner.achievements} />
               <SettingsDialog taskPlanner={planner} />
             </div>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="mb-8">
+            <QuoteOfTheDay />
           </motion.div>
 
           {/* Grid principal: stânga (zile) + dreapta (aside) */}
