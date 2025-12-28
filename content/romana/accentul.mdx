@@ -1,0 +1,160 @@
+---
+title: "Accentul și Excepțiile"
+description: "Cum pronunțăm corect? Reguli, omografe și capcanele din DOOM3."
+subject: "Limba și literatura română"
+grade: "Clasa a VIII-a"
+category: "Fonetică"
+---
+
+<div className="w-full max-w-5xl mx-auto font-sans text-slate-300">
+
+  {/* HERO SECTION */}
+  <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 mb-12 text-center shadow-lg relative overflow-hidden">
+    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-red-500"></div>
+    <div className="flex items-center justify-center gap-3 mb-2">
+      <span className="text-3xl">📢</span>
+      <h3 className="m-0 text-orange-400 uppercase text-sm tracking-wider font-bold">Definiție</h3>
+    </div>
+    <div className="text-lg text-slate-300 leading-relaxed">
+      Accentul este pronunțarea mai intensă (mai tare) a unei silabe dintr-un cuvânt.
+      <br/>
+      În limba română, accentul este <span className="text-white font-bold bg-orange-500/20 px-2 rounded">LIBER</span> (poate sta pe orice silabă).
+    </div>
+  </div>
+
+  {/* POZIȚIILE ACCENTULUI - GRID */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+
+    {/* ULTIMA SILABĂ */}
+    <div className="relative rounded-2xl bg-blue-100/5 border border-blue-300/20 p-6 text-blue-100">
+      <div className="absolute top-4 right-4 text-2xl opacity-40">End</div>
+      <h3 className="m-0 mb-3 text-xl font-bold text-blue-300">Pe ultima silabă</h3>
+      <div className="text-sm mb-4 leading-normal opacity-80">
+        Este foarte frecvent în limba română, mai ales la infinitivul verbelor.
+      </div>
+      <div className="rounded-lg border border-blue-300/30 bg-black/20 p-3 text-center mb-3 text-blue-200 font-mono text-lg">
+        ma-ca-<strong>ra</strong>
+      </div>
+      <div className="text-xs opacity-60 text-center">Ex: a cânta, popor, defileu</div>
+    </div>
+
+    {/* PENULTIMA SILABĂ */}
+    <div className="relative rounded-2xl bg-emerald-100/5 border border-emerald-300/20 p-6 text-emerald-100">
+      <div className="absolute top-4 right-4 text-2xl opacity-40">Mid</div>
+      <h3 className="m-0 mb-3 text-xl font-bold text-emerald-300">Pe penultima</h3>
+      <div className="text-sm mb-4 leading-normal opacity-80">
+        Majoritatea cuvintelor din vocabularul fundamental au acest accent.
+      </div>
+      <div className="rounded-lg border border-emerald-300/30 bg-black/20 p-3 text-center mb-3 text-emerald-200 font-mono text-lg">
+        <strong>ca</strong>-să
+      </div>
+      <div className="text-xs opacity-60 text-center">Ex: lapte, carte, floare</div>
+    </div>
+
+    {/* ANTEPENULTIMA */}
+    <div className="relative rounded-2xl bg-purple-100/5 border border-purple-300/20 p-6 text-purple-100">
+      <div className="absolute top-4 right-4 text-2xl opacity-40">Start</div>
+      <h3 className="m-0 mb-3 text-xl font-bold text-purple-300">Pe antepenultima</h3>
+      <div className="text-sm mb-4 leading-normal opacity-80">
+        Mai rar, întâlnit adesea la cuvinte lungi sau împrumuturi.
+      </div>
+      <div className="rounded-lg border border-purple-300/30 bg-black/20 p-3 text-center mb-3 text-purple-200 font-mono text-lg">
+        <strong>re</strong>-pe-de
+      </div>
+      <div className="text-xs opacity-60 text-center">Ex: veveriță, pasăre</div>
+    </div>
+
+  </div>
+
+  {/* OMOGRAFELE - CARD SPECIAL */}
+  <div className="rounded-2xl bg-slate-900 border border-slate-700 overflow-hidden mb-12 shadow-xl">
+    <div className="bg-slate-800 p-4 border-b border-slate-700 flex items-center justify-between">
+      <h3 className="m-0 text-lg font-bold text-white flex items-center gap-2">
+        🎭 Magia Omografelor
+      </h3>
+      <span className="text-xs uppercase font-bold text-slate-400 bg-slate-700 px-2 py-1 rounded">Atenție</span>
+    </div>
+    <div className="p-6">
+      <div className="text-slate-300 mb-6">
+        Cuvintele care se scriu la fel, dar <strong>accentul schimbă sensul</strong>.
+      </div>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Perechea 1 */}
+        <div className="flex flex-col gap-2 p-4 rounded-xl bg-slate-800/50 border border-slate-700">
+          <div className="flex justify-between items-center border-b border-slate-600 pb-2">
+            <span className="text-xl text-yellow-400 font-bold">vesélă</span>
+            <span className="text-sm text-slate-400">vase</span>
+          </div>
+          <div className="flex justify-between items-center pt-1">
+            <span className="text-xl text-yellow-400 font-bold">véselă</span>
+            <span className="text-sm text-slate-400">bucuroasă</span>
+          </div>
+        </div>
+
+        {/* Perechea 2 */}
+        <div className="flex flex-col gap-2 p-4 rounded-xl bg-slate-800/50 border border-slate-700">
+          <div className="flex justify-between items-center border-b border-slate-600 pb-2">
+            <span className="text-xl text-sky-400 font-bold">copíi</span>
+            <span className="text-sm text-slate-400">băieți/fete</span>
+          </div>
+          <div className="flex justify-between items-center pt-1">
+            <span className="text-xl text-sky-400 font-bold">cópii</span>
+            <span className="text-sm text-slate-400">xerox</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ {/* REGULILE DOOM3 - LISTA */}
+  <div className="mb-8">
+    <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-red-500 pl-4">
+      🔥 Capcanele DOOM3 (Trebuie să le știi!)
+    </h3>
+    <div className="space-y-3">
+      
+      {/* TRAFIC */}
+      <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800 border border-slate-700">
+        <div>
+          <span className="block font-bold text-green-400">tra-FIC</span>
+          <span className="text-xs text-slate-500">Corect (DOOM3)</span>
+        </div>
+        <div className="text-right">
+          <span className="block text-slate-400 line-through decoration-red-500/50">TRA-fic</span>
+          <span className="text-xs text-slate-600">Norma veche</span>
+        </div>
+      </div>
+
+      {/* ANTIC */}
+      <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800 border border-slate-700">
+        <div>
+          <span className="block font-bold text-green-400">an-TIC</span>
+          <span className="text-xs text-slate-500">Corect</span>
+        </div>
+        <div className="text-right">
+          <span className="block text-slate-400 line-through decoration-red-500/50">AN-tic</span>
+          <span className="text-xs text-slate-600">Greșit (des întâlnit)</span>
+        </div>
+      </div>
+
+      {/* VARIANTE DUBLE - CORECTAT */}
+      <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800 border border-slate-700">
+        <div>
+          <span className="block font-bold text-amber-400">Variante Duble</span>
+          <span className="text-xs text-slate-500">Ambele sunt corecte</span>
+        </div>
+        <div className="text-right font-mono text-sm text-slate-300">
+          <div className="mb-1">
+            <strong>GIN</strong>-gaș / gin-<strong>GAȘ</strong>
+          </div>
+          <div>
+            pe-<strong>NU</strong>-ri-e / pe-nu-<strong>RI</strong>-e
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+    
+</div>

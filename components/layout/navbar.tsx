@@ -158,7 +158,7 @@ export function Navbar() {
             >
               <div className="p-4 flex items-center justify-between border-b border-border">
                 <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center gap-2 text-lg font-bold text-primary">
-                  <Image src="/im/logo.png" alt="Logo" width={20} height={20} className="h-5 w-5" />
+                  <Image src="/images/logo.png" alt="Logo" width={20} height={20} className="h-5 w-5" />
                   <span>Învățăm Împreună</span>
                 </Link>
                 <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} aria-label="Închide meniul"><X className="h-5 w-5" /></Button>

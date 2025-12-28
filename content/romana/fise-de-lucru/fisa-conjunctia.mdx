@@ -1,0 +1,142 @@
+
+<div className="w-full max-w-4xl mx-auto font-sans text-slate-300">
+
+  {/* HEADER */}
+  <div className="text-center mb-12">
+    <h1 className="m-0 text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-400">
+      Atelierul de Legături
+    </h1>
+    <div className="mt-2 text-lg text-slate-400">Conectează corect ideile gramaticale.</div>
+  </div>
+
+  {/* LEVEL 1: Tipul Conjuncției */}
+  <div className="mb-10">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="rounded-full bg-blue-200/10 px-3 py-1 text-xs font-bold uppercase text-blue-300">
+        Nivelul 1
+      </span>
+      <h2 className="m-0 text-2xl font-bold text-slate-200">Coordonatoare sau Subordonatoare?</h2>
+    </div>
+
+    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 shadow-lg">
+      <div className="flex flex-col gap-4">
+        
+        {/* Q1 */}
+        <details className="group rounded-xl p-4 cursor-pointer border border-blue-300/20 bg-blue-100/5 text-slate-200">
+          <summary className="flex justify-between items-center font-bold list-none">
+            <span className="text-lg">1. "Mergem la mare <span className="text-blue-400">sau</span> la munte?"</span>
+            <span className="text-sm font-normal text-slate-400 transition-transform group-open:rotate-90">Verifică ▶</span>
+          </summary>
+          <div className="mt-4 pt-4 border-t border-blue-300/20">
+            <div className="flex flex-col gap-2">
+              <span className="text-xl font-bold text-white">Coordonatoare (Disjunctivă)</span>
+              <span className="text-sm text-slate-400">
+                Leagă două complemente de același fel (la mare / la munte). Oferă o alegere.
+              </span>
+            </div>
+          </div>
+        </details>
+
+        {/* Q2 */}
+        <details className="group rounded-xl p-4 cursor-pointer border border-blue-300/20 bg-blue-100/5 text-slate-200">
+          <summary className="flex justify-between items-center font-bold list-none">
+            <span className="text-lg">2. "Am aflat <span className="text-pink-400">că</span> ai câștigat."</span>
+            <span className="text-sm font-normal text-slate-400 transition-transform group-open:rotate-90">Verifică ▶</span>
+          </summary>
+          <div className="mt-4 pt-4 border-t border-blue-300/20">
+             <div className="flex flex-col gap-2">
+              <span className="text-xl font-bold text-white">Subordonatoare</span>
+              <span className="text-sm text-slate-400">
+                Introduce o propoziție secundară (Ce am aflat? -> că ai câștigat).
+              </span>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </div>
+
+  {/* LEVEL 2: Nuanțe de Coordonare */}
+  <div className="mb-10">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="rounded-full bg-orange-200/10 px-3 py-1 text-xs font-bold uppercase text-orange-300">
+        Nivelul 2
+      </span>
+      <h2 className="m-0 text-2xl font-bold text-slate-200">Adversativ vs. Conclusiv</h2>
+    </div>
+
+    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 shadow-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+        {/* Card 1 */}
+        <div className="rounded-xl border border-slate-600 bg-white/5 p-4 text-center">
+          <div className="text-lg text-slate-300 mb-3">"Nu învață, <strong className="text-white">ci</strong> se joacă."</div>
+          <details className="group">
+             <summary className="cursor-pointer text-sm text-orange-400 hover:text-orange-300 font-bold">Analiza</summary>
+             <div className="mt-2 text-xs text-white font-bold pt-2 border-t border-slate-600">
+                ADVERSATIVĂ
+             </div>
+             <div className="text-xs text-slate-400">Cele două acțiuni se opun.</div>
+          </details>
+        </div>
+
+        {/* Card 2 */}
+        <div className="rounded-xl border border-slate-600 bg-white/5 p-4 text-center">
+          <div className="text-lg text-slate-300 mb-3">"A plouat, <strong className="text-white">așadar</strong> stăm în casă."</div>
+          <details className="group">
+             <summary className="cursor-pointer text-sm text-orange-400 hover:text-orange-300 font-bold">Analiza</summary>
+             <div className="mt-2 text-xs text-white font-bold pt-2 border-t border-slate-600">
+                CONCLUSIVĂ
+             </div>
+             <div className="text-xs text-slate-400">Arată urmarea primei acțiuni.</div>
+          </details>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {/* BOSS LEVEL: Capcana "IAR" */}
+  <div className="mb-12">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="rounded-full bg-red-500/20 px-3 py-1 text-xs font-bold uppercase text-red-400">
+        Boss Level
+      </span>
+      <h2 className="m-0 text-2xl font-bold text-slate-200">IAR vs. IARĂ</h2>
+    </div>
+
+    <div className="rounded-xl bg-slate-900 p-8 text-white shadow-xl border border-red-500/30 relative">
+      
+      <div className="text-xl mb-6 leading-relaxed">
+        Ce valoare are cuvântul marcat:
+        <br/>
+        <em>"Eu scriu, <span className="text-red-400 font-bold">iar</span> el citește."</em>
+      </div>
+      
+      <details className="group">
+        <summary className="inline-block cursor-pointer rounded-lg bg-red-600 px-6 py-3 font-bold text-white transition hover:bg-red-500 shadow-lg shadow-red-900/50">
+          Analizează ▼
+        </summary>
+        <div className="mt-6 rounded-xl border border-red-500/50 bg-black/40 p-6">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="text-3xl">🔗</span>
+            <h3 className="m-0 text-xl font-bold text-white">Conjuncție Adversativă</h3>
+          </div>
+          <div className="text-slate-300 leading-relaxed">
+            Aici, "iar" pune în opoziție două acțiuni.
+            <div className="mt-3 p-3 bg-red-500/10 rounded-lg text-sm text-red-200 italic border-l-4 border-red-500">
+              💡 Atenție! Dacă înseamnă "din nou" (Ex: "A venit iar la noi"), este <strong>ADVERB</strong>.
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  {/* FINAL */}
+  <div className="text-center rounded-2xl bg-slate-800/50 border border-slate-700 p-8 text-slate-300">
+    <h3 className="m-0 mb-2 text-2xl font-bold text-slate-100">🎉 Felicitări!</h3>
+    <p>Ai conectat toate cunoștințele corect!</p>
+  </div>
+</div>

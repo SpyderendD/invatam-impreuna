@@ -52,8 +52,8 @@ const romanaChapters: Chapter[] = [
     lessons: [
       { id: "fon-01", title: "Vocale, Consoane, Semivocale, I șoptit", slug: "fonetica-sunete", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-sunete" },
       { id: "fon-02", title: "Diftong, Triftong, Hiat", slug: "diftong-triftong-hiat", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-diftong-triftong-hiat" },
-      { id: "fon-03", title: "Reguli de Despărțire în Silabe", slug: "fonetica-silaba", duration: "15 min", type: "Teorie" },
-      { id: "fon-04", title: "Accentul și Excepții", slug: "fonetica-accentul", duration: "10 min", type: "Teorie" },
+      { id: "fon-03", title: "Reguli de Despărțire în Silabe", slug: "reguli-despartire", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-despartire" },
+      { id: "fon-04", title: "Accentul și Excepții", slug: "accentul", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-accent" },
     ],
   },
   
@@ -66,7 +66,7 @@ const romanaChapters: Chapter[] = [
     description: "Ghid complet pentru scrierea corectă, de la cratimă la utilizarea virgulei.",
     icon: <Quote className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "norm-01", title: "Semnele de Ortografie si punctuatie", slug: "semne-de-ortografie si punctuatie", duration: "15 min", type: "Teorie" },
+      { id: "norm-01", title: "Semnele de Ortografie si punctuatie", slug: "semne-ortografie", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-ortografie" },
     ],
   },
   
@@ -81,7 +81,7 @@ const romanaChapters: Chapter[] = [
     lessons: [
       { id: "vocab-01", title: "Derivare", slug: "derivare", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-derivare" },
       { id: "vocab-02", title: "Compunere", slug: "compunere", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-compunere" },
-      { id: "vocab-03", title: "Conversiune", slug: "conversiune", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-conversiune" },
+      { id: "vocab-03", title: "Conversiune", slug: "conversiunea", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-conversiune" },
       { id: "vocab-04", title: "Imprumuturi", slug: "imprumuturi", duration: "10 min", type: "Teorie",  worksheetSlug: "fisa-imprumuturi" },
     ],
   },
@@ -101,9 +101,9 @@ const romanaChapters: Chapter[] = [
       { id: "morf-04", title: "Pronumele și Adjectivul Pronominal", slug: "pronumele-si-adjectivul-pronominal", duration: "30 min", type: "Teorie", worksheetSlug: "fisa-pronumele" },
       { id: "morf-05", title: "Numeralul", slug: "numeralul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-numeralul" },
       { id: "morf-06", title: "Adverbul", slug: "adverbul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-adverbul" },
-      { id: "morf-07", title: "Prepoziția", slug: "prepozitia", duration: "10 min", type: "Teorie" },
-      { id: "morf-08", title: "Conjuncția", slug: "conjunctia", duration: "10 min", type: "Teorie" },
-      { id: "morf-09", title: "Interjecția", slug: "interjectia", duration: "10 min", type: "Teorie" },
+      { id: "morf-07", title: "Prepoziția", slug: "prepozitia", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-prepozitie" },
+      { id: "morf-08", title: "Conjuncția", slug: "conjunctia", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-conjunctia" },
+      { id: "morf-09", title: "Interjecția", slug: "interjectia", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-interjectia" },
     ],
   },
   
@@ -151,6 +151,7 @@ const romanaChapters: Chapter[] = [
     lessons: [
       { id: "red-01", title: "Tipuri de Texte (Narativ, Descriptiv, etc.)", slug: "tipuri-de-texte", duration: "15 min", type: "Teorie" },
       { id: "red-02", title: "Planul de Idei", slug: "planul-de-idei", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-planul-de-idei" },
+      { id: "red-02", title: "Mesajul textului", slug: "mesajul-textului", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-mesajul-textului" },
       { id: "red-03", title: "Redactarea unui Rezumat", slug: "redactarea-rezumatului", duration: "10 min", type: "Teorie", worksheetSlug: "fisa-rezumatul" },
       { id: "red-04", title: "Caracterizarea Personajului", slug: "caracterizarea-personajului", duration: "15 min", type: "Teorie" },
       { id: "red-05", title: "Scrisoarea, E-mailul, Jurnalul", slug: "scrisoare-email-jurnal", duration: "15 min", type: "Teorie" },
@@ -167,7 +168,7 @@ const romanaChapters: Chapter[] = [
     description: "Analiza ideilor și valorilor transmise prin texte literare.",
     icon: <Gem className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "val-01", title: "Identificarea Valorilor în Text", slug: "valori-culturale-morale", duration: "15 min", type: "Teorie" },
+      { id: "val-01", title: "Identificarea Valorilor în Text", slug: "valori-culturale", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-valori" },
     ],
   },
 
@@ -180,7 +181,7 @@ const romanaChapters: Chapter[] = [
     description: "Explorează relațiile de sens dintre cuvinte: sinonime, antonime, omonime etc.",
     icon: <Link2 className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "sem-01", title: "Sinonime, Antonime, Omonime, Omofone, Omografe, Paronime, Pleonasmul, Campul lexical, Locutiunea", slug: "categorii-semantice", duration: "20 min", type: "Teorie" },
+      { id: "sem-01", title: "Sinonime, Antonime, Omonime, Omofone, Omografe, Paronime, Pleonasmul, Campul lexical, Locutiunea", slug: "categorii-semantice", duration: "20 min", type: "Teorie", worksheetSlug: "fisa-categorii-semantice" },
     ],
   },
 

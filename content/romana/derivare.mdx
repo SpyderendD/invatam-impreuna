@@ -1,122 +1,142 @@
 ---
-title: Derivarea - Arhitectura Cuvintelor
-description: O lecție vizuală și interactivă despre cum se formează cuvintele noi.
-subject: Limba și literatura română
-grade: Clasa a VIII-a
-category: Vocabular
+title: "Derivarea - Arhitectura Cuvintelor"
+description: "Cum construim cuvinte noi? Prefixe, sufixe și derivarea parasintetică."
+subject: "Limba și literatura română"
+grade: "Clasa a VIII-a"
+category: "Vocabular"
 ---
 
-<div style={{fontFamily: 'sans-serif', lineHeight: '1.6'}}>
+<div className="w-full max-w-5xl mx-auto font-sans text-slate-300">
 
-  {/* Hero Section */}
-  <div style={{background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', borderRadius: '12px', padding: '30px', color: 'white', marginBottom: '30px', boxShadow: '0 10px 25px -5px rgba(118, 75, 162, 0.4)'}}>
-    <h1 style={{margin: '0 0 10px 0', fontSize: '2.2rem', fontWeight: '800'}}>🏗️ Derivarea</h1>
-    <p style={{margin: 0, opacity: '0.9', fontSize: '1.1rem'}}>Principalul mijloc de îmbogățire a vocabularului pentru Evaluarea Națională.</p>
+  {/* HERO SECTION */}
+  <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 mb-12 text-center shadow-lg relative overflow-hidden">
+    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
+    <div className="flex items-center justify-center gap-3 mb-2">
+      <span className="text-3xl">🏗️</span>
+      <h3 className="m-0 text-blue-400 uppercase text-sm tracking-wider font-bold">Definiție</h3>
+    </div>
+    <div className="text-lg text-slate-300 leading-relaxed">
+      Derivarea este cel mai important mijloc intern de îmbogățire a vocabularului.
+      <br/>
+      Construim cuvinte noi adăugând sunete (<span className="text-white font-bold bg-blue-500/20 px-2 rounded">afixe</span>) la un cuvânt de bază.
+    </div>
   </div>
 
-  {/* Concept Card */}
-  <div style={{backgroundColor: 'white', borderLeft: '8px solid #3b82f6', borderRadius: '8px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', marginBottom: '40px'}}>
-    <h3 style={{marginTop: 0, color: '#1e3a8a', textTransform: 'uppercase', fontSize: '0.9rem', letterSpacing: '1px'}}>Definiție</h3>
-    <p style={{fontSize: '1.1rem', color: '#374151', margin: 0}}>
-      <strong>Derivarea</strong> este procesul prin care creăm cuvinte noi adăugând sunete (afixe) la un <strong>cuvânt de bază</strong>.
-    </p>
-  </div>
+  {/* CELE 3 MECANISME - GRID */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
 
-  <h2 style={{textAlign: 'center', marginBottom: '30px', color: '#888', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '0.9rem'}}>Cele 3 Mecanisme ale Derivării</h2>
-
-  {/* Grid Layout for Types */}
-  <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginBottom: '40px'}}>
-
-    {/* Card 1: Prefixe */}
-    <div style={{backgroundColor: '#eff6ff', borderRadius: '12px', padding: '20px', border: '1px solid #bfdbfe', position: 'relative', overflow: 'hidden'}}>
-      <div style={{position: 'absolute', top: '-10px', right: '-10px', backgroundColor: '#3b82f6', width: '50px', height: '50px', borderRadius: '50%', opacity: '0.2'}}></div>
-      <h3 style={{margin: '0 0 15px 0', color: '#1e40af', display: 'flex', alignItems: 'center'}}>
-        <span style={{backgroundColor: '#2563eb', color: 'white', padding: '5px 10px', borderRadius: '6px', fontSize: '0.8rem', marginRight: '10px'}}>1</span>
-        Prefixe
-      </h3>
-      <p style={{color: '#1e3a8a', fontSize: '0.9rem'}}>Se pun <strong>în fața</strong> cuvântului. Modifică sensul.</p>
-      <div style={{marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
-        <div style={{backgroundColor: 'white', padding: '8px 12px', borderRadius: '6px', color: '#333', boxShadow: '0 2px 4px rgba(0,0,0,0.05)'}}>
-          <span style={{color: '#ef4444', fontWeight: 'bold'}}>ne</span>sigur
+    {/* PREFIXE */}
+    <div className="relative rounded-2xl bg-cyan-100/5 border border-cyan-300/20 p-6 text-cyan-100">
+      <div className="absolute top-4 right-4 text-2xl opacity-40">1️⃣</div>
+      <h3 className="m-0 mb-3 text-xl font-bold text-cyan-300">Cu Prefixe</h3>
+      <div className="text-sm mb-4 leading-normal opacity-80">
+        Se pun <strong>în fața</strong> rădăcinii și modifică sensul cuvântului.
+      </div>
+      <div className="space-y-2">
+        <div className="rounded-lg border border-cyan-300/30 bg-black/20 p-2 text-center text-cyan-200 font-mono">
+          <span className="text-white font-bold">stră</span>-bunic
         </div>
-        <div style={{backgroundColor: 'white', padding: '8px 12px', borderRadius: '6px', color: '#333', boxShadow: '0 2px 4px rgba(0,0,0,0.05)'}}>
-          <span style={{color: '#ef4444', fontWeight: 'bold'}}>stră</span>vechi
+        <div className="rounded-lg border border-cyan-300/30 bg-black/20 p-2 text-center text-cyan-200 font-mono">
+          <span className="text-white font-bold">in</span>-egal
         </div>
       </div>
     </div>
 
-    {/* Card 2: Sufixe */}
-    <div style={{backgroundColor: '#f0fdf4', borderRadius: '12px', padding: '20px', border: '1px solid #bbf7d0', position: 'relative', overflow: 'hidden'}}>
-      <div style={{position: 'absolute', top: '-10px', right: '-10px', backgroundColor: '#22c55e', width: '50px', height: '50px', borderRadius: '50%', opacity: '0.2'}}></div>
-      <h3 style={{margin: '0 0 15px 0', color: '#166534', display: 'flex', alignItems: 'center'}}>
-        <span style={{backgroundColor: '#16a34a', color: 'white', padding: '5px 10px', borderRadius: '6px', fontSize: '0.8rem', marginRight: '10px'}}>2</span>
-        Sufixe
-      </h3>
-      <p style={{color: '#14532d', fontSize: '0.9rem'}}>Se pun <strong>la final</strong>. Schimbă sensul sau clasa.</p>
-      <div style={{marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
-        <div style={{backgroundColor: 'white', padding: '8px 12px', borderRadius: '6px', color: '#333', boxShadow: '0 2px 4px rgba(0,0,0,0.05)'}}>
-          copil<span style={{color: '#16a34a', fontWeight: 'bold'}}>aș</span> <span style={{fontSize:'0.8rem', color:'#888'}}>(diminutiv)</span>
+    {/* SUFIXE */}
+    <div className="relative rounded-2xl bg-emerald-100/5 border border-emerald-300/20 p-6 text-emerald-100">
+      <div className="absolute top-4 right-4 text-2xl opacity-40">2️⃣</div>
+      <h3 className="m-0 mb-3 text-xl font-bold text-emerald-300">Cu Sufixe</h3>
+      <div className="text-sm mb-4 leading-normal opacity-80">
+        Se pun <strong>la sfârșitul</strong> rădăcinii. Pot schimba și clasa gramaticală.
+      </div>
+      <div className="space-y-2">
+        <div className="rounded-lg border border-emerald-300/30 bg-black/20 p-2 text-center text-emerald-200 font-mono">
+          bunic-<span className="text-white font-bold">uț</span>
         </div>
-        <div style={{backgroundColor: 'white', padding: '8px 12px', borderRadius: '6px', color: '#333', boxShadow: '0 2px 4px rgba(0,0,0,0.05)'}}>
-          pietr<span style={{color: '#16a34a', fontWeight: 'bold'}}>oi</span> <span style={{fontSize:'0.8rem', color:'#888'}}>(augmentativ)</span>
+        <div className="rounded-lg border border-emerald-300/30 bg-black/20 p-2 text-center text-emerald-200 font-mono">
+          flor-<span className="text-white font-bold">ărie</span>
         </div>
       </div>
     </div>
 
-    {/* Card 3: Parasintetică */}
-    <div style={{backgroundColor: '#fffbeb', borderRadius: '12px', padding: '20px', border: '1px solid #fde68a', position: 'relative', overflow: 'hidden'}}>
-      <div style={{position: 'absolute', top: '-10px', right: '-10px', backgroundColor: '#d97706', width: '50px', height: '50px', borderRadius: '50%', opacity: '0.2'}}></div>
-      <h3 style={{margin: '0 0 15px 0', color: '#92400e', display: 'flex', alignItems: 'center'}}>
-        <span style={{backgroundColor: '#d97706', color: 'white', padding: '5px 10px', borderRadius: '6px', fontSize: '0.8rem', marginRight: '10px'}}>3</span>
-        Parasintetică
-      </h3>
-      <p style={{color: '#78350f', fontSize: '0.9rem'}}><strong>Simultan</strong> prefix și sufix. "Regula sandvișului".</p>
-      <div style={{marginTop: '15px', backgroundColor: '#fff', padding: '15px', borderRadius: '8px', border: '1px dashed #d97706'}}>
-        <div style={{textAlign: 'center', fontWeight: 'bold', color: '#333', marginBottom: '5px'}}>Împădurit</div>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '5px', fontSize: '0.8rem'}}>
-          <span style={{backgroundColor: '#fed7aa', padding: '2px 6px', borderRadius: '4px'}}>Îm-</span>
-          <span>+</span>
-          <span style={{backgroundColor: '#e5e7eb', padding: '2px 6px', borderRadius: '4px'}}>pădur</span>
-          <span>+</span>
-          <span style={{backgroundColor: '#fed7aa', padding: '2px 6px', borderRadius: '4px'}}>-it</span>
-        </div>
+    {/* PARASINTETICĂ */}
+    <div className="relative rounded-2xl bg-orange-100/5 border border-orange-300/20 p-6 text-orange-100">
+      <div className="absolute top-4 right-4 text-2xl opacity-40">3️⃣</div>
+      <h3 className="m-0 mb-3 text-xl font-bold text-orange-300">Parasintetică</h3>
+      <div className="text-sm mb-4 leading-normal opacity-80">
+        Adăugarea <strong>simultană</strong> a unui prefix și a unui sufix.
       </div>
+      <div className="rounded-lg border border-orange-300/30 bg-black/20 p-3 text-center mb-3 text-orange-200 font-mono text-lg">
+        <span className="text-white font-bold">îm</span>-pădur-<span className="text-white font-bold">it</span>
+      </div>
+      <div className="text-xs opacity-60 text-center italic">Regula: Nu există "împădur" sau "pădurit".</div>
     </div>
 
   </div>
 
-  {/* Mental Map Table */}
-  <div style={{borderRadius: '12px', overflow: 'hidden', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', border: '1px solid #e5e7eb'}}>
-    <div style={{backgroundColor: '#1f2937', color: 'white', padding: '15px', fontWeight: 'bold', letterSpacing: '1px', textAlign: 'center'}}>
-      🧠 Harta Mentală Recapitulativă
+  {/* FAMILIA LEXICALĂ - CARD */}
+  <div className="rounded-2xl bg-slate-900 border border-slate-700 overflow-hidden mb-12 shadow-xl">
+    <div className="bg-slate-800 p-4 border-b border-slate-700 flex items-center justify-between">
+      <h3 className="m-0 text-lg font-bold text-white flex items-center gap-2">
+        🌳 Familia Lexicală
+      </h3>
     </div>
-    <div style={{overflowX: 'auto', backgroundColor: 'white'}}>
-      <table style={{width: '100%', borderCollapse: 'collapse', minWidth: '500px'}}>
-        <thead>
-          <tr style={{backgroundColor: '#f3f4f6', color: '#4b5563', textTransform: 'uppercase', fontSize: '0.85rem'}}>
-            <th style={{padding: '15px', textAlign: 'left', borderBottom: '2px solid #e5e7eb'}}>Tip Derivare</th>
-            <th style={{padding: '15px', textAlign: 'left', borderBottom: '2px solid #e5e7eb'}}>Mecanism</th>
-            <th style={{padding: '15px', textAlign: 'left', borderBottom: '2px solid #e5e7eb'}}>Exemplu Vizual</th>
-          </tr>
-        </thead>
-        <tbody style={{color: '#374151'}}>
-          <tr style={{borderBottom: '1px solid #e5e7eb'}}>
-            <td style={{padding: '15px', fontWeight: 'bold', color: '#2563eb'}}>Cu Prefix</td>
-            <td style={{padding: '15px'}}>⬅️ Înainte</td>
-            <td style={{padding: '15px'}}><span style={{color: '#ef4444'}}>Stră</span>bunic</td>
-          </tr>
-          <tr style={{borderBottom: '1px solid #e5e7eb'}}>
-            <td style={{padding: '15px', fontWeight: 'bold', color: '#16a34a'}}>Cu Sufix</td>
-            <td style={{padding: '15px'}}>➡️ După</td>
-            <td style={{padding: '15px'}}>Bunic<span style={{color: '#16a34a'}}>uț</span></td>
-          </tr>
-          <tr>
-            <td style={{padding: '15px', fontWeight: 'bold', color: '#d97706'}}>Parasintetică</td>
-            <td style={{padding: '15px'}}>⬅️🥪➡️ Ambele</td>
-            <td style={{padding: '15px'}}><span style={{color: '#d97706'}}>Îm</span>bătrân<span style={{color: '#d97706'}}>it</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="p-6">
+      <div className="text-slate-300 mb-6">
+        Toate cuvintele formate prin derivare, compunere sau conversiune de la aceeași <strong>rădăcină</strong>.
+      </div>
+      
+      <div className="p-6 rounded-xl bg-slate-800/50 border border-slate-700 text-center">
+        <div className="text-sm text-slate-400 mb-2 uppercase tracking-wide font-bold">Rădăcina: FLOR</div>
+        <div className="flex flex-wrap justify-center gap-3">
+          <span className="px-3 py-1 rounded-full bg-slate-700 text-white border border-slate-600">floare</span>
+          <span className="px-3 py-1 rounded-full bg-slate-700 text-white border border-slate-600">florărie</span>
+          <span className="px-3 py-1 rounded-full bg-slate-700 text-white border border-slate-600">floricică</span>
+          <span className="px-3 py-1 rounded-full bg-slate-700 text-white border border-slate-600">înflorit</span>
+          <span className="px-3 py-1 rounded-full bg-slate-700 text-white border border-slate-600">neînflorit</span>
+          <span className="px-3 py-1 rounded-full bg-slate-700 text-white border border-slate-600">reînflorire</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* TIPURI DE SUFIXE - LISTA */}
+  <div className="mb-8">
+    <h3 className="text-2xl font-bold text-white mb-6 border-l-4 border-emerald-500 pl-4">
+      Tipuri Speciale de Sufixe
+    </h3>
+    <div className="space-y-3">
+      
+      <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800 border border-slate-700">
+        <div>
+          <span className="block font-bold text-emerald-400">Diminutivale</span>
+          <span className="text-xs text-slate-500">Micșorează obiectul</span>
+        </div>
+        <div className="text-right font-mono text-sm text-slate-300">
+          copil-<strong>aș</strong>, cățel-<strong>uș</strong>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800 border border-slate-700">
+        <div>
+          <span className="block font-bold text-emerald-400">Augmentative</span>
+          <span className="text-xs text-slate-500">Măresc obiectul</span>
+        </div>
+        <div className="text-right font-mono text-sm text-slate-300">
+          băiet-<strong>oi</strong>, căs-<strong>oaie</strong>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800 border border-slate-700">
+        <div>
+          <span className="block font-bold text-emerald-400">De agent</span>
+          <span className="text-xs text-slate-500">Indică autorul acțiunii</span>
+        </div>
+        <div className="text-right font-mono text-sm text-slate-300">
+          mor-<strong>ar</strong>, foch-<strong>ist</strong>
+        </div>
+      </div>
+
     </div>
   </div>
 

@@ -1,0 +1,142 @@
+
+<div className="w-full max-w-4xl mx-auto font-sans text-slate-300">
+
+  {/* HEADER */}
+  <div className="text-center mb-12">
+    <h1 className="m-0 text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-500">
+      Atelierul de Asamblare
+    </h1>
+    <div className="mt-2 text-lg text-slate-400">Descompune și reconstruiește cuvintele compuse.</div>
+  </div>
+
+  {/* LEVEL 1: Identificare */}
+  <div className="mb-10">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="rounded-full bg-teal-200/10 px-3 py-1 text-xs font-bold uppercase text-teal-300">
+        Nivelul 1
+      </span>
+      <h2 className="m-0 text-2xl font-bold text-slate-200">Tipul Compunerii</h2>
+    </div>
+
+    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 shadow-lg">
+      <div className="flex flex-col gap-4">
+        
+        {/* Q1 */}
+        <details className="group rounded-xl p-4 cursor-pointer border border-teal-300/20 bg-teal-100/5 text-slate-200">
+          <summary className="flex justify-between items-center font-bold list-none">
+            <span className="text-lg">1. Untdelemn</span>
+            <span className="text-sm font-normal text-slate-400 transition-transform group-open:rotate-90">Verifică ▶</span>
+          </summary>
+          <div className="mt-4 pt-4 border-t border-teal-300/20">
+            <div className="flex items-center gap-3">
+              <span className="text-xl font-bold text-teal-400">Contopire</span>
+              <span className="text-sm text-slate-400">(unt + de + lemn, scrise legat)</span>
+            </div>
+          </div>
+        </details>
+
+        {/* Q2 */}
+        <details className="group rounded-xl p-4 cursor-pointer border border-teal-300/20 bg-teal-100/5 text-slate-200">
+          <summary className="flex justify-between items-center font-bold list-none">
+            <span className="text-lg">2. Prim-ministru</span>
+            <span className="text-sm font-normal text-slate-400 transition-transform group-open:rotate-90">Verifică ▶</span>
+          </summary>
+          <div className="mt-4 pt-4 border-t border-teal-300/20">
+            <div className="flex items-center gap-3">
+              <span className="text-xl font-bold text-teal-400">Alăturare (cu cratimă)</span>
+              <span className="text-sm text-slate-400">(prim + ministru)</span>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </div>
+
+  {/* LEVEL 2: Anatomia Cuvântului */}
+  <div className="mb-10">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="rounded-full bg-lime-200/10 px-3 py-1 text-xs font-bold uppercase text-lime-300">
+        Nivelul 2
+      </span>
+      <h2 className="m-0 text-2xl font-bold text-slate-200">Din ce e format?</h2>
+    </div>
+
+    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 shadow-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+        {/* Card 1 */}
+        <div className="rounded-xl border border-slate-600 bg-white/5 p-4 text-center">
+          <div className="text-lg font-bold text-white mb-2">Binefăcător</div>
+          <details className="group">
+             <summary className="cursor-pointer text-sm text-lime-400 hover:text-lime-300">Vezi componentele</summary>
+             <div className="mt-2 text-xs text-slate-300 pt-2 border-t border-slate-600">
+                Adverb (bine) + Adjectiv/Participiu (făcător)
+             </div>
+          </details>
+        </div>
+
+        {/* Card 2 */}
+        <div className="rounded-xl border border-slate-600 bg-white/5 p-4 text-center">
+          <div className="text-lg font-bold text-white mb-2">Cincisprezece</div>
+          <details className="group">
+             <summary className="cursor-pointer text-sm text-lime-400 hover:text-lime-300">Vezi componentele</summary>
+             <div className="mt-2 text-xs text-slate-300 pt-2 border-t border-slate-600">
+                Numeral (cinci) + Prep. (spre) + Numeral (zece)
+             </div>
+          </details>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {/* BOSS LEVEL: Ortografia */}
+  <div className="mb-12">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="rounded-full bg-red-500/20 px-3 py-1 text-xs font-bold uppercase text-red-400">
+        Boss Level
+      </span>
+      <h2 className="m-0 text-2xl font-bold text-slate-200">Legat sau Dezlegat?</h2>
+    </div>
+
+    <div className="rounded-xl bg-slate-900 p-8 text-white shadow-xl border border-red-500/30 relative">
+      
+      <div className="text-xl mb-6 leading-relaxed">
+        Cum scriem corect: <br/> 
+        <span className="text-red-400 font-mono text-2xl font-bold"> "ALTĂDATĂ" </span> vs <span className="text-red-400 font-mono text-2xl font-bold"> "ALTĂ DATĂ" </span>?
+      </div>
+      
+      <details className="group">
+        <summary className="inline-block cursor-pointer rounded-lg bg-red-600 px-6 py-3 font-bold text-white transition hover:bg-red-500 shadow-lg shadow-red-900/50">
+          Explicația Corectă ▼
+        </summary>
+        <div className="mt-6 space-y-4">
+          
+          <div className="rounded-xl border border-slate-600 bg-black/40 p-4">
+            <div className="font-bold text-green-400 mb-1">ALTĂDATĂ (legat)</div>
+            <div className="text-slate-300 text-sm">
+              Este <strong>adverb</strong> și înseamnă "în trecut" sau "în viitor" (odinioară).
+              <br/><em className="text-slate-500">"Altădată aici era o pădure."</em>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-slate-600 bg-black/40 p-4">
+            <div className="font-bold text-yellow-400 mb-1">ALTĂ DATĂ (dezlegat)</div>
+            <div className="text-slate-300 text-sm">
+              Este <strong>locuțiune</strong> sau structură liberă. Înseamnă "o ocazie diferită".
+              <br/><em className="text-slate-500">"Vom discuta asta altă dată (nu acum)."</em>
+            </div>
+          </div>
+
+        </div>
+      </details>
+    </div>
+  </div>
+
+  {/* FINAL */}
+  <div className="text-center rounded-2xl bg-slate-800/50 border border-slate-700 p-8 text-slate-300">
+    <h3 className="m-0 mb-2 text-2xl font-bold text-slate-100">🎉 Felicitări!</h3>
+    <p>Ai completat atelierul de compunere!</p>
+  </div>
+</div>

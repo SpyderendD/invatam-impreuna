@@ -1,0 +1,149 @@
+---
+title: "Antrenament - Conversiunea"
+description: "Exerciții interactive: identifică valoarea morfologică a cuvintelor."
+subject: "Limba și literatura română"
+grade: "Clasa a VIII-a"
+category: "Exerciții"
+---
+
+<div className="w-full max-w-4xl mx-auto font-sans text-slate-300">
+
+  {/* HEADER */}
+  <div className="text-center mb-12">
+    <h1 className="m-0 text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-pink-500">
+      Laboratorul de Alchimie
+    </h1>
+    <div className="mt-2 text-lg text-slate-400">Identifică transformările gramaticale.</div>
+  </div>
+
+  {/* LEVEL 1: Identificare Simplă */}
+  <div className="mb-10">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="rounded-full bg-indigo-200/10 px-3 py-1 text-xs font-bold uppercase text-indigo-300">
+        Nivelul 1
+      </span>
+      <h2 className="m-0 text-2xl font-bold text-slate-200">Ce este cuvântul marcat?</h2>
+    </div>
+
+    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 shadow-lg">
+      <div className="flex flex-col gap-4">
+        
+        {/* Q1 */}
+        <details className="group rounded-xl p-4 cursor-pointer border border-indigo-300/20 bg-indigo-100/5 text-slate-200">
+          <summary className="flex justify-between items-center font-bold list-none">
+            <span className="text-lg">1. "Un <span className="text-indigo-400">bătrân</span> citea ziarul."</span>
+            <span className="text-sm font-normal text-slate-400 transition-transform group-open:rotate-90">Verifică ▶</span>
+          </summary>
+          <div className="mt-4 pt-4 border-t border-indigo-300/20">
+            <div className="flex flex-col gap-2">
+              <span className="text-xl font-bold text-white">Substantiv</span>
+              <span className="text-sm text-slate-400">
+                Provine din adjectiv ("om bătrân"), dar aici este articulat ("un") și are rol de subiect.
+              </span>
+            </div>
+          </div>
+        </details>
+
+        {/* Q2 */}
+        <details className="group rounded-xl p-4 cursor-pointer border border-indigo-300/20 bg-indigo-100/5 text-slate-200">
+          <summary className="flex justify-between items-center font-bold list-none">
+            <span className="text-lg">2. "Ea scrie <span className="text-indigo-400">frumos</span>."</span>
+            <span className="text-sm font-normal text-slate-400 transition-transform group-open:rotate-90">Verifică ▶</span>
+          </summary>
+          <div className="mt-4 pt-4 border-t border-indigo-300/20">
+             <div className="flex flex-col gap-2">
+              <span className="text-xl font-bold text-white">Adverb</span>
+              <span className="text-sm text-slate-400">
+                Provine din adjectiv ("băiat frumos"), dar aici determină un verb ("scrie cum?") și este invariabil.
+              </span>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </div>
+
+  {/* LEVEL 2: Comparație Contextuală */}
+  <div className="mb-10">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="rounded-full bg-pink-200/10 px-3 py-1 text-xs font-bold uppercase text-pink-300">
+        Nivelul 2
+      </span>
+      <h2 className="m-0 text-2xl font-bold text-slate-200">Cuvântul Cameleon: "LUNI"</h2>
+    </div>
+
+    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 shadow-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+        {/* Card 1 */}
+        <div className="rounded-xl border border-slate-600 bg-white/5 p-4 text-center">
+          <div className="text-lg text-slate-300 mb-3">"Am două <strong className="text-white">luni</strong> de vacanță."</div>
+          <details className="group">
+             <summary className="cursor-pointer text-sm text-pink-400 hover:text-pink-300 font-bold">Analiza</summary>
+             <div className="mt-2 text-xs text-white font-bold pt-2 border-t border-slate-600">
+                SUBSTANTIV
+             </div>
+             <div className="text-xs text-slate-400">Numără unitățile de timp (o lună, două luni).</div>
+          </details>
+        </div>
+
+        {/* Card 2 */}
+        <div className="rounded-xl border border-slate-600 bg-white/5 p-4 text-center">
+          <div className="text-lg text-slate-300 mb-3">"<strong className="text-white">Luni</strong> merg la școală."</div>
+          <details className="group">
+             <summary className="cursor-pointer text-sm text-pink-400 hover:text-pink-300 font-bold">Analiza</summary>
+             <div className="mt-2 text-xs text-white font-bold pt-2 border-t border-slate-600">
+                ADVERB
+             </div>
+             <div className="text-xs text-slate-400">Răspunde la întrebarea "când?" (lunea).</div>
+          </details>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {/* BOSS LEVEL: Prepoziția */}
+  <div className="mb-12">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-bold uppercase text-cyan-400">
+        Boss Level
+      </span>
+      <h2 className="m-0 text-2xl font-bold text-slate-200">Capcana Genitivului</h2>
+    </div>
+
+    <div className="rounded-xl bg-slate-900 p-8 text-white shadow-xl border border-cyan-500/30 relative">
+      
+      <div className="text-xl mb-6 leading-relaxed">
+        Ce valoare morfologică are cuvântul <span className="text-cyan-400 font-mono text-2xl font-bold"> "ÎMPOTRIVA" </span> în enunțul:
+        <br/>
+        <em>"Ei au luptat împotriva inamicului."</em>
+      </div>
+      
+      <details className="group">
+        <summary className="inline-block cursor-pointer rounded-lg bg-cyan-600 px-6 py-3 font-bold text-white transition hover:bg-cyan-500 shadow-lg shadow-cyan-900/50">
+          Dezvăluie Răspunsul ▼
+        </summary>
+        <div className="mt-6 rounded-xl border border-cyan-500/50 bg-black/40 p-6">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="text-3xl">🤯</span>
+            <h3 className="m-0 text-xl font-bold text-white">Prepoziție</h3>
+          </div>
+          <div className="text-slate-300 leading-relaxed">
+            Provine din adverbul <em>împotrivă</em>, dar pentru că este urmat de un substantiv în cazul Genitiv ("inamicului"), devine <strong>prepoziție specifică Genitivului</strong>.
+            <div className="mt-3 p-3 bg-cyan-500/10 rounded-lg text-sm text-cyan-200 italic border-l-4 border-cyan-500">
+              💡 Alte exemple similare: deasupra, dedesubtul, înaintea, înapoia.
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  {/* FINAL */}
+  <div className="text-center rounded-2xl bg-slate-800/50 border border-slate-700 p-8 text-slate-300">
+    <h3 className="m-0 mb-2 text-2xl font-bold text-slate-100">🎉 Felicitări!</h3>
+    <p>Ai stăpânit arta transformării cuvintelor!</p>
+  </div>
+</div>

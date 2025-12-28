@@ -6,115 +6,88 @@ grade: "Clasa a VIII-a"
 category: "Fonetică"
 ---
 
-<div className="w-full max-w-4xl mx-auto font-sans">
+<div className="w-full max-w-5xl mx-auto font-sans text-slate-300">
 
-  {/* HERO SECTION - Gradientul rămâne, arată bine */}
-  <div style={{background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)', borderRadius: '16px', padding: '32px', color: 'white', marginBottom: '32px', boxShadow: '0 10px 20px rgba(0,0,0,0.2)'}}>
-    <h1 style={{margin: '0 0 10px 0', fontSize: '2.5rem', fontWeight: '800', color: 'white'}}>🔤 Grupurile de Sunete</h1>
-    <div style={{fontSize: '1.1rem', opacity: '0.95', color: 'white'}}>Matematica sunetelor: Cum se combină vocalele și semivocalele?</div>
+  {/* SECRETUL ANALIZEI */}
+  <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 mb-12 text-center">
+    <div className="flex items-center justify-center gap-3 mb-2">
+      <span className="text-2xl">🔑</span>
+      <h3 className="m-0 text-amber-400 uppercase text-sm tracking-wider font-bold">Secretul Analizei</h3>
+    </div>
+    <p className="text-lg text-slate-300 leading-relaxed">
+      Totul depinde de <span className="bg-amber-400/10 text-amber-300 px-2 py-1 rounded-md font-bold">despărțirea în silabe</span>! Nu poți identifica grupul dacă nu ai despărțit corect cuvântul.
+    </p>
   </div>
 
-  {/* SECRETUL SUPREM - Stil "Card Alb" */}
-  <div style={{backgroundColor: 'white', borderLeft: '8px solid #f59e0b', borderRadius: '12px', padding: '24px', marginBottom: '40px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'}}>
-    <div style={{display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px'}}>
-      <span style={{fontSize: '1.5rem'}}>🔑</span>
-      <h3 style={{margin: 0, color: '#d97706', textTransform: 'uppercase', fontSize: '0.9rem', letterSpacing: '1px', fontWeight: 'bold'}}>Secretul Analizei</h3>
-    </div>
-    <div style={{fontSize: '1.1rem', color: '#334155', lineHeight: '1.6'}}>
-      Totul depinde de <span style={{color: '#d97706', fontWeight: '800', textDecoration: 'underline'}}>despărțirea în silabe</span>! Nu poți identifica grupul dacă nu ai despărțit corect cuvântul.
-    </div>
-  </div>
+  {/* CLASIFICARE - GRID */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
 
-  {/* CLASIFICARE - GRID - FORȚĂM STILURILE "STICKER" (Pastel + Text Închis) */}
-  <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '48px'}}>
-
-    {/* DIFTONG - Sticker Portocaliu */}
-    <div style={{backgroundColor: '#fff7ed', border: '1px solid #fed7aa', borderRadius: '16px', padding: '24px', position: 'relative'}}>
-      <div style={{position: 'absolute', top: '16px', right: '16px', fontSize: '1.5rem', opacity: '0.5'}}>✌️</div>
-      <h3 style={{margin: '0 0 12px 0', fontSize: '1.5rem', fontWeight: '800', color: '#c2410c'}}>Diftong</h3>
-      <div style={{color: '#431407', fontSize: '0.95rem', marginBottom: '16px', lineHeight: '1.5'}}>
-        Combinația de o <strong>Vocală</strong> și o <strong>Semivocală</strong> pronunțate în <span style={{textDecoration: 'underline', textDecorationColor: '#fb923c'}}>aceeași silabă</span>.
+    {/* DIFTONG */}
+    <div className="relative rounded-2xl bg-yellow-100/10 border border-yellow-300/20 p-6 text-yellow-100">
+      <div className="absolute top-4 right-4 text-3xl opacity-50">✌️</div>
+      <h3 className="m-0 mb-3 text-2xl font-bold text-yellow-300">Diftong</h3>
+      <div className="text-sm mb-4 leading-normal opacity-80">
+        Combinația de o Vocală și o Semivocală pronunțate în aceeași silabă.
       </div>
-      <div style={{backgroundColor: 'white', border: '1px dashed #f97316', borderRadius: '8px', padding: '12px', textAlign: 'center', marginBottom: '12px', color: '#c2410c', fontWeight: 'bold', fontFamily: 'monospace'}}>
+      <div className="rounded-lg border border-yellow-300/30 bg-white/5 p-3 text-center mb-3 text-yellow-200 font-mono">
         V + sv / sv + V
       </div>
-      <div style={{fontSize: '0.85rem', color: '#7c2d12', textAlign: 'center'}}>
-        Ex: <em>d<strong>oa</strong>r, c<strong>âi</strong>-ne</em>
-      </div>
+      <div className="text-xs opacity-60 text-center">Ex: doar, câi-ne</div>
     </div>
 
-    {/* TRIFTONG - Sticker Mov (AICI ERA PROBLEMA - ACUM E REZOLVATĂ) */}
-    <div style={{backgroundColor: '#faf5ff', border: '1px solid #e9d5ff', borderRadius: '16px', padding: '24px', position: 'relative'}}>
-      <div style={{position: 'absolute', top: '16px', right: '16px', fontSize: '1.5rem', opacity: '0.5'}}>🤟</div>
-      <h3 style={{margin: '0 0 12px 0', fontSize: '1.5rem', fontWeight: '800', color: '#7e22ce'}}>Triftong</h3>
-      <div style={{color: '#3b0764', fontSize: '0.95rem', marginBottom: '16px', lineHeight: '1.5'}}>
-        Combinația de o <strong>Vocală</strong> și <strong>două Semivocale</strong> în <span style={{textDecoration: 'underline', textDecorationColor: '#a855f7'}}>aceeași silabă</span>.
+    {/* TRIFTONG */}
+    <div className="relative rounded-2xl bg-purple-100/10 border border-purple-300/20 p-6 text-purple-100">
+      <div className="absolute top-4 right-4 text-3xl opacity-50">🤟</div>
+      <h3 className="m-0 mb-3 text-2xl font-bold text-purple-300">Triftong</h3>
+      <div className="text-sm mb-4 leading-normal opacity-80">
+        Combinația de o Vocală și două Semivocale în aceeași silabă.
       </div>
-      <div style={{backgroundColor: 'white', border: '1px dashed #9333ea', borderRadius: '8px', padding: '12px', textAlign: 'center', marginBottom: '12px', color: '#7e22ce', fontWeight: 'bold', fontFamily: 'monospace'}}>
+      <div className="rounded-lg border border-purple-300/30 bg-white/5 p-3 text-center mb-3 text-purple-200 font-mono">
         sv + V + sv
       </div>
-      <div style={{fontSize: '0.85rem', color: '#581c87', textAlign: 'center'}}>
-        Ex: <em>l<strong>e-oai</strong>-că, <strong>iau</strong></em>
-      </div>
+      <div className="text-xs opacity-60 text-center">Ex: le-oai-că, iau</div>
     </div>
 
-    {/* HIAT - Sticker Turcoaz */}
-    <div style={{backgroundColor: '#f0fdfa', border: '1px solid #ccfbf1', borderRadius: '16px', padding: '24px', position: 'relative'}}>
-      <div style={{position: 'absolute', top: '16px', right: '16px', fontSize: '1.5rem', opacity: '0.5'}}>✂️</div>
-      <h3 style={{margin: '0 0 12px 0', fontSize: '1.5rem', fontWeight: '800', color: '#0f766e'}}>Hiat</h3>
-      <div style={{color: '#134e4a', fontSize: '0.95rem', marginBottom: '16px', lineHeight: '1.5'}}>
-        Două <strong>Vocale</strong> alăturate care fac parte din <span style={{textDecoration: 'underline', textDecorationColor: '#2dd4bf'}}>silabe diferite</span>.
+    {/* HIAT */}
+    <div className="relative rounded-2xl bg-slate-800 border border-slate-600 p-6 text-white">
+      <div className="absolute top-4 right-4 text-3xl opacity-80">✂️</div>
+      <h3 className="m-0 mb-3 text-2xl font-bold text-white">Hiat</h3>
+      <div className="text-sm mb-4 leading-normal opacity-80">
+        Două <strong>Vocale</strong> alăturate care fac parte din <span className="font-bold">silabe diferite</span>.
       </div>
-      <div style={{backgroundColor: 'white', border: '1px dashed #14b8a6', borderRadius: '8px', padding: '12px', textAlign: 'center', marginBottom: '12px', color: '#0f766e', fontWeight: 'bold', fontFamily: 'monospace'}}>
+      <div className="rounded-lg border border-slate-500 bg-white/90 p-3 text-center mb-3 text-slate-800 font-bold font-mono">
         V - V
       </div>
-      <div style={{fontSize: '0.85rem', color: '#115e59', textAlign: 'center'}}>
-        Ex: <em>p<strong>o-e</strong>-zi-e, a-l<strong>e-e</strong></em>
-      </div>
+      <div className="text-xs opacity-60 text-center text-white/70">Ex: po-e-zi-e, a-le-e</div>
     </div>
-
   </div>
 
-  {/* TABEL COMPARATIV - Stil "Card Alb" pentru contrast maxim */}
-  <div style={{backgroundColor: 'white', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'}}>
-    <div style={{backgroundColor: '#f1f5f9', padding: '16px', textAlign: 'center', borderBottom: '1px solid #e2e8f0', color: '#475569', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase'}}>
-      Harta Mentală
+  {/* HARTA MENTALĂ */}
+  <div className="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden shadow-lg">
+    <div className="p-4 text-center border-b border-slate-700">
+      <h4 className="m-0 text-slate-400 font-bold tracking-wider uppercase">Harta Mentală</h4>
     </div>
-    
-    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))'}}>
-      
-      {/* Coloana Aceeași Silabă */}
-      <div style={{padding: '24px', borderRight: '1px solid #e2e8f0'}}>
-        <div style={{color: '#16a34a', fontWeight: 'bold', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px'}}>
-          <span>✅</span> Aceeași Silabă
-        </div>
-        <div style={{display: 'flex', flexDirection: 'column', gap: '12px'}}>
-          <div style={{display: 'flex', justifyContent: 'space-between', padding: '12px', backgroundColor: '#fff7ed', borderRadius: '8px', color: '#334155'}}>
-            <span style={{fontWeight: 'bold'}}>Diftong</span>
-            <span style={{fontFamily: 'monospace', color: '#ea580c'}}>2 sunete</span>
+    <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="p-6 border-b md:border-b-0 md:border-r border-slate-700">
+        <h5 className="font-bold text-green-400 mb-4 flex items-center gap-2">✅ În Aceeași Silabă</h5>
+        <div className="flex flex-col gap-3">
+          <div className="flex justify-between items-center p-3 bg-yellow-200/10 rounded-lg">
+            <span className="font-bold text-yellow-200">Diftong</span><span className="font-mono text-yellow-400/80">2 sunete</span>
           </div>
-          <div style={{display: 'flex', justifyContent: 'space-between', padding: '12px', backgroundColor: '#faf5ff', borderRadius: '8px', color: '#334155'}}>
-            <span style={{fontWeight: 'bold'}}>Triftong</span>
-            <span style={{fontFamily: 'monospace', color: '#9333ea'}}>3 sunete</span>
+          <div className="flex justify-between items-center p-3 bg-purple-200/10 rounded-lg">
+            <span className="font-bold text-purple-200">Triftong</span><span className="font-mono text-purple-400/80">3 sunete</span>
           </div>
         </div>
       </div>
-
-      {/* Coloana Silabe Diferite */}
-      <div style={{padding: '24px'}}>
-        <div style={{color: '#dc2626', fontWeight: 'bold', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px'}}>
-          <span>⚡</span> Silabe Diferite
-        </div>
-        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', backgroundColor: '#f0fdfa', borderRadius: '8px', height: '100%', color: '#334155'}}>
+      <div className="p-6">
+        <h5 className="font-bold text-red-400 mb-4 flex items-center gap-2">⚡ În Silabe Diferite</h5>
+        <div className="flex justify-between items-center p-3 bg-white/5 rounded-lg h-full">
           <div>
-            <span style={{fontWeight: 'bold', display: 'block'}}>Hiat</span>
-            <span style={{fontSize: '0.8rem', opacity: '0.7'}}>Separare între vocale</span>
+            <span className="font-bold text-slate-200">Hiat</span><span className="block text-xs text-slate-400">Separare între vocale</span>
           </div>
-          <span style={{fontFamily: 'monospace', color: '#0d9488', fontWeight: 'bold'}}>V - V</span>
+          <span className="font-mono text-slate-300 font-bold">V - V</span>
         </div>
       </div>
-
     </div>
   </div>
-
 </div>
