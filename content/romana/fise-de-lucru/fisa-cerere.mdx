@@ -1,0 +1,129 @@
+---
+title: "Antrenament - Redactare Oficială"
+description: "Corectează greșelile și învață să scrii o cerere perfectă."
+subject: "Limba și literatura română"
+grade: "Clasa a VIII-a"
+category: "Exerciții"
+---
+
+<div className="w-full max-w-4xl mx-auto font-sans text-slate-300">
+
+  {/* HEADER */}
+  <div className="text-center mb-16 pt-8">
+    <h1 className="m-0 text-4xl md:text-5xl font-serif text-white mb-4">
+      Biroul de Administrație
+    </h1>
+    <div className="h-1 w-24 bg-blue-600 mx-auto mb-6"></div>
+    <div className="text-lg text-slate-400 italic font-light">
+      "Stilul este haina gândirii." — aici haina trebuie să fie oficială.
+    </div>
+  </div>
+
+  {/* STUDIU DE CAZ 1 - GREȘELI DE REGISTRU */}
+  <div className="mb-16">
+    <div className="flex items-center gap-4 mb-6">
+      <div className="bg-red-900/30 text-red-400 px-3 py-1 text-xs font-bold uppercase tracking-wider border border-red-500/20">Studiu de Caz 1</div>
+      <h2 className="m-0 text-2xl font-bold text-white">Detectarea Tonului Inadecvat</h2>
+    </div>
+
+    <div className="grid grid-cols-1 gap-8">
+      {/* TEXTUL GREȘIT */}
+      <div className="bg-white p-6 text-slate-900 font-serif relative transform rotate-1 shadow-lg border border-slate-300">
+        <div className="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold px-2 py-1">VARIANTA GREȘITĂ</div>
+        <p className="mb-4">"Salut Domnule Director,</p>
+        <p className="mb-4">
+          Eu sunt Popescu Ion din a 8-a B. Vreau și eu să mă înscriu la concursul de mate că sunt bun la calcule. Sper să mă lăsați.
+        </p>
+        <p>Mersi mult,<br/>Ion"</p>
+      </div>
+
+      {/* ANALIZA ȘI CORECTURA */}
+      <div className="flex flex-col justify-center gap-4">
+        <details className="group border-b border-slate-700 pb-4">
+          <summary className="flex justify-between items-center cursor-pointer font-bold text-slate-200 hover:text-blue-400 transition">
+            1. Analiza Erorilor
+            <span className="text-blue-500 opacity-0 group-hover:opacity-100 transition">▼</span>
+          </summary>
+          <div className="mt-3 text-sm text-slate-400 leading-relaxed">
+            <ul className="list-disc list-inside space-y-2">
+              <li><strong>Salut:</strong> Formula "Salut" este colocvială. Se folosește doar "Domnule Director" (sus în dreapta).</li>
+              <li><strong>Eu sunt:</strong> Se folosește formula standard "Subsemnatul".</li>
+              <li><strong>Vreau și eu:</strong> Exprimare subiectivă și nepoliticoasă. Se folosește "Vă rog să aprobați".</li>
+              <li><strong>Sunt bun la calcule:</strong> Justificare subiectivă, inutilă în cerere.</li>
+              <li><strong>Mersi:</strong> Inacceptabil. Nu se folosesc mulțumiri în încheiere, doar semnătura.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details className="group border-b border-slate-700 pb-4">
+          <summary className="flex justify-between items-center cursor-pointer font-bold text-slate-200 hover:text-green-400 transition">
+            2. Varianta Corectă
+            <span className="text-green-500 opacity-0 group-hover:opacity-100 transition">▼</span>
+          </summary>
+          <div className="mt-3 p-4 bg-slate-800 border-l-2 border-green-500 text-sm text-slate-300 font-mono">
+            "Subsemnatul, Popescu Ion, elev în clasa a VIII-a B la Școala..., vă rog să aprobați înscrierea mea la concursul de matematică..."
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  {/* SEPARATOR */}
+  <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent mb-16"></div>
+
+  {/* STUDIU DE CAZ 2 - AȘEZAREA ÎN PAGINĂ */}
+  <div className="mb-16">
+    <div className="flex items-center gap-4 mb-6">
+      <div className="bg-blue-900/30 text-blue-400 px-3 py-1 text-xs font-bold uppercase tracking-wider border border-blue-500/20">Studiu de Caz 2</div>
+      <h2 className="m-0 text-2xl font-bold text-white">Geometria Paginii</h2>
+    </div>
+
+    <div className="p-6 bg-slate-900 rounded-xl border border-slate-700">
+      <div className="mb-4 text-slate-300">
+        Unde trebuie poziționată formula: <strong className="text-white">"Domnului Director al..."</strong>?
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Opțiunea A */}
+        <div className="p-4 border border-slate-600 rounded bg-black/20 opacity-50 cursor-not-allowed">
+          <div className="text-xs text-slate-500 mb-2">OPȚIUNEA A</div>
+          <div className="h-20 border border-slate-500 bg-white relative">
+             <div className="absolute top-2 right-2 text-[10px] text-black font-bold">Domnului Director...</div>
+          </div>
+          <div className="text-red-400 font-bold mt-2 text-sm text-center">Incorect (Sus)</div>
+        </div>
+
+        {/* Opțiunea B */}
+        <div className="p-4 border-2 border-green-500 rounded bg-green-500/5">
+          <div className="text-xs text-green-400 mb-2 font-bold">OPȚIUNEA B (Corectă)</div>
+          <div className="h-20 border border-slate-500 bg-white relative">
+             <div className="absolute bottom-2 left-2 text-[10px] text-black font-bold">Domnului Director...</div>
+          </div>
+          <div className="text-green-400 font-bold mt-2 text-sm text-center">Corect (Jos, Stânga)</div>
+        </div>
+      </div>
+      
+      <div className="mt-4 text-sm text-slate-400 italic text-center">
+        Aceasta este o greșeală frecventă. Formula finală de adresare se scrie jos, după semnătură, ca și cum ai indica cui îi predai foaia.
+      </div>
+    </div>
+  </div>
+
+  {/* MODEL DE CERERE - TEMPLATE */}
+  <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 p-8 rounded-sm">
+    <h3 className="m-0 text-xl font-bold text-white mb-4">📝 Template Universal</h3>
+    <div className="bg-black/30 p-4 rounded text-sm font-mono text-slate-300 whitespace-pre-wrap leading-relaxed border border-slate-600">
+{`Domnule Director,
+
+Subsemnatul/a, [Nume], elev/ă în clasa [X], la Școala [Y], vă rog să aprobați [Solicitarea Clară: motivare absențe / eliberare acte / înscriere].
+
+Menționez că [Motivul, scurt și obiectiv].
+
+Data,                                         Semnătura,
+[ZZ.LL.AAAA]                                  [Semnătura]
+
+Domnului Director al [Instituția]`}
+    </div>
+  </div>
+
+</div>

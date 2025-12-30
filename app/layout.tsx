@@ -1,54 +1,115 @@
 // app/layout.tsx
+
+// =======================================================================
+// IMPORTURILE NECESARE
+// =======================================================================
 import './globals.css';
 import { Inter, Lora } from 'next/font/google';
 import type { Metadata, Viewport } from 'next';
-import Script from 'next/script';
+import Script from 'next/script'; // Componenta pentru Google Analytics
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
 import { Providers } from '@/components/Providers';
-import { CustomCursor } from '@/components/animations/CustomCursor';
+import CustomCursor from '@/components/animations/CustomCursor';
+import { Toaster } from '@/components/ui/toaster';
 
 // =======================================================================
-// 1. FONTURI
-// Definim fonturile care vor fi folosite în aplicație.
+// 1. CONFIGURARE FONTURI
 // =======================================================================
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const lora = Lora({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-lora' });
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+const lora = Lora({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-lora',
+  display: 'swap',
+});
 
 // =======================================================================
-// 2. METADATE (SEO)
-// Aceste informații sunt esențiale pentru motoarele de căutare (Google).
-// Codul tău de aici este excelent.
+// 2. METADATE SEO AVANSATE
 // =======================================================================
 export const metadata: Metadata = {
-  // ADAUGAT: Această linie este esențială pentru a activa PWA.
-  // Îi spune browserului unde să găsească fișierul de configurare al aplicației.
-  manifest: '/manifest.json',
-
   metadataBase: new URL('https://invatam-impreuna.vercel.app'),
   title: {
-    default: 'Învățăm Împreună | Platformă Educațională',
+    default: 'Învățăm Împreună | Platformă Educațională Gratuită',
     template: '%s | Învățăm Împreună',
   },
-  description: 'Platformă educațională online pentru pregătire la Evaluarea Națională, Bacalaureat și alte materii. Lecții interactive, teste și resurse.',
-  // Poți adăuga înapoi restul metadatelor tale (keywords, openGraph, etc.) aici.
-  // Le-am scos pentru a păstra codul mai scurt, dar structura ta era corectă.
-
-  // ADAUGAT (Opțional, dar Recomandat): Acesta specifică iconița care va fi
-  // folosită când un utilizator adaugă aplicația pe ecranul de pornire pe iOS.
-  icons: {
-    apple: '/icon-192x192.png',
+  description: 'Platformă educațională online completă pentru pregătire la Evaluarea Națională și Bacalaureat. Lecții interactive, teste gratuite, monitorizare progres și resurse vizuale pentru elevi din România.',
+  keywords: [
+    'educatie online', 'evaluare nationala', 'bacalaureat', 'lectii video',
+    'teste online', 'mate', 'romana', 'informatica', 'chimie', 'fizica',
+    'invatam impreuna', 'platforma elevi', 'pregatire examene', 'resurse scolare',
+    'invatare interactiva', 'flashcarduri', 'timer studiu'
+  ],
+  authors: [{ name: 'Mera Alin David', url: 'https://invatam-impreuna.vercel.app' }],
+  creator: 'Mera Alin David (Spyderend)',
+  publisher: 'Învățăm Împreună',
+  alternates: {
+    canonical: '/',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'ro_RO',
+    url: 'https://invatam-impreuna.vercel.app',
+    siteName: 'Învățăm Împreună',
+    title: 'Învățăm Împreună - Viitorul tău începe azi',
+    description: 'Pregătește-te pentru Evaluarea Națională și BAC cu lecții interactive și teste gratuite. Platformă creată de elevi, pentru elevi.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Invatam Impreuna Platforma',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Învățăm Împreună | Platformă Educațională',
+    description: 'Resurse gratuite pentru examenele tale. Învață inteligent.',
+    images: ['/og-image.png'],
+    creator: '@spyderend', 
+  },
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon-16x16.png',
+    apple: '/apple-touch-icon.png',
+  },
+  appleWebApp: {
+    capable: true,
+    title: "Învățăm Împreună",
+    statusBarStyle: "default",
+  },
+  verification: {
+    google: 'sOjUUt5BdjJ2F4A64Tw9HkCX8kxANp8fKncbXCoXnvA',
+  },
+  category: 'education',
 };
 
 // =======================================================================
 // 3. VIEWPORT
-// Controlează cum se afișează site-ul pe dispozitive mobile.
 // =======================================================================
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 5, // Permite zoom până la 5x (standard accesibilitate)
-  userScalable: true, // Permite utilizatorului să facă zoom
+  maximumScale: 5,
+  userScalable: true,
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#0D2440' },
@@ -56,53 +117,102 @@ export const viewport: Viewport = {
 };
 
 // =======================================================================
-// 4. COMPONENTA ROOT LAYOUT
-// Acesta este "șablonul" principal pentru TOATE paginile din site.
+// 4. ROOT LAYOUT
 // =======================================================================
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'Învățăm Împreună',
-    url: 'https://invatam-impreuna.vercel.app',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        name: 'Învățăm Împreună',
+        url: 'https://invatam-impreuna.vercel.app',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: 'https://invatam-impreuna.vercel.app/search?q={search_term_string}',
+          'query-input': 'required name=search_term_string'
+        }
+      },
+      {
+        '@type': 'Organization',
+        name: 'Învățăm Împreună',
+        url: 'https://invatam-impreuna.vercel.app',
+        logo: 'https://invatam-impreuna.vercel.app/icon-192x192.png',
+        sameAs: [
+          "https://tiktok.com/@spyderend",
+          "https://instagram.com/mera_alin"
+        ],
+        founder: {
+          '@type': 'Person',
+          name: 'Mera Alin David'
+        }
+      }
+    ]
   };
 
   return (
     <html
       lang="ro"
-      // `suppressHydrationWarning` este necesar pentru a preveni o eroare
-      // cauzată de scriptul care schimbă tema (dark/light).
       suppressHydrationWarning
-      className={`${inter.variable} ${lora.variable}`}
+      className={`${inter.variable} ${lora.variable} scroll-smooth`}
     >
-      {/* 
-        Plasăm scripturile necesare în interiorul tag-ului <head>.
-        Aceasta este soluția care rezolvă eroarea de hidratare pe care o primeai.
-      */}
       <head>
-        <meta name="google-site-verification" content="sOjUUt5BdjJ2F4A64Tw9HkCX8kxANp8fKncbXCoXnvA" />
         <Script
           id="json-ld-website"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         
-        {/* Script pentru a preveni "clipirea" temei la încărcarea paginii. */}
-        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
-        <Script id="theme-init" strategy="beforeInteractive">
-          {`(function(){try{var t=localStorage.getItem('theme');var e=window.matchMedia('(prefers-color-scheme: dark)').matches;var d=document.documentElement;d.classList.add(t==='dark'||(!t&&e)?'dark':'light');d.classList.remove(t==='dark'||(!t&&e)?'light':'dark');}catch(t){}})()`}
-        </Script>
+        {/* Anti-FOUC Script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark')
+                } else {
+                  document.documentElement.classList.remove('dark')
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
       </head>
       
-      <body>
-        {/* Componenta <Providers> învelește totul și oferă contextele
-            de Autentificare și Temă pentru întreaga aplicație. */}
+      <body className="min-h-screen bg-background text-foreground antialiased overflow-x-hidden selection:bg-primary/30 selection:text-primary-foreground">
+        
+        {/* --- GOOGLE ANALYTICS START --- */}
+        {/* 1. Încărcăm scriptul extern de la Google */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-4T2MY0SSCB"
+        />
+        
+        {/* 2. Configurăm Analytics */}
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+        >
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-4T2MY0SSCB');
+          `}
+        </Script>
+        {/* --- GOOGLE ANALYTICS END --- */}
+
         <Providers>
           {children}
           <CustomCursor />
+          <Toaster />
         </Providers>
+
+        <Analytics />
         <SpeedInsights />
+        
       </body>
     </html>
   );

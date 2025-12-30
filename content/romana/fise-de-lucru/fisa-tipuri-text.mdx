@@ -1,0 +1,152 @@
+---
+title: "Antrenament - Tipuri de Texte"
+description: "Exerciții interactive. Literar vs Nonliterar și Moduri de Expunere."
+subject: "Limba și literatura română"
+grade: "Clasa a VIII-a"
+category: "Exerciții"
+---
+
+<div className="w-full max-w-4xl mx-auto font-sans text-slate-300">
+
+  {/* HEADER */}
+  <div className="text-center mb-12">
+    <h1 className="m-0 text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 to-cyan-400">
+      Scanner de Texte
+    </h1>
+    <div className="mt-2 text-lg text-slate-400">Analizează fragmentele și identifică tipul corect.</div>
+  </div>
+
+  {/* LEVEL 1: Literar vs Nonliterar */}
+  <div className="mb-10">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="rounded-full bg-fuchsia-200/10 px-3 py-1 text-xs font-bold uppercase text-fuchsia-300">
+        Nivelul 1
+      </span>
+      <h2 className="m-0 text-2xl font-bold text-slate-200">Ficțiune sau Realitate?</h2>
+    </div>
+
+    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 shadow-lg">
+      <div className="flex flex-col gap-6">
+        
+        {/* Q1 */}
+        <details className="group rounded-xl p-4 cursor-pointer border border-fuchsia-300/20 bg-fuchsia-100/5 text-slate-200">
+          <summary className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-bold list-none">
+            <div className="italic text-slate-300 text-sm border-l-2 border-fuchsia-500 pl-3">
+              "Luceafărul aștepta în colțul cerului, privind cu ochi de gheață spre pământul adormit."
+            </div>
+            <span className="text-xs font-normal text-slate-400 bg-black/30 px-3 py-1 rounded-full whitespace-nowrap transition-transform group-open:bg-fuchsia-600 group-open:text-white">Verifică ▶</span>
+          </summary>
+          <div className="mt-4 pt-4 border-t border-fuchsia-300/20">
+            <div className="flex flex-col gap-2">
+              <span className="text-xl font-bold text-fuchsia-400">Text Literar</span>
+              <span className="text-sm text-slate-400">
+                Conține figuri de stil ("ochi de gheață"), personificare și creează o imagine artistică subiectivă.
+              </span>
+            </div>
+          </div>
+        </details>
+
+        {/* Q2 */}
+        <details className="group rounded-xl p-4 cursor-pointer border border-cyan-300/20 bg-cyan-100/5 text-slate-200">
+          <summary className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-bold list-none">
+            <div className="italic text-slate-300 text-sm border-l-2 border-cyan-500 pl-3">
+              "Venus este a doua planetă de la Soare. Este numită după zeița romană a iubirii și frumuseții."
+            </div>
+            <span className="text-xs font-normal text-slate-400 bg-black/30 px-3 py-1 rounded-full whitespace-nowrap transition-transform group-open:bg-cyan-600 group-open:text-white">Verifică ▶</span>
+          </summary>
+          <div className="mt-4 pt-4 border-t border-cyan-300/20">
+             <div className="flex flex-col gap-2">
+              <span className="text-xl font-bold text-cyan-400">Text Nonliterar (Informativ)</span>
+              <span className="text-sm text-slate-400">
+                Prezintă informații științifice, verificabile, într-un limbaj clar și obiectiv.
+              </span>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </div>
+
+  {/* LEVEL 2: Modurile de Expunere */}
+  <div className="mb-10">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="rounded-full bg-indigo-200/10 px-3 py-1 text-xs font-bold uppercase text-indigo-300">
+        Nivelul 2
+      </span>
+      <h2 className="m-0 text-2xl font-bold text-slate-200">Cum este scris?</h2>
+    </div>
+
+    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 shadow-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        {/* Card 1 */}
+        <div className="rounded-xl border border-slate-600 bg-white/5 p-4 text-center">
+          <div className="text-sm text-slate-300 italic mb-4">"Pădurea era deasă, întunecată, cu copaci seculari ce își împleteau crengile."</div>
+          <details className="group">
+             <summary className="cursor-pointer text-xs uppercase font-bold text-emerald-400 hover:text-emerald-300">Analizează</summary>
+             <div className="mt-3 text-sm text-white font-bold pt-2 border-t border-slate-600">
+                DESCRIPTIV
+             </div>
+             <div className="text-xs text-slate-400">Mulțime de substantive și adjective.</div>
+          </details>
+        </div>
+
+        {/* Card 2 */}
+        <div className="rounded-xl border border-slate-600 bg-white/5 p-4 text-center">
+          <div className="text-sm text-slate-300 italic mb-4">"— Unde mergi?<br/>— Mă duc acasă, a răspuns el grăbit."</div>
+          <details className="group">
+             <summary className="cursor-pointer text-xs uppercase font-bold text-amber-400 hover:text-amber-300">Analizează</summary>
+             <div className="mt-3 text-sm text-white font-bold pt-2 border-t border-slate-600">
+                DIALOGAT (+ Narativ)
+             </div>
+             <div className="text-xs text-slate-400">Schimb de replici, linii de dialog.</div>
+          </details>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {/* BOSS LEVEL: Textul Argumentativ */}
+  <div className="mb-12">
+    <div className="flex items-center gap-3 mb-4">
+      <span className="rounded-full bg-rose-500/20 px-3 py-1 text-xs font-bold uppercase text-rose-400">
+        Boss Level
+      </span>
+      <h2 className="m-0 text-2xl font-bold text-slate-200">Structura Argumentării</h2>
+    </div>
+
+    <div className="rounded-xl bg-slate-900 p-8 text-white shadow-xl border border-rose-500/30 relative">
+      
+      <div className="text-lg mb-6 leading-relaxed">
+        Identifică <span className="text-rose-400 font-bold">conectorii</span> din următorul text:
+        <br/><br/>
+        <em>"Consider că lectura este importantă. <span className="text-slate-500">În primul rând</span>, ne dezvoltă vocabularul. <span className="text-slate-500">În al doilea rând</span>, ne dezvoltă imaginația. <span className="text-slate-500">În concluzie</span>, toți ar trebui să citim."</em>
+      </div>
+      
+      <details className="group">
+        <summary className="inline-block cursor-pointer rounded-lg bg-rose-600 px-6 py-3 font-bold text-white transition hover:bg-rose-500 shadow-lg shadow-rose-900/50">
+          Vezi Rolul Lor ▼
+        </summary>
+        <div className="mt-6 space-y-3">
+          <div className="p-3 rounded bg-slate-800 border-l-4 border-rose-400 text-sm text-slate-300">
+            <strong>Consider că:</strong> Introduce ipoteza (opinia).
+          </div>
+          <div className="p-3 rounded bg-slate-800 border-l-4 border-rose-400 text-sm text-slate-300">
+            <strong>În primul rând / În al doilea rând:</strong> Ordonează argumentele.
+          </div>
+          <div className="p-3 rounded bg-slate-800 border-l-4 border-green-500 text-sm text-slate-300">
+            <strong>În concluzie:</strong> Introduce sinteza finală.
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  {/* FINAL */}
+  <div className="text-center rounded-2xl bg-slate-800/50 border border-slate-700 p-8 text-slate-300">
+    <h3 className="m-0 mb-2 text-2xl font-bold text-slate-100">🎉 Felicitări!</h3>
+    <p>Acum poți decoda orice tip de text!</p>
+  </div>
+</div>

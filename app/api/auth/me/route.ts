@@ -1,19 +1,40 @@
-import admin from 'firebase-admin';
+import { initFirebaseAdmin } from '@/lib/firebaseAdmin';
+import { getAuth } from 'firebase-admin/auth';
+import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
-if (!admin.apps.length) {
-  const serviceAccountKey = process.env.FIREBASE_PRIVATE_KEY;
-  if (serviceAccountKey) {
-    try {
-      const serviceAccount = JSON.parse(serviceAccountKey);
-      admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
-      console.log('Firebase Admin SDK a fost inițializat.');
-    } catch (e: any) {
-      console.error('Eroare la inițializarea Firebase Admin:', e.message);
-    }
-  } else {
-    console.error('EROARE: FIREBASE_PRIVATE_KEY nu este setat în .env.local');
+export async function GET() {
+  // Inițializăm Firebase
+  const app = initFirebaseAdmin();
+
+  // Dacă Firebase nu a reușit să pornească (cheie greșită sau lipsă la build),
+  // returnăm că utilizatorul nu e logat, dar NU dăm eroare 500.
+  if (!app) {
+    console.warn("Firebase Admin failed to load. Skipping auth check.");
+    return NextResponse.json({ user: null }, { status: 200 });
+  }
+
+  const cookieStore = cookies();
+  const sessionCookie = cookieStore.get('session')?.value;
+
+  if (!sessionCookie) {
+    return NextResponse.json({ user: null }, { status: 200 });
+  }
+
+  try {
+    const decodedClaims = await getAuth().verifySessionCookie(sessionCookie, true);
+    
+    return NextResponse.json({ 
+      user: {
+        uid: decodedClaims.uid,
+        email: decodedClaims.email,
+        picture: decodedClaims.picture,
+        name: decodedClaims.name || '',
+      } 
+    }, { status: 200 });
+
+  } catch (error) {
+    // Dacă sesiunea e invalidă, returnăm user null, nu eroare
+    return NextResponse.json({ user: null }, { status: 200 });
   }
 }
-
-// exportăm explicit instanța auth()
-export const adminAuth = admin.auth();

@@ -1,33 +1,37 @@
 import admin from 'firebase-admin';
-import { getFirestore } from 'firebase-admin/firestore';
 
-// 1. Verificăm dacă variabilele există
-const projectId = process.env.FIREBASE_PROJECT_ID;
-const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-const privateKey = process.env.FIREBASE_PRIVATE_KEY;
-
-if (!admin.apps.length) {
-  if (projectId && clientEmail && privateKey) {
-    try {
-      // 2. Formatăm corect cheia privată
-      // Vercel uneori transformă \n în string literal "\\n", așa că le înlocuim înapoi
-      const formattedPrivateKey = privateKey.replace(/\\n/g, '\n');
-
-      admin.initializeApp({
-        credential: admin.credential.cert({
-          projectId,
-          clientEmail,
-          privateKey: formattedPrivateKey,
-        }),
-      });
-      console.log('✅ Firebase Admin SDK a fost inițializat cu succes.');
-    } catch (e: any) {
-      console.error('❌ EROARE la inițializarea Firebase Admin:', e.message);
-    }
-  } else {
-    console.warn('⚠️ AVERTISMENT: Cheile Firebase Admin lipsesc din variabilele de mediu.');
-  }
+function formatPrivateKey(key: string) {
+  return key.replace(/\\n/g, '\n');
 }
 
-export const adminAuth = admin.apps.length ? admin.auth() : null;
-export const adminDb = admin.apps.length ? getFirestore() : null;
+export function initFirebaseAdmin() {
+  // 1. Verificăm dacă avem deja o aplicație pornită
+  if (admin.apps.length > 0) {
+    return admin.app();
+  }
+
+  const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+
+  // 2. Dacă nu există cheia (ex: la build time), nu crăpăm, doar returnăm null
+  if (!serviceAccountKey) {
+    console.warn('⚠️ FIREBASE_SERVICE_ACCOUNT_KEY lipsă. Firebase Admin nu a fost inițializat.');
+    return null;
+  }
+
+  try {
+    // 3. Încercăm să parsăm JSON-ul. Aici apărea eroarea ta!
+    const serviceAccount = JSON.parse(serviceAccountKey);
+    
+    if (serviceAccount.private_key) {
+      serviceAccount.private_key = formatPrivateKey(serviceAccount.private_key);
+    }
+
+    return admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+    });
+  } catch (error) {
+    // 4. PRINDEM EROAREA și nu lăsăm build-ul să moară
+    console.error('❌ Eroare la parsarea FIREBASE_SERVICE_ACCOUNT_KEY:', error);
+    return null; // Returnăm null ca să putem continua
+  }
+}
