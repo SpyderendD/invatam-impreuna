@@ -2,12 +2,12 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image'; // --- 1. IMPORTĂ COMPONENTA IMAGE ---
+import Image from 'next/image';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Facebook, Instagram, Youtube, Loader2 } from 'lucide-react'; // Am scos BookOpen
+import { Facebook, Instagram, Youtube, Loader2 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast'; 
 
 // Componenta Iconiță TikTok
@@ -77,8 +77,20 @@ export function Footer() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const startYear = 2025;
-  const currentYear = new Date().getFullYear();
+  // --- LOGICA NOUĂ PENTRU DATĂ ---
+  const launchDate = new Date(2025, 1, 3); // 3 feb 2025 (Luna este indexată de la 0, deci 1 = Februarie)
+  const now = new Date();
+  
+  // Formatator pentru data de start (Zi + Lună scurtă + An)
+  const fmtStart = new Intl.DateTimeFormat('ro-RO', { day: 'numeric', month: 'short', year: 'numeric' });
+  // Formatator pentru data curentă (Lună scurtă + An)
+  const fmtEnd = new Intl.DateTimeFormat('ro-RO', { month: 'short', year: 'numeric' });
+
+  // Funcție pentru a scoate punctele din abrevierile lunilor (ex: "feb." -> "feb")
+  const stripDots = (s: string) => s.replaceAll('.', '');
+
+  const startLabel = stripDots(fmtStart.format(launchDate)); // ex: "3 feb 2025"
+  const endLabel = stripDots(fmtEnd.format(now)); // ex: "ian 2026"
 
   const handleNewsletterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -118,10 +130,9 @@ export function Footer() {
           viewport={{ once: true, amount: 0.2 }}
         >
           <motion.div variants={itemVariants} className="md:col-span-1">
-            {/* --- 2. AM ÎNLOCUIT ICONIȚA CU IMAGINEA --- */}
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <Image 
-                src="/images/logo.png" // Calea corectă către imagine
+                src="/images/logo.png" 
                 alt="Învățăm Împreună Logo"
                 width={28}
                 height={28}
@@ -173,8 +184,9 @@ export function Footer() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
+          {/* --- AICI AM ACTUALIZAT TEXTUL DE COPYRIGHT --- */}
           <p className="text-sm text-muted-foreground text-center md:text-left">
-            © {startYear} – {currentYear} Învățăm Împreună. Construit cu ❤️ pentru viitorul României.
+            © {startLabel} – {endLabel} Învățăm Împreună. Construit cu ❤️ pentru viitorul României.
           </p>
           <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center md:justify-end">
             {footerLinks.legal.map(link => (

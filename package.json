@@ -61,6 +61,7 @@
     "firebase-admin": "^12.1.1",
     "framer-motion": "^11.18.2",
     "gray-matter": "^4.0.3",
+    "html2canvas": "^1.4.1",
     "input-otp": "^1.2.4",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.395.0",

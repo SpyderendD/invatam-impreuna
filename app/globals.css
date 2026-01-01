@@ -4,35 +4,44 @@
 
 @layer base {
   :root {
-    /* --- LIGHT MODE --- */
-    --background: 0 0% 100%;
-    --foreground: 213 66% 15%; 
+    /* --- LIGHT MODE (CORECTAT PENTRU FUNDAL ALB PUR) --- */
+    --background: 0 0% 100%;             /* #ffffff */
+    --foreground: 222.2 84% 4.9%;        /* #020817 - Text negru */
+
     --card: 0 0% 100%;
-    --card-foreground: 213 66% 15%;
+    --card-foreground: 222.2 84% 4.9%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 213 66% 15%;
-    --primary: 213 54% 39%;
-    --primary-foreground: 212 50% 94%;
-    --secondary: 212 50% 94%;
-    --secondary-foreground: 213 66% 15%;
-    --muted: 212 50% 96%;
-    --muted-foreground: 213 40% 40%;
-    --accent: 212 50% 94%;
-    --accent-foreground: 213 54% 39%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 221.2 83.2% 53.3%;        /* #2563eb - Albastru */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;          /* #f1f5f9 - Gri foarte deschis */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%; /* Text gri */
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 211 48% 85%;
-    --input: 211 48% 85%;
-    --ring: 213 54% 39%;
+
+    --border: 214.3 31.8% 91.4%;         /* #e2e8f0 - Borduri gri deschis */
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+
     --radius: 0.5rem;
 
-    /* Culori Materii */
+    /* Culori Materii (Păstrate) */
     --color-romana: 252 59% 59%;
     --color-matematica: 156 72% 39%;
     --color-chimie: 39 96% 50%;
     --color-informatica: 270 76% 63%;
     
-    /* Gooey Nav Light */
+    /* Gooey Nav Light (Păstrat) */
     --color-gooey-1: hsl(var(--primary));
     --color-gooey-2: hsl(var(--secondary));
     --color-gooey-3: 211 48% 65%;
@@ -42,28 +51,36 @@
   }
 
   .dark {
-    /* --- DARK MODE --- */
-    --background: 213 66% 15%;
-    --foreground: 212 50% 94%;
-    --card: 213 55% 18%;
-    --card-foreground: 212 50% 94%;
-    --popover: 213 66% 15%;
-    --popover-foreground: 212 50% 94%;
-    --primary: 211 48% 65%;
-    --primary-foreground: 213 66% 15%;
-    --secondary: 213 50% 25%;
-    --secondary-foreground: 212 50% 94%;
-    --muted: 213 50% 25%;
-    --muted-foreground: 211 30% 70%;
-    --accent: 213 50% 25%;
-    --accent-foreground: 212 50% 94%;
+    /* --- DARK MODE (CORECTAT PENTRU NAVY BLUE) --- */
+    --background: 222.2 84% 4.9%;        /* #020817 - Navy Blue închis */
+    --foreground: 210 40% 98%;           /* #f8fafc - Alb */
+
+    --card: 224 71.4% 4.1%;            /* #080f1e - O nuanță puțin mai deschisă pt card */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217.2 91.2% 59.8%;        /* #60a5fa - Albastru deschis de accent */
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;      /* #1e293b - Albastru-gri */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 213 50% 25%;
-    --input: 213 50% 25%;
-    --ring: 211 48% 65%;
 
-    /* Gooey Nav Dark */
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    /* Gooey Nav Dark (Păstrat) */
     --color-gooey-1: hsl(var(--primary));
     --color-gooey-2: hsl(var(--secondary));
     --color-gooey-3: 212 50% 94%;
@@ -72,7 +89,7 @@
     --gooey-filter-after-bg: 211 48% 65%;
   }
 
-  /* RESET GLOBAL SIGUR */
+  /* RESET GLOBAL (Păstrat) */
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
@@ -144,6 +161,30 @@
   }
   .animate-gradient { animation: gradient-x 15s ease infinite; }
 }
+.aurora-bg {
+  
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background-color: #030712; /* Fundal de bază */
+  }
+
+  .aurora-bg .aurora__item {
+    position: absolute;
+    border-radius: 50%;
+    mix-blend-mode: overlay;
+    opacity: 0.2;
+    animation: aurora-anim 12s infinite alternate;
+  }
+
+  @keyframes aurora-anim {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    100% { transform: translate(50%, 50%) scale(1.5); }
+  }
 
 @layer components {
   .gooey-effect {
