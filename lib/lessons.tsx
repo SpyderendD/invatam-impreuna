@@ -134,9 +134,9 @@ const romanaChapters: Chapter[] = [
     lessons: [
       { id: "fs-01", title: "Predicatul si fraza", slug: "predicatul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-predicat" },
       { id: "fs-02", title: "Subiectul", slug: "subiectul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-subiect" },
-      { id: "fs-03", title: "Atributul și Propoziția Atributivă", slug: "atributul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-atributul" },
-      { id: "fs-04", title: "Complementul și Propozițiile Completive", slug: "complementul", duration: "25 min", type: "Teorie", worksheetSlug: "fisa-complementul" },
-      { id: "fs-05", title: "Circumstanțialul și Propozițiile Circumstanțiale", slug: "circumstantialul", duration: "25 min", type: "Teorie", worksheetSlug: "fisa-circumstantialul" },
+      { id: "fs-03", title: "Atributul și Propoziția Atributivă", slug: "atributul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-atribut" },
+      { id: "fs-04", title: "Complementul și Propozițiile Completive", slug: "complementul", duration: "25 min", type: "Teorie", worksheetSlug: "fisa-complement" },
+      { id: "fs-05", title: "Circumstanțialul și Propozițiile Circumstanțiale", slug: "circumstantialele", duration: "25 min", type: "Teorie", worksheetSlug: "fisa-circumstantiale" },
     ],
   },
 

@@ -10,10 +10,15 @@ import { ChevronLeft } from 'lucide-react';
 import { ALL_SUBJECTS_OBJECT } from '@/lib/lessons';
 
 // Importăm componentele MDX de care am putea avea nevoie
-import { Alert } from '@/components/mdx/Alert';
-import { ExampleBlock } from '@/components/mdx/ExampleBlock';
+// Asigură-te că aceste componente există la căile respective
+// Daca nu le ai create, poți șterge linia cu 'components: mdxComponents' de mai jos
+// import { Alert } from '@/components/mdx/Alert'; 
+// import { ExampleBlock } from '@/components/mdx/ExampleBlock';
 
-const mdxComponents = { Alert, ExampleBlock };
+const mdxComponents = { 
+  // Alert, 
+  // ExampleBlock 
+};
 
 type WorksheetPageParams = {
   params: {
@@ -25,26 +30,34 @@ type WorksheetPageParams = {
 export default async function WorksheetPage({ params }: WorksheetPageParams) {
   const { subjectSlug, worksheetSlug } = params;
 
-  // Găsim lecția care corespunde acestei fișe, pentru a afișa titlul
-  const lesson = ALL_SUBJECTS_OBJECT[subjectSlug]?.chapters
-    .flatMap(c => c.lessons)
-    .find(l => l.worksheetSlug === worksheetSlug);
-  
-  const title = lesson ? `Fișă de Lucru: ${lesson.title}` : "Fișă de Lucru";
-
+  // Construim calea către fișier
+  // Structura: radacina/content/[materie]/fise-de-lucru/[nume-fisa].mdx
   const filePath = path.join(process.cwd(), 'content', subjectSlug, 'fise-de-lucru', `${worksheetSlug}.mdx`);
 
   let mdxSource: string;
   try {
     mdxSource = fs.readFileSync(filePath, 'utf8');
   } catch (error) {
-    notFound(); // Dacă fișierul MDX nu există, afișăm 404
+    console.error("Nu am găsit fișierul MDX:", filePath);
+    notFound(); 
   }
 
-  const { content } = await compileMDX({
+  // --- AICI ESTE MODIFICAREA CHEIE ---
+  // Adăugăm opțiunea 'parseFrontmatter: true'
+  // Asta va extrage metadatele și LE VA SCOATE din conținutul vizibil
+  const { content, frontmatter } = await compileMDX<{ title?: string }>({
     source: mdxSource,
     components: mdxComponents,
+    options: { parseFrontmatter: true } 
   });
+
+  // Găsim lecția pentru butonul de "Înapoi"
+  const lesson = ALL_SUBJECTS_OBJECT[subjectSlug]?.chapters
+    .flatMap(c => c.lessons)
+    .find(l => l.worksheetSlug === worksheetSlug);
+  
+  // Prioritizăm titlul din MDX, dacă nu există, folosim fallback-ul
+  const displayTitle = frontmatter.title || (lesson ? `Fișă de Lucru: ${lesson.title}` : "Fișă de Lucru");
 
   return (
     <div className="container max-w-4xl mx-auto px-4 py-12 md:py-20">
@@ -53,9 +66,14 @@ export default async function WorksheetPage({ params }: WorksheetPageParams) {
           <ChevronLeft className="h-4 w-4 mr-2" /> Înapoi la Lecție
         </Link>
       </Button>
-      <h1 className="font-lora text-4xl md:text-5xl font-medium text-foreground mb-12">{title}</h1>
       
-      <article className="prose prose-lg max-w-none dark:prose-invert">
+      <h1 className="font-lora text-4xl md:text-5xl font-medium text-foreground mb-12">
+        {displayTitle}
+      </h1>
+      
+      {/* Containerul pentru conținutul MDX */}
+      {/* 'prose' vine de la Tailwind Typography plugin și formatează automat textul */}
+      <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-lora prose-a:text-blue-600 dark:prose-a:text-blue-400">
         {content}
       </article>
     </div>

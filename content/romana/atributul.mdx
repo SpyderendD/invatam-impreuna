@@ -1,0 +1,167 @@
+---
+title: "Sintaxa Avansată: Atributul și AT"
+description: "Determină un substantiv. Clasificări, realizări și subtilități de punctuație."
+subject: "Limba și literatura română"
+grade: "Clasa a VIII-a / Liceu"
+category: "Sintaxă"
+---
+
+<div className="w-full max-w-5xl mx-auto font-sans text-slate-300">
+
+  {/* HERO SECTION */}
+  <div className="bg-slate-900 border border-slate-700 rounded-sm p-8 mb-12 shadow-2xl relative overflow-hidden">
+    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-pink-500 via-fuchsia-500 to-purple-600"></div>
+    <div className="pl-6">
+      <h3 className="m-0 text-pink-500 uppercase text-xs tracking-[0.2em] font-bold mb-2">Descrierea Sintactică</h3>
+      <div className="text-2xl md:text-3xl font-serif text-white leading-tight mb-4">
+        "Atributul este umbra substantivului."
+      </div>
+      <div className="text-slate-400 font-light text-lg">
+        Este partea secundară de propoziție care determină un <span className="text-white font-bold">substantiv</span> (sau un înlocuitor). Propoziția Atributivă (AT) face același lucru la nivelul frazei.
+      </div>
+    </div>
+  </div>
+
+  {/* CLASIFICAREA ATRIBUTELOR - GRID */}
+  <div className="mb-16">
+    <h3 className="text-xl font-bold text-white mb-8 border-b border-slate-700 pb-2">
+      I. Tipuri de Atribute (După partea de vorbire)
+    </h3>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      {/* 1. ADJECTIVAL */}
+      <div className="bg-slate-800/40 border border-slate-700 p-5 rounded-lg hover:bg-slate-800 transition group">
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="text-lg font-bold text-pink-400 m-0">1. Atribut Adjectival</h4>
+          <span className="text-xs text-slate-500 group-hover:text-pink-300 transition">Se acordă</span>
+        </div>
+        <div className="text-sm text-slate-400 mb-2">Exprimat prin adjectiv, numeral cu valoare adjectivală, gerunziu acordat.</div>
+        <div className="font-mono text-sm text-white bg-black/20 p-2 rounded">
+          "Cartea <span className="text-pink-400 font-bold">interesantă</span>..." / "Clasa <span className="text-pink-400 font-bold">a doua</span>..."
+        </div>
+      </div>
+
+      {/* 2. SUBSTANTIVAL */}
+      <div className="bg-slate-800/40 border border-slate-700 p-5 rounded-lg hover:bg-slate-800 transition group">
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="text-lg font-bold text-fuchsia-400 m-0">2. Atribut Substantival</h4>
+          <span className="text-xs text-slate-500 group-hover:text-fuchsia-300 transition">Cu prepoziție sau în Genitiv</span>
+        </div>
+        <div className="text-sm text-slate-400 mb-2">Exprimat prin substantiv sau pronume.</div>
+        <div className="font-mono text-sm text-white bg-black/20 p-2 rounded">
+          "Cartea <span className="text-fuchsia-400 font-bold">elevului</span>..." (Genitiv) <br/>
+          "Cartea <span className="text-fuchsia-400 font-bold">de povești</span>..." (Prepozițional)
+        </div>
+      </div>
+
+      {/* 3. VERBAL */}
+      <div className="bg-slate-800/40 border border-slate-700 p-5 rounded-lg hover:bg-slate-800 transition group">
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="text-lg font-bold text-purple-400 m-0">3. Atribut Verbal</h4>
+          <span className="text-xs text-slate-500 group-hover:text-purple-300 transition">Moduri nepersonale</span>
+        </div>
+        <div className="text-sm text-slate-400 mb-2">Exprimat prin verb la infinitiv, supin sau gerunziu (neacordat).</div>
+        <div className="font-mono text-sm text-white bg-black/20 p-2 rounded">
+          "Dorința <span className="text-purple-400 font-bold">de a învăța</span>..." (Infinitiv) <br/>
+          "Temă <span className="text-purple-400 font-bold">de scris</span>..." (Supin)
+        </div>
+      </div>
+
+      {/* 4. ADVERBIAL */}
+      <div className="bg-slate-800/40 border border-slate-700 p-5 rounded-lg hover:bg-slate-800 transition group">
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="text-lg font-bold text-indigo-400 m-0">4. Atribut Adverbial</h4>
+          <span className="text-xs text-slate-500 group-hover:text-indigo-300 transition">Rar, dar posibil</span>
+        </div>
+        <div className="text-sm text-slate-400 mb-2">Exprimat prin adverb (de loc, de timp, de mod).</div>
+        <div className="font-mono text-sm text-white bg-black/20 p-2 rounded">
+          "Ziua <span className="text-indigo-400 font-bold">de mâine</span>..." <br/>
+          "Mersul <span className="text-indigo-400 font-bold">agale</span>..."
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {/* PROPOZIȚIA ATRIBUTIVĂ (AT) */}
+  <div className="mb-16">
+    <h3 className="text-xl font-bold text-white mb-8 border-b border-slate-700 pb-2">
+      II. Propoziția Atributivă (AT)
+    </h3>
+
+    <div className="rounded-xl bg-slate-900 border border-slate-700 p-8 shadow-xl relative">
+      <div className="absolute top-0 right-0 p-4 opacity-10 text-6xl font-bold text-white">AT</div>
+      
+      <div className="flex flex-col md:flex-row gap-8 items-start">
+        
+        {/* ELEMENTUL REGENT */}
+        <div className="flex-1 w-full">
+          <h4 className="text-amber-400 font-bold mb-4 uppercase text-xs tracking-widest">Element Regent (Cine o cere?)</h4>
+          <ul className="space-y-3 text-sm text-slate-300">
+            <li className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+              Substantiv: <em>"Am citit <strong>cartea</strong> / care mi-a plăcut. /"</em>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+              Pronume: <em>"<strong>Acela</strong> / care învață / știe."</em>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+              Numeral: <em>"<strong>Al doilea</strong>, / care a venit, / e fratele meu."</em>
+            </li>
+          </ul>
+        </div>
+
+        {/* TOPICĂ ȘI PUNCTUAȚIE */}
+        <div className="flex-1 w-full border-t md:border-t-0 md:border-l border-slate-700 pt-6 md:pt-0 md:pl-8">
+          <h4 className="text-cyan-400 font-bold mb-4 uppercase text-xs tracking-widest">Punctuația (Capcana)</h4>
+          
+          <div className="space-y-4">
+            <div className="p-3 bg-slate-800 rounded border-l-4 border-red-500">
+              <span className="block text-white font-bold text-xs mb-1">DETERMINATIVĂ (Fără virgulă)</span>
+              <div className="text-slate-400 text-sm">
+                Esențială pentru identificarea obiectului.
+                <br/><em className="text-slate-200">"Elevii <strong>care învață</strong> iau note mari."</em> (Doar aceia, nu toți).
+              </div>
+            </div>
+
+            <div className="p-3 bg-slate-800 rounded border-l-4 border-green-500">
+              <span className="block text-white font-bold text-xs mb-1">EXPLICATIVĂ (Cu virgulă)</span>
+              <div className="text-slate-400 text-sm">
+                Aduce un detaliu suplimentar, neesențial.
+                <br/><em className="text-slate-200">"Mama, <strong>care mă iubește</strong>, m-a ajutat."</em> (Toți știm că mama mă iubește).
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {/* INTRODUCEREA AT - ELEMENTE DE RELAȚIE */}
+  <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 p-8 rounded-sm">
+    <h3 className="m-0 text-xl font-bold text-white mb-6">Elemente de Relație (Introductive)</h3>
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+      <div className="p-3 border border-slate-600 rounded">
+        <span className="block text-pink-400 font-bold mb-1">Pronume Relative</span>
+        <span className="text-xs text-slate-400">care, cine, ce, cât</span>
+      </div>
+      <div className="p-3 border border-slate-600 rounded">
+        <span className="block text-fuchsia-400 font-bold mb-1">Adverbe Relative</span>
+        <span className="text-xs text-slate-400">unde, când, cum</span>
+      </div>
+      <div className="p-3 border border-slate-600 rounded">
+        <span className="block text-purple-400 font-bold mb-1">Conjuncții</span>
+        <span className="text-xs text-slate-400">că, să, ca... să, dacă</span>
+      </div>
+      <div className="p-3 border border-slate-600 rounded">
+        <span className="block text-indigo-400 font-bold mb-1">Locuțiuni</span>
+        <span className="text-xs text-slate-400">de parcă, de ce</span>
+      </div>
+    </div>
+  </div>
+
+</div>
