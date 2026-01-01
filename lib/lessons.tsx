@@ -132,11 +132,11 @@ const romanaChapters: Chapter[] = [
     description: "Analiza părților de propoziție și a propozițiilor subordonate corespondente.",
     icon: <Network className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "fs-01", title: "Predicatul si fraza", slug: "functii-sintactice-predicatul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-predicatul" },
-      { id: "fs-02", title: "Subiectul", slug: "functii-sintactice-subiectul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-subiectul" },
-      { id: "fs-03", title: "Atributul și Propoziția Atributivă", slug: "functii-sintactice-atributul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-atributul" },
-      { id: "fs-04", title: "Complementul și Propozițiile Completive", slug: "functii-sintactice-complementul", duration: "25 min", type: "Teorie", worksheetSlug: "fisa-complementul" },
-      { id: "fs-05", title: "Circumstanțialul și Propozițiile Circumstanțiale", slug: "functii-sintactice-circumstantialul", duration: "25 min", type: "Teorie", worksheetSlug: "fisa-circumstantialul" },
+      { id: "fs-01", title: "Predicatul si fraza", slug: "predicatul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-predicat" },
+      { id: "fs-02", title: "Subiectul", slug: "subiectul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-subiect" },
+      { id: "fs-03", title: "Atributul și Propoziția Atributivă", slug: "atributul", duration: "15 min", type: "Teorie", worksheetSlug: "fisa-atributul" },
+      { id: "fs-04", title: "Complementul și Propozițiile Completive", slug: "complementul", duration: "25 min", type: "Teorie", worksheetSlug: "fisa-complementul" },
+      { id: "fs-05", title: "Circumstanțialul și Propozițiile Circumstanțiale", slug: "circumstantialul", duration: "25 min", type: "Teorie", worksheetSlug: "fisa-circumstantialul" },
     ],
   },
 

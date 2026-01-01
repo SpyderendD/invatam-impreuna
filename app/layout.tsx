@@ -6,7 +6,7 @@
 import './globals.css';
 import { Inter, Lora } from 'next/font/google';
 import type { Metadata, Viewport } from 'next';
-import Script from 'next/script'; // Componenta pentru Google Analytics
+import Script from 'next/script'; 
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import { Providers } from '@/components/Providers';
@@ -38,12 +38,16 @@ export const metadata: Metadata = {
     default: 'Învățăm Împreună | Platformă Educațională Gratuită',
     template: '%s | Învățăm Împreună',
   },
-  description: 'Platformă educațională online completă pentru pregătire la Evaluarea Națională și Bacalaureat. Lecții interactive, teste gratuite, monitorizare progres și resurse vizuale pentru elevi din România.',
+  description: 'Platformă educațională online completă pentru pregătire la Evaluarea Națională și Bacalaureat. Lecții interactive, teste gratuite, monitorizare progres și resurse vizuale pentru elevi.',
   keywords: [
     'educatie online', 'evaluare nationala', 'bacalaureat', 'lectii video',
     'teste online', 'mate', 'romana', 'informatica', 'chimie', 'fizica',
     'invatam impreuna', 'platforma elevi', 'pregatire examene', 'resurse scolare',
-    'invatare interactiva', 'flashcarduri', 'timer studiu'
+    'invatare interactiva', 'flashcarduri', 'timer studiu', 'progres monitorizat', 'lectii interactive',
+    'bacalaureat', 'evaluare nationala', 'elevi', 'pregatire examene', 'resurse scolare',
+    'mate', 'romana', 'informatica', 'chimie', 'fizica', 'invatam impreuna',
+    'platforma educatie', 'teste gratuite', 'lectii video', 'invatare online',
+    'Spyderend', 'Mera Alin David', 'Romania', 'scoala', 'educatie gratuita',
   ],
   authors: [{ name: 'Mera Alin David', url: 'https://invatam-impreuna.vercel.app' }],
   creator: 'Mera Alin David (Spyderend)',

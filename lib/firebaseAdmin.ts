@@ -1,39 +1,50 @@
 import admin from 'firebase-admin';
+import { getAuth } from 'firebase-admin/auth';
+import { getFirestore } from 'firebase-admin/firestore';
+import type { App } from 'firebase-admin/app'; // Importăm tipul corect
 
-// Funcție care repară cheia privată (transformă \\n în \n real)
 function formatPrivateKey(key: string) {
   return key.replace(/\\n/g, '\n');
 }
 
-export function initFirebaseAdmin() {
-  // 1. Dacă Firebase e deja pornit, îl folosim pe cel existent
-  if (admin.apps.length > 0) {
-    return admin.app();
-  }
+// Definim tipul variabilei
+let app: App | undefined;
 
-  // 2. Citim variabilele SEPARATE (așa cum le ai tu în poza)
+// Verificăm dacă există deja o instanță
+if (!admin.apps.length) {
   const projectId = process.env.FIREBASE_PROJECT_ID;
   const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
   const privateKey = process.env.FIREBASE_PRIVATE_KEY;
 
-  // Verificăm dacă avem tot ce ne trebuie
-  if (!projectId || !clientEmail || !privateKey) {
-    console.error('❌ Lipsesc variabilele de mediu pentru Firebase Admin!');
-    console.error('Verifică: FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY');
-    return null;
+  if (projectId && clientEmail && privateKey) {
+    try {
+      app = admin.initializeApp({
+        credential: admin.credential.cert({
+          projectId,
+          clientEmail,
+          privateKey: formatPrivateKey(privateKey),
+        }),
+      });
+      console.log('🔥 Firebase Admin a fost inițializat cu succes.');
+    } catch (error) {
+      console.error('❌ Eroare la inițializarea Firebase Admin:', error);
+    }
+  } else {
+    // Aici nu mai crăpăm build-ul, doar afișăm un warn
+    if (process.env.NODE_ENV === 'development') {
+       console.warn('⚠️ Variabilele de mediu Firebase lipsesc. Admin SDK nu a fost inițializat.');
+    }
   }
+} else {
+  // Dacă există, o folosim pe cea existentă
+  app = admin.app();
+}
 
-  try {
-    // 3. Inițializăm Firebase cu variabilele tale
-    return admin.initializeApp({
-      credential: admin.credential.cert({
-        projectId,
-        clientEmail,
-        privateKey: formatPrivateKey(privateKey),
-      }),
-    });
-  } catch (error) {
-    console.error('❌ Eroare la inițializarea Firebase Admin:', error);
-    return null;
-  }
+// Exportăm instanțele, gestionând cazul în care 'app' e undefined
+export const adminAuth = app ? getAuth(app) : null;
+export const adminDb = app ? getFirestore(app) : null;
+
+// Funcție fallback (opțional)
+export function initFirebaseAdmin() {
+    return app;
 }
