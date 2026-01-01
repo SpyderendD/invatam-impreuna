@@ -1,51 +1,39 @@
 import admin from 'firebase-admin';
 
+// Funcție care repară cheia privată (transformă \\n în \n real)
 function formatPrivateKey(key: string) {
-  // Această funcție e critică. Vercel transformă uneori \n în \\n.
-  // Aici le transformăm înapoi în newline-uri reale.
   return key.replace(/\\n/g, '\n');
 }
 
 export function initFirebaseAdmin() {
+  // 1. Dacă Firebase e deja pornit, îl folosim pe cel existent
   if (admin.apps.length > 0) {
     return admin.app();
   }
 
-  // 1. Încercăm să citim variabilele separate (metoda clasică)
-  const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || process.env.FIREBASE_PROJECT_ID;
+  // 2. Citim variabilele SEPARATE (așa cum le ai tu în poza)
+  const projectId = process.env.FIREBASE_PROJECT_ID;
   const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
   const privateKey = process.env.FIREBASE_PRIVATE_KEY;
 
-  if (projectId && clientEmail && privateKey) {
-    try {
-      return admin.initializeApp({
-        credential: admin.credential.cert({
-          projectId,
-          clientEmail,
-          privateKey: formatPrivateKey(privateKey),
-        }),
-      });
-    } catch (error) {
-      console.error('❌ Eroare la inițializarea Firebase din variabile separate:', error);
-    }
+  // Verificăm dacă avem tot ce ne trebuie
+  if (!projectId || !clientEmail || !privateKey) {
+    console.error('❌ Lipsesc variabilele de mediu pentru Firebase Admin!');
+    console.error('Verifică: FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY');
+    return null;
   }
 
-  // 2. Fallback: Încercăm JSON-ul mare (dacă variabilele separate nu merg)
-  const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-  if (serviceAccountKey) {
-    try {
-      const serviceAccount = JSON.parse(serviceAccountKey);
-      if (serviceAccount.private_key) {
-         serviceAccount.private_key = formatPrivateKey(serviceAccount.private_key);
-      }
-      return admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-      });
-    } catch (error) {
-       console.error('❌ Eroare la inițializarea Firebase din JSON:', error);
-    }
+  try {
+    // 3. Inițializăm Firebase cu variabilele tale
+    return admin.initializeApp({
+      credential: admin.credential.cert({
+        projectId,
+        clientEmail,
+        privateKey: formatPrivateKey(privateKey),
+      }),
+    });
+  } catch (error) {
+    console.error('❌ Eroare la inițializarea Firebase Admin:', error);
+    return null;
   }
-  
-  console.warn('⚠️ Nu am reușit să inițializez Firebase Admin. Verifică variabilele de mediu.');
-  return null;
 }

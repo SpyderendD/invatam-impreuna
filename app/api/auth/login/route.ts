@@ -1,41 +1,40 @@
-// app/api/auth/login/route.ts
-import { NextResponse, type NextRequest } from 'next/server';
-import { adminAuth } from '@/lib/firebaseAdmin';
+import { NextResponse } from 'next/server';
+import { initFirebaseAdmin } from '@/lib/firebaseAdmin';
+import { getAuth } from 'firebase-admin/auth';
 
-const SESSION_COOKIE_DURATION_MS = 60 * 60 * 24 * 5 * 1000;
+export async function POST(request: Request) {
+  const app = initFirebaseAdmin();
+  
+  if (!app) {
+    return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
+  }
 
-type LoginPayload = { idToken?: string };
-
-export const dynamic = 'force-dynamic';
-
-export async function POST(req: NextRequest) {
   try {
-    const { idToken } = (await req.json()) as LoginPayload;
-    if (!idToken) {
-      return NextResponse.json({ error: 'ID Token este necesar' }, { status: 400 });
-    }
+    // 1. Primim ID Token-ul de la Frontend (Google login)
+    const { idToken } = await request.json();
+    
+    // 2. Setăm durata sesiunii la 5 zile
+    const expiresIn = 60 * 60 * 24 * 5 * 1000; 
 
-    // Aici e verificarea: dacă adminAuth e null, nu putem continua
-    if (!adminAuth) {
-      console.error('[API/LOGIN] EROARE FATALĂ: Firebase Admin SDK nu este inițializat.');
-      return NextResponse.json({ error: 'Eroare de configurare server (Firebase Admin).' }, { status: 500 });
-    }
+    // 3. Generăm cookie-ul de sesiune folosind Admin SDK
+    const auth = getAuth(app);
+    const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
 
-    const sessionCookie = await adminAuth.createSessionCookie(idToken, {
-      expiresIn: SESSION_COOKIE_DURATION_MS,
-    });
-
+    // 4. Creăm răspunsul și atașăm cookie-ul
     const response = NextResponse.json({ status: 'success' }, { status: 200 });
+
     response.cookies.set('session', sessionCookie, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: SESSION_COOKIE_DURATION_MS / 1000,
+      maxAge: expiresIn / 1000, // secunde
+      httpOnly: true, // Nu poate fi citit de JavaScript din browser (securitate)
+      secure: process.env.NODE_ENV === 'production', // Doar pe HTTPS
       path: '/',
+      sameSite: 'lax',
     });
+
     return response;
-  } catch (error: any) {
-    console.error("[API/LOGIN] EROARE CRITICĂ:", { message: error.message, code: error.code });
-    return NextResponse.json({ error: 'Eroare la autentificare pe server.' }, { status: 500 });
+
+  } catch (error) {
+    console.error('Login API Error:', error);
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 }
