@@ -1,24 +1,8 @@
 // app/sitemap.xml/route.ts
 import { ALL_SUBJECTS_OBJECT } from '@/lib/lessons';
+import { MetadataRoute } from 'next';
 
 const SITE_URL = 'https://invatam-impreuna.vercel.app';
-
-function generateSitemapXml(urls: { url: string; lastModified: string; }[]): string {
-  return `<?xml version="1.0" encoding="UTF-8"?>
-   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-     ${urls
-       .map(({ url, lastModified }) => {
-         return `
-           <url>
-               <loc>${url}</loc>
-               <lastmod>${lastModified}</lastmod>
-           </url>
-         `;
-       })
-       .join('')}
-   </urlset>
-  `;
-}
 
 export async function GET() {
   const staticRoutes = [
@@ -54,11 +38,19 @@ export async function GET() {
   });
 
   const allUrls = [...staticRoutes, ...dynamicRoutes];
-  const sitemap = generateSitemapXml(allUrls);
 
-  return new Response(sitemap, {
-    headers: {
-      'Content-Type': 'application/xml',
-    },
+  // Construim manual string-ul XML
+  const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  ${allUrls.map(item => `
+    <url>
+      <loc>${item.url}</loc>
+      <lastmod>${item.lastModified}</lastmod>
+    </url>
+  `).join('')}
+</urlset>`;
+
+  return new Response(xmlContent, {
+    headers: { 'Content-Type': 'application/xml; charset=utf-8' },
   });
 }
