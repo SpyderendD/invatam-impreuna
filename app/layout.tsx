@@ -91,9 +91,12 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
+    icon: [
+      { url: "/images/favicon.ico", type: "image/x-icon", sizes: "any" },
+      { url: "/images/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/images/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: "/images/apple-touch-icon.png",
   },
   appleWebApp: {
     capable: true,
