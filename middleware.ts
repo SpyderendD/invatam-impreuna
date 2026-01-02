@@ -13,7 +13,8 @@ export async function middleware(request: NextRequest) {
     '/termeni',
     '/politica-confidentialitate',
     '/cookies',
-    '/metode-invatare' // E bine să fie publică și asta
+    '/metode-invatare',
+    '/app/sitemap.xml'
   ];
 
   // Verificăm dacă e pagină publică
