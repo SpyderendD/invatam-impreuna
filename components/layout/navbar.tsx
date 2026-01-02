@@ -24,7 +24,6 @@ const navLinks = [
   { href: '/#materii', label: 'Materii', icon: BookMarked },
   { href: '/modele-teste', label: 'Modele teste E.N.', icon: Calculator },
   { href: '/dashboard', label: 'Monitorizare', icon: LineChart },
-  { href: '/quizuri', label: 'Quizuri', icon: HelpCircle },
   { href: '/studiu-inteligent', label: 'Studiu inteligent', icon: Bot },
   { href: '/contact', label: 'Contact', icon: HelpCircle },
 ] as const;

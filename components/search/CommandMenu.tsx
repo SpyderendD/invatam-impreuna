@@ -34,7 +34,6 @@ export function CommandMenu({ ...props }: CommandMenuProps) {
               <CommandItem onSelect={() => runCommand(() => router.push('/#materii'))}><BookMarked className="mr-2 h-4 w-4" /><span>Materii</span></CommandItem>
               <CommandItem onSelect={() => runCommand(() => router.push('/modele-teste'))}><Calculator className="mr-2 h-4 w-4" /><span>Modele teste E.N.</span></CommandItem>
               <CommandItem onSelect={() => runCommand(() => router.push('/dashboard'))}><LineChart className="mr-2 h-4 w-4" /><span>Monitorizare</span></CommandItem>
-              <CommandItem onSelect={() => runCommand(() => router.push('/quizuri'))}><HelpCircle className="mr-2 h-4 w-4" /><span>Quizuri</span></CommandItem>
             </CommandGroup>
             {user && (
               <>
