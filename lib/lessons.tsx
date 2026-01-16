@@ -3,7 +3,7 @@
 import { JSX } from "react";
 import {
   PenSquare, BookOpen, Languages, Waypoints, Calculator, InfinityIcon,
-  Ruler, Cuboid, Sparkles, Drama, Mic, Heart, Scale, ClipboardList, SpellCheck, Link2, AudioWaveform, Network, Quote, Gem
+  Ruler, Cuboid, Sparkles, Drama, Mic, Heart, Scale, ClipboardList, SpellCheck, Link2, AudioWaveform, Network, Quote, Gem, Sigma, Percent, GitCompareArrows, FunctionSquare
 } from "lucide-react";
 
 // ============================================================================
@@ -190,64 +190,85 @@ const romanaChapters: Chapter[] = [
 
 
 // ============================================================================
-// == DATELE PENTRU MATERIA "MATEMATICĂ" (rămân neschimbate)
+// == DATELE PENTRU MATEMATICĂ (ALINIATE CU PROGRAMA DE EXAMEN)
 // ============================================================================
 
 const matematicaChapters: Chapter[] = [
   {
-    id: "algebra-fundamente",
-    title: "Algebră: Fundamente și Numere",
-    description: "Explorează mulțimile numerice, divizibilitatea și operațiile de bază.",
-    icon: <InfinityIcon className="h-8 w-8 text-primary" />,
+    id: "numere",
+    title: "Mulțimi și Numere",
+    description: "De la numere naturale la numere reale. Operații, divizibilitate și intervale.",
+    icon: <Sigma className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "alg-01", title: "Mulțimi numerice (ℕ, ℤ, ℚ, ℝ)", slug: "multimi-numerice", duration: "15 min", type: "Teorie" },
-      { id: "alg-02", title: "Divizibilitate în ℕ", slug: "divizibilitate", duration: "20 min", type: "Teorie" },
-      { id: "alg-03", title: "Fracții ordinare și zecimale", slug: "fractii", duration: "15 min", type: "Teorie" },
-      { id: "alg-04", title: "Rapoarte, Proporții, Procente", slug: "rapoarte-proportii-procente", duration: "15 min", type: "Formule" },
-      { id: "alg-05", title: "Puteri și Radicali", slug: "puteri-si-radicali", duration: "20 min", type: "Formule" },
-      { id: "alg-06", title: "Calcul cu numere reale", slug: "calcul-numere-reale", duration: "20 min", type: "Exerciții" },
+      { id: "mate_num_01", title: "Mulțimi: Relații și Operații", slug: "multimi-relatii-operatii", duration: "20 min", type: "Teorie" },
+      { id: "mate_num_02", title: "Mulțimea Numerelor Naturale (ℕ)", slug: "numere-naturale", duration: "25 min", type: "Teorie" },
+      { id: "mate_num_03", title: "Mulțimea Numerelor Întregi (ℤ)", slug: "numere-intregi", duration: "15 min", type: "Teorie" },
+      { id: "mate_num_04", title: "Mulțimea Numerelor Raționale (ℚ)", slug: "numere-rationale", duration: "25 min", type: "Teorie" },
+      { id: "mate_num_05", title: "Mulțimea Numerelor Reale (ℝ)", slug: "numere-reale", duration: "20 min", type: "Teorie" },
+      { id: "mate_num_06", title: "Intervale Numerice în ℝ", slug: "intervale-numerice", duration: "15 min", type: "Exerciții" },
     ],
   },
   {
-    id: "algebra-calcul",
-    title: "Algebră: Calcul Algebric și Funcții",
-    description: "De la formule de calcul la ecuații, sisteme și funcții.",
+    id: "rapoarte-procente",
+    title: "Rapoarte, Proporții și Organizarea Datelor",
+    description: "Mărimi proporționale, procente, probabilități și elemente de statistică.",
+    icon: <Percent className="h-8 w-8 text-primary" />,
+    lessons: [
+      { id: "mate_rap_01", title: "Rapoarte și Proporții", slug: "rapoarte-si-proportii", duration: "20 min", type: "Teorie" },
+      { id: "mate_rap_02", title: "Mărimi Direct/Invers Proporționale", slug: "marimi-proportionale", duration: "20 min", type: "Exerciții" },
+      { id: "mate_rap_03", title: "Procente. Calcul Procentual", slug: "procente-si-calcul", duration: "25 min", type: "Exerciții" },
+      { id: "mate_rap_04", title: "Probabilități și Statistică", slug: "probabilitati-si-statistica", duration: "15 min", type: "Teorie" },
+    ],
+  },
+  {
+    id: "calcul-algebric",
+    title: "Calcul Algebric și Funcții",
+    description: "Operații cu numere reale, formule, descompuneri, ecuații și funcții.",
     icon: <Calculator className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "alg-07", title: "Formule de calcul prescurtat", slug: "formule-calcul-prescurtat", duration: "15 min", type: "Formule" },
-      { id: "alg-08", title: "Descompunerea în factori", slug: "descompunere-factori", duration: "15 min", type: "Exerciții" },
-      { id: "alg-09", title: "Ecuații și inecuații de gradul I", slug: "ecuatii-inecuatii-grad-1", duration: "25 min", type: "Teorie" },
-      { id: "alg-10", title: "Ecuația de gradul II", slug: "ecuatia-grad-2", duration: "15 min", type: "Teorie" },
-      { id: "alg-11", title: "Sisteme de ecuații", slug: "sisteme-de-ecuatii", duration: "20 min", type: "Exerciții" },
-      { id: "alg-12", title: "Funcții și elemente de grafic", slug: "functii-si-grafice", duration: "20 min", type: "Teorie" },
+      { id: "mate_alg_01", title: "Operații cu numere reale reprezentate prin litere", slug: "operatii-algebrice", duration: "20 min", type: "Exerciții" },
+      { id: "mate_alg_02", title: "Formule de Calcul Prescurtat", slug: "formule-calcul-prescurtat", duration: "20 min", type: "Formule" },
+      { id: "mate_alg_03", title: "Descompunerea în factori", slug: "descompunere-in-factori", duration: "25 min", type: "Exerciții" },
+      { id: "mate_alg_04", title: "Ecuații, Inecuații și Sisteme de ecuații", slug: "ecuatii-inecuatii-sisteme", duration: "30 min", type: "Teorie" },
+      { id: "mate_alg_05", title: "Funcții. Reprezentare grafică", slug: "functii-si-grafice", duration: "25 min", type: "Teorie" },
     ],
   },
   {
-    id: "geometrie-plan",
-    title: "Geometrie în Plan",
-    description: "Proprietățile figurilor geometrice plane, de la unghiuri la poligoane.",
+    id: "geometrie-plana",
+    title: "Geometrie Plană",
+    description: "Unghiuri, triunghiuri, patrulatere și cercul. Proprietăți și arii.",
     icon: <Ruler className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "geo-01", title: "Unghiuri și Drepte paralele", slug: "unghiuri-drepte-paralele", duration: "15 min", type: "Teorie" },
-      { id: "geo-02", title: "Triunghiul: Clasificare și proprietăți", slug: "triunghiul-proprietati", duration: "20 min", type: "Teorie" },
-      { id: "geo-03", title: "Linii importante în triunghi", slug: "linii-importante-triunghi", duration: "20 min", type: "Teorie" },
-      { id: "geo-04", title: "Relații metrice în triunghiul dreptunghic", slug: "relatii-metrice-triunghi", duration: "25 min", type: "Formule" },
-      { id: "geo-05", title: "Asemănarea triunghiurilor", slug: "asemanarea-triunghiurilor", duration: "15 min", type: "Teorie" },
-      { id: "geo-06", title: "Patrulatere: Proprietăți și arii", slug: "patrulatere", duration: "20 min", type: "Formule" },
-      { id: "geo-07", title: "Cercul și Poligoane regulate", slug: "cercul-si-poligoane", duration: "15 min", type: "Formule" },
+      { id: "mate_geo_01", title: "Unghiuri și Drepte paralele", slug: "unghiuri-si-drepte", duration: "20 min", type: "Teorie" },
+      { id: "mate_geo_02", title: "Triunghiul: Proprietăți și Linii Importante", slug: "triunghiul-proprietati-linii", duration: "25 min", type: "Teorie" },
+      { id: "mate_geo_03", title: "Patrulatere: Proprietăți și Arii", slug: "patrulatere-proprietati-arii", duration: "25 min", type: "Formule" },
+      { id: "mate_geo_04", title: "Cercul: Elemente și Proprietăți", slug: "cercul-elemente-proprietati", duration: "20 min", type: "Teorie" },
     ],
   },
   {
-    id: "geometrie-spatiu",
+    id: "relatii-metrice-trigonometrie",
+    title: "Asemănare, Relații Metrice și Trigonometrie",
+    description: "Teorema lui Thales, Pitagora, Catetei, Înălțimii și funcțiile trigonometrice.",
+    icon: <GitCompareArrows className="h-8 w-8 text-primary" />,
+    lessons: [
+      { id: "mate_rel_01", title: "Segmente proporționale. Teorema lui Thales", slug: "thales-si-proportionalitate", duration: "20 min", type: "Teorie" },
+      { id: "mate_rel_02", title: "Asemănarea Triunghiurilor", slug: "asemanarea-triunghiurilor", duration: "20 min", type: "Teorie" },
+      { id: "mate_rel_03", title: "Relații metrice în triunghiul dreptunghic", slug: "relatii-metrice-triunghi-dreptunghic", duration: "30 min", type: "Formule" },
+      { id: "mate_rel_04", title: "Noțiuni de Trigonometrie (sin, cos, tg, ctg)", slug: "trigonometrie", duration: "25 min", type: "Formule" },
+      { id: "mate_rel_05", title: "Arii: Triunghiuri și Patrulatere", slug: "arii-triunghiuri-patrulatere", duration: "20 min", type: "Formule" },
+    ],
+  },
+  {
+    id: "geometrie-in-spatiu",
     title: "Geometrie în Spațiu",
-    description: "Calculează arii și volume pentru principalele corpuri geometrice.",
+    description: "Paralelism, perpendicularitate, proiecții și calculul de arii și volume.",
     icon: <Cuboid className="h-8 w-8 text-primary" />,
     lessons: [
-      { id: "geo-08", title: "Puncte, drepte, plane", slug: "puncte-drepte-plane-spatiu", duration: "15 min", type: "Teorie" },
-      { id: "geo-09", title: "Prisma: Arie și Volum", slug: "prisma", duration: "15 min", type: "Formule" },
-      { id: "geo-10", title: "Piramida: Arie și Volum", slug: "piramida", duration: "20 min", type: "Formule" },
-      { id: "geo-11", title: "Trunchiul de piramidă", slug: "trunchi-piramida", duration: "15 min", type: "Formule" },
-      { id: "geo-12", title: "Corpuri rotunde (Cilindru, Con, Sferă)", slug: "corpuri-rotunde", duration: "20 min", type: "Formule" },
+      { id: "mate_spatiu_01", title: "Relații între puncte, drepte și plane", slug: "relatii-puncte-drepte-plane", duration: "25 min", type: "Teorie" },
+      { id: "mate_spatiu_02", title: "Proiecții, Unghiuri diedre, Teorema celor 3 ⊥", slug: "proiectii-unghiuri-t3p", duration: "25 min", type: "Teorie" },
+      { id: "mate_spatiu_03", title: "Corpuri Geometrice: Prisma", slug: "prisma-arii-volume", duration: "20 min", type: "Formule" },
+      { id: "mate_spatiu_04", title: "Corpuri Geometrice: Piramida", slug: "piramida-arii-volume", duration: "20 min", type: "Formule" },
+      { id: "mate_spatiu_05", title: "Corpuri Geometrice: Corpuri Rotunde", slug: "corpuri-rotunde", duration: "20 min", type: "Formule" },
     ],
   },
 ];
