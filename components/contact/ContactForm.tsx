@@ -16,7 +16,7 @@ import Image from 'next/image';
 const sectionFadeIn = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "circOut" } }, };
 const staggerContainer = { hidden: {}, visible: { transition: { staggerChildren: 0.15, delayChildren: 0.2 } }, };
 
-// --- COMPONENTA CARDULUI (FINALĂ - STRUCTURA CERUTĂ) ---
+// --- COMPONENTA CARDULUI CU BUTONUL CONTACT ---
 const FounderCard = () => {
   return (
     <div className="founder-card-wrapper">
@@ -35,7 +35,7 @@ const FounderCard = () => {
           overflow: hidden;
         }
 
-        /* 1. Butonul de Mail */
+        /* Butonul de Mail (Sus Dreapta) */
         .uiverse-card .mail {
           position: absolute;
           right: 2rem;
@@ -57,7 +57,7 @@ const FounderCard = () => {
           transform: scale(1.2);
         }
 
-        /* 2. Poza (Se micșorează la hover) */
+        /* Poza */
         .uiverse-card .profile-pic {
           position: absolute;
           width: calc(100% - 8px);
@@ -79,13 +79,12 @@ const FounderCard = () => {
           transition: all 0.5s ease-in-out 0s;
         }
 
-        /* 3. Panoul de jos */
+        /* Panoul de jos */
         .uiverse-card .bottom {
           position: absolute;
           bottom: 4px;
           left: 4px;
           right: 4px;
-          /* Aici e magia: Îl setăm să arate Numele + Socials din start */
           top: 68%; 
           background: hsl(var(--primary));
           border-radius: 29px;
@@ -95,12 +94,11 @@ const FounderCard = () => {
           transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
           display: flex;
           flex-direction: column;
-          align-items: center; /* Centrăm tot conținutul */
+          align-items: center;
           text-align: center;
           padding: 15px;
         }
 
-        /* Nume */
         .uiverse-card .bottom .name {
           font-size: 1.2rem;
           color: hsl(var(--primary-foreground));
@@ -108,16 +106,15 @@ const FounderCard = () => {
           margin-top: 5px;
         }
         
-        /* Nickname */
         .uiverse-card .bottom .nickname {
            font-size: 0.85rem;
            color: hsl(var(--primary-foreground) / 0.8);
            font-weight: 600;
            font-family: monospace;
-           margin-bottom: 12px; /* Spațiu până la socials */
+           margin-bottom: 12px;
         }
 
-        /* Social Icons (Vizibile MEREU sub nume) */
+        /* Social Icons */
         .uiverse-card .bottom .social-links-container {
           display: flex;
           gap: 12px;
@@ -139,34 +136,31 @@ const FounderCard = () => {
           transform: scale(1.2);
         }
 
-        /* Descrierea (Ascunsă inițial) */
         .uiverse-card .bottom .about-me {
           font-size: 0.8rem;
           color: hsl(var(--primary-foreground) / 0.9);
           line-height: 1.3;
-          
-          /* Ascuns default */
           opacity: 0;
           height: 0;
           transform: translateY(20px);
           transition: all 0.3s ease;
         }
 
-        /* Buton Contact (Ascuns inițial) */
+        /* BUTONUL CONTACT */
         .uiverse-card .bottom .contact-btn {
           background: hsl(var(--primary-foreground));
           color: hsl(var(--primary));
           border: none;
           border-radius: 20px;
-          font-size: 0.7rem;
+          font-size: 0.75rem;
           font-weight: bold;
-          padding: 8px 20px;
+          padding: 8px 24px;
           box-shadow: 0 4px 6px rgba(0,0,0,0.1);
           cursor: pointer;
           text-decoration: none;
-          margin-top: auto; /* Îl împinge jos de tot când apare */
+          margin-top: auto; /* Împinge la fund */
           
-          /* Ascuns default */
+          /* Ascuns inițial */
           opacity: 0;
           transform: translateY(20px);
           transition: all 0.3s ease;
@@ -178,20 +172,16 @@ const FounderCard = () => {
             transform: scale(1.05);
         }
 
-
         /* --- ANIMATII LA HOVER --- */
-
         .uiverse-card:hover {
           border-top-left-radius: 55px;
         }
 
-        /* Panoul urcă */
         .uiverse-card:hover .bottom {
           top: 20%; 
           border-radius: 80px 29px 29px 29px;
         }
 
-        /* Poza se micșorează */
         .uiverse-card:hover .profile-pic {
           width: 100px;
           height: 100px;
@@ -227,6 +217,10 @@ const FounderCard = () => {
       `}</style>
 
       <div className="uiverse-card group">
+        <a href="mailto:spyderend0@gmail.com" className="mail" aria-label="Trimite email">
+          <Mail className="h-5 w-5" />
+        </a>
+        
         <div className="profile-pic">
            <Image 
              src="/images/EU.jpg" 
@@ -240,8 +234,6 @@ const FounderCard = () => {
         </div>
         
         <div className="bottom">
-          {/* Elementele Vizibile Mereu */}
-          <br/>
           <span className="name">Mera Alin David</span>
           <span className="nickname">@Spyderend 🕷️</span>
           
@@ -254,11 +246,12 @@ const FounderCard = () => {
             </a>
           </div>
 
-          {/* Elementele care apar DOAR la Hover */}
           <span className="about-me">
             Founder & Developer.<br/>
             Elev, pasionat de educație, tehnologie și Minecraft.
           </span>
+          
+          <a href="/eu" className="contact-btn">Despre mine</a>
         </div>
       </div>
     </div>

@@ -186,7 +186,7 @@ export function Footer() {
         >
           {/* --- AICI AM ACTUALIZAT TEXTUL DE COPYRIGHT --- */}
           <p className="text-sm text-muted-foreground text-center md:text-left">
-            © {startLabel} – {endLabel} Învățăm Împreună. Construit cu ❤️ pentru viitorul României.
+            © {startLabel} – {endLabel} Mera Alin David - Spyderend. Construit cu ❤️ pentru viitorul României.
           </p>
           <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center md:justify-end">
             {footerLinks.legal.map(link => (

@@ -223,7 +223,110 @@
       height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
       scroll-snap-align: start; border-bottom: 1px solid hsl(var(--border)); padding: 2rem; box-sizing: border-box; text-align: center;
   }
+
+   /* ========================================= */
+  /*            CREEPY BUTTON (AICI)           */
+  /* ========================================= */
+  .creepy-btn {
+    /* Variabile locale pentru buton - se adaptează la tema ta */
+    --btn-bg: hsl(var(--card));
+    --btn-text: hsl(var(--foreground));
+    --btn-cover: hsl(var(--primary));
+    --btn-cover-text: hsl(var(--primary-foreground));
+    --pupil: #000;
+    --eye: #fff;
+    --trans-dur: 0.3s;
+  
+    background-color: var(--btn-bg);
+    border-radius: 1.5em;
+    color: var(--btn-text);
+    cursor: pointer;
+    letter-spacing: 1px;
+    min-width: 10em;
+    padding: 0.2em; /* Spatiu pentru contur */
+    border: 2px solid hsl(var(--border)); /* Bordură subtilă */
+    font-weight: 700;
+    font-family: var(--font-inter);
+    transition: transform 0.1s linear;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex; /* Important pentru aliniere */
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .creepy-btn__cover {
+    background-color: var(--btn-cover);
+    color: var(--btn-cover-text);
+    border-radius: 1.25em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75em 1.5em;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    transform-origin: 1.25em 50%;
+    transition: background-color var(--trans-dur), transform var(--trans-dur) cubic-bezier(0.65, 0, 0.35, 1);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+  }
+  
+  /* Când pui mouse-ul pe buton (nu doar pe cover) */
+  .creepy-btn:hover .creepy-btn__cover {
+    transform: rotate(-8deg); /* Se ridică puțin mai subtil */
+    background-color: hsl(var(--primary) / 0.9);
+  }
+  
+  .creepy-btn:active .creepy-btn__cover {
+    transform: rotate(0deg);
+  }
+  
+  /* OCHII - Poziționați sub cover */
+  .creepy-btn__eyes {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    right: 1.5em; /* Poziționați în dreapta, sub unde se ridică capacul */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .creepy-btn__eye {
+    background-color: var(--eye);
+    border-radius: 50%;
+    overflow: hidden;
+    width: 0.9em;
+    height: 0.9em;
+    position: relative;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.4);
+    animation: eye-blink 4s infinite; 
+  }
+  
+  .creepy-btn__pupil {
+    background-color: var(--pupil);
+    border-radius: 50%;
+    width: 35%;
+    height: 35%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* Mișcarea e făcută din React prin style */
+  }
 }
+
+/* Keyframes */
+@keyframes eye-blink {
+  0%, 92%, 100% { height: 0.9em; transform: scaleY(1); }
+  96% { transform: scaleY(0.1); } /* Clipește */
+}
+
 
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes gradient-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }

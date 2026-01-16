@@ -1,11 +1,14 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import CustomCursor from '@/components/animations/CustomCursor';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Confetti from 'react-confetti';
+import DeadlineAnimation from '@/components/animations/DeadlineAnimation';
+import CreepyButton from '@/components/ui/CreepyButton';
 
 // --- Iconițe ---
 import { 
@@ -22,7 +25,9 @@ import {
     Settings,
     CheckCircle,
     BookCopy,
-    Presentation
+    Presentation,
+    X,
+    Ghost
 } from 'lucide-react'; 
 
 // Variante animații
@@ -123,6 +128,14 @@ const aiToolsData = [
 ];
 
 export default function StudiuInteligentPage() {
+  // Stare pentru Modala Creepy
+  const [showSurprise, setShowSurprise] = useState(false);
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+  }, []);
+
   return (
     <>
       <CustomCursor />
@@ -148,20 +161,88 @@ export default function StudiuInteligentPage() {
               </motion.p>
               
               <motion.div variants={sectionFadeIn} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button asChild size="lg" className="w-full sm:w-auto">
-                  <Link href="#instrumente-ai">Unelte AI</Link>
+                <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
+                  <Link href="/metode-invatare">Metode de învățare</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
                   <Link href="#instrumente-studiu">Flashcarduri & Timer</Link>
                 </Button>
-                <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
-                  <Link href="/metode-invatare">Metode de învățare</Link>
-                </Button>
+                
+                {/* BUTONUL CREEPY INTEGRAT AICI */}
+                <CreepyButton onClick={() => setShowSurprise(true)} className="w-full sm:w-auto">
+                   Nu Apăsa Aici!
+                </CreepyButton>
+
               </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
+
+      {/* MODALA SURPRIZĂ */}
+      <AnimatePresence>
+        {showSurprise && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowSurprise(false)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+
+            {/* Confetti */}
+            <Confetti width={windowSize.width} height={windowSize.height} recycle={false} numberOfPieces={200} />
+
+            {/* Card */}
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0, rotate: -10 }}
+              animate={{ scale: 1, opacity: 1, rotate: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 50 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="relative bg-card border-2 border-primary w-full max-w-md rounded-3xl p-8 text-center shadow-2xl shadow-primary/20 overflow-hidden"
+            >
+              <button 
+                onClick={() => setShowSurprise(false)}
+                className="absolute top-4 right-4 p-2 rounded-full hover:bg-muted transition-colors z-10"
+                aria-label="Închide"
+              >
+                <X className="w-6 h-6 text-muted-foreground" />
+              </button>
+
+              <div className="flex flex-col items-center">
+                
+                {/* Animația Deadline (Omulețul) */}
+                <DeadlineAnimation />
+                
+                <h2 className="text-3xl font-bold text-foreground mb-2">Te-am prins! 🕵️</h2>
+                <p className="text-muted-foreground text-lg mb-6">
+                  Ai apăsat butonul interzis... Acum trebuie să înveți pentru examen!
+                  <br/>
+                  <span className="font-semibold text-primary">Deadline-ul se apropie!</span> 🔥
+                </p>
+
+                <div className="flex gap-4 w-full">
+                  <button 
+                    onClick={() => setShowSurprise(false)}
+                    className="flex-1 py-3 rounded-xl bg-primary text-primary-foreground font-bold hover:opacity-90 transition-opacity"
+                  >
+                    Mă apuc de treabă
+                  </button>
+                  <button 
+                    onClick={() => setShowSurprise(false)}
+                    className="flex-1 py-3 rounded-xl bg-muted text-foreground font-semibold hover:bg-muted/80 transition-colors"
+                  >
+                    Mai stau puțin
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Secțiunea cu Tab-uri pentru Instrumente AI */}
       <section id="instrumente-ai" className="py-24 bg-background border-y border-border">
@@ -172,7 +253,6 @@ export default function StudiuInteligentPage() {
           </motion.div>
 
           <Tabs defaultValue="notebooklm" className="w-full max-w-5xl mx-auto">
-            {/* FIX PENTRU MOBIL: Am schimbat grid-ul să fie pe o coloană pe mobil și 4 pe desktop */}
             <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-4 h-auto p-2 gap-2 bg-muted/50 rounded-xl">
               {aiToolsData.map(tool => (
                 <TabsTrigger 
@@ -186,7 +266,6 @@ export default function StudiuInteligentPage() {
               ))}
             </TabsList>
 
-            {/* GENERAREA CONȚINUTULUI */}
             {aiToolsData.map(tool => (
               <TabsContent key={tool.id} value={tool.id} className="mt-8 focus-visible:outline-none">
                 <motion.div
