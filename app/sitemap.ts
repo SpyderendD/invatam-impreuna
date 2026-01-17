@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next';
 import { ALL_SUBJECTS_OBJECT } from '@/lib/lessons';
 
+export const dynamic = 'force-dynamic';
+
 const SITE_URL = 'https://invatam-impreuna.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
