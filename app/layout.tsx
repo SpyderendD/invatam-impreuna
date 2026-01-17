@@ -12,6 +12,8 @@ import { Analytics } from '@vercel/analytics/react';
 import { Providers } from '@/components/Providers';
 import CustomCursor from '@/components/animations/CustomCursor';
 import { Toaster } from '@/components/ui/toaster';
+import AccessibilityMenu from '@/components/ui/AccessibilityMenu';
+import CookieBanner from '@/components/ui/CookieBanner';
 
 // =======================================================================
 // 1. CONFIGURARE FONTURI
@@ -216,7 +218,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CustomCursor />
           <Toaster />
         </Providers>
-
+        <AccessibilityMenu />
+        <CookieBanner />
         <Analytics />
         <SpeedInsights />
         

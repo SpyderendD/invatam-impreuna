@@ -1,4 +1,3 @@
-// app/setari/page.tsx
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
@@ -25,13 +24,13 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
-import  ThemeToggle  from '@/components/theme/ThemeToggle';
+import ThemeToggle from '@/components/theme/ThemeToggle';
 import { Switch } from '@/components/ui/switch';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Icons
-import { User, KeyRound, Palette, Trash2, Loader2, Bell, MailCheck, MailWarning } from 'lucide-react';
+import { User, KeyRound, Palette, Trash2, Loader2, Bell, MailCheck, MailWarning, RefreshCw, Check } from 'lucide-react';
 
-// Animații simple
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
@@ -49,11 +48,12 @@ export default function SettingsPage() {
   const router = useRouter();
 
   const [displayName, setDisplayName] = useState('');
+  const [photoURL, setPhotoURL] = useState('');
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [passwordForDelete, setPasswordForDelete] = useState('');
 
   const [isLoading, setIsLoading] = useState({
-    name: false,
+    profile: false, // combinat nume + poza
     passwordReset: false,
     delete: false,
     verification: false,
@@ -63,6 +63,8 @@ export default function SettingsPage() {
   useEffect(() => {
     if (user) {
       setDisplayName(user.displayName || '');
+      // Dacă nu are poză, setăm una default generată
+      setPhotoURL(user.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.uid}`);
     }
     if (typeof window !== 'undefined' && 'Notification' in window) {
       setNotificationsEnabled(Notification.permission === 'granted');
@@ -75,9 +77,16 @@ export default function SettingsPage() {
     return () => clearInterval(t);
   }, [verificationCooldown]);
 
-  const isNameChanged = useMemo(
-    () => displayName.trim() !== '' && displayName !== (user?.displayName || ''),
-    [displayName, user]
+  // Generare avatar nou (schimbă seed-ul)
+  const regenerateAvatar = () => {
+    const randomSeed = Math.random().toString(36).substring(7);
+    const newAvatar = `https://api.dicebear.com/7.x/avataaars/svg?seed=${randomSeed}`;
+    setPhotoURL(newAvatar);
+  };
+
+  const hasChanges = useMemo(
+    () => (displayName.trim() !== '' && displayName !== (user?.displayName || '')) || (photoURL !== user?.photoURL),
+    [displayName, photoURL, user]
   );
 
   if (!user) {
@@ -90,17 +99,20 @@ export default function SettingsPage() {
 
   // Handlers
 
-  const handleNameUpdate = async () => {
-    if (!isNameChanged) return;
-    setIsLoading((s) => ({ ...s, name: true }));
+  const handleProfileUpdate = async () => {
+    if (!hasChanges) return;
+    setIsLoading((s) => ({ ...s, profile: true }));
     try {
-      await updateProfile(user, { displayName });
-      setUser?.({ ...user, displayName });
-      toast({ title: 'Nume salvat!', description: 'Numele tău de afișare a fost actualizat.' });
+      await updateProfile(user, { 
+        displayName,
+        photoURL 
+      });
+      setUser?.({ ...user, displayName, photoURL });
+      toast({ title: 'Profil actualizat!', description: 'Modificările au fost salvate cu succes.' });
     } catch {
-      toast({ title: 'Eroare', description: 'Nu am putut salva numele.', variant: 'destructive' });
+      toast({ title: 'Eroare', description: 'Nu am putut actualiza profilul.', variant: 'destructive' });
     } finally {
-      setIsLoading((s) => ({ ...s, name: false }));
+      setIsLoading((s) => ({ ...s, profile: false }));
     }
   };
 
@@ -219,44 +231,66 @@ export default function SettingsPage() {
               </Card>
             </motion.div>
           )}
-          {emailVerified && (
-            <motion.div variants={itemVariants}>
-              <Card className="border-emerald-500/40 bg-emerald-500/10">
-                <CardContent className="py-3 flex items-center gap-3">
-                  <MailCheck className="h-5 w-5 text-emerald-600" />
-                  <p className="text-sm font-medium">Email verificat</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
 
-          {/* Profil – DOAR nume (fără avatar) */}
+          {/* Profil – Nume + Avatar */}
           <SettingsCard>
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <User /> Profil
+                <User /> Profil Public
               </CardTitle>
-              <CardDescription>Numele tău va fi afișat în întreaga aplicație.</CardDescription>
+              <CardDescription>Cum apari celorlalți utilizatori pe platformă.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6">
+              
+              {/* Secțiunea Avatar */}
+              <div className="flex items-center gap-6">
+                <div className="relative group">
+                  <Avatar className="h-24 w-24 border-2 border-border shadow-md">
+                    <AvatarImage src={photoURL} className="object-cover bg-muted" />
+                    <AvatarFallback className="text-2xl font-bold">{displayName?.[0]}</AvatarFallback>
+                  </Avatar>
+                  {/* Buton Overlay pe Avatar (Opțional) */}
+                  <button 
+                    onClick={regenerateAvatar}
+                    className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    title="Generează alt avatar"
+                  >
+                    <RefreshCw className="h-6 w-6 text-white" />
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  <h3 className="font-medium">Avatar</h3>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" onClick={regenerateAvatar}>
+                      <RefreshCw className="mr-2 h-3.5 w-3.5" /> Generează Aleatoriu
+                    </Button>
+                    {/* Dacă vrei upload, aici ar veni un <Input type="file" /> */}
+                  </div>
+                  <p className="text-xs text-muted-foreground">Folosim avatare unice generate automat.</p>
+                </div>
+              </div>
+
+              {/* Secțiunea Nume */}
               <div className="w-full space-y-2">
                 <Label htmlFor="displayName">Nume de afișare</Label>
                 <Input
                   id="displayName"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  disabled={isLoading.name}
+                  disabled={isLoading.profile}
                   placeholder="Numele tău"
                 />
               </div>
+
             </CardContent>
             <CardFooter className="border-t bg-muted/50 px-6 py-4 flex justify-between items-center">
-              <Button onClick={handleNameUpdate} disabled={isLoading.name || !isNameChanged}>
-                {isLoading.name && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Salvează Numele
+              <Button onClick={handleProfileUpdate} disabled={isLoading.profile || !hasChanges}>
+                {isLoading.profile ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Check className="mr-2 h-4 w-4" />}
+                Salvează Modificările
               </Button>
               <p className="text-xs text-muted-foreground">
-                {isNameChanged ? 'Ai modificări nesalvate.' : 'Numele este actualizat.'}
+                {hasChanges ? 'Ai modificări nesalvate.' : 'Profilul este actualizat.'}
               </p>
             </CardFooter>
           </SettingsCard>

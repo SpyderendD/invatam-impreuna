@@ -224,6 +224,74 @@
       scroll-snap-align: start; border-bottom: 1px solid hsl(var(--border)); padding: 2rem; box-sizing: border-box; text-align: center;
   }
 
+/* ========================================= */
+/*       ACCESIBILITATE (A11Y MENU)          */
+/* ========================================= */
+
+/* 1. Linkuri Evidențiate */
+body.highlight-links a {
+  text-decoration: underline !important;
+  color: #ffff00 !important; /* Galben strident */
+  background-color: #000 !important;
+  font-weight: bold !important;
+}
+
+/* 2. Titluri Evidențiate */
+body.highlight-titles h1, 
+body.highlight-titles h2, 
+body.highlight-titles h3, 
+body.highlight-titles h4 {
+  border: 2px solid #0000ff !important; /* Albastru */
+  padding: 5px !important;
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+/* 3. Font Dislexie (Arial sau OpenDyslexic dacă ai) */
+body.readable-font * {
+  font-family: Arial, Helvetica, sans-serif !important;
+  line-height: 1.8 !important;
+}
+
+/* 4. Cursor Mare */
+body.big-cursor, body.big-cursor * {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewport="0 0 48 48" style="fill:black;font-size:24px;"><text y="50%">👆</text></svg>') 16 0, auto !important;
+}
+
+/* 5. Oprește Animațiile */
+body.stop-animations *, body.stop-animations *::before, body.stop-animations *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* 6. Contrast & Culori (folosind filtre CSS pe HTML) */
+html.grayscale-mode {
+  filter: grayscale(100%) !important;
+}
+
+html.sat-high {
+  filter: saturate(200%) !important;
+}
+
+html.sat-low {
+  filter: saturate(50%) !important;
+}
+
+html.contrast-high {
+  filter: contrast(150%) !important;
+}
+
+/* Inversare Culori (Dark/Light forțat) */
+html.contrast-dark {
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+/* Notă: Imaginile trebuie inversate înapoi ca să arate normal */
+html.contrast-dark img, 
+html.contrast-dark video {
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+
    /* ========================================= */
   /*            CREEPY BUTTON (AICI)           */
   /* ========================================= */
