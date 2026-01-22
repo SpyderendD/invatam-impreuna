@@ -56,12 +56,12 @@ export const metadata: Metadata = {
   
   // Iconițe pentru toate dispozitivele
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/icon-192x192.png',
+    icon: '/public/images/favicon.ico',
+    shortcut: '/public/images/favicon.ico',
+    apple: '/public/images/icon-192x192.png',
     other: {
       rel: 'apple-touch-icon-precomposed',
-      url: '/icon-192x192.png',
+      url: '/public/images/icon-192x192.png',
     },
   },
 
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     siteName: 'Învățăm Împreună',
     images: [
       {
-        url: '/og-image.png', // Asigură-te că ai o imagine frumoasă numită og-image.png în public
+        url: '/public/images/og-image.png', // Asigură-te că ai o imagine frumoasă numită og-image.png în public
         width: 1200,
         height: 630,
         alt: 'Învățăm Împreună Preview',
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Învățăm Împreună',
     description: 'Platformă educațională completă pentru elevi.',
-    images: ['/og-image.png'],
+    images: ['/public/images/og-image.png'],
   },
 
   // Indexare (Spunem roboților Google că au voie să scaneze tot)
