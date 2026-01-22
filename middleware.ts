@@ -31,7 +31,8 @@ export async function middleware(request: NextRequest) {
     '/cookies',
     '/metode-invatare',
     '/povestea-mea',
-    '/modele-teste'
+    '/modele-teste',
+    "/eu"
   ];
 
   // Verificăm dacă e pagină publică

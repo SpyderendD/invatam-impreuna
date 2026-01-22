@@ -1,47 +1,43 @@
-// app/layout.tsx
-
-// =======================================================================
-// IMPORTURILE NECESARE
-// =======================================================================
 import './globals.css';
 import { Inter, Lora } from 'next/font/google';
 import type { Metadata, Viewport } from 'next';
-import Script from 'next/script'; 
+import Script from 'next/script';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/react';
 import { Providers } from '@/components/Providers';
-import CustomCursor from '@/components/animations/CustomCursor';
-import { Toaster } from '@/components/ui/toaster';
-import AccessibilityMenu from '@/components/ui/AccessibilityMenu';
-import CookieBanner from '@/components/ui/CookieBanner';
+import CustomCursor from '@/components/animations/CustomCursor'; // Asigură-te că ai fișierul aici
 
 // =======================================================================
-// 1. CONFIGURARE FONTURI
+// 1. OPTIMIZARE FONTURI
+// Folosim 'swap' pentru a afișa textul imediat, chiar dacă fontul se încarcă
 // =======================================================================
-const inter = Inter({
-  subsets: ['latin'],
+const inter = Inter({ 
+  subsets: ['latin'], 
   variable: '--font-inter',
-  display: 'swap',
+  display: 'swap', 
 });
 
-const lora = Lora({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+const lora = Lora({ 
+  subsets: ['latin'], 
+  weight: ['400', '500', '600', '700'], 
   variable: '--font-lora',
   display: 'swap',
 });
 
 // =======================================================================
-// 2. METADATE SEO AVANSATE
+// 2. METADATE SEO COMPLETE
+// Configurare robustă pentru Google, Facebook, Twitter și WhatsApp
 // =======================================================================
 export const metadata: Metadata = {
   metadataBase: new URL('https://invatam-impreuna.vercel.app'),
+  
   title: {
-    default: 'Învățăm Împreună | Platformă Educațională Gratuită',
+    default: 'Învățăm Împreună | Platformă Educațională Interactivă',
     template: '%s | Învățăm Împreună',
   },
-  description: 'Platformă educațională online completă pentru pregătire la Evaluarea Națională și Bacalaureat. Lecții interactive, teste gratuite, monitorizare progres și resurse vizuale pentru elevi.',
-  keywords: [
+  
+  description: 'Platformă educațională online gratuită pentru pregătire la Evaluarea Națională, Bacalaureat și alte materii. Lecții interactive, teste grilă, flashcarduri și resurse AI.',
+  
+  keywords: ['educatie', 'invatam impreuna', 'bacalaureat', 'evaluare nationala', 'teste', 'lectii online', 'matematica', 'romana', 'ai educatie',
     'educatie online', 'evaluare nationala', 'bacalaureat', 'lectii video',
     'teste online', 'mate', 'romana', 'informatica', 'chimie', 'fizica',
     'invatam impreuna', 'platforma elevi', 'pregatire examene', 'resurse scolare',
@@ -49,14 +45,53 @@ export const metadata: Metadata = {
     'bacalaureat', 'evaluare nationala', 'elevi', 'pregatire examene', 'resurse scolare',
     'mate', 'romana', 'informatica', 'chimie', 'fizica', 'invatam impreuna',
     'platforma educatie', 'teste gratuite', 'lectii video', 'invatare online',
-    'Spyderend', 'Mera Alin David', 'Romania', 'scoala', 'educatie gratuita',
-  ],
-  authors: [{ name: 'Mera Alin David', url: 'https://invatam-impreuna.vercel.app' }],
-  creator: 'Mera Alin David (Spyderend)',
+    'Spyderend', 'Mera Alin David', 'Romania', 'scoala', 'educatie gratuita',],
+  
+  authors: [{ name: 'Echipa Învățăm Împreună' }],
+  creator: 'Învățăm Împreună',
   publisher: 'Învățăm Împreună',
-  alternates: {
-    canonical: '/',
+
+  // Configurare PWA (Progressive Web App)
+  manifest: '/manifest.json',
+  
+  // Iconițe pentru toate dispozitivele
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/icon-192x192.png',
+    other: {
+      rel: 'apple-touch-icon-precomposed',
+      url: '/icon-192x192.png',
+    },
   },
+
+  // Open Graph (Cum arată link-ul când îl dai pe Facebook/WhatsApp)
+  openGraph: {
+    type: 'website',
+    locale: 'ro_RO',
+    url: 'https://invatam-impreuna.vercel.app',
+    title: 'Învățăm Împreună - Viitorul Educației Tale',
+    description: 'Accesează resurse educaționale moderne, teste interactive și unelte AI pentru un studiu eficient.',
+    siteName: 'Învățăm Împreună',
+    images: [
+      {
+        url: '/og-image.png', // Asigură-te că ai o imagine frumoasă numită og-image.png în public
+        width: 1200,
+        height: 630,
+        alt: 'Învățăm Împreună Preview',
+      },
+    ],
+  },
+
+  // Twitter Cards
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Învățăm Împreună',
+    description: 'Platformă educațională completă pentru elevi.',
+    images: ['/og-image.png'],
+  },
+
+  // Indexare (Spunem roboților Google că au voie să scaneze tot)
   robots: {
     index: true,
     follow: true,
@@ -68,161 +103,81 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  openGraph: {
-    type: 'website',
-    locale: 'ro_RO',
-    url: 'https://invatam-impreuna.vercel.app',
-    siteName: 'Învățăm Împreună',
-    title: 'Învățăm Împreună - Viitorul tău începe azi',
-    description: 'Pregătește-te pentru Evaluarea Națională și BAC cu lecții interactive și teste gratuite. Platformă creată de elevi, pentru elevi.',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Invatam Impreuna Platforma',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Învățăm Împreună | Platformă Educațională',
-    description: 'Resurse gratuite pentru examenele tale. Învață inteligent.',
-    images: ['/og-image.png'],
-    creator: '@spyderend', 
-  },
-  manifest: '/manifest.json',
-  icons: {
-    icon: [
-      { url: "/images/favicon.ico", type: "image/x-icon", sizes: "any" },
-      { url: "/images/favicon-16x16.png", type: "image/png", sizes: "16x16" },
-      { url: "/images/favicon-32x32.png", type: "image/png", sizes: "32x32" },
-    ],
-    apple: "/images/apple-touch-icon.png",
-  },
-  appleWebApp: {
-    capable: true,
-    title: "Învățăm Împreună",
-    statusBarStyle: "default",
-  },
-  verification: {
-    google: 'sOjUUt5BdjJ2F4A64Tw9HkCX8kxANp8fKncbXCoXnvA',
-  },
-  category: 'education',
 };
 
 // =======================================================================
-// 3. VIEWPORT
+// 3. CONFIGURARE VIEWPORT (MOBILE)
 // =======================================================================
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 5,
-  userScalable: true,
+  maximumScale: 5, // Lăsăm userul să facă zoom (accesibilitate)
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0D2440' },
+    { media: '(prefers-color-scheme: dark)', color: '#0F172A' }, // Dark mode color match
   ],
 };
 
 // =======================================================================
-// 4. ROOT LAYOUT
+// 4. COMPONENTA PRINCIPALĂ
 // =======================================================================
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-
+  
+  // Schema.org pentru Google (Structured Data)
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'WebSite',
-        name: 'Învățăm Împreună',
-        url: 'https://invatam-impreuna.vercel.app',
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: 'https://invatam-impreuna.vercel.app/search?q={search_term_string}',
-          'query-input': 'required name=search_term_string'
-        }
-      },
-      {
-        '@type': 'Organization',
-        name: 'Învățăm Împreună',
-        url: 'https://invatam-impreuna.vercel.app',
-        logo: 'https://invatam-impreuna.vercel.app/icon-192x192.png',
-        sameAs: [
-          "https://tiktok.com/@spyderend",
-          "https://instagram.com/mera_alin"
-        ],
-        founder: {
-          '@type': 'Person',
-          name: 'Mera Alin David'
-        }
-      }
-    ]
+    '@type': 'WebSite',
+    name: 'Învățăm Împreună',
+    url: 'https://invatam-impreuna.vercel.app',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://invatam-impreuna.vercel.app/search?q={search_term_string}',
+      'query-input': 'required name=search_term_string'
+    }
   };
 
   return (
-    <html
-      lang="ro"
-      suppressHydrationWarning
-      className={`${inter.variable} ${lora.variable} scroll-smooth`}
+    <html 
+      lang="ro" 
+      suppressHydrationWarning 
+      className={`${inter.variable} ${lora.variable}`}
     >
       <head>
+        {/* A. JSON-LD pentru SEO Structurat */}
         <Script
           id="json-ld-website"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          strategy="worker" // Îl încărcăm în fundal să nu blocheze site-ul
         />
         
-        {/* Anti-FOUC Script */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.classList.add('dark')
-                } else {
-                  document.documentElement.classList.remove('dark')
-                }
-              } catch (_) {}
-            `,
-          }}
+        {/* B. Script pentru evitarea Flash-ului de Temă (Dark/Light) */}
+        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`(function(){try{var t=localStorage.getItem('theme');var e=window.matchMedia('(prefers-color-scheme: dark)').matches;var d=document.documentElement;d.classList.add(t==='dark'||(!t&&e)?'dark':'light');d.classList.remove(t==='dark'||(!t&&e)?'light':'dark');}catch(t){}})()`}
+        </Script>
+
+        {/* C. GOOGLE ADSENSE - Optimizat */}
+        {/* Folosim strategy="afterInteractive" pentru a nu încetini încărcarea inițială a paginii */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8380681272847895"
+          crossOrigin="anonymous"
+          strategy="afterInteractive" 
         />
       </head>
       
-      <body className="min-h-screen bg-background text-foreground antialiased overflow-x-hidden selection:bg-primary/30 selection:text-primary-foreground">
-        
-        {/* --- GOOGLE ANALYTICS START --- */}
-        {/* 1. Încărcăm scriptul extern de la Google */}
-        <Script
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-4T2MY0SSCB"
-        />
-        
-        {/* 2. Configurăm Analytics */}
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-        >
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-4T2MY0SSCB');
-          `}
-        </Script>
-        {/* --- GOOGLE ANALYTICS END --- */}
-
+      <body className="antialiased selection:bg-primary/30 selection:text-foreground">
         <Providers>
-          {children}
+          {/* Cursorul personalizat global */}
           <CustomCursor />
-          <Toaster />
+          
+          {/* Conținutul Paginii */}
+          {children}
         </Providers>
-        <AccessibilityMenu />
-        <CookieBanner />
-        <Analytics />
-        <SpeedInsights />
         
+        {/* Monitorizare Performanță Vercel */}
+        <SpeedInsights />
       </body>
     </html>
   );
