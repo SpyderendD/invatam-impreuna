@@ -5,12 +5,11 @@ import Link from 'next/link';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { 
-  Code, Terminal, Globe, 
-  ChevronDown, Zap, Shield, Laptop, Database, BrainCircuit, Gamepad2,
-  Cpu, ArrowRight 
+  Code, Terminal, Globe, ChevronDown, Zap, Shield, Laptop, Database, BrainCircuit,
+  Gamepad2, Cpu, ArrowRight, Heart, Feather, Sparkles 
 } from 'lucide-react';
 
-// --- MATRIX RAIN EFFECT COMPONENT ---
+// --- MATRIX RAIN EFFECT COMPONENT (PĂSTRAT IDENTIC) ---
 const MatrixRain = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -23,7 +22,7 @@ const MatrixRain = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const chars = '01ABCDEFXYZ';
+    const chars = '01ABCXYZ†♥'; // Am adăugat simboluri care te reprezintă
     const fontSize = 14;
     const columns = canvas.width / fontSize;
     const drops = Array(Math.ceil(columns)).fill(1);
@@ -55,8 +54,7 @@ export default function PovesteaMeaPage() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   const [text, setText] = useState('');
   
-  // TEXT MODIFICAT: Mai prietenos
-  const fullText = "> Salut! Eu sunt Spyderend.";
+  const fullText = "> Salut! Sunt Spyderend.";
 
   useEffect(() => {
     let i = 0;
@@ -64,7 +62,7 @@ export default function PovesteaMeaPage() {
       setText(fullText.slice(0, i));
       i++;
       if (i > fullText.length) clearInterval(interval);
-    }, 50);
+    }, 80); // Un pic mai lent, ca să se simtă mai natural
     return () => clearInterval(interval);
   }, []);
 
@@ -80,8 +78,6 @@ export default function PovesteaMeaPage() {
       {/* --- HERO SECTION --- */}
       <section className="relative h-screen flex flex-col items-center justify-center px-4 overflow-hidden border-b border-[#333]">
         <MatrixRain />
-        
-        {/* Glowing Orb Background */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00ff41] rounded-full blur-[200px] opacity-10 animate-pulse pointer-events-none" />
 
         <div className="z-10 text-center space-y-8 max-w-5xl relative">
@@ -92,11 +88,10 @@ export default function PovesteaMeaPage() {
             className="inline-flex items-center gap-2 border border-[#00ff41]/50 bg-[#00ff41]/5 px-6 py-2 rounded-none text-[#00ff41] text-sm tracking-[0.2em] uppercase backdrop-blur-md"
           >
             <span className="w-2 h-2 bg-[#00ff41] animate-ping rounded-full"></span>
-            Profil Creator
+            PROFIL CREATOR
           </motion.div>
 
           <div className="relative">
-             {/* GLITCH TITLE */}
              <h1 className="text-6xl md:text-9xl font-black tracking-tighter text-white glitch-text relative z-10" data-text="MERA ALIN DAVID">
                 MERA ALIN <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff41] to-emerald-600">DAVID</span>
              </h1>
@@ -106,10 +101,9 @@ export default function PovesteaMeaPage() {
             {text}<span className="animate-blink w-3 h-6 md:h-8 bg-[#00ff41] ml-2 block"></span>
           </div>
 
-          {/* TEXT MODIFICAT: Mai simplu și direct */}
-          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed border-l-4 border-[#00ff41] pl-6 text-left bg-white/5 p-4 rounded-r-xl backdrop-blur-sm">
-            Elev pasionat. Creator digital.<br/>
-            Îmi place să construiesc lucruri care ajută. Cred că tehnologia, folosită corect, poate face școala mai ușoară și mai interesantă.
+          {/* TEXT REFORMULAT SĂ FIE MAI AUTENTIC ȘI DIRECT */}
+          <p className="font-sans text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed border-l-4 border-[#00ff41] pl-6 text-left bg-white/5 p-4 rounded-r-xl backdrop-blur-sm">
+            Sunt elev la Colegiul Economic &quot;Transilvania&quot;. Îmi place să construiesc lucruri utile, de la cod la poezii, și încerc să găsesc un echilibru între ele. Mă ghidez după un principiu simplu: ce fac, fac bine.
           </p>
 
           <div className="pt-8 flex flex-col sm:flex-row gap-6 justify-center">
@@ -142,21 +136,21 @@ export default function PovesteaMeaPage() {
               viewport={{ once: true }}
               className="space-y-8"
             >
-              {/* TEXT MODIFICAT: Mai puțin dramatic */}
               <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
                 <span className="text-[#00ff41]">&gt;</span> De ce am <br/>
                 făcut <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">acest site?</span>
               </h2>
               
+              {/* TEXTELE RESCRISE CU VORBELE TALE */}
               <div className="space-y-6 text-gray-300 text-lg leading-relaxed font-sans">
                 <p>
-                  Totul a pornit dintr-o nevoie personală. Ca elev, am simțit de multe ori că resursele pentru examene sunt împrăștiate și greu de urmărit. Am vrut să creez locul pe care mi l-aș fi dorit eu să-l am când învățam.
+                  Sincer, totul a pornit dintr-o frustrare. În clasa a 8-a, când învățam pentru examen, nu găseam nicăieri resurse bune, gratuite și puse toate la un loc. Și da, sunt un pic &quot;zgârcit&quot; – nu cred că ar trebui să plătești pentru informația de bază.
                 </p>
                 <p className="border-l-2 border-purple-500 pl-4 italic bg-purple-500/5 p-2">
-                  Au fost momente când am vrut să renunț, când codul nu mergea sau eram prea obosit după școală.
+                  Așa că m-am gândit: dacă nu există, îl fac eu. Am învățat programare singur, cu ajutorul lui Dumnezeu. Au fost multe momente grele, dar am continuat.
                 </p>
                 <p>
-                  Dar am continuat, pas cu pas. Am învățat programare din mers, am greșit, am reparat și am mers mai departe. Satisfacția de a vedea platforma funcționând și de a ști că poate ajuta și alți colegi a meritat tot efortul.
+                  Răbdarea și pacea pe care le simt când merg la biserică m-au ajutat să trec peste orice bug și orice noapte nedormită. Acest site este modul meu de a lăsa o amprentă de bunătate.
                 </p>
               </div>
             </motion.div>
@@ -178,7 +172,6 @@ export default function PovesteaMeaPage() {
                   <span className="ml-2 text-gray-500 text-xs">scopul_meu.txt</span>
                 </div>
                 
-                {/* TEXT MODIFICAT ÎN TERMINAL */}
                 <div className="p-6 space-y-4 text-gray-300">
                   <div>
                     <span className="text-green-500">➜</span> <span className="text-blue-400">~</span> <span className="text-yellow-500">cat</span> obiective.txt
@@ -187,9 +180,9 @@ export default function PovesteaMeaPage() {
                     Vreau să fac învățarea mai accesibilă și mai modernă pentru toți elevii.
                   </p>
                   <div className="pl-4 border-l border-gray-700 space-y-2">
-                     <p><span className="text-[#00ff41]">✔</span> O platformă gratuită și utilă.</p>
-                     <p><span className="text-[#00ff41]">✔</span> Informație structurată clar.</p>
-                     <p><span className="text-[#00ff41]">✔</span> Unelte care chiar ajută la studiu.</p>
+                     <p><span className="text-[#00ff41]">✔</span> O platformă gratuită, din suflet.</p>
+                     <p><span className="text-[#00ff41]">✔</span> Materie clară, fără &quot;umplutură&quot;.</p>
+                     <p><span className="text-[#00ff41]">✔</span> Să las pe Dumnezeu să mă ghideze.</p>
                   </div>
                   <div>
                     <span className="text-green-500">➜</span> <span className="text-blue-400">~</span> <span className="animate-pulse">_</span>
@@ -202,7 +195,7 @@ export default function PovesteaMeaPage() {
         </div>
       </section>
 
-      {/* --- TIMELINE --- */}
+      {/* --- TIMELINE (PĂSTRAT IDENTIC) --- */}
       <section className="py-32 px-6 bg-[#030303] relative overflow-hidden">
         <svg className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 100 H 200 V 400 H 600" fill="none" stroke="#00ff41" strokeWidth="2" />
@@ -233,12 +226,11 @@ export default function PovesteaMeaPage() {
                 className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-[#333] bg-[#0a0a0a] hover:border-[#00ff41] hover:shadow-[0_0_20px_rgba(0,255,65,0.1)] transition-all duration-300"
               >
                 <div className="flex items-center justify-between space-x-2 mb-2">
-                  <div className="font-bold text-xl text-white">Începutul</div>
+                  <div className="font-bold text-xl text-white">Curiozitatea</div>
                   <time className="font-mono text-xs text-[#00ff41] bg-[#00ff41]/10 px-2 py-1 rounded">2020 - 2023</time>
                 </div>
-                {/* TEXT MODIFICAT */}
-                <div className="text-gray-400">
-                  Totul a început din curiozitate. M-am jucat cu servere de Minecraft, am încercat să înțeleg cum funcționează codul și am început să experimentez cu mici scripturi. A fost o joacă, dar una serioasă.
+                <div className="text-gray-400 font-sans">
+                  Totul a început ca o joacă. M-am băgat pe servere de Minecraft, am încercat să înțeleg codul din spate și am început să experimentez cu scripturi simple.
                 </div>
               </motion.div>
             </div>
@@ -258,9 +250,8 @@ export default function PovesteaMeaPage() {
                   <div className="font-bold text-xl text-white">Proiectul</div>
                   <time className="font-mono text-xs text-[#00d2ff] bg-[#00d2ff]/10 px-2 py-1 rounded">Late 2024</time>
                 </div>
-                {/* TEXT MODIFICAT */}
-                <div className="text-gray-400">
-                  Am decis să fac ceva concret. Am început să învăț Next.js și React pentru a construi &quot;Învățăm Împreună&quot;. A fost o provocare mare, dar am vrut să demonstrez că pot duce un proiect de la zero până la capăt.
+                <div className="text-gray-400 font-sans">
+                  Am decis să fac ceva concret. Am început să învăț Next.js și React pentru a construi &quot;Învățăm Împreună&quot;. A fost greu, dar am vrut să demonstrez că pot duce un proiect de la zero la capăt.
                 </div>
               </motion.div>
             </div>
@@ -280,9 +271,8 @@ export default function PovesteaMeaPage() {
                   <div className="font-bold text-xl text-white">Prezent</div>
                   <time className="font-mono text-xs text-purple-500 bg-purple-500/10 px-2 py-1 rounded">2025</time>
                 </div>
-                {/* TEXT MODIFICAT */}
-                <div className="text-gray-400">
-                  Platforma este online! Am reușit să vând primul meu site și continui să învăț. Sunt mai disciplinat și mai motivat să creez lucruri utile în domeniul IT.
+                <div className="text-gray-400 font-sans">
+                  Platforma este online. Continui să învăț și să dezvolt. Sunt mai disciplinat și mai motivat să creez lucruri utile în domeniul IT, fără să uit de unde am plecat.
                 </div>
               </motion.div>
             </div>
@@ -300,19 +290,20 @@ export default function PovesteaMeaPage() {
              viewport={{ once: true }}
              className="text-3xl md:text-5xl font-bold text-center mb-16"
           >
-            Ce Folosesc <span className="text-gray-600">{'//'}</span> Tech Stack
+            Ce Folosesc <span className="text-gray-600">{'//'}</span> My Stack
           </motion.h2>
 
+          {/* AM MODIFICAT AICI CA SĂ TE REPREZINTE MAI BINE */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { name: "Next.js", icon: <Globe className="w-6 h-6"/>, color: "text-[#00ff41]", border: "group-hover:border-[#00ff41]" },
               { name: "React", icon: <Code className="w-6 h-6"/>, color: "text-blue-400", border: "group-hover:border-blue-400" },
-              { name: "Tailwind", icon: <Laptop className="w-6 h-6"/>, color: "text-cyan-400", border: "group-hover:border-cyan-400" },
-              { name: "Firebase", icon: <Database className="w-6 h-6"/>, color: "text-yellow-500", border: "group-hover:border-yellow-500" },
-              { name: "AI Tools", icon: <BrainCircuit className="w-6 h-6"/>, color: "text-pink-500", border: "group-hover:border-pink-500" },
+              { name: "Poezie", icon: <Feather className="w-6 h-6"/>, color: "text-pink-400", border: "group-hover:border-pink-400" },
+              { name: "Credință", icon: <Sparkles className="w-6 h-6"/>, color: "text-yellow-400", border: "group-hover:border-yellow-400" },
+              { name: "Echilibru", icon: <Heart className="w-6 h-6"/>, color: "text-red-500", border: "group-hover:border-red-500" },
               { name: "Vercel", icon: <Shield className="w-6 h-6"/>, color: "text-white", border: "group-hover:border-white" },
               { name: "Minecraft", icon: <Gamepad2 className="w-6 h-6"/>, color: "text-green-600", border: "group-hover:border-green-600" },
-              { name: "Pasiune", icon: <Terminal className="w-6 h-6"/>, color: "text-gray-400", border: "group-hover:border-gray-400" },
+              { name: "Muzică Clasică", icon: <Terminal className="w-6 h-6"/>, color: "text-gray-400", border: "group-hover:border-gray-400" },
             ].map((tech, i) => (
               <motion.div 
                 key={i}
@@ -320,12 +311,12 @@ export default function PovesteaMeaPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                whileHover={{ scale: 1.05, rotateX: 10, rotateY: 10 }}
+                whileHover={{ scale: 1.05, y: -5 }}
                 className={`p-8 rounded-2xl bg-[#0a0a0a] border border-[#222] ${tech.border} transition-all duration-300 group cursor-default relative overflow-hidden`}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br from-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity`} />
                 <div className={`mb-4 ${tech.color}`}>{tech.icon}</div>
-                <div className={`text-xl font-bold text-white group-hover:${tech.color.split(' ')[0]} transition-colors`}>{tech.name}</div>
+                <div className={`text-xl font-bold text-white group-hover:${tech.color.split(' ')[0]} transition-colors font-sans`}>{tech.name}</div>
               </motion.div>
             ))}
           </div>
@@ -344,19 +335,20 @@ export default function PovesteaMeaPage() {
             dar trebuie să <span className="text-[#00ff41] underline decoration-4 underline-offset-8 decoration-wavy">începi</span> ca să devii expert.&rdquo;
           </h2>
 
-          <p className="text-gray-400 mb-12 text-lg">
+          <p className="text-gray-400 mb-12 text-lg font-sans">
             Acesta este proiectul meu de suflet. Dar este doar începutul.
           </p>
 
           <Button asChild size="lg" className="bg-white text-black hover:bg-gray-200 font-bold px-12 py-8 rounded-full text-xl shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform">
-            <Link href="/#materii">
-              Vezi ce am construit <ArrowRight className="ml-3 w-6 h-6" />
+            <Link href="/contact">
+              Vrei să vorbim? <ArrowRight className="ml-3 w-6 h-6" />
             </Link>
           </Button>
         </div>
       </section>
 
       <style jsx global>{`
+        /* STILURILE TALE ORIGINALE PENTRU GLITCH */
         .glitch-text {
           position: relative;
         }
@@ -396,6 +388,12 @@ export default function PovesteaMeaPage() {
           15% { clip: rect(60px, 9999px, 80px, 0); }
           20% { clip: rect(10px, 9999px, 50px, 0); }
           100% { clip: rect(80px, 9999px, 70px, 0); }
+        }
+        .animate-blink {
+          animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+          50% { opacity: 0; }
         }
       `}</style>
     </main>

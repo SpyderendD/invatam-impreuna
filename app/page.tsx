@@ -299,7 +299,16 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
+
+        <div className="mt-16 text-center">
+            <p className="text-sm text-muted-foreground mb-2">
+              Feedback-ul tău contează:
+            </p>
+            <HeartRating slug="contact-feedback" />
+          </div>
       </section>
+
+      
 
       {/* --- FEATURES SECTION --- */}
       <section className="py-24 bg-background relative z-10 border-y border-white/5">
@@ -422,13 +431,6 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
-          
-          <div className="mt-16 text-center">
-            <p className="text-sm text-muted-foreground mb-2">
-              Feedback-ul tău contează:
-            </p>
-            <HeartRating slug="contact-feedback" />
-          </div>
         </div>
       </section>
     </>
