@@ -116,7 +116,7 @@ const baccalaureateSubjects = [
     title: "Informatică", 
     icon: <Code className="h-8 w-8" />, 
     href: "/materii/informatica", 
-    isActive: true 
+    isActive: false 
   },
   { 
     title: "Chimie", 

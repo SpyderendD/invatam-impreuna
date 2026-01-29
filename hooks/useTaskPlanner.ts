@@ -35,7 +35,7 @@ export interface RecurringTask {
   description: string;
 }
 
-export type AchievementId = 'first_win' | 'streak_3' | 'streak_7' | 'master_planner';
+export type AchievementId = 'first_win' | 'streak_3' | 'streak_7' | 'streak_10' | 'streak_20' | 'streak_30' | 'master_planner' | 'grand_master_planner' | 'king_planner' | 'hero_planner';
 
 export interface AchievementStats {
   unlocked: Set<AchievementId>;
@@ -65,9 +65,15 @@ const DEFAULT_SETTINGS: PlannerSettings = {
 
 export const achievementsList: Record<AchievementId, { title: string; description: string; icon: string }> = {
   first_win: { title: 'Primul Pas', description: 'Ai completat prima ta sarcină!', icon: '🌟' },
+  king_planner: { title: 'King', description: 'Ai atins 10 de sarcini completate total.', icon: '👑' },
   streak_3: { title: 'Încălzirea', description: '3 zile la rând cu obiective atinse.', icon: '🔥' },
   streak_7: { title: 'De Neoprit', description: 'O săptămână perfectă!', icon: '🚀' },
+  streak_10: { title: '10 Pasi', description: '10 zile la rând cu obiective atinse.', icon: '🏅' },
+  streak_20: { title: '20 Pasi', description: '20 zile la rând cu obiective atinse.', icon: '🎖️' },
+  streak_30: { title: '30 Pasi', description: '30 zile la rând cu obiective atinse.', icon: '🏆' },
   master_planner: { title: 'Maestru', description: 'Ai atins 100 de sarcini completate total.', icon: '👑' },
+  hero_planner: { title: 'Hero', description: 'Ai atins 500 de sarcini completate total.', icon: '🦸' },
+  grand_master_planner: { title: 'Grand Maestru', description: 'Ai atins 1000 de sarcini completate total.', icon: '👑' },
 };
 
 // --- HOOK PRINCIPAL ---
@@ -326,9 +332,6 @@ export function useTaskPlanner() {
 
   // --- LOGICA DE ACHIEVEMENTS (Server-Side Logic simulat pe client) ---
   const checkAchievements = (currentPlan: Record<string, DayPlan>) => {
-     // Aici poți pune logica de streak, etc.
-     // Pentru simplificare, salvăm doar stats actuale dacă se schimbă ceva major
-     // De exemplu, un "Master Planner" la 100 task-uri
      
      const totalCompleted = Object.values(currentPlan).flatMap(d => d.tasks).filter(t => t.status === 'completed').length;
      const newUnlocked = new Set(achievements.unlocked);
@@ -340,11 +343,61 @@ export function useTaskPlanner() {
         updated = true;
      }
      
+     if (totalCompleted >= 3 && !newUnlocked.has('streak_3')) {
+        newUnlocked.add('streak_3');
+        toast({ title: '🔥 Premiu Deblocat: İncălzirea!' });
+        updated = true;
+     }
+     
+     if (totalCompleted >= 7 && !newUnlocked.has('streak_7')) {
+        newUnlocked.add('streak_7');
+        toast({ title: '🚀 Premiu Deblocat: De Neoprit!' });
+        updated = true;
+     }
+
+     if (totalCompleted >= 10 && !newUnlocked.has('streak_10')) {
+        newUnlocked.add('streak_10');
+        toast({ title: '🏆 Premiu Deblocat: 10 Pasi!' });
+        updated = true;
+     }
+     
+     if (totalCompleted >= 20 && !newUnlocked.has('streak_20')) {
+        newUnlocked.add('streak_20');
+        toast({ title: '🏆 Premiu Deblocat: 20 Pasi!' });
+        updated = true;
+     }
+     
+     if (totalCompleted >= 30 && !newUnlocked.has('streak_30')) {
+        newUnlocked.add('streak_30');
+        toast({ title: '🏆 Premiu Deblocat: 30 Pasi!' });
+        updated = true;
+     }
+     
      if (totalCompleted >= 100 && !newUnlocked.has('master_planner')) {
         newUnlocked.add('master_planner');
         toast({ title: '👑 Premiu Deblocat: Maestru!' });
         updated = true;
      }
+
+     if (totalCompleted >= 1000 && !newUnlocked.has('grand_master_planner')) {
+        newUnlocked.add('grand_master_planner');
+        toast({ title: '👑 Premiu Deblocat: Grand Maestru!' });
+        updated = true;
+     }
+
+     if (totalCompleted >= 500 && !newUnlocked.has('hero_planner')) {
+        newUnlocked.add('hero_planner');
+        toast({ title: '🦸 Premiu Deblocat: Hero!' });
+        updated = true;
+     }
+     
+      if (totalCompleted >= 10 && !newUnlocked.has('king_planner')) {
+        newUnlocked.add('king_planner');
+        toast({ title: '👑 Premiu Deblocat: King!' });
+        updated = true;
+     }
+
+
 
      if (updated) {
          const newStats = { 
