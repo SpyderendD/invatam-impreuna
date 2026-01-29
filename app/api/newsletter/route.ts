@@ -1,49 +1,50 @@
-// src/app/api/newsletter/route.ts
 import { NextResponse } from 'next/server';
 
-export async function POST(request: Request) {
-    try {
-        const { email } = await request.json();
-        if (!email || !email.includes('@')) {
-            return NextResponse.json({ error: 'Email invalid.' }, { status: 400 });
+export async function POST(req: Request) {
+  const { email, name } = await req.json(); // Citim și numele
+
+  if (!email || !email.includes('@')) {
+    return NextResponse.json({ error: 'Email invalid.' }, { status: 400 });
+  }
+
+  // Verificăm dacă avem cheia API
+  const API_KEY = process.env.BREVO_API_KEY;
+  if (!API_KEY) {
+    return NextResponse.json({ error: 'Server misconfigured.' }, { status: 500 });
+  }
+
+  try {
+    const response = await fetch('https://api.brevo.com/v3/contacts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'accept': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        attributes: {
+          FIRSTNAME: name, // Aici trimitem numele către Brevo
+          // Poți adăuga și LASTNAME dacă vrei, dar FIRSTNAME e destul
+        },
+        listIds: [2], // Asigură-te că ID-ul listei e corect (2 e cel standard de obicei)
+        updateEnabled: true // Dacă există deja, îi face update la nume
+      }),
+    });
+
+    if (!response.ok) {
+        // Dacă eroarea e că există deja, nu e neapărat o eroare gravă, dar Brevo returnează eroare la duplicate fără updateEnabled
+        const errorData = await response.json();
+        // Codul 'duplicate_parameter' înseamnă că e deja abonat
+        if (errorData.code === 'duplicate_parameter') {
+             return NextResponse.json({ message: 'Ești deja abonat!' }, { status: 200 });
         }
-
-        // AICI VOM APELA API-UL BREVO
-        const BREVO_API_KEY = process.env.BREVO_API_KEY;
-        const BREVO_LIST_ID = 3; // <<< ATENȚIE: ÎNLOCUIEȘTE CU ID-ul LISTEI TALE BREVO
-
-        if (!BREVO_API_KEY) {
-            console.error("BREVO_API_KEY nu este definit în variabilele de mediu.");
-            return NextResponse.json({ error: 'Configurare server incorectă.' }, { status: 500 });
-        }
-
-        const brevoResponse = await fetch('https://api.brevo.com/v3/contacts', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'api-key': BREVO_API_KEY,
-            },
-            body: JSON.stringify({
-                email: email,
-                listIds: [BREVO_LIST_ID], // Adaugă contactul la lista specificată
-                // emailBlacklisted: false, // Poți adăuga și alte atribute dacă vrei
-                // smsBlacklisted: false,
-                 updateEnabled: true // Permite actualizarea contactelor existente
-            }),
-        });
-
-        if (!brevoResponse.ok) {
-            const errorData = await brevoResponse.json();
-            console.error('Brevo API Error:', errorData);
-            throw new Error(errorData.message || 'Eroare la abonare la newsletter.');
-        }
-
-        console.log(`Email ${email} abonat cu succes la Brevo.`);
-        return NextResponse.json({ message: 'Abonare la newsletter reușită!' });
-
-    } catch (error: any) {
-        console.error("Eroare la abonarea la newsletter (server-side):", error);
-        return NextResponse.json({ error: error.message || 'Eroare la abonare.' }, { status: 500 });
+        return NextResponse.json({ error: 'Eroare la Brevo.' }, { status: response.status });
     }
+
+    return NextResponse.json({ message: 'Te-ai abonat cu succes!' }, { status: 201 });
+
+  } catch (error) {
+    return NextResponse.json({ error: 'Eroare de server.' }, { status: 500 });
+  }
 }

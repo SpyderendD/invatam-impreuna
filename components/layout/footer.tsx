@@ -75,22 +75,20 @@ const itemVariants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 
 export function Footer() {
   const { toast } = useToast();
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // --- LOGICA NOUĂ PENTRU DATĂ ---
-  const launchDate = new Date(2025, 1, 3); // 3 feb 2025 (Luna este indexată de la 0, deci 1 = Februarie)
+  // --- LOGICA PENTRU DATĂ ---
+  const launchDate = new Date(2025, 1, 3); // 3 feb 2025
   const now = new Date();
   
-  // Formatator pentru data de start (Zi + Lună scurtă + An)
   const fmtStart = new Intl.DateTimeFormat('ro-RO', { day: 'numeric', month: 'short', year: 'numeric' });
-  // Formatator pentru data curentă (Lună scurtă + An)
   const fmtEnd = new Intl.DateTimeFormat('ro-RO', { month: 'short', year: 'numeric' });
 
-  // Funcție pentru a scoate punctele din abrevierile lunilor (ex: "feb." -> "feb")
   const stripDots = (s: string) => s.replaceAll('.', '');
 
-  const startLabel = stripDots(fmtStart.format(launchDate)); // ex: "3 feb 2025"
-  const endLabel = stripDots(fmtEnd.format(now)); // ex: "ian 2026"
+  const startLabel = stripDots(fmtStart.format(launchDate));
+  const endLabel = stripDots(fmtEnd.format(now));
 
   const handleNewsletterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -99,7 +97,7 @@ export function Footer() {
       const response = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, name }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'A apărut o eroare necunoscută.');
@@ -108,6 +106,7 @@ export function Footer() {
         description: data.message || "Mulțumim pentru abonare!",
       });
       setEmail('');
+      setName('');
     } catch (error: any) {
       toast({
         title: "Eroare la abonare",
@@ -162,17 +161,32 @@ export function Footer() {
             <p className="text-muted-foreground text-sm mb-4">
               Primește noutăți și resurse utile direct în inbox.
             </p>
-            <form onSubmit={handleNewsletterSubmit} className="flex space-x-2">
+            <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-3">
               <Input
-                name="email" type="email" placeholder="Email-ul tău" required
+                name="name" 
+                type="text" 
+                placeholder="Prenumele tău" 
+                required
                 className="bg-background"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 disabled={isSubmitting}
               />
-              <Button type="submit" className="shrink-0 w-32" disabled={isSubmitting}>
-                {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Abonare'}
-              </Button>
+              <div className="flex gap-2">
+                <Input
+                  name="email" 
+                  type="email" 
+                  placeholder="Email-ul tău" 
+                  required
+                  className="bg-background"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isSubmitting}
+                />
+                <Button type="submit" className="shrink-0" disabled={isSubmitting}>
+                  {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Abonare'}
+                </Button>
+              </div>
             </form>
           </motion.div>
         </motion.div>
@@ -184,7 +198,6 @@ export function Footer() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          {/* --- AICI AM ACTUALIZAT TEXTUL DE COPYRIGHT --- */}
           <p className="text-sm text-muted-foreground text-center md:text-left">
             © {startLabel} – {endLabel} Mera Alin David - Spyderend. Construit cu ❤️ pentru viitorul României.
           </p>

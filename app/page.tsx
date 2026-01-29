@@ -17,7 +17,7 @@ import InteractiveHeroIllustration from '@/components/animations/InteractiveHero
 import { 
     Code, PenTool, Sparkles, Rocket, ArrowRight, 
     BookOpenCheck, Calculator, Lightbulb, FlaskConical,
-    History, Lock, Zap, Layers
+    History, Lock, Zap, Layers, 
 } from 'lucide-react'; 
 
 // --- Varianțe de animație ---
@@ -131,6 +131,12 @@ const baccalaureateSubjects = [
     href: "https://www.fizichim.ro/docs/fizica/clasa6/capitolul1-introducere-in-studiul-fizicii/I-1-ce-este-fizica", 
     isActive: true, 
     openInNewTab: true 
+  },
+  { 
+    title: "Contabilitate", 
+    icon: <Calculator className="h-8 w-8" />, 
+    href: "#", 
+    isActive: false 
   },
 ];
 
