@@ -193,7 +193,9 @@ export default function ProfilePage() {
   const rewards = [
     { id: "starter", title: "Începutul", desc: "1 lecție", icon: <Star className="h-6 w-6" />, unlocked: stats.completedLessons >= 1, color: "text-yellow-400" },
     { id: "pro", title: "Învățăcel", desc: "10 lecții", icon: <Zap className="h-6 w-6" />, unlocked: stats.completedLessons >= 10, color: "text-blue-400" },
-    { id: "master", title: "Maestru", desc: "20 lecții", icon: <Crown className="h-6 w-6" />, unlocked: stats.completedLessons >= 20, color: "text-purple-400" },
+    { id: "premium", title: "Premium", desc: "20 lecții", icon: <Crown className="h-6 w-6" />, unlocked: stats.completedLessons >= 20, color: "text-purple-400" },
+    { id: "master", title: "Maestru", desc: "50 lecții", icon: <GraduationCap className="h-6 w-6" />, unlocked: stats.completedLessons >= 50, color: "text-green-400" },
+    { id: "legend", title: "Legendă", desc: "100 lecții", icon: <Trophy className="h-6 w-6" />, unlocked: stats.completedLessons >= 100, color: "text-orange-400" },
   ];
 
   if (isAuthLoading || isLoading) return <div className="min-h-screen bg-[#030712] flex items-center justify-center"><Loader2 className="animate-spin h-10 w-10 text-primary" /></div>;
