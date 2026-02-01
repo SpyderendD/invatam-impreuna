@@ -9,7 +9,7 @@ const firebaseConfig = {
 apiKey: "AIzaSyCtv-Ma8A_gnrJphT2bxI1p3lWaYScGYP0",
 authDomain: "invatamimpreuna-d109a.firebaseapp.com",
 projectId: "invatamimpreuna-d109a",
-storageBucket: "invatamimpreuna-d109a.appspot.com", // <- IMPORTANT
+storageBucket: "invatamimpreuna-d109a.appspot.com",
 messagingSenderId: "97869258977",
 appId: "1:97869258977:web:c48963074655625c2e57a0",
 measurementId: "G-4T2MY0SSCB",

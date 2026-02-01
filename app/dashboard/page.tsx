@@ -9,7 +9,7 @@ import {
     AchievementStats, 
     achievementsList, 
     AchievementId 
-} from '@/hooks/useTaskPlanner'; // Asigură-te că acest import este corect
+} from '@/hooks/useTaskPlanner';
 import { format, addDays, startOfWeek, isToday, isPast } from 'date-fns';
 import { ro } from 'date-fns/locale';
 import { useInView } from 'react-intersection-observer';
@@ -87,7 +87,7 @@ export default function DashboardPage() {
     const playSuccessSound = useAudio('/sounds/success.mp3');
 
     useEffect(() => {
-        const tutSeen = localStorage.getItem('planner_tutorial_seen_v12'); // Am incrementat versiunea tutorialului
+        const tutSeen = localStorage.getItem('planner_tutorial_seen_v12');
         if (!tutSeen) {
             const t = setTimeout(() => setAskTutorial(true), 600);
             return () => clearTimeout(t);
