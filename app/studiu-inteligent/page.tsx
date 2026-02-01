@@ -140,6 +140,7 @@ export default function StudiuInteligentPage() {
   return (
     <>
       <ParticlesBackground />
+      
       <CustomCursor />
       {/* Secțiunea Hero */}
       <section className="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-24 bg-background">
