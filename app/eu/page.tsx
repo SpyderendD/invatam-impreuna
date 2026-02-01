@@ -8,6 +8,7 @@ import {
   Code, Terminal, Globe, ChevronDown, Zap, Shield, Laptop, Database, BrainCircuit,
   Gamepad2, Cpu, ArrowRight, Heart, Feather, Sparkles 
 } from 'lucide-react';
+import { ParticlesBackground } from '@/components/animations/ParticlesBackground';
 
 // --- MATRIX RAIN EFFECT COMPONENT (PĂSTRAT IDENTIC) ---
 const MatrixRain = () => {
@@ -68,7 +69,7 @@ export default function PovesteaMeaPage() {
 
   return (
     <main className="min-h-screen bg-black text-gray-200 overflow-x-hidden selection:bg-[#00ff41] selection:text-black font-mono">
-      
+      <ParticlesBackground />
       {/* Progress Bar Neon */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-[#00ff41] origin-left z-50 shadow-[0_0_20px_#00ff41]"

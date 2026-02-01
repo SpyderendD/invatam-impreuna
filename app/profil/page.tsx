@@ -9,6 +9,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { ALL_SUBJECTS_OBJECT, Chapter, Lesson } from "@/lib/lessons";
 import { useToast } from "@/components/ui/use-toast";
 import html2canvas from 'html2canvas';
+import { ParticlesBackground } from '@/components/animations/ParticlesBackground';
 
 // UI & Icons
 import { Button } from "@/components/ui/button";
@@ -205,6 +206,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen text-slate-200 font-sans selection:bg-indigo-500/30 selection:text-white relative pb-20">
       <AmbientBackground />
+      <ParticlesBackground />
       <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-indigo-500 origin-left z-50 shadow-[0_0_15px_#a855f7]" />
 
       <main className="container max-w-7xl mx-auto px-4 py-8 relative z-10">
@@ -457,7 +459,6 @@ export default function ProfilePage() {
             </div>
          </div>
       </div>
-
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertCircle, RefreshCw, Sparkles, Youtube } from 'lucide-react';
 import Link from 'next/link';
-
+import { ParticlesBackground } from '@/components/animations/ParticlesBackground';
 // --- Tipuri de date ---
 interface YouTubeVideo {
   id: { videoId: string };
@@ -74,6 +74,7 @@ export default function BlogPage() {
 
   return (
     <>
+      <ParticlesBackground />
       {/* Hero Section */}
       <motion.section 
         className="relative overflow-hidden bg-primary/5 py-20 text-center"

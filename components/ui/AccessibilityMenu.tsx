@@ -17,16 +17,16 @@ import {
   Sun,
   Moon,
   Droplets,
-  Palette
+  Palette,
+  Contrast
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 
 // Tipuri de setări
 type A11ySettings = {
-  fontSize: number; // Procent (100 = normal)
-  lineHeight: number; // 1.5 = normal
-  letterSpacing: number; // 0 = normal
+  fontSize: number;
+  lineHeight: number;
+  letterSpacing: number;
   contrast: 'normal' | 'high' | 'dark' | 'light';
   saturation: 'normal' | 'high' | 'low' | 'grayscale';
   highlightLinks: boolean;
@@ -34,6 +34,7 @@ type A11ySettings = {
   readableFont: boolean;
   bigCursor: boolean;
   stopAnimations: boolean;
+  nightMode: boolean;
 };
 
 const defaultSettings: A11ySettings = {
@@ -47,13 +48,13 @@ const defaultSettings: A11ySettings = {
   readableFont: false,
   bigCursor: false,
   stopAnimations: false,
+  nightMode: false,
 };
 
 export default function AccessibilityMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [settings, setSettings] = useState<A11ySettings>(defaultSettings);
 
-  // Aplicăm setările pe <html> sau <body>
   useEffect(() => {
     const html = document.documentElement;
     const body = document.body;
@@ -65,14 +66,30 @@ export default function AccessibilityMenu() {
     body.style.lineHeight = `${settings.lineHeight}`;
     body.style.letterSpacing = `${settings.letterSpacing}px`;
 
-    // 3. Contrast & Colors (folosim clase CSS sau filtre)
+    // 3. Contrast & Colors (Clase CSS)
     html.classList.remove('contrast-high', 'contrast-dark', 'contrast-light');
     if (settings.contrast !== 'normal') html.classList.add(`contrast-${settings.contrast}`);
 
-    html.classList.remove('sat-high', 'sat-low', 'grayscale-mode');
-    if (settings.saturation === 'high') html.classList.add('sat-high');
-    if (settings.saturation === 'low') html.classList.add('sat-low');
-    if (settings.saturation === 'grayscale') html.classList.add('grayscale-mode');
+    // --- LOGICA FILTRE VIZUALE ---
+    let filters = '';
+
+    // Saturație
+    if (settings.saturation === 'grayscale') filters += 'grayscale(100%) ';
+    else if (settings.saturation === 'high') filters += 'saturate(200%) ';
+    else if (settings.saturation === 'low') filters += 'saturate(50%) ';
+
+    // Night Mode (Filtrul ROȘU INTENS)
+    if (settings.nightMode) {
+      // sepia(1) = face totul maroniu complet
+      // hue-rotate(-50deg) = mută maroniul spre roșu/purpuriu
+      // saturate(3) = face roșul foarte intens (să nu pară gri)
+      // contrast(0.8) = scade puțin contrastul ca să nu fie strident pe negru
+      filters += 'sepia(1) hue-rotate(-50deg) saturate(3) contrast(0.8) ';
+    }
+
+    // Aplicăm filtrele
+    html.style.filter = filters;
+    // -------------------------------------------------------------------
 
     // 4. Highlight Links
     if (settings.highlightLinks) body.classList.add('highlight-links');
@@ -96,7 +113,10 @@ export default function AccessibilityMenu() {
 
   }, [settings]);
 
-  const resetSettings = () => setSettings(defaultSettings);
+  const resetSettings = () => {
+    setSettings(defaultSettings);
+    document.documentElement.style.filter = '';
+  };
 
   return (
     <>
@@ -184,13 +204,21 @@ export default function AccessibilityMenu() {
                 {/* 2. Culori & Contrast */}
                 <div className="space-y-4">
                   <h3 className="font-bold text-lg flex items-center gap-2 border-b pb-2">
-                    <Palette className="w-5 h-5 text-purple-500" /> Culori
+                    <Palette className="w-5 h-5 text-purple-500" /> Culori & Lumină
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
+                    {/* BUTON MOD ROȘU */}
+                    <OptionButton 
+                       active={settings.nightMode} 
+                       onClick={() => setSettings(s => ({ ...s, nightMode: !s.nightMode }))}
+                       icon={<Moon className="text-red-500" />} 
+                       label="Protecție Ochi (Roșu)" 
+                    />
+                    
                     <OptionButton 
                        active={settings.contrast === 'dark'} 
                        onClick={() => setSettings(s => ({ ...s, contrast: s.contrast === 'dark' ? 'normal' : 'dark' }))}
-                       icon={<Moon />} 
+                       icon={<Contrast />} 
                        label="Contrast Întunecat" 
                     />
                     <OptionButton 
@@ -204,12 +232,6 @@ export default function AccessibilityMenu() {
                        onClick={() => setSettings(s => ({ ...s, saturation: s.saturation === 'grayscale' ? 'normal' : 'grayscale' }))}
                        icon={<Droplets className="text-gray-400" />} 
                        label="Monocrom" 
-                    />
-                    <OptionButton 
-                       active={settings.saturation === 'high'} 
-                       onClick={() => setSettings(s => ({ ...s, saturation: s.saturation === 'high' ? 'normal' : 'high' }))}
-                       icon={<Droplets className="text-red-500" />} 
-                       label="Saturație Ridicată" 
                     />
                   </div>
                 </div>

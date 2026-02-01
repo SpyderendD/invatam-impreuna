@@ -21,6 +21,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ParticlesBackground } from '@/components/animations/ParticlesBackground';
 import { 
     Dialog, 
     DialogContent, 
@@ -116,6 +117,7 @@ export default function DashboardPage() {
     const handleFinishTutorial = () => { localStorage.setItem('planner_tutorial_seen_v12', 'true'); setShowTutorial(false); };
 
     return (
+        
         <div className="min-h-screen relative bg-background text-foreground transition-colors duration-500">
             <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 hidden dark:block">
                 <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-gradient-to-tr from-primary/20 to-secondary/20 blur-3xl" />
@@ -538,21 +540,24 @@ function AskTutorialDialog({ onConfirm, onDecline }: { onConfirm: () => void; on
 
 function DashboardSkeleton() {
     return (
-        <div className="min-h-screen bg-background">
-            <main className="container mx-auto px-4 py-6 md:py-12">
-                <div className="flex flex-col gap-8">
-                    <div className="flex justify-between items-center"><div><Skeleton className="h-8 w-60 mb-2" /><Skeleton className="h-5 w-48" /></div><div className="flex gap-2"><Skeleton className="h-10 w-10 rounded-md" /><Skeleton className="h-10 w-10 rounded-md" /><Skeleton className="h-10 w-24 rounded-md" /><Skeleton className="h-10 w-10 rounded-md" /></div></div>
-                    <Skeleton className="h-24 w-full rounded-lg" />
-                    <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
-                        <div className="xl:col-span-8 2xl:col-span-9 space-y-6">
-                            <Skeleton className="h-16 w-full rounded-xl" />
-                            <div className="hidden xl:grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">{Array.from({ length: 7 }).map((_, i) => <Skeleton key={i} className="h-80 rounded-2xl" />)}</div>
-                            <div className="flex xl:hidden gap-4 overflow-x-auto pb-2">{Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-80 w-4/5 shrink-0 rounded-2xl" />)}</div>
+        <>
+            <ParticlesBackground />
+            <div className="min-h-screen bg-background">
+                <main className="container mx-auto px-4 py-6 md:py-12">
+                    <div className="flex flex-col gap-8">
+                        <div className="flex justify-between items-center"><div><Skeleton className="h-8 w-60 mb-2" /><Skeleton className="h-5 w-48" /></div><div className="flex gap-2"><Skeleton className="h-10 w-10 rounded-md" /><Skeleton className="h-10 w-10 rounded-md" /><Skeleton className="h-10 w-24 rounded-md" /><Skeleton className="h-10 w-10 rounded-md" /></div></div>
+                        <Skeleton className="h-24 w-full rounded-lg" />
+                        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+                            <div className="xl:col-span-8 2xl:col-span-9 space-y-6">
+                                <Skeleton className="h-16 w-full rounded-xl" />
+                                <div className="hidden xl:grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">{Array.from({ length: 7 }).map((_, i) => <Skeleton key={i} className="h-80 rounded-2xl" />)}</div>
+                                <div className="flex xl:hidden gap-4 overflow-x-auto pb-2">{Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-80 w-4/5 shrink-0 rounded-2xl" />)}</div>
+                            </div>
+                            <aside className="xl:col-span-4 2xl:col-span-3 space-y-8"><Skeleton className="h-48 w-full rounded-xl" /><Skeleton className="h-32 w-full rounded-xl" /></aside>
                         </div>
-                        <aside className="xl:col-span-4 2xl:col-span-3 space-y-8"><Skeleton className="h-48 w-full rounded-xl" /><Skeleton className="h-32 w-full rounded-xl" /></aside>
                     </div>
-                </div>
-            </main>
-        </div>
+                </main>
+            </div>
+        </>
     );
 }

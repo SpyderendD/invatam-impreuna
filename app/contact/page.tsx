@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ContactForm from '@/components/contact/ContactForm';
+import { ParticlesBackground } from '@/components/animations/ParticlesBackground';
 
 export const metadata: Metadata = {
   title: 'Contact & Povestea mea',
@@ -7,5 +8,11 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  return <ContactForm />;
+  return (
+    <>
+      <ParticlesBackground />
+      <ContactForm />
+    </>
+  );
+  
 }

@@ -14,6 +14,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { toast } from '@/components/ui/use-toast';
+import { ParticlesBackground } from '@/components/animations/ParticlesBackground';
 
 // UI
 import { Button } from '@/components/ui/button';
@@ -201,6 +202,7 @@ export default function SettingsPage() {
   // Render
   return (
     <div className="min-h-screen bg-background">
+      <ParticlesBackground />
       <main className="container max-w-4xl mx-auto px-4 py-12 md:py-16">
         <motion.div initial="hidden" animate="visible" variants={containerVariants} className="space-y-10">
           {/* Header */}
