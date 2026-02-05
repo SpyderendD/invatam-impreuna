@@ -104,7 +104,7 @@ export default function PovesteaMeaPage() {
 
           {/* TEXT REFORMULAT SĂ FIE MAI AUTENTIC ȘI DIRECT */}
           <p className="font-sans text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed border-l-4 border-[#00ff41] pl-6 text-left bg-white/5 p-4 rounded-r-xl backdrop-blur-sm">
-            Sunt elev la Colegiul Economic &quot;Transilvania&quot;. Îmi place să construiesc lucruri utile, de la cod la poezii, și încerc să găsesc un echilibru între ele. Mă ghidez după un principiu simplu: ce fac, fac bine.
+            Sunt un elev, cu multe pasiuni, unele nici de mine descoperite. Îmi place să construiesc lucruri utile, de la cod la poezii, și încerc să găsesc un echilibru între ele. Mă ghidez după un principiu simplu: ce fac, fac bine.
           </p>
 
           <div className="pt-8 flex flex-col sm:flex-row gap-6 justify-center">
