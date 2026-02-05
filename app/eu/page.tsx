@@ -299,7 +299,7 @@ export default function PovesteaMeaPage() {
             {[
               { name: "Next.js", icon: <Globe className="w-6 h-6"/>, color: "text-[#00ff41]", border: "group-hover:border-[#00ff41]" },
               { name: "React", icon: <Code className="w-6 h-6"/>, color: "text-blue-400", border: "group-hover:border-blue-400" },
-              { name: "Poezie", icon: <Feather className="w-6 h-6"/>, color: "text-pink-400", border: "group-hover:border-pink-400" },
+              { name: "Node JS", icon: <Feather className="w-6 h-6"/>, color: "text-pink-400", border: "group-hover:border-pink-400" },
               { name: "Credință", icon: <Sparkles className="w-6 h-6"/>, color: "text-yellow-400", border: "group-hover:border-yellow-400" },
               { name: "Echilibru", icon: <Heart className="w-6 h-6"/>, color: "text-red-500", border: "group-hover:border-red-500" },
               { name: "Vercel", icon: <Shield className="w-6 h-6"/>, color: "text-white", border: "group-hover:border-white" },
