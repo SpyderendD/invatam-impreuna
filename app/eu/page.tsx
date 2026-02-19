@@ -296,7 +296,7 @@ export default function PovesteaMeaPage() {
                   <time className="font-mono text-xs text-purple-500 bg-purple-500/10 px-2 py-1 rounded">2026</time>
                 </div>
                 <div className="text-gray-400 font-sans">
-                  Acum învvăț și mă străduiesc să adaug cât mai multe funcționalități utile și să fac platforma cât mai bună pentru elevi / profesori și pentru mine. Am învățat că răbdarea și perseverența sunt cheia, și că nu trebuie să te oprești niciodată din învățat și din încercat să faci lucruri noi.
+                  Acum învăț și mă străduiesc să adaug cât mai multe funcționalități utile și să fac platforma cât mai bună pentru elevi / profesori și pentru mine. Am învățat că răbdarea și perseverența sunt cheia, și că nu trebuie să te oprești niciodată din învățat și din încercat să faci lucruri noi.
                 </div>
               </motion.div>
             </div>
