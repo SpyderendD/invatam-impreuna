@@ -215,7 +215,7 @@ export default function PovesteaMeaPage() {
 
           <div className="space-y-16 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-[#00ff41] before:via-purple-500 before:to-transparent">
             
-            {/* ITEM 1 */}
+            {/* ITEM 1 2020-2023 */}
             <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
               <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#00ff41] bg-black shadow-[0_0_15px_#00ff41] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
                 <Zap className="w-5 h-5 text-[#00ff41]" />
@@ -236,7 +236,7 @@ export default function PovesteaMeaPage() {
               </motion.div>
             </div>
 
-            {/* ITEM 2 */}
+            {/* ITEM 2 - 2024 */}
             <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
               <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#00d2ff] bg-black shadow-[0_0_15px_#00d2ff] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
                 <Code className="w-5 h-5 text-[#00d2ff]" />
@@ -252,12 +252,13 @@ export default function PovesteaMeaPage() {
                   <time className="font-mono text-xs text-[#00d2ff] bg-[#00d2ff]/10 px-2 py-1 rounded">Late 2024</time>
                 </div>
                 <div className="text-gray-400 font-sans">
-                  Am decis să fac ceva concret. Am început să învăț Next.js și React pentru a construi &quot;Învățăm Împreună&quot;. A fost greu, dar am vrut să demonstrez că pot duce un proiect de la zero la capăt.
+                  Am decis să fac ceva concret. Am început să învăț Html, CSS, JavaScript pentru a construi &quot;Învățăm Împreună&quot;. A fost greu, dar am vrut să demonstrez că pot duce un proiect de la zero la capăt.
+                  Am început cu elemente simple, dar am învățat și am adăugat funcționalități noi, totul cu ajutorul lui Dumnezeu și ținta mea de a nu mă opri.
                 </div>
               </motion.div>
             </div>
 
-            {/* ITEM 3 */}
+            {/* ITEM 3 - 2025 */}
             <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
               <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-purple-500 bg-black shadow-[0_0_15px_purple] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
                 <Globe className="w-5 h-5 text-purple-500" />
@@ -273,7 +274,29 @@ export default function PovesteaMeaPage() {
                   <time className="font-mono text-xs text-purple-500 bg-purple-500/10 px-2 py-1 rounded">2025</time>
                 </div>
                 <div className="text-gray-400 font-sans">
-                  Platforma este online. Continui să învăț și să dezvolt. Sunt mai disciplinat și mai motivat să creez lucruri utile în domeniul IT, fără să uit de unde am plecat.
+                  Prima dată a fost pe netlify, apoi am migrat pe Vercel pentru performanță și fiabilitate pentru noul limbaj Next.js și React. A fost foarte greu să învăț totul singur și să reconstuiesc platforma, dar am avut răbdare și am continuat să adaug funcționalități noi, cum ar fi monitorizarea progresului și un blog cu noutăți.
+                  Platforma este online. Continui să învăț și să o dezvolt. Sunt mai disciplinat și mai motivat să creez lucruri utile, fără să uit de unde am plecat.
+                </div>
+              </motion.div>
+            </div>
+
+            {/* ITEM 3 - 2026 */}
+            <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-purple-500 bg-black shadow-[0_0_15px_purple] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                <Globe className="w-5 h-5 text-purple-500" />
+              </div>
+              <motion.div 
+                 initial={{ opacity: 0, x: -50 }}
+                 whileInView={{ opacity: 1, x: 0 }}
+                 viewport={{ once: true }}
+                 className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-[#333] bg-[#0a0a0a] hover:border-purple-500 hover:shadow-[0_0_20px_rgba(168,85,247,0.1)] transition-all duration-300"
+              >
+                <div className="flex items-center justify-between space-x-2 mb-2">
+                  <div className="font-bold text-xl text-white">Prezent</div>
+                  <time className="font-mono text-xs text-purple-500 bg-purple-500/10 px-2 py-1 rounded">2026</time>
+                </div>
+                <div className="text-gray-400 font-sans">
+                  Acum învvăț și mă străduiesc să adaug cât mai multe funcționalități utile și să fac platforma cât mai bună pentru elevi / profesori și pentru mine. Am învățat că răbdarea și perseverența sunt cheia, și că nu trebuie să te oprești niciodată din învățat și din încercat să faci lucruri noi.
                 </div>
               </motion.div>
             </div>

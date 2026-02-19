@@ -17,8 +17,9 @@ import InteractiveHeroIllustration from '@/components/animations/InteractiveHero
 import { 
     Code, PenTool, Sparkles, Rocket, ArrowRight, 
     BookOpenCheck, Calculator, Lightbulb, FlaskConical,
-    History, Lock, Zap, Layers, 
+    History, Lock, Zap, Layers, BrainCircuit, CalendarCheck, ClipboardCheck, Newspaper, UserPlus, TrendingUp, Share2, Heart
 } from 'lucide-react'; 
+import { hr } from 'date-fns/locale';
 
 // --- Varianțe de animație ---
 const fadeInUp = {
@@ -54,11 +55,63 @@ const featuresData = [
     icon: <Zap className="h-6 w-6 text-white" />,
     gradient: "from-purple-500 to-pink-500"
   },
+
   { 
-    title: "Acces Gratuit", 
-    description: "Platforma este deschisă 24/7, fără costuri ascunse.", 
-    icon: <Layers className="h-6 w-6 text-white" />,
-    gradient: "from-orange-500 to-amber-500"
+    title: "Studiu Inteligent", 
+    description: "Creează flashcard-uri personalizate, cronometrează-ți sesiunile și învață eficient cu tehnicile noastre." , 
+    icon: <BrainCircuit className="h-6 w-6 text-white" />,
+    gradient: "from-violet-500 to-fuchsia-500",
+    href: "/studiu"
+  },
+  { 
+    title: "Monitorizare Progres", 
+    description: "Planifică-ți săptămâna cu un calendar interactiv. Bifează task-uri, câștigă XP și deblochează premii.", 
+    icon: <CalendarCheck className="h-6 w-6 text-white" />,
+    gradient: "from-blue-500 to-cyan-500",
+    href: "/dashboard"
+  },
+  { 
+    title: "Modele de Teste E.N.", 
+    description: "Exersează pe modele de teste reale pentru Evaluarea Națională și verifică-ți cunoștințele înainte de examen.", 
+    icon: <ClipboardCheck className="h-6 w-6 text-white" />,
+    gradient: "from-emerald-500 to-green-500",
+    href: "/modele-teste-EN"
+  },
+  { 
+    title: "Blog & Noutăți", 
+    description: "Fii la curent cu cele mai noi articole, tutoriale video de pe YouTube și sfaturi utile pentru învățare.", 
+    icon: <Newspaper className="h-6 w-6 text-white" />,
+    gradient: "from-orange-500 to-amber-500",
+    href: "/blog"
+  },
+
+  { 
+    title: "Creează-ți Cont Gratuit", 
+    description: "Alătură-te comunității noastre. Salvează-ți progresul, deblochează premii și urmărește-ți evoluția de la un singur loc.", 
+    icon: <UserPlus className="h-6 w-6 text-white" />,
+    gradient: "from-blue-500 to-cyan-500",
+    href: "/register"
+  },
+  { 
+    title: "Monitorizează-ți Progresul", 
+    description: "Vezi exact câte lecții ai finalizat și cât XP ai acumulat. Stabilește-ți ținte zilnice și menține-ți seria de productivitate (streak).", 
+    icon: <TrendingUp className="h-6 w-6 text-white" />,
+    gradient: "from-violet-500 to-fuchsia-500",
+    href: "/profil"
+  },
+  { 
+    title: "Exportează-ți Profilul", 
+    description: "Fii mândru de munca ta! Generează un card de profil elegant, perfect pentru a-l posta pe Instagram Story sau a-l împărtăși cu prietenii.", 
+    icon: <Share2 className="h-6 w-6 text-white" />,
+    gradient: "from-emerald-500 to-green-500",
+    href: "/profil"
+  },
+  { 
+    title: "Creat de Elevi, pentru Elevi", 
+    description: "Acesta nu este un site corporatist. Este un proiect făcut cu pasiune, care încearcă să ofere tot ce este mai bun și mai frumos, gratuit.", 
+    icon: <Heart className="h-6 w-6 text-white" />,
+    gradient: "from-rose-500 to-pink-500",
+    href: "/eu",
   },
 ];
 
@@ -315,30 +368,48 @@ export default function Home() {
       </section>
 
       
-
-      {/* --- FEATURES SECTION --- */}
-      <section className="py-24 bg-background relative z-10 border-y border-white/5">
-        <div className="container">
-          <motion.div className="text-center mb-16 max-w-3xl mx-auto" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeInUp}>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">De ce să alegi platforma noastră?</h2>
-            <p className="text-lg text-muted-foreground">Focus pe ce contează. Fără reclame, fără distragere.</p>
+{/* --- FEATURES SECTION --- */}
+<section className="py-24 bg-background relative z-10 border-y border-white/5">
+  <div className="container">
+    <motion.div 
+      className="text-center mb-16 max-w-3xl mx-auto" 
+      initial="hidden" 
+      whileInView="visible" 
+      viewport={{ once: true, amount: 0.3 }} 
+      variants={fadeInUp}
+    >
+      <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">O platformă completă pentru succesul tău</h2>
+      <p className="text-lg text-muted-foreground">De la planificare la practică, ai toate uneltele într-un singur loc.</p>
+    </motion.div>
+    
+    <motion.div 
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" 
+      initial="hidden" 
+      whileInView="visible" 
+      viewport={{ once: true, amount: 0.2 }} 
+      variants={staggerContainer}
+    >
+      {featuresData.map((feature) => (
+        <Link href={feature.href || '#'} key={feature.title} className="block">
+          <motion.div 
+            variants={fadeInUp}
+            whileHover={{ y: -5, scale: 1.02 }} // Putem adăuga animația aici
+            className="group h-full relative p-8 rounded-3xl bg-card border border-border hover:border-primary/20 transition-all duration-300 shadow-lg hover:shadow-2xl overflow-hidden"
+          >
+            <div className="absolute -right-10 -bottom-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all duration-500" />
+            
+            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 shadow-lg shadow-black/10 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300`}>
+              {feature.icon}
+            </div>
+            
+            <h3 className="text-xl font-bold text-foreground mb-3">{feature.title}</h3>
+            <p className="text-muted-foreground leading-relaxed text-sm">{feature.description}</p>
           </motion.div>
-          
-          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={staggerContainer}>
-            {featuresData.map((feature) => (
-              <motion.div key={feature.title} variants={fadeInUp}
-                className="group relative p-8 rounded-3xl bg-card border border-border hover:border-primary/20 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden">
-                <div className="absolute -right-10 -bottom-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all duration-500" />
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 shadow-lg shadow-black/10 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300`}>
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+        </Link>
+      ))}
+    </motion.div>
+  </div>
+</section>
 
       {/* --- MATERII SECTION --- */}
       <section id="materii" className="py-32 relative overflow-hidden bg-background">

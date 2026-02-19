@@ -139,7 +139,7 @@ export default function TermsOfUsePage() {
 
                 <h2>3. USER REPRESENTATIONS</h2>
                 <p>
-                  By using the Services, you represent and warrant that: (1) you have the legal capacity and you agree to comply with these Legal Terms; (2) you will not access the Services through automated or non-human means, whether through a bot, script or otherwise; (3) you will not use the Services for any illegal or unauthorized purpose.
+                  By using the Services, you represent and warrant that: (1) If you are a minor under the age of 16, you confirm that you have obtained parental consent to use this Platform if not you have the legal capacity and you agree to comply with these Legal Terms; (2) you will not access the Services through automated or non-human means, whether through a bot, script or otherwise; (3) you will not use the Services for any illegal or unauthorized purpose.
                 </p>
 
                 <h2>4. PROHIBITED ACTIVITIES</h2>
@@ -263,7 +263,7 @@ export default function TermsOfUsePage() {
 
                 <h2>3. DECLARAȚIILE UTILIZATORULUI</h2>
                 <p>
-                  Prin utilizarea Serviciilor, declarați că: (1) aveți capacitatea legală și sunteți de acord să respectați acești Termeni Legali; (2) nu veți accesa Serviciile prin mijloace automate (bot, script); (3) nu veți utiliza Serviciile în niciun scop ilegal.
+                  Prin utilizarea Serviciilor, declarați că: (1) Dacă sunteți minor cu vârsta sub 16 ani, confirmați că ați obținut consimțământul părinților pentru a utiliza această Platformă, dacă nu aveți capacitate legală, și sunteți de acord să respectați acești Termeni Legali; (2) nu veți accesa Serviciile prin mijloace automate (bot, script); (3) nu veți utiliza Serviciile în niciun scop ilegal.
                 </p>
 
                 <h2>4. ACTIVITĂȚI INTERZISE</h2>

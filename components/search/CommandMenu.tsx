@@ -32,7 +32,7 @@ export function CommandMenu({ ...props }: CommandMenuProps) {
             <CommandEmpty>Niciun rezultat găsit.</CommandEmpty>
             <CommandGroup heading="Navigație">
               <CommandItem onSelect={() => runCommand(() => router.push('/#materii'))}><BookMarked className="mr-2 h-4 w-4" /><span>Materii</span></CommandItem>
-              <CommandItem onSelect={() => runCommand(() => router.push('/modele-teste'))}><Calculator className="mr-2 h-4 w-4" /><span>Modele teste E.N.</span></CommandItem>
+              <CommandItem onSelect={() => runCommand(() => router.push('/modele-teste-EN'))}><Calculator className="mr-2 h-4 w-4" /><span>Modele teste E.N.</span></CommandItem>
               <CommandItem onSelect={() => runCommand(() => router.push('/dashboard'))}><LineChart className="mr-2 h-4 w-4" /><span>Monitorizare</span></CommandItem>
             </CommandGroup>
             {user && (

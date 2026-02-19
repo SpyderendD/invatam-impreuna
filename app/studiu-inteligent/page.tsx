@@ -28,7 +28,7 @@ import {
     BookCopy,
     Presentation,
     X,
-    Ghost
+    Cpu // <-- Iconiță nouă pentru Turbo.ai
 } from 'lucide-react'; 
 
 // Variante animații
@@ -48,7 +48,7 @@ const staggerContainer = {
     },
 };
 
-// Datele pentru uneltele AI
+// Datele pentru uneltele AI (cu Turbo.ai adăugat)
 const aiToolsData = [
     {
       id: "notebooklm",
@@ -108,6 +108,25 @@ const aiToolsData = [
       ]
     },
     {
+      id: "turboai",
+      name: "Turbo.ai",
+      tagline: "Inteligență artificială ultra-rapidă și versatilă.",
+      description: "Turbo.ai este o platformă ce oferă acces la o varietate de modele AI de ultimă generație, optimizate pentru viteză. Este perfect pentru când ai nevoie de răspunsuri rapide, idei de brainstorming sau ajutor la scrierea de cod.",
+      href: "https://www.turbo.ai/",
+      icon: <Cpu className="h-6 w-6" />, // Iconiță nouă
+      steps: [
+        { title: "Alege un Mod", description: "Selectează modulul potrivit nevoilor tale (Chat, Code, etc.).", icon: <Rocket className="h-5 w-5"/> },
+        { title: "Pornește Conversația", description: "Scrie direct ce ai nevoie, ca și cum ai vorbi cu un asistent.", icon: <Sparkles className="h-5 w-5"/> },
+        { title: "Obține Rezultate Imediate", description: "Primește răspunsuri și soluții într-un timp foarte scurt.", icon: <CheckCircle className="h-5 w-5"/> },
+      ],
+      prompts: [
+        "Fă un brainstorming cu 10 titluri pentru un eseu despre inteligența artificială.",
+        "Explică pe scurt ce este un 'API' (Application Programming Interface).",
+        "Generează o funcție JavaScript care validează un email.",
+        "Corectează gramatical acest paragraf: [textul tău].",
+      ]
+    },
+    {
       id: "aidocmaker",
       name: "AI Doc Maker",
       tagline: "Generatorul tău de prezentări și documente.",
@@ -129,7 +148,6 @@ const aiToolsData = [
 ];
 
 export default function StudiuInteligentPage() {
-  // Stare pentru Modala Creepy
   const [showSurprise, setShowSurprise] = useState(false);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
@@ -140,8 +158,8 @@ export default function StudiuInteligentPage() {
   return (
     <>
       <ParticlesBackground />
-      
       <CustomCursor />
+      
       {/* Secțiunea Hero */}
       <section className="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-24 bg-background">
         <div className="container relative z-10">
@@ -171,7 +189,6 @@ export default function StudiuInteligentPage() {
                   <Link href="#instrumente-studiu">Flashcarduri & Timer</Link>
                 </Button>
                 
-                {/* BUTONUL CREEPY INTEGRAT AICI */}
                 <CreepyButton onClick={() => setShowSurprise(true)} className="w-full sm:w-auto">
                    Nu Apăsa Aici!
                 </CreepyButton>
@@ -187,7 +204,6 @@ export default function StudiuInteligentPage() {
         {showSurprise && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -196,10 +212,8 @@ export default function StudiuInteligentPage() {
               className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             />
 
-            {/* Confetti */}
             <Confetti width={windowSize.width} height={windowSize.height} recycle={false} numberOfPieces={200} />
 
-            {/* Card */}
             <motion.div
               initial={{ scale: 0.5, opacity: 0, rotate: -10 }}
               animate={{ scale: 1, opacity: 1, rotate: 0 }}
@@ -216,10 +230,7 @@ export default function StudiuInteligentPage() {
               </button>
 
               <div className="flex flex-col items-center">
-                
-                {/* Animația Deadline (Omulețul) */}
                 <DeadlineAnimation />
-                
                 <h2 className="text-3xl font-bold text-foreground mb-2">Te-am prins! 🕵️</h2>
                 <p className="text-muted-foreground text-lg mb-6">
                   Ai apăsat butonul interzis... Acum trebuie să înveți pentru examen!
@@ -256,7 +267,8 @@ export default function StudiuInteligentPage() {
           </motion.div>
 
           <Tabs defaultValue="notebooklm" className="w-full max-w-5xl mx-auto">
-            <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-4 h-auto p-2 gap-2 bg-muted/50 rounded-xl">
+            {/* AM MODIFICAT AICI PENTRU A SUPORTA 5 COLOANE */}
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 h-auto p-2 gap-2 bg-muted/50 rounded-xl">
               {aiToolsData.map(tool => (
                 <TabsTrigger 
                   key={tool.id} 
@@ -277,8 +289,8 @@ export default function StudiuInteligentPage() {
                   transition={{ duration: 0.4, ease: "easeOut" }}
                   className="rounded-3xl border bg-card/80 backdrop-blur-sm p-6 md:p-10 shadow-2xl"
                 >
-                  {/* Header Area */}
-                  <div className="flex flex-col md:flex-row gap-8 items-start justify-between mb-12 border-b border-border pb-8">
+                  {/* ... restul codului pentru Tab Content (rămâne la fel) ... */}
+                   <div className="flex flex-col md:flex-row gap-8 items-start justify-between mb-12 border-b border-border pb-8">
                     <div className="max-w-2xl">
                       <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">{tool.tagline}</h3>
                       <p className="text-muted-foreground text-lg leading-relaxed">{tool.description}</p>
@@ -293,7 +305,6 @@ export default function StudiuInteligentPage() {
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    {/* Stânga: Pașii */}
                     <div className="space-y-6">
                       <h4 className="text-xl font-semibold flex items-center gap-2">
                         <Settings className="h-5 w-5 text-primary" /> Cum funcționează?
@@ -312,8 +323,6 @@ export default function StudiuInteligentPage() {
                         ))}
                       </div>
                     </div>
-
-                    {/* Dreapta: Prompt-uri */}
                     <div className="space-y-6">
                       <h4 className="text-xl font-semibold flex items-center gap-2">
                         <Sparkles className="h-5 w-5 text-primary" /> Ce să-i ceri? (Exemple)
@@ -360,9 +369,7 @@ export default function StudiuInteligentPage() {
           >
             <Link href="/studiu" className="block group">
               <div className="relative overflow-hidden rounded-2xl border bg-card p-8 md:p-12 transition-all duration-300 group-hover:shadow-xl group-hover:border-primary">
-                {/* Efect de gradient la hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
                 <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
                   <div className="flex flex-col items-center md:items-start text-center md:text-left">
                      <div className="flex items-center gap-3 mb-4">

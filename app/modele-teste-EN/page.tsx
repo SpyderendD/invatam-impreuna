@@ -1,4 +1,4 @@
-// app/modele-teste/page.tsx
+// app/modele-teste-EN/page.tsx
 'use client';
 
 import { useMemo, useState } from 'react';
@@ -78,7 +78,7 @@ const SOURCES: SiteGroup[] = [
     label: 'Informații privind învățământul',
     description: 'Site cu informații generale despre învățământ și examene.',
     links: [
-      { id: 'edupedu-root', title: 'Edupedu – Pagina principală', url: 'www.edupedu.ro/', tags: ['informatii'] },
+      { id: 'edupedu-root', title: 'Edupedu – Pagina principală', url: 'https://www.edupedu.ro/', tags: ['informatii'] },
     ],
   },
 ];

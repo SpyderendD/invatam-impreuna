@@ -79,7 +79,7 @@ export default function CookiePolicyPage() {
               // ================= ENGLISH CONTENT =================
               <>
                 <p>
-                  This Cookie Policy explains how <strong>Învățăm Împreună</strong> (&quot;<strong>Company</strong>,&quot; &quot;<strong>we</strong>,&quot; &quot;<strong>us</strong>,&quot; and &quot;<strong>our</strong>&quot;) uses cookies and similar technologies to recognize you when you visit our website at <a href="https://invatam-impreuna.vercel.app">https://invatam-impreuna.vercel.app</a> (&quot;<strong>Website</strong>&quot;). It explains what these technologies are and why we use them, as well as your rights to control our use of them.
+                  This Cookie Policy explains how <strong>Învățăm Împreună</strong> (&quot;<strong>The Platform</strong>, &quot;<strong>The Project</strong>, &quot; &quot;<strong>we</strong>,&quot; &quot;<strong>us</strong>,&quot; and &quot;<strong>our</strong>&quot;) uses cookies and similar technologies to recognize you when you visit our website at <a href="https://invatam-impreuna.vercel.app">https://invatam-impreuna.vercel.app</a> (&quot;<strong>Website</strong>&quot;). It explains what these technologies are and why we use them, as well as your rights to control our use of them.
                 </p>
                 <p>
                   In some cases we may use cookies to collect personal information, or that becomes personal information if we combine it with other information.
@@ -170,7 +170,7 @@ export default function CookiePolicyPage() {
               // ================= ROMANIAN CONTENT =================
               <>
                 <p>
-                  Această Politică de Cookie-uri explică modul în care <strong>Învățăm Împreună</strong> (&quot;<strong>Compania</strong>,&quot; &quot;<strong>noi</strong>,&quot;) utilizează cookie-uri și tehnologii similare pentru a vă recunoaște atunci când vizitați site-ul nostru la <a href="https://invatam-impreuna.vercel.app">https://invatam-impreuna.vercel.app</a> (&quot;<strong>Website-ul</strong>&quot;). Explică ce sunt aceste tehnologii și de ce le folosim, precum și drepturile dvs. de a controla utilizarea lor.
+                  Această Politică de Cookie-uri explică modul în care <strong>Învățăm Împreună</strong> (&quot;<strong>Platforma</strong>,&quot;,&quot;<strong>Proiectul</strong>,&quot; &quot;<strong>noi</strong>,&quot;) utilizează cookie-uri și tehnologii similare pentru a vă recunoaște atunci când vizitați site-ul nostru la <a href="https://invatam-impreuna.vercel.app">https://invatam-impreuna.vercel.app</a> (&quot;<strong>Website-ul</strong>&quot;). Explică ce sunt aceste tehnologii și de ce le folosim, precum și drepturile dvs. de a controla utilizarea lor.
                 </p>
 
                 <h2 id="ce-sunt-cookie">Ce sunt cookie-urile?</h2>
