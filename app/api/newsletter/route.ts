@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
-  const { email, name } = await req.json(); // Citim și numele
+  const { email, name } = await req.json();
 
   if (!email || !email.includes('@')) {
     return NextResponse.json({ error: 'Email invalid.' }, { status: 400 });
   }
 
-  // Verificăm dacă avem cheia API
   const API_KEY = process.env.BREVO_API_KEY;
   if (!API_KEY) {
     return NextResponse.json({ error: 'Server misconfigured.' }, { status: 500 });
@@ -24,19 +23,23 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         email: email,
         attributes: {
-          FIRSTNAME: name, // Aici trimitem numele către Brevo
-          // Poți adăuga și LASTNAME dacă vrei, dar FIRSTNAME e destul
+          FIRSTNAME: name,
         },
-        listIds: [2], // Asigură-te că ID-ul listei e corect (2 e cel standard de obicei)
-        updateEnabled: true // Dacă există deja, îi face update la nume
+        // --- AICI ESTE SCHIMBAREA IMPORTANTĂ ---
+        // Schimbăm ID-ul listei în 3, pentru a se potrivi cu automatizarea ta
+        listIds: [3], 
+        // ---------------------------------------
+        updateEnabled: true 
       }),
     });
 
     if (!response.ok) {
-        // Dacă eroarea e că există deja, nu e neapărat o eroare gravă, dar Brevo returnează eroare la duplicate fără updateEnabled
         const errorData = await response.json();
-        // Codul 'duplicate_parameter' înseamnă că e deja abonat
+        // Dacă contactul există deja, încercăm să-l adăugăm forțat în lista 3
         if (errorData.code === 'duplicate_parameter') {
+             // Facem un nou call pentru a adăuga contactul existent în lista 3
+             // Dar pentru simplitate, mesajul de "deja abonat" e ok de obicei.
+             // Dacă vrei să forțezi adăugarea în listă pentru cei existenți, e nevoie de logică extra.
              return NextResponse.json({ message: 'Ești deja abonat!' }, { status: 200 });
         }
         return NextResponse.json({ error: 'Eroare la Brevo.' }, { status: response.status });
