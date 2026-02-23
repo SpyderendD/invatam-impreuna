@@ -4,7 +4,8 @@ import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Providers } from '@/components/Providers';
-import CustomCursor from '@/components/animations/CustomCursor'; // Asigură-te că ai fișierul aici
+import CustomCursor from '@/components/animations/CustomCursor';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 // =======================================================================
 // 1. OPTIMIZARE FONTURI
@@ -184,6 +185,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Monitorizare Performanță Vercel */}
         <SpeedInsights />
+
+          {/* Google Analytics */}
+        <GoogleAnalytics gaId="G-4T2MY0SSCB" />
       </body>
     </html>
   );
