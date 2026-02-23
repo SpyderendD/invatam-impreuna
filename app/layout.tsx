@@ -103,6 +103,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  verification: {
+    google: 'OjUUt5BdjJ2F4A64Tw9HkCX8kxANp8fKncbXCoXnvA',
+  },
 };
 
 // =======================================================================
