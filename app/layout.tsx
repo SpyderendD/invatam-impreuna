@@ -10,15 +10,15 @@ import CustomCursor from '@/components/animations/CustomCursor'; // Asigură-te 
 // 1. OPTIMIZARE FONTURI
 // Folosim 'swap' pentru a afișa textul imediat, chiar dacă fontul se încarcă
 // =======================================================================
-const inter = Inter({ 
-  subsets: ['latin'], 
+const inter = Inter({
+  subsets: ['latin'],
   variable: '--font-inter',
-  display: 'swap', 
+  display: 'swap',
 });
 
-const lora = Lora({ 
-  subsets: ['latin'], 
-  weight: ['400', '500', '600', '700'], 
+const lora = Lora({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-lora',
   display: 'swap',
 });
@@ -29,14 +29,14 @@ const lora = Lora({
 // =======================================================================
 export const metadata: Metadata = {
   metadataBase: new URL('https://invatam-impreuna.vercel.app'),
-  
+
   title: {
     default: 'Învățăm Împreună | Platformă Educațională Interactivă',
     template: '%s | Învățăm Împreună',
   },
-  
+
   description: 'Platformă educațională online gratuită pentru pregătire la Evaluarea Națională, Bacalaureat și alte materii. Lecții interactive, teste grilă, flashcarduri și resurse AI.',
-  
+
   keywords: ['educatie', 'invatam impreuna', 'bacalaureat', 'evaluare nationala', 'teste', 'lectii online', 'matematica', 'romana', 'ai educatie',
     'educatie online', 'evaluare nationala', 'bacalaureat', 'lectii video',
     'teste online', 'mate', 'romana', 'informatica', 'chimie', 'fizica',
@@ -46,14 +46,14 @@ export const metadata: Metadata = {
     'mate', 'romana', 'informatica', 'chimie', 'fizica', 'invatam impreuna',
     'platforma educatie', 'teste gratuite', 'lectii video', 'invatare online',
     'Spyderend', 'Mera Alin David', 'Romania', 'scoala', 'educatie gratuita',],
-  
+
   authors: [{ name: 'Echipa Învățăm Împreună' }],
   creator: 'Învățăm Împreună',
   publisher: 'Învățăm Împreună',
 
   // Configurare PWA (Progressive Web App)
   manifest: '/manifest.json',
-  
+
   // Iconițe pentru toate dispozitivele
   icons: {
     icon: '/images/favicon.ico',
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     siteName: 'Învățăm Împreună',
     images: [
       {
-        url: '/images/og-image.png', 
+        url: '/images/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Învățăm Împreună Preview',
@@ -104,7 +104,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: '<meta name="google-site-verification" content="sOjUUt5BdjJ2F4A64Tw9HkCX8kxANp8fKncbXCoXnvA" />',
+    google: 'sOjUUt5BdjJ2F4A64Tw9HkCX8kxANp8fKncbXCoXnvA',
   },
 };
 
@@ -125,7 +125,7 @@ export const viewport: Viewport = {
 // 4. COMPONENTA PRINCIPALĂ
 // =======================================================================
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  
+
   // Schema.org pentru Google (Structured Data)
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -140,12 +140,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <html 
-      lang="ro" 
-      suppressHydrationWarning 
+    <html
+      lang="ro"
+      suppressHydrationWarning
       className={`${inter.variable} ${lora.variable}`}
     >
       <head>
+
+        <meta name="google-site-verification" content="sOjUUt5BdjJ2F4A64Tw9HkCX8kxANp8fKncbXCoXnvA" />
+
         {/* A. JSON-LD pentru SEO Structurat */}
         <Script
           id="json-ld-website"
@@ -153,7 +156,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           strategy="worker" // Îl încărcăm în fundal să nu blocheze site-ul
         />
-        
+
         {/* B. Script pentru evitarea Flash-ului de Temă (Dark/Light) */}
         {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
         <Script id="theme-init" strategy="beforeInteractive">
@@ -166,19 +169,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8380681272847895"
           crossOrigin="anonymous"
-          strategy="afterInteractive" 
+          strategy="afterInteractive"
         />
       </head>
-      
+
       <body className="antialiased selection:bg-primary/30 selection:text-foreground">
         <Providers>
           {/* Cursorul personalizat global */}
           <CustomCursor />
-          
+
           {/* Conținutul Paginii */}
           {children}
         </Providers>
-        
+
         {/* Monitorizare Performanță Vercel */}
         <SpeedInsights />
       </body>
