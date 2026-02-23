@@ -1,4 +1,3 @@
-// components/study/CreateDeckDialog.tsx
 'use client';
 
 import { useState } from 'react';
@@ -16,10 +15,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { PlusCircle, Loader2 } from 'lucide-react';
+import { PlusCircle, Loader2, Lock } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 
-// Definim tipul pentru un pachet nou
 interface Deck {
     id: string;
     name: string;
@@ -27,12 +25,13 @@ interface Deck {
     cardCount: number;
 }
 
-// Definim ce props va primi componenta
+// AM ADĂUGAT reachedLimit
 interface CreateDeckDialogProps {
-  onDeckCreated: (newDeck: Deck) => void; // O funcție care va fi apelată cu noul pachet
+  onDeckCreated: (newDeck: Deck) => void; 
+  reachedLimit?: boolean; 
 }
 
-export function CreateDeckDialog({ onDeckCreated }: CreateDeckDialogProps) {
+export function CreateDeckDialog({ onDeckCreated, reachedLimit }: CreateDeckDialogProps) {
   const { user } = useAuth();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
@@ -42,7 +41,7 @@ export function CreateDeckDialog({ onDeckCreated }: CreateDeckDialogProps) {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!user || !name.trim()) return;
+    if (!user || !name.trim() || reachedLimit) return;
 
     setIsSubmitting(true);
     try {
@@ -67,10 +66,10 @@ export function CreateDeckDialog({ onDeckCreated }: CreateDeckDialogProps) {
         description: `Pachetul "${name}" a fost creat.`,
       });
       
-      onDeckCreated(data); // Trimitem noul pachet înapoi la componenta părinte
+      onDeckCreated(data); 
       setName('');
       setDescription('');
-      setOpen(false); // Închidem dialogul
+      setOpen(false); 
 
     } catch (error: any) {
       toast({
@@ -86,23 +85,22 @@ export function CreateDeckDialog({ onDeckCreated }: CreateDeckDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Creează Pachet Nou
+        {/* BUTONUL SE SCHIMBĂ DACĂ LIMITA E ATINSĂ */}
+        <Button disabled={reachedLimit} className={reachedLimit ? "opacity-70" : ""}>
+          {reachedLimit ? <Lock className="mr-2 h-4 w-4" /> : <PlusCircle className="mr-2 h-4 w-4" />}
+          {reachedLimit ? 'Limită atinsă (Max 5)' : 'Creează Pachet Nou'}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Creează un Pachet Nou de Studiu</DialogTitle>
           <DialogDescription>
-            Dă-i un nume și o descriere pachetului tău de flashcarduri. Poți adăuga cardurile mai târziu.
+            Dă-i un nume și o descriere pachetului tău de flashcarduri.
           </DialogDescription>
         </DialogHeader>
         <form id="create-deck-form" onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Nume
-            </Label>
+            <Label htmlFor="name" className="text-right">Nume</Label>
             <Input
               id="name"
               value={name}
@@ -113,23 +111,19 @@ export function CreateDeckDialog({ onDeckCreated }: CreateDeckDialogProps) {
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="description" className="text-right">
-              Descriere
-            </Label>
+            <Label htmlFor="description" className="text-right">Descriere</Label>
             <Textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="col-span-3"
-              placeholder="(Opțional) Ex: Timpurile verbelor la modul indicativ"
+              placeholder="(Opțional)"
             />
           </div>
         </form>
         <DialogFooter>
           <Button type="submit" form="create-deck-form" disabled={isSubmitting}>
-            {isSubmitting ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : null}
+            {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
             {isSubmitting ? 'Se creează...' : 'Creează Pachet'}
           </Button>
         </DialogFooter>

@@ -27,6 +27,7 @@ const footerLinks = {
     { href: 'https://www.fizichim.ro/docs/chimie/clasa7/capitolul1-chimia-stiinta-a-naturii/I-1-ce-este-chimia/', label: 'Chimie' },
   ],
   resurse: [
+    { href: '/studiu', label: 'Flashcard-uri' },
     { href: '/contact', label: 'Contactează-ne' },
     { href: '/eu', label: 'Despre mine' },
     { href: '/blog', label: 'Blog' },

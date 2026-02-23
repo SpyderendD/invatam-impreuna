@@ -1,4 +1,3 @@
-// app/api/study/decks/route.ts
 import { NextResponse, type NextRequest } from 'next/server';
 import { adminAuth, adminDb } from '@/lib/firebaseAdmin';
 import { Timestamp } from 'firebase-admin/firestore';
@@ -41,6 +40,12 @@ export async function POST(req: NextRequest) {
     const { name, description } = await req.json();
     if (!name) {
       return NextResponse.json({ error: 'Numele pachetului este obligatoriu' }, { status: 400 });
+    }
+
+    // --- VERIFICAREA LIMITEI PE SERVER (SECURITATE) ---
+    const existingDecksSnapshot = await adminDb.collection('studyDecks').where('userId', '==', uid).get();
+    if (existingDecksSnapshot.size >= 5) {
+      return NextResponse.json({ error: 'Ai atins limita maximă de 5 pachete.' }, { status: 403 });
     }
 
     const newDeck = {
