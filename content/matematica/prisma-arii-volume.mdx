@@ -1,0 +1,95 @@
+# Corpuri Geometrice: Prisma
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce este o prismă dreaptă?</h3>
+  <p>
+    Imaginează-ți un teanc de foi identice puse una peste alta. Prisma este corpul geometric format din două baze (poligoane identice și paralele) unite prin fețe laterale care sunt dreptunghiuri.
+  </p>
+</div>
+
+## 1. Clasificarea Prismelor
+
+Denumirea prismei vine de la forma bazei sale:
+
+*   **Prismă triunghiulară regulată:** Baza este un triunghi echilateral.
+*   **Prismă patrulateră regulată:** Baza este un pătrat.
+*   **Prismă hexagonală regulată:** Baza este un hexagon regulat.
+*   **Paralelipiped dreptunghic:** Toate fețele (inclusiv bazele) sunt dreptunghiuri.
+*   **Cubul:** Toate fețele sunt pătrate egale.
+
+---
+
+## 2. Formule Fundamentale (Valabile pentru orice prismă dreaptă)
+
+Pentru a rezolva problemele, trebuie să știi aceste 3 formule „de aur”:
+
+### 🔵 Aria Laterală ($A_l$)
+Reprezintă suma ariilor fețelor laterale (fără capace).
+$$ A_l = P_b \cdot h $$
+*(Perimetrul bazei $\times$ înălțimea)*
+
+### 🟢 Aria Totală ($A_t$)
+Toată suprafața corpului (laturile + cele două baze).
+$$ A_t = A_l + 2 \cdot A_b $$
+*($A_b$ este aria unei singure baze)*
+
+### 🔴 Volumul ($V$)
+Cât spațiu ocupă corpul (sau câtă apă încape în el).
+$$ V = A_b \cdot h $$
+
+---
+
+## 3. Cazuri Speciale: Paralelipipedul și Cubul
+
+Acestea apar cel mai des la examen deoarece au formule suplimentare pentru diagonală.
+
+### A. Paralelipipedul dreptunghic
+Are dimensiunile: lungime ($L$), lățime ($l$) și înălțime ($h$).
+*   **Diagonala corpului:** $$ d = \sqrt{L^2 + l^2 + h^2} $$
+*   **Aria totală:** $$ A_t = 2(L \cdot l + L \cdot h + l \cdot h) $$
+*   **Volum:** $$ V = L \cdot l \cdot h $$
+
+### B. Cubul
+Toate muchiile sunt egale ($a$).
+*   **Diagonala corpului:** $$ d = a\sqrt{3} $$
+*   **Aria totală:** $$ A_t = 6a^2 $$
+*   **Volum:** $$ V = a^3 $$
+
+---
+
+## 4. Exercițiu Rezolvat (Model de Examen)
+
+<ExampleBlock title="Problema: Prisma Patrulateră Regulată" type="math">
+  **Ipoteză:** Fie o prismă patrulateră regulată cu latura bazei $l = 6 \text{ cm}$ și înălțimea $h = 10 \text{ cm}$. Calculați Aria Laterală, Aria Totală și Volumul.
+
+  **Rezolvare:**
+  
+  **Pasul 1: Calculăm elementele bazei**
+  Deoarece este prismă patrulateră regulată, baza este un **pătrat**.
+  *   $P_b = 4 \cdot l = 4 \cdot 6 = 24 \text{ cm}$
+  *   $A_b = l^2 = 6^2 = 36 \text{ cm}^2$
+
+  **Pasul 2: Aria Laterală**
+  $$ A_l = P_b \cdot h = 24 \cdot 10 = \mathbf{240 \text{ cm}^2} $$
+
+  **Pasul 3: Aria Totală**
+  $$ A_t = A_l + 2 \cdot A_b = 240 + 2 \cdot 36 = 240 + 72 = \mathbf{312 \text{ cm}^2} $$
+
+  **Pasul 4: Volumul**
+  $$ V = A_b \cdot h = 36 \cdot 10 = \mathbf{360 \text{ cm}^3} $$
+</ExampleBlock>
+
+---
+
+## 5. Sinteză pentru memorare rapidă
+
+| Tip Prismă | Aria Bazei ($A_b$) | Diagonala ($d$) |
+| :--- | :--- | :--- |
+| **Triunghiulară** | $\frac{l^2\sqrt{3}}{4}$ | - |
+| **Pătrată** | $l^2$ | - |
+| **Paralelipiped** | $L \cdot l$ | $\sqrt{L^2+l^2+h^2}$ |
+| **Cub** | $a^2$ | $a\sqrt{3}$ |
+
+<Alert type="warning">
+  **Sfat de 10:** La examen, desenează prisma mare și clar. Notează bazele cu $ABC$ și $A'B'C'$. Cele mai multe greșeli apar din confundarea laturii bazei cu muchia laterală (înălțimea)!
+</Alert>

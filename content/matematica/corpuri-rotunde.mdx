@@ -1,0 +1,95 @@
+# Corpuri Geometrice: Corpuri Rotunde
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce sunt corpurile rotunde?</h3>
+  <p>
+    Sunt corpuri care au cel puțin o față curbă. Cele trei corpuri fundamentale pe care trebuie să le știi pentru examen sunt: <strong>Cilindrul</strong>, <strong>Conul</strong> și <strong>Sfera</strong>.
+  </p>
+</div>
+
+## 1. Cilindrul Circular Drept
+
+Imaginează-ți o cutie de conserve. Cilindrul are două baze care sunt cercuri identice și o față laterală care, dacă ar fi desfășurată, ar fi un dreptunghi.
+
+### Elemente:
+*   **Raza ($R$):** Raza cercului bazei.
+*   **Înălțimea ($H$):** Distanța dintre cele două baze.
+*   **Generatoarea ($G$):** La cilindrul drept, $G = H$.
+
+### Formule:
+*   **Aria Bazei:** $A_b = \pi R^2$
+*   **Aria Laterală:** $A_l = 2 \pi R G$
+*   **Aria Totală:** $A_t = A_l + 2 A_b = 2 \pi R(G + R)$
+*   **Volumul:** $V = A_b \cdot H = \pi R^2 H$
+
+---
+
+## 2. Conul Circular Drept
+
+Imaginează-ți un coif de petrecere sau o vafă de înghețată. Conul are o singură bază (cerc) și un vârf ($V$).
+
+### Elemente și Relația Fundamentală:
+Între înălțime ($H$), rază ($R$) și generatoare ($G$) se formează un triunghi dreptunghic. Aplicăm **Pitagora**:
+$$ G^2 = H^2 + R^2 $$
+
+### Formule:
+*   **Aria Bazei:** $A_b = \pi R^2$
+*   **Aria Laterală:** $A_l = \pi R G$
+*   **Aria Totală:** $A_t = A_l + A_b = \pi R(G + R)$
+*   **Volumul:** $V = \frac{\pi R^2 H}{3}$
+
+<Alert type="warning">
+  **Ține minte:** Conul este pentru Cilindru ceea ce Piramida este pentru Prismă. Volumul său este exact **o treime** din volumul cilindrului cu aceeași bază!
+</Alert>
+
+---
+
+## 3. Sfera
+
+Sfera este corpul perfect rotund (o minge). Ea nu are baze, desfășurări plane sau generatoare. Depinde doar de **Rază ($R$)**.
+
+### Formule:
+*   **Aria Sufrafeței:** $A = 4 \pi R^2$
+*   **Volumul:** $V = \frac{4 \pi R^3}{3}$
+
+---
+
+## 4. Exercițiu Rezolvat (Model EN)
+
+<ExampleBlock title="Problema: Conul și Secțiunea" type="math">
+  **Ipoteză:** Un con circular drept are raza bazei $R = 6 \text{ cm}$ și înălțimea $H = 8 \text{ cm}$. 
+  1. Calculați generatoarea conului.
+  2. Calculați Aria Laterală și Volumul.
+
+  **Rezolvare:**
+
+  **1. Generatoarea ($G$):**
+  Folosim Pitagora în triunghiul format de $H$ și $R$:
+  $$ G^2 = H^2 + R^2 = 8^2 + 6^2 = 64 + 36 = 100 $$
+  $$ G = \sqrt{100} = \mathbf{10 \text{ cm}} $$
+
+  **2. Aria Laterală ($A_l$):**
+  $$ A_l = \pi R G = \pi \cdot 6 \cdot 10 = \mathbf{60\pi \text{ cm}^2} $$
+
+  **3. Volumul ($V$):**
+  $$ V = \frac{\pi R^2 H}{3} = \frac{\pi \cdot 6^2 \cdot 8}{3} = \frac{36 \pi \cdot 8}{3} = 12 \pi \cdot 8 = \mathbf{96\pi \text{ cm}^3} $$
+</ExampleBlock>
+
+---
+
+## 5. Tabel Comparativ pentru Memorare
+
+| Corp | Generatoare ($G$) | Aria Laterală ($A_l$) | Volum ($V$) |
+| :--- | :--- | :--- | :--- |
+| **Cilindru** | $G = H$ | $2 \pi R G$ | $\pi R^2 H$ |
+| **Con** | $G = \sqrt{H^2 + R^2}$ | $\pi R G$ | $\frac{\pi R^2 H}{3}$ |
+| **Sferă** | - | $4 \pi R^2$ (Totală) | $\frac{4 \pi R^3}{3}$ |
+
+---
+
+## 💡 Sfaturi de 10 pentru examen:
+1.  **Nu înlocui $\pi$:** Rezultatele la examen se lasă aproape întotdeauna cu $\pi$ (ex: $24\pi$). Îl înlocuiești cu $3,14$ doar dacă problema îți cere explicit ("Calculați cu aproximație de...").
+2.  **Secțiuni:** 
+    *   Secțiunea axială a unui cilindru este un **dreptunghi** (cu laturile $2R$ și $H$).
+    *   Secțiunea axială a unui con este un **triunghi isoscel** (cu baza $2R$ și laturile $G$).
+3.  **Unități de măsură:** Volumul este mereu în unități cubice ($cm^3$), iar aria în unități pătrate ($cm^2$). Verifică de două ori înainte de a preda lucrarea!

@@ -321,10 +321,10 @@ export default function ProfilePage() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                  {stats.subjects.map((subject) => (
-                    <Link key={subject.id} href={`/materii/${subject.id}`} className="block group">
-                       <div className={cn("p-5 rounded-xl border bg-[#0f172a]/40 backdrop-blur-sm transition-all hover:-translate-y-1", subject.border)}>
+                    <Link key={subject.id} href={`/materii/${subject.id}`} className="block group"> 
+                       <div className={cn("p-5 rounded-xl border bg-[#0f172a]/40 backdrop-blur-sm transition-all hover:-translate-y-1", subject.border)}>Evaluarea Națională
                           <div className="flex justify-between items-start mb-4">
-                             <h3 className={cn("font-bold text-lg", subject.color)}>{subject.name}</h3>
+                             <h3 className={cn("font-bold text-lg", subject.color)}>{subject.name}</h3> 
                              <span className="text-2xl font-black text-slate-500/50 group-hover:text-white transition-colors">{subject.percentage}%</span>
                           </div>
                           <div className="h-1.5 w-full bg-[#020617] rounded-full overflow-hidden">

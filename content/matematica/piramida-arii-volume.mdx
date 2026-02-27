@@ -1,0 +1,98 @@
+# Corpuri Geometrice: Piramida
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce este o piramidă regulată?</h3>
+  <p>
+    Spre deosebire de prismă (care are două baze), piramida are <strong>o singură bază</strong> (un poligon) și un punct situat deasupra ei, numit <strong>vârf</strong> ($V$). 
+  </p>
+  <p className="mt-2">
+    Într-o piramidă regulată, baza este un poligon regulat (triunghi echilateral sau pătrat), iar fețele laterale sunt triunghiuri isoscele identice.
+  </p>
+</div>
+
+## 1. Elementele Piramidei (Notații)
+
+Pentru a rezolva problemele, trebuie să identifici corect aceste 5 elemente:
+
+1.  **Latura bazei ($l$):** Muchia poligonului de jos.
+2.  **Înălțimea ($h$):** Distanța de la vârf la centrul bazei ($VO$).
+3.  **Apotema piramidei ($a_p$):** Înălțimea unei fețe laterale.
+4.  **Apotema bazei ($a_b$):** Distanța de la centrul bazei la mijlocul unei laturi.
+5.  **Muchia laterală ($m$):** Segmentul care unește vârful cu un colț al bazei ($VA, VB \dots$).
+
+---
+
+## 2. Formule Generale (Valabile pentru orice piramidă)
+
+Acestea sunt cele 3 formule pe care trebuie să le scrii imediat ce primești subiectul:
+
+### 🔵 Aria Laterală ($A_l$)
+$$ A_l = \frac{P_b \cdot a_p}{2} $$
+*(Perimetrul bazei $\times$ apotema piramidei, totul supra 2)*
+
+### 🟢 Aria Totală ($A_t$)
+$$ A_t = A_l + A_b $$
+*(Aria laterală + aria bazei singure)*
+
+### 🔴 Volumul ($V$)
+$$ V = \frac{A_b \cdot h}{3} $$
+<Alert type="warning">
+  **Atenție!** Nu uita să împarți la **3**. Volumul piramidei este exact o treime din volumul unei prisme cu aceeași bază și înălțime.
+</Alert>
+
+---
+
+## 3. Relații Metrice (Pitagora în Piramidă)
+
+Majoritatea problemelor te pun să afli un element lipsă folosind **Teorema lui Pitagora**. Iată triunghiurile magice:
+
+1.  **Legătura între $h$ și $a_p$:** 
+    $$ a_p^2 = h^2 + a_b^2 $$
+2.  **Legătura între $h$ și muchia laterală $m$:**
+    $$ m^2 = h^2 + R^2 $$
+    *(unde $R$ este raza cercului circumscris bazei)*.
+
+---
+
+## 4. Piramida Patrulateră Regulată (Cea mai frecventă)
+
+Baza este un **pătrat**.
+*   $P_b = 4 \cdot l$
+*   $A_b = l^2$
+*   $a_b = \frac{l}{2}$
+
+<ExampleBlock title="Exercițiu Rezolvat" type="math">
+  **Problemă:** O piramidă patrulateră regulată are latura bazei $l = 12 \text{ cm}$ și înălțimea $h = 8 \text{ cm}$. Calculați Volumul și Aria Laterală.
+
+  **Rezolvare:**
+  1.  **Aria bazei ($A_b$):** $12^2 = 144 \text{ cm}^2$
+  2.  **Volumul ($V$):** $V = \frac{144 \cdot 8}{3} = 48 \cdot 8 = \mathbf{384 \text{ cm}^3}$
+  3.  **Apotema bazei ($a_b$):** $a_b = \frac{12}{2} = 6 \text{ cm}$
+  4.  **Apotema piramidei ($a_p$):** Aplicăm Pitagora: $a_p^2 = h^2 + a_b^2 = 8^2 + 6^2 = 64 + 36 = 100 \implies a_p = 10 \text{ cm}$
+  5.  **Aria Laterală ($A_l$):** $P_b = 4 \cdot 12 = 48 \text{ cm}$. 
+      $$ A_l = \frac{48 \cdot 10}{2} = \mathbf{240 \text{ cm}^2} $$
+</ExampleBlock>
+
+---
+
+## 5. Tetraedrul Regulat
+
+Este o piramidă triunghiulară cu **toate muchiile egale** ($a$). Este corpul cu cele mai multe proprietăți simetrice.
+
+*   **Aria Totală:** $A_t = a^2\sqrt{3}$
+*   **Înălțimea:** $h = \frac{a\sqrt{6}}{3}$
+*   **Volumul:** $V = \frac{a^3\sqrt{2}}{12}$
+
+---
+
+## 6. Rezumat Vizual pentru Examen
+
+| Tip Piramidă | Baza | Aria Bazei ($A_b$) | Apotema bazei ($a_b$) |
+| :--- | :--- | :--- | :--- |
+| **Triunghiulară** | $\triangle$ echilateral | $\frac{l^2\sqrt{3}}{4}$ | $\frac{l\sqrt{3}}{6}$ |
+| **Patrulateră** | Pătrat | $l^2$ | $\frac{l}{2}$ |
+| **Hexagonală** | Hexagon | $\frac{3l^2\sqrt{3}}{2}$ | $\frac{l\sqrt{3}}{2}$ |
+
+<Alert type="info">
+  **Sfat de aur:** Când desenezi piramida, începe cu baza (paralelogram pentru pătrat), găsește centrul bazei prin intersecția diagonalelor, ridică înălțimea vertical și abia apoi unește vârful cu colțurile. Un desen corect te ajută să vezi triunghiurile dreptunghice necesare!
+</Alert>
