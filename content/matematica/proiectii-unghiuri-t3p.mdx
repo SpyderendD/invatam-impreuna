@@ -1,0 +1,95 @@
+# Proiecții, Unghiuri diedre și T3P
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce este o proiecție?</h3>
+  <p>
+    Imaginează-ți că ai un plan (podeaua) și o sursă de lumină exact deasupra unui obiect. Umbra lăsată de acel obiect pe podea este <strong>proiecția</strong> sa.
+  </p>
+</div>
+
+## 1. Proiecții pe un plan
+
+### A. Proiecția unui punct
+Proiecția unui punct $A$ pe un plan $\alpha$ este piciorul perpendicularei coborâte din $A$ pe plan.
+$$ Pr_{\alpha}(A) = A', \text{ unde } AA' \perp \alpha $$
+
+### B. Proiecția unei drepte / segment
+Proiecția unei drepte pe un plan este, de regulă, tot o dreaptă. 
+*   **Unghiul dintre o dreaptă și un plan:** Este unghiul format de dreapta respectivă cu proiecția ei pe acel plan. 
+    $$\measuredangle(d, \alpha) = \measuredangle(d, Pr_{\alpha}d)$$
+
+---
+
+## 2. Unghiul Diedru (Unghiul a două plane)
+
+Un **diedru** este figura formată de două semiplane care au aceeași frontieră (muchie).
+
+### Cum măsurăm unghiul dintre două plane $\alpha$ și $\beta$?
+1.  Găsim muchia (intersecția) lor: $\alpha \cap \beta = d$.
+2.  Fixăm un punct $M$ pe muchia $d$.
+3.  Ducem o dreaptă $a \subset \alpha$ astfel încât $a \perp d$ în $M$.
+4.  Ducem o dreaptă $b \subset \beta$ astfel încât $b \perp d$ în $M$.
+5.  **Unghiul dintre plane** este unghiul dintre cele două drepte perpendiculare: $\measuredangle(\alpha, \beta) = \measuredangle(a, b)$.
+
+---
+
+## 3. Teorema celor 3 Perpendiculare (T3P) 👑
+
+Aceasta este „regina” geometriei în spațiu. Se folosește aproape mereu pentru a afla **distanța de la un punct la o dreaptă**.
+
+<Alert type="info">
+  **Enunț:** Fie un plan $\alpha$, un punct $A \notin \alpha$ și o dreaptă $d \subset \alpha$. Dacă:
+  1. $AM \perp \alpha$ (perpendiculara pe plan)
+  2. $MN \perp d$ (perpendiculara din piciorul primei pe dreapta $d$)
+  3. Atunci rezultă că: **$AN \perp d$** (a treia perpendiculară)
+</Alert>
+
+**La ce ne folosește?** Distanța de la punctul $A$ la dreapta $d$ este lungimea segmentului $AN$.
+
+---
+
+## 4. Reciprocele T3P
+
+Există două reciproce (R1 și R2) pe care le folosim pentru a demonstra perpendicularități inverse (de exemplu, pentru a afla înălțimea unei piramide).
+
+*   **R1:** Dacă $AM \perp \alpha$ și $AN \perp d$, atunci rezultă $MN \perp d$.
+*   **R2:** Dacă $MN \perp d$, $AN \perp d$ și $AM \perp MN$, atunci rezultă $AM \perp \alpha$.
+
+---
+
+## 5. Exercițiu Rezolvat (Model Piramidă Patrulateră)
+
+<ExampleBlock title="Problema: Distanța de la vârf la o muchie a bazei" type="math">
+  **Ipoteză:** Fie piramida patrulateră regulată $VABCD$ cu înălțimea $VO = 4 \text{ cm}$ și latura bazei $AB = 6 \text{ cm}$. Calculați distanța de la $V$ la dreapta $BC$.
+
+  **Rezolvare:**
+  1.  **Identificăm planul:** Planul bazei este $(ABC)$.
+  2.  **Prima perpendiculară:** $VO \perp (ABC)$ (înălțimea piramidei).
+  3.  **A doua perpendiculară:** Din punctul $O$ (centrul bazei), ducem $OM \perp BC$. Într-un pătrat, $M$ va fi mijlocul lui $BC$. 
+      $$ OM = \frac{AB}{2} = \frac{6}{2} = 3 \text{ cm} $$
+  4.  **Aplicăm T3P:**
+      * $VO \perp (ABC)$
+      * $OM \perp BC$
+      * $\implies VM \perp BC$ (distanța căutată).
+  5.  **Calculăm $VM$ (apotema piramidei):**
+      În $\triangle VOM$ dreptunghic în $O$, folosim Pitagora:
+      $$ VM^2 = VO^2 + OM^2 = 4^2 + 3^2 = 16 + 9 = 25 $$
+      $$ VM = \sqrt{25} = \mathbf{5 \text{ cm}} $$
+  
+  **Răspuns:** Distanța de la $V$ la $BC$ este de 5 cm.
+</ExampleBlock>
+
+---
+
+## 6. Tabel Recapitulativ
+
+| Noțiune | Ce reprezintă? | Cum se calculează? |
+| :--- | :--- | :--- |
+| **Proiecție** | „Umbra” pe plan | Cobori perpendiculara din punct |
+| **Unghi Dreaptă-Plan** | Înclinarea dreptei | Unghiul dintre dreaptă și umbra ei |
+| **Unghi Diedru** | Înclinarea între plane | Două perpendiculare pe muchie |
+| **T3P** | Unealta de distanțe | $h \perp \alpha, p \perp d \implies$ distanța $\perp d$ |
+
+<Alert type="warning">
+  **Sfat practic:** Când ai de calculat distanța de la un punct la o dreaptă în spațiu, caută mereu să „construiești” T3P. Găsește întâi înălțimea pe plan, apoi proiecția pe dreaptă!
+</Alert>

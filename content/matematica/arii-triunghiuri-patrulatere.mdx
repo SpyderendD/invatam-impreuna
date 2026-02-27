@@ -1,0 +1,90 @@
+# Arii: Triunghiuri și Patrulatere
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce trebuie să știi înainte?</h3>
+  <p>
+    1. <strong>Unitatea de măsură:</strong> Aria se măsoară în unități la pătrat ($cm^2, m^2, mm^2$).
+    <br/>2. <strong>Înălțimea ($h$):</strong> Este întotdeauna segmentul perpendicular dus din vârf pe latura opusă (bază).
+  </p>
+</div>
+
+## 1. Aria Triunghiului
+
+Triunghiul este baza multor alte figuri. Formula generală se aplică oricărui tip de triunghi:
+
+### 🔵 Formula Generală
+$$ \mathcal{A}_{\triangle} = \frac{b \cdot h}{2} \quad \left( \frac{\text{baza} \cdot \text{înălțimea}}{2} \right) $$
+
+### 🟢 Cazuri Particulare (Formule Rapide)
+*   **Triunghi Dreptunghic:** Deoarece catetele sunt perpendiculare, una joacă rol de bază și cealaltă de înălțime.
+    $$ \mathcal{A}_{\triangle dr} = \frac{c_1 \cdot c_2}{2} $$
+*   **Triunghi Echilateral:** (Favoritul examenelor!) Având toate laturile egale ($l$), aria depinde doar de latură.
+    $$ \mathcal{A}_{\triangle ech} = \frac{l^2\sqrt{3}}{4} $$
+
+---
+
+## 2. Aria Patrulaterelor
+
+Patrulaterele sunt poligoane cu 4 laturi. Fiecare are o formulă specifică bazată pe proprietățile sale.
+
+### 🔳 Pătratul
+Este cel mai simplu: latura la puterea a doua.
+$$ \mathcal{A}_{pătrat} = l^2 $$
+*Alternativ (dacă știi diagonala):* $$ \mathcal{A} = \frac{d^2}{2} $$
+
+### ▭ Dreptunghiul
+$$ \mathcal{A}_{dreptunghi} = L \cdot l \quad (\text{Lungime} \cdot \text{lățime}) $$
+
+### ▱ Paralelogramul
+Atenție: NU înmulțim laturile între ele, ci baza cu înălțimea corespunzătoare.
+$$ \mathcal{A}_{paralelogram} = b \cdot h $$
+
+### 💠 Rombul
+Cea mai folosită formulă implică diagonalele (care sunt perpendiculare).
+$$ \mathcal{A}_{romb} = \frac{d_1 \cdot d_2}{2} $$
+*De asemenea, fiind un paralelogram, merge și formula $b \cdot h$.*
+
+### ⏢ Trapezul
+Aria trapezului este media bazelor înmulțită cu înălțimea.
+$$ \mathcal{A}_{trapez} = \frac{(B + b) \cdot h}{2} $$
+*(B = baza mare, b = baza mică, h = înălțimea)*
+
+---
+
+## 3. Tabel Recapitulativ (Cheat Sheet) 🏆
+
+| Figura | Date necesare | Formula Ariei |
+| :--- | :--- | :---: |
+| **Triunghi oarecare** | Baza ($b$), Înălțimea ($h$) | $\frac{b \cdot h}{2}$ |
+| **Triunghi echilateral** | Latura ($l$) | $\frac{l^2\sqrt{3}}{4}$ |
+| **Triunghi dreptunghic** | Catetele ($c_1, c_2$) | $\frac{c_1 \cdot c_2}{2}$ |
+| **Pătrat** | Latura ($l$) | $l^2$ |
+| **Dreptunghi** | $L$ și $l$ | $L \cdot l$ |
+| **Romb** | Diagonalele ($d_1, d_2$) | $\frac{d_1 \cdot d_2}{2}$ |
+| **Trapez** | Bazele ($B, b$) și $h$ | $\frac{(B+b) \cdot h}{2}$ |
+
+---
+
+## 4. Exercițiu Rezolvat (Model EN)
+
+<ExampleBlock title="Problema: Calculul ariei unui trapez isoscel" type="math">
+  **Problemă:** Un trapez isoscel $ABCD$ are baza mare $AB = 14 \text{ cm}$, baza mică $CD = 6 \text{ cm}$ și latura neparalelă $AD = 5 \text{ cm}$. Calculați aria trapezului.
+
+  **Rezolvare:**
+  1.  **Aflăm înălțimea ($h$):**
+      Într-un trapez isoscel, dacă ducem înălțimea $DE \perp AB$, segmentul $AE$ se calculează astfel:
+      $$ AE = \frac{B - b}{2} = \frac{14 - 6}{2} = \frac{8}{2} = 4 \text{ cm} $$
+  
+  2.  **Folosim Pitagora în $\triangle ADE$:**
+      ($\triangle ADE$ este dreptunghic în $E$, ipotenuza este $AD=5$, o catetă este $AE=4$)
+      $$ h^2 = AD^2 - AE^2 \implies h^2 = 5^2 - 4^2 = 25 - 16 = 9 $$
+      $$ h = \sqrt{9} = \mathbf{3 \text{ cm}} $$
+
+  3.  **Calculăm Aria:**
+      $$ \mathcal{A} = \frac{(B + b) \cdot h}{2} = \frac{(14 + 6) \cdot 3}{2} $$
+      $$ \mathcal{A} = \frac{20 \cdot 3}{2} = \frac{60}{2} = \mathbf{30 \text{ cm}^2} $$
+</ExampleBlock>
+
+<Alert type="warning">
+  **Sfat de aur:** Nu uita! Dacă într-o problemă de geometrie în plan (Subiectul II) ți se cere aria unei figuri compuse, încearcă să o împarți în triunghiuri sau dreptunghiuri mai mici a căror arie o poți calcula ușor!
+</Alert>

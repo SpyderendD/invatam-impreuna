@@ -1,0 +1,99 @@
+# Asemănarea Triunghiurilor
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce înseamnă "asemenea"?</h3>
+  <p>
+    Două triunghiuri sunt <strong>asemenea</strong> dacă au unghiurile corespondente congruente (egale) și laturile corespondente proporționale.
+  </p>
+  <p className="mt-2">
+    Gândește-te la un triunghi și la "umbra" sa mărită. Forma rămâne identică, doar dimensiunea se schimbă. Notăm asemănarea cu simbolul "$\sim$".
+  </p>
+</div>
+
+## 1. Definiția matematică
+
+Spunem că $\triangle ABC \sim \triangle A'B'C'$ dacă:
+1.  **Unghiurile sunt egale:** $\hat{A} = \hat{A'}$, $\hat{B} = \hat{B'}$ și $\hat{C} = \hat{C'}$.
+2.  **Laturile sunt proporționale:**
+    $$ \frac{AB}{A'B'} = \frac{AC}{A'C'} = \frac{BC}{B'C'} = k $$
+    *(unde $k$ se numește raport de asemănare)*.
+
+---
+
+## 2. Teorema Fundamentală a Asemănării (T.F.A.)
+
+Aceasta este cea mai folosită metodă de a crea triunghiuri asemenea în probleme.
+
+<Alert type="info">
+  **Enunț:** O paralelă dusă la una dintre laturile unui triunghi formează cu celelalte două laturi (sau cu prelungirile lor) un triunghi asemenea cu cel inițial.
+</Alert>
+
+**Dacă $DE \parallel BC$, atunci $\triangle ADE \sim \triangle ABC$.**
+
+Din această asemănare rezultă șirul de rapoarte:
+$$ \frac{AD}{AB} = \frac{AE}{AC} = \frac{DE}{BC} $$
+
+---
+
+## 3. Criterii de Asemănare
+
+Nu trebuie să verificăm toate unghiurile și toate laturile de fiecare dată. Există 3 "scurtături":
+
+### 1. Criteriul U.U. (Unghi-Unghi) 🌟 *Cel mai folosit*
+Două triunghiuri sunt asemenea dacă au **două unghiuri** respectiv congruente.
+*(Dacă două sunt egale, al treilea va fi automat egal deoarece suma este $180^\circ$)*.
+
+### 2. Criteriul L.U.L. (Latură-Unghi-Latură)
+Două triunghiuri sunt asemenea dacă au două laturi proporționale și unghiurile dintre ele egale.
+$$ \frac{AB}{A'B'} = \frac{AC}{A'C'} \text{ și } \hat{A} = \hat{A'} $$
+
+### 3. Criteriul L.L.L. (Latură-Latură-Latură)
+Două triunghiuri sunt asemenea dacă au toate cele trei laturi proporționale.
+
+---
+
+## 4. Proprietăți importante ale raportului $k$
+
+Dacă $\triangle ABC \sim \triangle A'B'C'$ cu raportul de asemănare $k$:
+
+*   **Raportul perimetrelor** este egal cu $k$.
+    $$ \frac{\mathcal{P}_{ABC}}{\mathcal{P}_{A'B'C'}} = k $$
+*   **Raportul ariilor** este egal cu $k^2$. (⚠️ *Aceasta este o capcană clasică la examen!*)
+    $$ \frac{\mathcal{A}_{ABC}}{\mathcal{A}_{A'B'C'}} = k^2 $$
+
+---
+
+## 5. Exercițiu Rezolvat (Model EN)
+
+<ExampleBlock title="Aflarea unei baze folosind asemănarea" type="math">
+  **Problemă:** În triunghiul $ABC$, avem $DE \parallel BC$, $D \in AB, E \in AC$. 
+  Se cunosc: $AD = 4$ cm, $DB = 8$ cm și $DE = 3$ cm. Calculați lungimea laturii $BC$.
+
+  **Rezolvare:**
+  1.  **Identificăm triunghiurile asemenea:**
+      Deoarece $DE \parallel BC$, conform T.F.A., avem $\triangle ADE \sim \triangle ABC$.
+  
+  2.  **Scriem rapoartele de asemănare:**
+      $$ \frac{AD}{AB} = \frac{AE}{AC} = \frac{DE}{BC} $$
+  
+  3.  **Calculăm latura întreagă $AB$:**
+      $$ AB = AD + DB = 4 + 8 = 12 \text{ cm} $$
+  
+  4.  **Folosim raportul care conține datele cunoscute:**
+      $$ \frac{AD}{AB} = \frac{DE}{BC} \implies \frac{4}{12} = \frac{3}{BC} $$
+  
+  5.  **Aflăm $BC$ prin înmulțire pe diagonală:**
+      $$ 4 \cdot BC = 12 \cdot 3 $$
+      $$ 4 \cdot BC = 36 $$
+      $$ BC = \frac{36}{4} = \mathbf{9 \text{ cm}} $$
+</ExampleBlock>
+
+---
+
+## 6. Configurația "Clepsidră" (Teorema lui Thales extinsă)
+
+Asemănarea funcționează și dacă paralela este dusă în afara triunghiului (pe prelungiri), formând o formă de clepsidră sau fundă.
+
+Dacă $AB \parallel CD$, atunci triunghiurile formate de vârful comun $O$ sunt asemenea:
+**$\triangle OAB \sim \triangle ODC$**
+*(Atenție la ordinea literelor: unghiurile alterne interne sunt egale!)*

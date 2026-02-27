@@ -1,0 +1,84 @@
+# Segmente proporționale. Teorema lui Thales
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Legenda lui Thales</h3>
+  <p>
+    Se spune că Thales din Milet a reușit să măsoare înălțimea piramidei lui Keops folosind doar umbra acesteia și un băț. El a înțeles că raportul dintre înălțimi este egal cu raportul dintre umbre. Aceasta este esența proporționalității în geometrie!
+  </p>
+</div>
+
+## 1. Segmente proporționale
+
+Raportul a două segmente este raportul lungimilor lor (măsurate în aceeași unitate de măsură).
+
+Spunem că segmentele $AB, CD, EF, GH$ sunt **proporționale** dacă lungimile lor formează o proporție:
+$$ \frac{AB}{CD} = \frac{EF}{GH} $$
+
+---
+
+## 2. Teorema lui Thales
+
+Această teoremă ne spune ce se întâmplă într-un triunghi atunci când tragem o linie paralelă cu una dintre laturi.
+
+<Alert type="info">
+  **Enunț:** O paralelă dusă la una dintre laturile unui triunghi determină pe celelalte două laturi (sau pe prelungirile lor) segmente proporționale.
+</Alert>
+
+
+### Formula matematică:
+În $\triangle ABC$, dacă $DE \parallel BC$ (unde $D \in AB$ și $E \in AC$), atunci:
+
+$$ \frac{AD}{DB} = \frac{AE}{EC} $$
+
+**Putem scrie și variante derivate (folosind latura întreagă):**
+*   $$ \frac{AD}{AB} = \frac{AE}{AC} $$
+*   $$ \frac{DB}{AB} = \frac{EC}{AC} $$
+
+---
+
+## 3. Reciproca Teoremei lui Thales
+
+Dacă Thales ne ajută să aflăm **lungimi** pornind de la paralele, Reciproca ne ajută să demonstrăm că **două drepte sunt paralele**.
+
+**Enunț:** Dacă o dreaptă determină pe două laturi ale unui triunghi segmente proporționale, atunci ea este paralelă cu a treia latură.
+
+$$ \text{Dacă } \frac{AD}{DB} = \frac{AE}{EC} \implies DE \parallel BC $$
+
+---
+
+## 4. Exercițiu Rezolvat (Model de examen)
+
+<ExampleBlock title="Aflarea lungimii unui segment" type="math">
+  **Problemă:** În triunghiul $ABC$, avem $MN \parallel BC$, unde $M \in AB$ și $N \in AC$. 
+  Se cunosc lungimile: $AM = 6$ cm, $AB = 10$ cm și $AN = 9$ cm. Calculați lungimea segmentului $NC$.
+
+  **Rezolvare:**
+  1.  Mai întâi, aflăm segmentul $MB$:
+      $$ MB = AB - AM = 10 - 6 = 4 \text{ cm} $$
+  
+  2.  Aplicăm **Teorema lui Thales** (deoarece $MN \parallel BC$):
+      $$ \frac{AM}{MB} = \frac{AN}{NC} $$
+  
+  3.  Înlocuim valorile cunoscute:
+      $$ \frac{6}{4} = \frac{9}{NC} $$
+  
+  4.  Folosim proprietatea fundamentală a proporțiilor (înmulțirea pe diagonală):
+      $$ 6 \cdot NC = 4 \cdot 9 $$
+      $$ 6 \cdot NC = 36 $$
+      $$ NC = \frac{36}{6} = \mathbf{6 \text{ cm}} $$
+</ExampleBlock>
+
+---
+
+## 5. Teorema Fundamentală a Asemănării (T.F.A.)
+
+Thales ne dă un raport doar pentru laturile "tăiate" ($AB$ și $AC$). Dacă avem nevoie să implicăm și baza ($BC$) și segmentul paralel ($DE$), folosim T.F.A.
+
+Dacă $DE \parallel BC$, atunci $\triangle ADE \sim \triangle ABC$ (triunghiurile sunt asemenea), ceea ce înseamnă:
+
+$$ \frac{AD}{AB} = \frac{AE}{AC} = \frac{DE}{BC} $$
+
+<Alert type="warning">
+  **Greșeală frecventă:** Mulți elevi scriu $\frac{AD}{DB} = \frac{DE}{BC}$. **ESTE GREȘIT!** 
+  Când vrei să folosești baza paralelelor, trebuie să folosești mereu **latura mică supra latura mare** a triunghiului.
+</Alert>

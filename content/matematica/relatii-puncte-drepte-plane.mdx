@@ -1,0 +1,87 @@
+# Relații între puncte, drepte și plane
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Trecerea la 3D</h3>
+  <p>
+    Spre deosebire de geometria plană, în spațiu apare un element nou: <strong>Planul</strong>. 
+    Imaginează-ți planul ca pe o suprafață de masă infinită, perfect netedă și fără grosime.
+  </p>
+</div>
+
+## 1. Determinarea Planului
+
+Un plan este "fixat" (determinat) în spațiu în 4 moduri fundamentale. Orice plan se notează cu litere grecești ($\alpha, \beta, \gamma$) sau prin punctele sale $(ABC)$.
+
+1.  **Trei puncte necoliniare:** Prin trei puncte care nu sunt pe aceeași linie trece un singur plan.
+2.  **O dreaptă și un punct exterior:** O dreaptă $d$ și un punct $A \notin d$.
+3.  **Două drepte concurente:** Două drepte care se intersectează într-un punct.
+4.  **Două drepte paralele:** Două drepte care nu se întâlnesc, dar sunt în același plan.
+
+---
+
+## 2. Poziții relative a două drepte în spațiu
+
+În spațiu, două drepte pot fi:
+
+### A. Coplanare (stau în același plan)
+*   **Concurente:** Se taie într-un singur punct ($d_1 \cap d_2 = \{M\}$).
+*   **Paralele:** Nu se taie niciodată ($d_1 \parallel d_2$).
+*   **Confundate:** Sunt de fapt aceeași dreaptă.
+
+### B. Necoplanare (Oarecare) ⚠️
+*   **Definiție:** Sunt dreptele care **nu sunt nici paralele, nici concurente**. Ele nu pot fi cuprinse în același plan.
+*   *Exemplu:* Într-o cameră, dreapta formată de marginea podelei din stânga și dreapta formată de marginea tavanului din față. Ele "trec una pe lângă alta".
+
+---
+
+## 3. Poziția unei drepte față de un plan
+
+O dreaptă $d$ față de un plan $\alpha$ poate fi:
+
+1.  **Inclusă în plan:** Toate punctele dreptei sunt în plan ($d \subset \alpha$).
+2.  **Paralelă cu planul:** Nu are niciun punct comun cu planul ($d \parallel \alpha$).
+    *   *Proprietate:* O dreaptă este paralelă cu un plan dacă este paralelă cu o dreaptă inclusă în acel plan.
+3.  **Secantă cu planul:** Taie planul într-un punct ($d \cap \alpha = \{P\}$).
+    *   **Caz special: Dreapta perpendiculară pe plan ($d \perp \alpha$):** Dacă dreapta este perpendiculară pe **două drepte concurente** din acel plan.
+
+---
+
+## 4. Poziția a două plane
+
+Două plane $\alpha$ și $\beta$ pot fi:
+
+*   **Paralele:** Nu au niciun punct comun ($\alpha \parallel \beta$).
+*   **Secante:** Se intersectează. 
+    *   **FOARTE IMPORTANT:** Intersecția a două plane secante este întotdeauna **O DREAPTĂ**.
+
+---
+
+## 5. Aplicație practică pe Cub (Model EN)
+
+Cubul este cel mai bun prieten al tău pentru a vizualiza aceste relații. Fie cubul $ABCDA'B'C'D'$.
+
+<ExampleBlock title="Identificarea relațiilor în spațiu" type="math">
+  Privind cubul $ABCDA'B'C'D'$, stabiliți poziția următoarelor elemente:
+
+  1.  **Dreptele $AB$ și $BC$:** Sunt **concurente** în punctul $B$.
+  2.  **Dreptele $AB$ și $A'B'$:** Sunt **paralele**.
+  3.  **Dreptele $AB$ și $CC'$:** Sunt **necoplanare** (oarecare). $AB$ e pe "podea", $CC'$ e o "coloană" care nu o atinge.
+  4.  **Dreapta $A'D'$ față de planul $(ABC)$:** Este **paralelă** ($A'D' \parallel (ABC)$), deoarece $A'D' \parallel AD$ și $AD \subset (ABC)$.
+  5.  **Planul $(ABB')$ față de planul $(DCC')$:** Sunt plane **paralele** (fața din față și fața din spate).
+  6.  **Planul $(ABC)$ față de planul $(BCC')$:** Sunt plane **secante**, iar intersecția lor este dreapta $BC$.
+</ExampleBlock>
+
+---
+
+## 6. Rezumat vizual rapid
+
+| Relația | Condiție necesară |
+| :--- | :--- |
+| **$d \parallel \alpha$** | $d \parallel d'$, unde $d' \subset \alpha$ |
+| **$d \perp \alpha$** | $d \perp a$ și $d \perp b$, unde $a, b \subset \alpha$ concurente |
+| **$\alpha \parallel \beta$** | Două drepte concurente din $\alpha$ sunt paralele cu $\beta$ |
+| **$\text{Intersecție plane}$** | Rezultatul este mereu o dreaptă |
+
+<Alert type="warning">
+  **Sfat de examen:** Când desenezi geometria în spațiu, folosește linii punctate pentru muchiile care nu se văd (cele din spate). Te va ajuta enorm să "vezi" interiorul figurii!
+</Alert>

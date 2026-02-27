@@ -1,0 +1,100 @@
+# Trigonometria în Triunghiul Dreptunghic
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce este Trigonometria?</h3>
+  <p>
+    Cuvântul vine din greacă: <em>trigonon</em> (triunghi) + <em>metron</em> (măsură). 
+    În triunghiul dreptunghic, funcțiile trigonometrice sunt pur și simplu <strong>rapoarte (fracții)</strong> între laturile triunghiului.
+  </p>
+</div>
+
+## 1. Jucătorii principali: Latura Opusă și Latura Alăturată
+
+Pentru a aplica trigonometria, trebuie să ne fixăm privirea pe un unghi ascuțit (să-l numim unghiul $u$). În funcție de acesta, laturile au nume noi:
+
+1.  **Ipotenuza ($ip$):** Latura cea mai lungă, opusă unghiului de $90^\circ$.
+2.  **Cateta Opusă ($c.op.$):** Latura care stă „în fața” unghiului $u$.
+3.  **Cateta Alăturată ($c.al.$):** Latura care „ajută” la formarea unghiului $u$ (lângă el).
+
+---
+
+## 2. Funcțiile Trigonometrice (Formulele)
+
+Există 4 rapoarte pe care trebuie să le știi:
+
+### 🔵 Sinus ($\sin$)
+$$ \sin(u) = \frac{\text{Cateta Opusă}}{\text{Ipotenuză}} $$
+
+### 🟢 Cosinus ($\cos$)
+$$ \cos(u) = \frac{\text{Cateta Alăturată}}{\text{Ipotenuză}} $$
+
+### 🔴 Tangenta ($\text{tg}$)
+$$ \text{tg}(u) = \frac{\text{Cateta Opusă}}{\text{Cateta Alăturată}} $$
+
+### 🟡 Cotangenta ($\text{ctg}$)
+$$ \text{ctg}(u) = \frac{\text{Cateta Alăturată}}{\text{Cateta Opusă}} $$
+
+---
+
+## 3. Tabelul Valorilor Importante 🏆
+
+La examen, vei avea nevoie de valorile pentru unghiurile de $30^\circ$, $45^\circ$ și $60^\circ$. Iată „tabelul de aur”:
+
+| Funcția | $30^\circ$ | $45^\circ$ | $60^\circ$ |
+| :--- | :---: | :---: | :---: |
+| **$\sin$** | $\frac{1}{2}$ | $\frac{\sqrt{2}}{2}$ | $\frac{\sqrt{3}}{2}$ |
+| **$\cos$** | $\frac{\sqrt{3}}{2}$ | $\frac{\sqrt{2}}{2}$ | $\frac{1}{2}$ |
+| **$\text{tg}$** | $\frac{\sqrt{3}}{3}$ | $1$ | $\sqrt{3}$ |
+| **$\text{ctg}$** | $\sqrt{3}$ | $1$ | $\frac{\sqrt{3}}{3}$ |
+
+---
+
+## 4. Identități fundamentale
+
+Există câteva relații magice care te ajută să scapi de calcule grele:
+
+1.  **Formula fundamentală:** $$ \sin^2(u) + \cos^2(u) = 1 $$
+2.  **Tangenta ca raport:** $$ \text{tg}(u) = \frac{\sin(u)}{\cos(u)} $$
+3.  **Cotangenta ca raport:** $$ \text{ctg}(u) = \frac{\cos(u)}{\sin(u)} $$
+
+---
+
+## 5. Exercițiu Rezolvat (Model de Examen)
+
+<ExampleBlock title="Problema: Aflarea ipotenuzei" type="math">
+  **Problemă:** În triunghiul $ABC$, dreptunghic în $A$, cunoaștem cateta $AB = 6 \text{ cm}$ și măsura unghiului $\hat{C} = 30^\circ$. Aflați lungimea ipotenuzei $BC$.
+
+  **Rezolvare:**
+  1.  **Identificăm ce avem:**
+      *   Unghiul pe care îl folosim este $\hat{C} = 30^\circ$.
+      *   Latura $AB$ este **Cateta Opusă** unghiului $C$.
+      *   Latura $BC$ este **Ipotenuza** (pe care vrem să o aflăm).
+
+  2.  **Alegem funcția corectă:**
+      Ce funcție folosește *Cateta Opusă* și *Ipotenuza*? Răspuns: **Sinus**.
+
+  3.  **Scriem formula:**
+      $$ \sin(C) = \frac{AB}{BC} $$
+      $$ \sin(30^\circ) = \frac{6}{BC} $$
+
+  4.  **Înlocuim valoarea din tabel:**
+      Știm că $\sin(30^\circ) = \frac{1}{2}$.
+      $$ \frac{1}{2} = \frac{6}{BC} $$
+
+  5.  **Calculăm prin înmulțire pe diagonală:**
+      $$ 1 \cdot BC = 2 \cdot 6 $$
+      $$ BC = \mathbf{12 \text{ cm}} $$
+</ExampleBlock>
+
+---
+
+## 6. Trucuri de memorare (Mnemonics)
+
+Dacă uiți care latură merge la care funcție, ține minte acest secret:
+*   **CO-SI-nus** merge cu cateta **alăturată** (Sună ca „co-alăturat”).
+*   **SIN-us** merge cu cateta **opusă**.
+*   **T-angenta** este singura care **nu** are treabă cu ipotenuza (folosește doar catetele).
+
+<Alert type="info">
+  **Sfat de 10:** Unghiurile de $30^\circ$ și $60^\circ$ sunt „complementare”. Asta înseamnă că $\sin(30^\circ)$ este egal cu $\cos(60^\circ)$. Dacă știi valorile pentru $30^\circ$, le știi inversate și pe cele de $60^\circ$!
+</Alert>

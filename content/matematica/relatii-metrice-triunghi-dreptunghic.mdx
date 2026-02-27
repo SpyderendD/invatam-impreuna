@@ -1,0 +1,100 @@
+# Relații metrice în triunghiul dreptunghic
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Configurația de bază</h3>
+  <p>
+    Pentru a aplica aceste teoreme, avem nevoie de un triunghi dreptunghic $ABC$ (cu $\measuredangle A = 90^\circ$) și de **înălțimea** corespunzătoare ipotenuzei, $AD \perp BC$.
+  </p>
+  <p className="mt-2">
+    Punctul $D$ împarte ipotenuza în două segmente, $BD$ și $DC$, numite <strong>proiecțiile catetelor</strong> pe ipotenuză.
+  </p>
+</div>
+
+
+---
+
+## 1. Teorema înălțimii
+
+Într-un triunghi dreptunghic, lungimea înălțimii corespunzătoare ipotenuzei este media geometrică a lungimilor proiecțiilor catetelor pe ipotenuză.
+
+**Formula:**
+$$ AD^2 = BD \cdot DC $$
+sau
+$$ AD = \sqrt{BD \cdot DC} $$
+
+---
+
+## 2. Teorema catetei
+
+Lungimea unei catete este media geometrică între lungimea ipotenuzei și lungimea proiecției acelei catete pe ipotenuză.
+
+**Formule:**
+*   Pentru cateta $AB$: $$ AB^2 = BD \cdot BC $$
+*   Pentru cateta $AC$: $$ AC^2 = CD \cdot BC $$
+
+---
+
+## 3. Teorema lui Pitagora 👑
+
+Este cea mai faimoasă teoremă din matematică. Ea stabilește relația dintre cele trei laturi ale triunghiului dreptunghic.
+
+<Alert type="info">
+  **Enunț:** În orice triunghi dreptunghic, suma pătratelor lungimilor catetelor este egală cu pătratul lungimii ipotenuzei.
+</Alert>
+
+**Formula:**
+$$ \text{cateta}_1^2 + \text{cateta}_2^2 = \text{ipotenuza}^2 $$
+$$ AB^2 + AC^2 = BC^2 $$
+
+---
+
+## 4. Formule utile pentru Înălțime și Arie
+
+Pe lângă teoremele de mai sus, înălțimea $AD$ se mai poate calcula și astfel:
+
+$$ AD = \frac{AB \cdot AC}{BC} \quad \left( \frac{\text{cateta}_1 \cdot \text{cateta}_2}{\text{ipotenuza}} \right) $$
+
+**Aria triunghiului dreptunghic:**
+$$ \mathcal{A} = \frac{AB \cdot AC}{2} \text{ sau } \mathcal{A} = \frac{BC \cdot AD}{2} $$
+
+---
+
+## 5. Exercițiu Rezolvat (Model Complet)
+
+<ExampleBlock title="Problema: Calculul tuturor elementelor" type="math">
+  **Problemă:** Fie $\triangle ABC$ dreptunghic în $A$, cu înălțimea $AD \perp BC$. Știm că proiecțiile catetelor pe ipotenuză sunt $BD = 4$ cm și $DC = 9$ cm. Aflați înălțimea $AD$, catetele $AB, AC$ și perimetrul.
+
+  **Rezolvare:**
+
+  **1. Calculăm ipotenuza ($BC$):**
+  $$ BC = BD + DC = 4 + 9 = \mathbf{13 \text{ cm}} $$
+
+  **2. Aplicăm Teorema Înălțimii ($AD$):**
+  $$ AD^2 = BD \cdot DC = 4 \cdot 9 = 36 $$
+  $$ AD = \sqrt{36} = \mathbf{6 \text{ cm}} $$
+
+  **3. Aplicăm Teorema Catetei ($AB$ și $AC$):**
+  *   $AB^2 = BD \cdot BC = 4 \cdot 13 = 52 \implies AB = \sqrt{52} = \mathbf{2\sqrt{13} \text{ cm}}$
+  *   $AC^2 = CD \cdot BC = 9 \cdot 13 = 117 \implies AC = \sqrt{117} = \mathbf{3\sqrt{13} \text{ cm}}$
+
+  **4. Verificare cu Pitagora:**
+  $$ AB^2 + AC^2 = 52 + 117 = 169 $$
+  $$ BC^2 = 13^2 = 169 $$
+  *Corect! (169 = 169)*
+</ExampleBlock>
+
+---
+
+## 6. Rezumat vizual (Checklist)
+
+| Ce vrei să afli? | Ce date ai? | Teorema recomandată |
+| :--- | :--- | :--- |
+| **Înălțimea ($h$)** | Proiecțiile ($p_1, p_2$) | T. Înălțimii: $h^2 = p_1 \cdot p_2$ |
+| **O catetă ($c$)** | Proiecția ei ($p$) și Ipotenuza ($i$) | T. Catetei: $c^2 = p \cdot i$ |
+| **Ipotenuza ($i$)** | Ambele catete ($c_1, c_2$) | T. lui Pitagora: $i^2 = c_1^2 + c_2^2$ |
+| **Înălțimea ($h$)** | Toate cele 3 laturi | $h = (c_1 \cdot c_2) / i$ |
+
+### Sfaturi pentru succes la EN:
+1.  **Recunoaște proiecțiile:** Întotdeauna verifică dacă $D$ este piciorul înălțimii. Nu confunda mediana cu înălțimea!
+2.  **Rădăcini pătrate:** Exersează scoaterea factorilor de sub radical, deoarece rezultatele relațiilor metrice sunt adesea de forma $a\sqrt{b}$.
+3.  **Atenție la ipoteză:** Teoremele se aplică **DOAR** în triunghiul dreptunghic. Dacă triunghiul nu este dreptunghic, trebuie să creezi unul trăgând o înălțime.
