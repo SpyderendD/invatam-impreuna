@@ -1,195 +1,84 @@
----
-title: "Funcții: Harta Secretă a Matematicii"
-description: "De la perechi de numere la linii pe un grafic. Un ghid vizual complet."
-subject: "Matematică"
-grade: "Clasa a VIII-a"
-category: "Algebră"
----
+# Funcții și Reprezentarea Grafică
 
-<div className="w-full max-w-5xl mx-auto font-sans text-slate-300">
-
-  {/* INTRODUCERE - OMETEASCĂ */}
-  <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-8 mb-12 text-center shadow-lg">
-    <div className="text-4xl mb-4">⚙️ → 🔢</div>
-    <h1 className="m-0 text-3xl md:text-4xl font-bold text-white mb-4">Funcția: O "Mașinărie" de transformat Numere</h1>
-    <div className="text-lg text-slate-400 leading-relaxed max-w-3xl mx-auto">
-      Imaginează-ți o mașinărie: îi dai un număr (x), ea face ceva cu el, și îți dă înapoi un alt număr (y). Această "mașinărie" cu o regulă precisă este o <strong>funcție</strong>. La examen, ne interesează funcțiile simple, ale căror grafice sunt linii drepte.
-    </div>
-  </div>
-
-  {/* 1. SISTEMUL DE COORDONATE - BAZA */}
-  <div className="mb-16">
-    <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-cyan-500 pl-4">Pasul 1: Harta (Sistemul de Axe)</h2>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-      
-      {/* VIZUALIZARE SISTEM DE AXE */}
-      <div className="bg-slate-900 border border-slate-700 p-6 rounded-xl aspect-square flex items-center justify-center">
-        <div className="relative w-full h-full text-xs text-slate-500">
-          {/* Axa Y */}
-          <div className="absolute top-0 bottom-0 left-1/2 w-px bg-slate-600"></div>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-4">y</div>
-          <div className="absolute top-1/2 left-1/2 h-2 w-px bg-slate-400"></div>
-          <div className="absolute top-1/4 left-1/2 h-2 w-px bg-slate-600"></div>
-          <div className="absolute top-3/4 left-1/2 h-2 w-px bg-slate-600"></div>
-          {/* Axa X */}
-          <div className="absolute left-0 right-0 top-1/2 h-px bg-slate-600"></div>
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 -mr-4">x</div>
-          <div className="absolute left-1/2 top-1/2 w-2 h-px bg-slate-400"></div>
-          <div className="absolute left-1/4 top-1/2 w-2 h-px bg-slate-600"></div>
-          <div className="absolute left-3/4 top-1/2 w-2 h-px bg-slate-600"></div>
-          {/* Punctul A */}
-          <div className="absolute w-2 h-2 bg-cyan-400 rounded-full" style={{ left: '75%', top: '25%' }}></div>
-          <div className="absolute text-cyan-400 font-bold" style={{ left: 'calc(75% + 10px)', top: 'calc(25% - 8px)'}}>A(2, 2)</div>
-          {/* Punctul B */}
-          <div className="absolute w-2 h-2 bg-rose-400 rounded-full" style={{ left: '25%', top: '75%' }}></div>
-          <div className="absolute text-rose-400 font-bold" style={{ left: 'calc(25% - 40px)', top: 'calc(75% - 8px)'}}>B(-2, -2)</div>
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <div className="bg-slate-800/50 p-5 border border-slate-700 rounded-lg">
-          <h3 className="font-bold text-slate-200 mb-2">Perechi Ordonate = Puncte</h3>
-          <div className="text-sm text-slate-400 leading-relaxed">
-            Fiecare punct de pe hartă are o "adresă" unică, formată din două numere: <strong>(x, y)</strong>.
-            <ul className="list-disc list-inside mt-2 space-y-1">
-              <li><strong>x (abscisa):</strong> Cât de mult mergi la stânga (negativ) sau la dreapta (pozitiv).</li>
-              <li><strong>y (ordonata):</strong> Cât de mult mergi în sus (pozitiv) sau în jos (negativ).</li>
-            </ul>
-          </div>
-        </div>
-        <div className="bg-slate-800/50 p-5 border border-slate-700 rounded-lg">
-          <h3 className="font-bold text-slate-200 mb-2">Exemplu: Punctul A(2, 2)</h3>
-          <div className="text-sm text-slate-400 leading-relaxed">
-            Pentru a ajunge la punctul A, pornești din centru (0,0), mergi <strong>2 unități la dreapta</strong> pe axa Ox, apoi <strong>2 unități în sus</strong> pe axa Oy.
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {/* 2. FUNCȚIA LINIARĂ - MAȘINĂRIA */}
-  <div className="mb-16">
-    <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-emerald-500 pl-4">Pasul 2: "Mașinăria" (Funcția de Gradul I)</h2>
-    <div className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 p-8 rounded-lg shadow-xl">
-      <div className="text-center mb-8">
-        <h4 className="text-3xl font-bold text-white mb-2 font-mono">f(x) = ax + b</h4>
-        <div className="text-slate-400">Aceasta este "rețeta" pe care o folosește mașinăria. <span className="font-mono text-amber-400">a</span> și <span className="font-mono text-amber-400">b</span> sunt numere fixe.</div>
-      </div>
-      
-      <div className="bg-black/30 p-6 rounded-xl border border-slate-700 max-w-2xl mx-auto">
-        <h5 className="font-bold text-emerald-400 mb-4 text-center">Exemplu Concret: f(x) = 2x - 1</h5>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center font-mono">
-          <div className="p-3 bg-slate-800 rounded-lg">
-            <div>x = <span className="font-bold text-white">0</span></div>
-            <div className="text-xl text-emerald-400 my-1">↓</div>
-            <div>f(0) = 2×0 - 1 = <span className="font-bold text-white">-1</span></div>
-            <div className="text-xs text-slate-500 mt-1">Punct: A(0, -1)</div>
-          </div>
-          <div className="p-3 bg-slate-800 rounded-lg">
-            <div>x = <span className="font-bold text-white">1</span></div>
-            <div className="text-xl text-emerald-400 my-1">↓</div>
-            <div>f(1) = 2×1 - 1 = <span className="font-bold text-white">1</span></div>
-            <div className="text-xs text-slate-500 mt-1">Punct: B(1, 1)</div>
-          </div>
-          <div className="p-3 bg-slate-800 rounded-lg">
-            <div>x = <span className="font-bold text-white">2</span></div>
-            <div className="text-xl text-emerald-400 my-1">↓</div>
-            <div>f(2) = 2×2 - 1 = <span className="font-bold text-white">3</span></div>
-            <div className="text-xs text-slate-500 mt-1">Punct: C(2, 3)</div>
-          </div>
-        </div>
-      </div>
-      <div className="mt-4 text-center text-sm text-slate-500 italic">
-        Fiecare calcul ne dă coordonatele unui punct. Toate aceste puncte vor fi pe o linie dreaptă.
-      </div>
-    </div>
-  </div>
-
-  {/* 3. REPREZENTAREA GRAFICĂ - REZULTATUL */}
-  <div className="mb-16">
-    <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-fuchsia-500 pl-4">Pasul 3: Desenul (Graficul)</h2>
-    <div className="bg-slate-800/50 border border-slate-700 p-8 rounded-lg">
-      <div className="text-center mb-6 text-slate-300">
-        Pentru a desena graficul (o dreaptă), nu trebuie să calculăm zeci de puncte. <strong>Sunt suficiente doar două.</strong> Cele mai simple sunt intersecțiile cu axele.
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="p-6 bg-slate-900/50 rounded-xl border border-slate-700">
-          <h5 className="font-bold text-cyan-400 mb-4">Intersecția cu axa Oy (verticală)</h5>
-          <div className="text-sm text-slate-300 space-y-2">
-            <div>1. Facem <strong className="text-white font-mono">x = 0</strong>.</div>
-            <div>2. Calculăm <strong className="text-white font-mono">f(0)</strong>.</div>
-            <div className="font-mono bg-black/30 p-2 rounded text-xs mt-4">
-              f(x) = 2x - 1 <br/>
-              f(0) = 2×0 - 1 = -1 <br/>
-              <span className="text-cyan-300 font-bold">⇒ Punctul A(0, -1)</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="p-6 bg-slate-900/50 rounded-xl border border-slate-700">
-          <h5 className="font-bold text-fuchsia-400 mb-4">Intersecția cu axa Ox (orizontală)</h5>
-          <div className="text-sm text-slate-300 space-y-2">
-            <div>1. Rezolvăm ecuația <strong className="text-white font-mono">f(x) = 0</strong>.</div>
-            <div>2. Aflăm valoarea lui x.</div>
-            <div className="font-mono bg-black/30 p-2 rounded text-xs mt-4">
-              2x - 1 = 0 <br/>
-              2x = 1 ⇒ x = 1/2 <br/>
-              <span className="text-fuchsia-300 font-bold">⇒ Punctul B(1/2, 0)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="mt-6 text-center text-sm text-slate-500 italic">
-        Unești punctele A și B cu o riglă și ai obținut graficul funcției!
-      </div>
-    </div>
-  </div>
-
-  {/* EXERCIȚII TIP EXAMEN */}
-  <div className="mb-8">
-    <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-red-500 pl-4">Aplicații Esențiale de Examen</h2>
-    <div className="space-y-4">
-      
-      <details className="group bg-slate-800 border border-slate-700 p-6 rounded-lg cursor-pointer">
-        <summary className="flex justify-between items-center font-bold text-red-400 list-none">
-          1. Verificarea apartenenței unui punct la grafic
-          <span className="transition-transform group-open:rotate-90">▶</span>
-        </summary>
-        <div className="mt-4 pt-4 border-t border-slate-700 text-sm text-slate-300">
-          <strong className="text-white">Problemă:</strong> Verifică dacă punctul M(3, 5) aparține graficului funcției f(x) = 2x - 1.
-          <br/><br/>
-          <strong>Rezolvare:</strong> Calculăm f(3) și vedem dacă rezultatul este 5.
-          <div className="font-mono bg-black/30 p-2 rounded mt-2 text-xs">
-            f(3) = 2×3 - 1 = 6 - 1 = 5. <br/>
-            Deoarece f(3) = 5 (y-ul punctului), <span className="text-green-400">punctul M aparține graficului</span>.
-          </div>
-        </div>
-      </details>
-
-      <details className="group bg-slate-800 border border-slate-700 p-6 rounded-lg cursor-pointer">
-        <summary className="flex justify-between items-center font-bold text-red-400 list-none">
-          2. Aflarea unei funcții liniare care trece prin două puncte
-          <span className="transition-transform group-open:rotate-90">▶</span>
-        </summary>
-        <div className="mt-4 pt-4 border-t border-slate-700 text-sm text-slate-300">
-          <strong className="text-white">Problemă:</strong> Află funcția f(x) = ax + b al cărei grafic trece prin A(1, 4) și B(2, 6).
-          <br/><br/>
-          <strong>Rezolvare:</strong> Formăm un sistem de ecuații, înlocuind pe rând x și y:
-          <div className="font-mono bg-black/30 p-4 rounded mt-2 text-xs leading-loose">
-            A(1, 4) ∈ Gf ⇒ f(1) = 4 ⇒ a×1 + b = 4 ⇒ <span className="text-amber-400">a + b = 4</span><br/>
-            B(2, 6) ∈ Gf ⇒ f(2) = 6 ⇒ a×2 + b = 6 ⇒ <span className="text-amber-400">2a + b = 6</span><br/>
-            <br/>
-            Scădem prima ecuație din a doua: (2a + b) - (a + b) = 6 - 4 ⇒ <strong className="text-white">a = 2</strong>.
-            <br/>
-            Înlocuim a=2 în prima ecuație: 2 + b = 4 ⇒ <strong className="text-white">b = 2</strong>.
-            <br/><br/>
-            <span className="text-green-400 font-bold text-base">Rezultat: f(x) = 2x + 2</span>
-          </div>
-        </div>
-      </details>
-      
-    </div>
-  </div>
-
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce este o funcție?</h3>
+  <p>
+    Imaginează-ți o funcție ca pe o "mașinărie" matematică. Tu îi dai un număr ($x$), iar ea, pe baza unei reguli, îți dă înapoi un alt număr ($y$ sau $f(x)$).
+  </p>
 </div>
+
+## 1. Definirea unei funcții
+
+O funcție este definită de:
+1.  **Domeniul de definiție (A)**
+2.  **Codomeniul (B)**
+3.  **Legea de corespondență (f(x))**
+
+Notație: $$ f : A \to B, \quad f(x) = \text{legea de corespondență} $$
+
+<ExampleBlock title="Exemplu" type="math">
+  Fie funcția $$ f : \mathbb{R} \to \mathbb{R}, \quad f(x) = 2x + 1 $$
+  Calculăm $f(3) = 2 \cdot 3 + 1 = 7$. Punctul este $A(3, 7)$.
+</ExampleBlock>
+
+---
+
+## 2. Reprezentarea Grafică a Funcției de Gradul I
+
+Graficul unei funcții de gradul I ($f(x) = ax + b$) este o **DREAPTĂ**. Pentru a o desena, avem nevoie de **două puncte**.
+
+<ExampleBlock title="Exemplu: Reprezentare grafică" type="math">
+  Să reprezentăm grafic funcția $$ f(x) = x + 2 $$
+
+  **Pasul 1 & 2:** Calculăm două puncte.
+  *   Pentru $x = 0$: $f(0) = 0 + 2 = 2 \implies A(0, 2)$
+  *   Pentru $x = 1$: $f(1) = 1 + 2 = 3 \implies B(1, 3)$
+  
+  **Pasul 3:** Tabelul de valori
+  
+  ##| $x$ | 0 | 1 |
+  ##| **$f(x)$** | **2** | **3** |
+
+  **Pasul 4 & 5:** Desenăm punctele și le unim. 
+  
+  {/* AICI ESTE NOUL LINK PENTRU IMAGINE */}
+  <div className="my-4 p-4 bg-white rounded-lg">
+    <img 
+        src="https://i.postimg.cc/0jBBjshp/Gemini-Generated-Image-9yp6k19yp6k19yp6.png" alt="Gemini-Generated-Image-9yp6k19yp6k19yp6" 
+        alt="Reprezentarea grafică a unei funcții liniare"
+        className="mx-auto"
+    />
+  </div>
+</ExampleBlock>
+
+---
+
+## 3. Apartenența unui punct la grafic
+
+Un punct $M(x_M, y_M)$ aparține graficului dacă $f(x_M) = y_M$.
+
+<ExampleBlock title="Exemplu" type="math">
+  Verificați dacă $P(2, 5)$ aparține graficului $f(x) = 3x - 1$.
+  Calculăm $f(2) = 3 \cdot 2 - 1 = 5$. Deoarece rezultatul este 5, punctul aparține.
+</ExampleBlock>
+
+---
+
+## 4. Intersecția cu axele
+
+### A. Intersecția cu axa $Oy$
+Se calculează făcând **$x=0$**.
+$$ G_f \cap Oy = A(0, f(0)) $$
+
+### B. Intersecția cu axa $Ox$
+Se calculează făcând **$f(x)=0$**.
+$$ G_f \cap Ox = B(x_0, 0) $$
+
+<ExampleBlock title="Exercițiu" type="math">
+  Fie $f(x) = 2x - 6$. Aflați aria triunghiului format de grafic și axe.
+  
+  *   **$G_f \cap Oy$ ($x=0$):** $f(0) = -6 \implies A(0, -6)$. Lungimea catetei $OA = 6$.
+  *   **$G_f \cap Ox$ ($f(x)=0$):** $2x - 6 = 0 \implies x = 3 \implies B(3, 0)$. Lungimea catetei $OB = 3$.
+  
+  Aria este $\mathcal{A} = \frac{OA \cdot OB}{2} = \frac{6 \cdot 3}{2} = 9 \text{ u.m.}^2$
+</ExampleBlock>

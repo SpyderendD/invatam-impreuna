@@ -1,0 +1,127 @@
+# Ecuații, Inecuații și Sisteme de ecuații
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Scopul final: Aflarea necunoscutei</h3>
+  <p>
+    Tot ce am învățat la calcul algebric (operații cu litere, descompunere în factori) ne-a pregătit pentru acest moment: găsirea valorii unei necunoscute ($x$).
+  </p>
+  <ul className="mt-2 list-disc list-inside text-sm">
+    <li><strong>Ecuația:</strong> Căutăm una sau mai multe valori exacte pentru $x$.</li>
+    <li><strong>Inecuația:</strong> Căutăm un interval de valori pentru $x$.</li>
+    <li><strong>Sistemul:</strong> Căutăm perechi de valori ($x, y$) care satisfac mai multe ecuații simultan.</li>
+  </ul>
+</div>
+
+## 1. Ecuația de gradul I
+
+Este cea mai simplă ecuație, de forma:
+$$ ax + b = 0, \text{ unde } a \neq 0 $$
+
+### Pașii de rezolvare:
+1.  **Separarea termenilor:** Trecem toți termenii cu $x$ într-o parte a egalului și toți termenii fără $x$ (termenii liberi) în cealaltă parte.
+2.  **Regula de aur:** Când un termen trece "peste egal", **își schimbă semnul**!
+3.  <strong>Aflarea lui $x$</strong>: Împărțim rezultatul la coeficientul lui $x$.
+
+<ExampleBlock title="Exemplu: Rezolvarea unei ecuații simple" type="math">
+  Rezolvați ecuația: $$ 5x - 8 = 2x + 7 $$
+
+  **Pasul 1: Separăm termenii**
+  Aducem $2x$ în stânga (devine $-2x$) și îl ducem pe $-8$ în dreapta (devine $+8$).
+  $$ 5x - 2x = 7 + 8 $$
+
+  **Pasul 2: Efectuăm calculele**
+  $$ 3x = 15 $$
+
+  **Pasul 3: Aflăm $x$**
+  $$ x = \frac{15}{3} \implies x = 5 $$
+  
+  Soluția ecuației este $S = \{5\}$.
+</ExampleBlock>
+
+## 2. Inecuația de gradul I
+
+Seamănă foarte mult cu ecuația, dar în loc de egal ($=$), avem unul dintre semnele:
+*   Mai mic: $<$
+*   Mai mare: $>$
+*   Mai mic sau egal: $\le$
+*   Mai mare sau egal: $\ge$
+
+Se rezolvă exact ca o ecuație, cu o singură excepție foarte importantă:
+
+<Alert type="warning">
+  **Atenție maximă!** Dacă înmulțim sau împărțim toată inecuația cu un **număr negativ**, sensul inegalității **se inversează**!
+  ($<$ devine $>$, $\ge$ devine $\le$, etc.)
+</Alert>
+
+<ExampleBlock title="Exemplu: Rezolvarea unei inecuații" type="math">
+  Rezolvați inecuația în $\mathbb{R}$: $$ 2(x-3) > 5x + 9 $$
+
+  **Pasul 1: Desfacem paranteza**
+  $$ 2x - 6 > 5x + 9 $$
+
+  **Pasul 2: Separăm termenii**
+  $$ 2x - 5x > 9 + 6 $$
+  $$ -3x > 15 $$
+
+  **Pasul 3: Aflăm $x$ (Atenție la semn!)**
+  Trebuie să împărțim la **-3**. Deoarece este un număr negativ, semnul `>` se va inversa și va deveni `<`.
+  $$ x < \frac{15}{-3} $$
+  $$ x < -5 $$
+
+  **Pasul 4: Scriem soluția ca interval**
+  Numerele mai mici decât -5 se găsesc la stânga lui -5 pe axă, până la $-\infty$.
+  Deoarece semnul este strict (`<`), folosim paranteză rotundă.
+  $$ x \in (-\infty, -5) $$
+</ExampleBlock>
+
+## 3. Sisteme de două ecuații cu două necunoscute
+
+Un sistem este un set de ecuații care trebuie rezolvate simultan. Căutăm o pereche de numere $(x, y)$ care verifică ambele ecuații.
+
+Cele mai comune metode de rezolvare sunt **metoda substituției** și **metoda reducerii**.
+
+### Metoda Substituției
+1.  Scoatem o necunoscută dintr-o ecuație (cea mai simplă).
+2.  Înlocuim (substituim) acea necunoscută în cealaltă ecuație.
+3.  Rezolvăm ecuația cu o singură necunoscută.
+4.  Aflăm și cealaltă necunoscută.
+
+<ExampleBlock title="Exemplu: Metoda Substituției" type="math">
+  Rezolvați sistemul: $$ \begin{cases} x + 2y = 7 \\ 3x - y = 0 \end{cases} $$
+
+  **Pasul 1:** Din prima ecuație, îl scoatem pe $x$:
+  $$ x = 7 - 2y $$
+
+  **Pasul 2:** Înlocuim acest $x$ în a doua ecuație:
+  $$ 3(7 - 2y) - y = 0 $$
+  
+  **Pasul 3:** Rezolvăm noua ecuație (care are doar necunoscuta $y$):
+  $$ 21 - 6y - y = 0 $$
+  $$ 21 - 7y = 0 \implies 21 = 7y \implies y = 3 $$
+
+  **Pasul 4:** Acum că știm $y=3$, îl aflăm pe $x$ din relația de la pasul 1:
+  $$ x = 7 - 2(3) = 7 - 6 \implies x = 1 $$
+
+  **Soluția** este perechea ordonată $S = \{(1, 3)\}$.
+</ExampleBlock>
+
+### Metoda Reducerii
+Scopul este să adunăm sau să scădem cele două ecuații pentru a elimina una dintre necunoscute. Uneori, trebuie să înmulțim una sau ambele ecuații cu un număr pentru ca acest lucru să fie posibil.
+
+<ExampleBlock title="Exemplu: Metoda Reducerii" type="math">
+  Rezolvați sistemul: $$ \begin{cases} 2x + 3y = 8 \\ 5x - y = 3 \end{cases} $$
+  
+  **Pasul 1:** Observăm că la $y$ avem $+3y$ sus și $-y$ jos. Dacă am avea $-3y$ jos, prin adunare s-ar reduce.
+  Deci, înmulțim **toată a doua ecuație cu 3**:
+  $$ \begin{cases} 2x + 3y = 8 \\ 15x - 3y = 9 \end{cases} $$
+  
+  **Pasul 2:** Adunăm cele două ecuații (termen cu termen):
+  $$ (2x + 15x) + (3y - 3y) = (8 + 9) $$
+  $$ 17x + 0 = 17 \implies 17x = 17 \implies x = 1 $$
+
+  **Pasul 3:** Înlocuim $x=1$ în oricare dintre ecuațiile inițiale (ex: în prima):
+  $$ 2(1) + 3y = 8 $$
+  $$ 2 + 3y = 8 \implies 3y = 6 \implies y = 2 $$
+  
+  **Soluția** este $S = \{(1, 2)\}$.
+</ExampleBlock>

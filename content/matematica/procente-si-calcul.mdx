@@ -1,0 +1,124 @@
+# Procente. Calcul Procentual
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce este un procent?</h3>
+  <p>
+    Un <strong>procent</strong> (notat cu simbolul <strong>%</strong>) este o fracție care are mereu numitorul <strong>100</strong>.
+  </p>
+  <p className="mt-2">
+    Când spunem "50%", înseamnă "50 dintr-o sută" sau jumătate din întreg.
+  </p>
+</div>
+
+## 1. Transformări de bază
+
+### A. Din procent în fracție
+Pentru a scrie un procent sub formă de fracție ordinară sau zecimală, pur și simplu împărțim numărul la 100.
+
+$$ p\% = \frac{p}{100} $$
+
+*Exemple:*
+*   $25\% = \frac{25}{100}^{(25} = \frac{1}{4} = 0,25$
+*   $10\% = \frac{10}{100}^{(10} = \frac{1}{10} = 0,1$
+
+### B. Din fracție în procent
+Pentru a transforma o fracție într-un procent, trebuie să o amplificăm/simplificăm astfel încât numitorul să devină 100, sau înmulțim fracția cu $100\%$.
+
+*Exemple:*
+*   $\frac{3}{5} = \frac{3 \cdot 20}{5 \cdot 20} = \frac{60}{100} = 60\%$
+*   $0,45 = \frac{45}{100} = 45\%$
+
+---
+
+## 2. Cum calculăm "p% dintr-un număr"?
+
+Aceasta este cea mai frecventă cerință. Pentru a afla cât reprezintă un anumit procent ($p\%$) dintr-un număr ($A$), înlocuim cuvântul **"din"** cu semnul de **înmulțire** ($\cdot$).
+
+Formula este:
+$$ p\% \text{ din } A = \frac{p}{100} \cdot A $$
+
+<ExampleBlock title="Exemplu: Aflarea unui procent" type="math">
+  Cât reprezintă $20\%$ din $350$?
+
+  **Rezolvare:**
+  $$ 20\% \text{ din } 350 = \frac{20}{100} \cdot 350 = \frac{20 \cdot 350}{100} $$
+  
+  Putem tăia zerourile (simplificăm cu 100):
+  $$ = 2 \cdot 35 = 70 $$
+</ExampleBlock>
+
+---
+
+## 3. Aflarea unui număr când cunoaștem un procent din el
+
+Dacă știm că $p\%$ dintr-un număr necunoscut $x$ este egal cu $B$, formăm o ecuație:
+
+$$ \frac{p}{100} \cdot x = B \implies x = \frac{B \cdot 100}{p} $$
+
+<ExampleBlock title="Exemplu: Aflarea întregului" type="math">
+  Determinați un număr știind că $15\%$ din el este $45$.
+
+  **Rezolvare:**
+  $$ \frac{15}{100} \cdot x = 45 $$
+  $$ x = \frac{45 \cdot 100}{15} $$
+  Simplificăm 45 cu 15 (obținem 3):
+  $$ x = 3 \cdot 100 = 300 $$
+</ExampleBlock>
+
+---
+
+## 4. Raportul Procentual (Aflarea procentului)
+
+Dacă vrem să aflăm cât la sută reprezintă un număr $A$ din alt număr $B$, formăm proporția:
+
+$$ \frac{p}{100} = \frac{A}{B} \implies p = \frac{A \cdot 100}{B} $$
+
+<ExampleBlock title="Exemplu: Raport procentual" type="math">
+  Într-o clasă sunt 25 de elevi, dintre care 10 sunt fete. Cât la sută din clasă reprezintă fetele?
+
+  **Rezolvare:**
+  Aici, $A = 10$ (partea) și $B = 25$ (întregul). Vrem să aflăm $p$.
+  
+  $$ \frac{p}{100} = \frac{10}{25} $$
+  $$ p = \frac{10 \cdot 100}{25} $$
+  Simplificăm 100 cu 25 (obținem 4):
+  $$ p = 10 \cdot 4 = 40 $$
+  
+  Răspuns: Fetele reprezintă **$40\%$** din clasă.
+</ExampleBlock>
+
+---
+
+## 5. Scumpiri și Ieftiniri (Reducerile)
+
+Acesta este cel mai practic capitol al matematicii! Când un preț se modifică, avem două moduri de a calcula noul preț.
+
+Fie $P$ prețul inițial și $p\%$ procentul de modificare.
+
+### Varianta lungă (în 2 pași):
+1.  Calculezi valoarea scumpirii/reducerii: $M = \frac{p}{100} \cdot P$.
+2.  Aduni (la scumpire) sau scazi (la reducere) această valoare din prețul inițial: $P_{nou} = P \pm M$.
+
+### Varianta scurtă (Formula magică):
+*   **După o scumpire cu $p\%$, prețul devine:**
+    $$ P_{nou} = P \cdot \left( 1 + \frac{p}{100} \right) $$
+
+*   **După o ieftinire cu $p\%$, prețul devine:**
+    $$ P_{nou} = P \cdot \left( 1 - \frac{p}{100} \right) $$
+
+<ExampleBlock title="Problemă: Dublă modificare de preț" type="math">
+  <strong>Problemă:</strong> Un telefon costă 2000 lei. El se scumpește cu $10\%$, iar după o lună se reduce cu $10\%$. Care este prețul final? (Atenție: NU se întoarce la 2000!)
+
+  **Pasul 1: Scumpirea cu $10\%$**
+  Calculăm $10\%$ din 2000:
+  $$ \frac{10}{100} \cdot 2000 = 200 \text{ lei (valoarea scumpirii)} $$
+  Prețul după scumpire:
+  $$ 2000 + 200 = 2200 \text{ lei} $$
+
+  **Pasul 2: Ieftinirea cu $10\%$**
+  Acum, reducerea se aplică la **NOUL PREȚ** (2200 lei), nu la cel vechi!
+  Calculăm $10\%$ din 2200:
+  $$ \frac{10}{100} \cdot 2200 = 220 \text{ lei (valoarea reducerii)} $$
+  Prețul final:
+  $$ 2200 - 220 = \mathbf{1980 \text{ lei}} $$
+</ExampleBlock>

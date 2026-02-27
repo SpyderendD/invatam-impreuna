@@ -1,0 +1,130 @@
+# Mulțimea Numerelor Întregi ($\mathbb{Z}$)
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Introducere</h3>
+  <p>
+    Dacă numerele naturale ($\mathbb{N}$) ne ajută să numărăm obiecte, numerele întregi ($\mathbb{Z}$) ne ajută să exprimăm temperaturi sub zero grade, datorii sau adâncimi sub nivelul mării.
+  </p>
+  <p className="mt-2">
+    Mulțimea numerelor întregi conține numerele naturale și opusele lor (numerele negative).
+  </p>
+</div>
+
+## 1. Definiție și Reprezentare
+
+Mulțimea numerelor întregi se notează cu **$\mathbb{Z}$** și este formată din:
+1.  Numerele întregi negative: $\dots, -3, -2, -1$
+2.  Numărul zero: $0$
+3.  Numerele întregi pozitive: $1, 2, 3, \dots$
+
+$$
+\mathbb{Z} = \{\dots, -3, -2, -1, 0, 1, 2, 3, \dots\}
+$$
+
+### Submulțimi importante:
+*   $\mathbb{Z}^*$ = Mulțimea numerelor întregi nenule (fără zero).
+*   $\mathbb{Z}_+$ = Mulțimea numerelor întregi pozitive (este egală cu $\mathbb{N}^*$).
+*   $\mathbb{Z}_-$ = Mulțimea numerelor întregi negative.
+
+---
+
+## 2. Axa Numerelor și Modulul
+
+Pe axa numerelor, numerele pozitive sunt la dreapta lui 0, iar cele negative sunt la stânga lui 0.
+
+### 🟣 Modulul unui număr întreg
+Modulul (sau valoarea absolută) reprezintă **distanța** de la acel număr până la origine (0). Se notează $|x|$.
+
+*   Dacă numărul e pozitiv, modulul este chiar numărul. ($|5| = 5$)
+*   Dacă numărul e negativ, modulul este opusul său (devine pozitiv). ($|-5| = 5$)
+*   Modulul lui 0 este 0. ($|0| = 0$)
+
+<Alert type="warning">
+  **Important:** Modulul este întotdeauna un număr pozitiv sau zero! Nu există distanțe negative.
+</Alert>
+
+---
+
+## 3. Compararea Numerelor Întregi
+
+Reguli simple pentru a compara oricare două numere $a$ și $b$:
+
+1.  Orice număr **pozitiv** este mai mare decât orice număr **negativ**. ($2 > -100$)
+2.  Dintre două numere **negative**, este mai mare cel care este mai aproape de zero (are modulul mai mic). ($-2 > -5$)
+3.  Zero este mai mare decât orice număr negativ și mai mic decât orice număr pozitiv.
+
+<ExampleBlock title="Exemplu de Ordonare" type="math">
+  Ordonează crescător numerele: $-5, 2, -1, 0, 7, -10$.
+
+  **Rezolvare:**
+  Ne uităm pe axă de la stânga la dreapta:
+  
+  $$-10 < -5 < -1 < 0 < 2 < 7$$
+</ExampleBlock>
+
+---
+
+## 4. Operații cu Numere Întregi
+
+### A. Adunarea
+*   **Același semn:** Adunăm modulele și păstrăm semnul comun.
+    *   $(+3) + (+2) = +5$
+    *   $(-3) + (-2) = -5$
+*   **Semne diferite:** Scădem modulele (cel mare minus cel mic) și păstrăm semnul celui mai mare în modul.
+    *   $(-7) + (+3) = -4$ (pentru că 7 e mai mare ca 3 și are minus)
+    *   $(+7) + (-3) = +4$
+
+### B. Scăderea
+Scăderea înseamnă adunarea cu opusul.
+$$ a - b = a + (-b) $$
+
+<ExampleBlock title="Exemple Scădere" type="math">
+  *   $5 - 2 = 3$
+  *   $5 - (-2) = 5 + 2 = 7$ (minus cu minus face plus)
+  *   $-5 - 2 = -7$
+  *   $-5 - (-2) = -5 + 2 = -3$
+</ExampleBlock>
+
+### C. Înmulțirea și Împărțirea
+Se efectuează operația cu modulele numerelor, iar semnul rezultatului se stabilește după **Regula Semnelor**:
+
+| Semn 1 | Semn 2 | Rezultat |
+| :---: | :---: | :---: |
+| $+$ | $+$ | $+$ (Plus) |
+| $-$ | $-$ | $+$ (Plus) |
+| $+$ | $-$ | $-$ (Minus) |
+| $-$ | $+$ | $-$ (Minus) |
+
+*   *Prietenul prietenului meu e prietenul meu ($+ \cdot + = +$)*
+*   *Dușmanul dușmanului meu e prietenul meu ($- \cdot - = +$)*
+
+---
+
+## 5. Ordinea Efectuării Operațiilor
+
+Regulile sunt aceleași ca la numere naturale, dar trebuie mare atenție la semne!
+
+1.  Ridicarea la putere.
+    *   $(-2)^2 = 4$ (exponent par $\to$ rezultat pozitiv)
+    *   $(-2)^3 = -8$ (exponent impar $\to$ rezultat negativ)
+2.  Înmulțiri și Împărțiri.
+3.  Adunări și Scăderi.
+
+<ExampleBlock title="Exercițiu Rezolvat" type="math">
+  Calculați: $$ -3 + 2 \cdot [5 - (-2)^2] $$
+  
+  **Pasul 1:** Puterea
+  $(-2)^2 = 4$
+  $$ = -3 + 2 \cdot [5 - 4] $$
+  
+  **Pasul 2:** Paranteza
+  $5 - 4 = 1$
+  $$ = -3 + 2 \cdot 1 $$
+  
+  **Pasul 3:** Înmulțirea
+  $2 \cdot 1 = 2$
+  $$ = -3 + 2 $$
+  
+  **Pasul 4:** Adunarea
+  $$ = -1 $$
+</ExampleBlock>

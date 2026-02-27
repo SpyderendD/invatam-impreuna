@@ -1,0 +1,124 @@
+# Descompunerea în factori
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce înseamnă să descompunem în factori?</h3>
+  <p>
+    Descompunerea în factori este procesul <strong>invers</strong> față de desfacerea parantezelor.
+    Scopul nostru este să transformăm o expresie matematică dintr-o <strong>sumă sau diferență</strong> într-un <strong>produs (înmulțire)</strong> de paranteze sau termeni.
+  </p>
+  <p className="mt-2 text-sm text-blue-600 dark:text-blue-400">
+    <em>*Acest lucru este vital pentru a putea simplifica fracții algebrice sau pentru a rezolva ecuații (deoarece un produs este zero dacă măcar unul dintre factori este zero).</em>
+  </p>
+</div>
+
+Avem **4 metode principale** de descompunere. În practică, le folosim adesea combinat, dar mereu începem prin a verifica prima metodă!
+
+---
+
+## 1. Scoaterea factorului comun
+
+Aceasta este **Regula Numărul 1**. Înainte să aplici orice altă metodă, te uiți dacă toți termenii au ceva în comun (o literă, un număr sau o paranteză întreagă).
+
+$$
+a \cdot b + a \cdot c = a \cdot (b + c)
+$$
+
+<ExampleBlock title="Exemple: Factorul comun" type="math">
+  *   **Factor comun o literă:** $x^2 + 5x = x \cdot x + 5 \cdot x = \mathbf{x(x + 5)}$
+  *   **Factor comun un număr:** $6x - 9 = 3 \cdot 2x - 3 \cdot 3 = \mathbf{3(2x - 3)}$
+  *   **Factor comun număr și literă:** $10x^3 - 15x^2 = \mathbf{5x^2(2x - 3)}$
+  *   **Factor comun o paranteză:** $x(a+b) + y(a+b) = \mathbf{(a+b)(x+y)}$
+</ExampleBlock>
+
+<Alert type="warning">
+  Dacă un termen este scos integral ca factor comun, în locul lui rămâne **1** (nu zero!).
+  Exemplu: $x^2 + x = x(x + 1)$.
+</Alert>
+
+---
+
+## 2. Utilizarea formulelor de calcul prescurtat
+
+Dacă nu avem un factor comun, verificăm dacă expresia seamănă cu rezultatul unei formule de calcul prescurtat. Citim formulele de la dreapta la stânga!
+
+### A. Diferența de pătrate (Când avem 2 termeni cu minus între ei)
+$$ a^2 - b^2 = (a - b)(a + b) $$
+
+*   $x^2 - 25 = x^2 - 5^2 = \mathbf{(x - 5)(x + 5)}$
+*   $4x^2 - 9 = (2x)^2 - 3^2 = \mathbf{(2x - 3)(2x + 3)}$
+
+### B. Binomul la pătrat (Când avem 3 termeni)
+Dacă avem un pătrat perfect la început, un pătrat perfect la final și dublul produsului lor la mijloc.
+$$ a^2 \pm 2ab + b^2 = (a \pm b)^2 $$
+
+*   $x^2 + 6x + 9 = x^2 + 2 \cdot x \cdot 3 + 3^2 = \mathbf{(x + 3)^2}$
+*   $x^2 - 10x + 25 = x^2 - 2 \cdot x \cdot 5 + 5^2 = \mathbf{(x - 5)^2}$
+
+---
+
+## 3. Gruparea termenilor
+
+Se folosește de obicei când avem **4 termeni**. Ideea este să grupăm câte doi termeni, să scoatem factor comun din fiecare grupă, pentru a obține o **paranteză comună**.
+
+$$ ax + ay + bx + by = a(x+y) + b(x+y) = (x+y)(a+b) $$
+
+<ExampleBlock title="Exemplu: Gruparea termenilor" type="math">
+  Descompuneți expresia: $$ x^3 + x^2 + 5x + 5 $$
+
+  **Pasul 1:** Grupăm primii doi termeni și ultimii doi.
+  Din primii doi ($x^3 + x^2$) scoatem factor comun pe $x^2$.
+  Din ultimii doi ($5x + 5$) scoatem factor comun pe $5$.
+
+  $$ = x^2(x + 1) + 5(x + 1) $$
+
+  **Pasul 2:** Acum, observăm că paranteza $(x+1)$ este factor comun pentru întreaga expresie!
+  
+  $$ = \mathbf{(x + 1)(x^2 + 5)} $$
+</ExampleBlock>
+
+---
+
+## 4. Spargerea unui termen (Metoda sumei și a produsului)
+
+Se folosește pentru trinoame de forma **$x^2 + bx + c$** care nu sunt pătrate perfecte (ex: $x^2 + 5x + 6$).
+
+**Secretul:** Trebuie să găsim două numere care **adunate** dau $b$ (termenul din mijloc) și **înmulțite** dau $c$ (termenul liber). Apoi despărțim termenul din mijloc ($bx$) folosind aceste numere și aplicăm metoda grupării.
+
+<ExampleBlock title="Exemplu: Spargerea termenului din mijloc" type="math">
+  Descompuneți: $$ x^2 + 5x + 6 $$
+
+  1. Căutăm două numere care adunate dau **5** și înmulțite dau **6**.
+     *Numerele sunt 2 și 3 ($2+3=5$ și $2 \cdot 3=6$).*
+  
+  2. "Spargem" termenul $5x$ în $2x + 3x$:
+  $$ = x^2 + 2x + 3x + 6 $$
+  
+  3. Facem gruparea termenilor (câte 2):
+  $$ = x(x + 2) + 3(x + 2) $$
+  
+  4. Scoatem paranteza factor comun:
+  $$ = \mathbf{(x + 2)(x + 3)} $$
+</ExampleBlock>
+
+---
+
+## 5. Exercițiu Combinat (Tip Examen)
+
+În problemele de la Evaluarea Națională, de cele mai multe ori trebuie să aplici două metode secvențial (una după alta).
+
+<ExampleBlock title="Exercițiu cu dificultate medie" type="math">
+  Descompuneți complet în factori expresia: $$ 3x^3 - 12x $$
+
+  **Pasul 1: Există un factor comun?**
+  DA! Ne uităm la numere (3 și 12 se împart la 3) și la litere ($x^3$ și $x$ se împart la $x$).
+  Scoatem factor comun pe $3x$:
+  $$ 3x^3 - 12x = 3x(x^2 - 4) $$
+
+  **Pasul 2: Paranteza rămasă se mai poate descompune?**
+  Ne uităm la $(x^2 - 4)$. Aceasta este o **diferență de pătrate**, pentru că $4 = 2^2$.
+  Aplicăm formula $a^2 - b^2 = (a-b)(a+b)$:
+  $$ x^2 - 4 = (x - 2)(x + 2) $$
+
+  **Rezultatul final:** (Înmulțim factorul comun cu noua descompunere)
+  $$ 3x^3 - 12x = \mathbf{3x(x - 2)(x + 2)} $$
+</ExampleBlock>

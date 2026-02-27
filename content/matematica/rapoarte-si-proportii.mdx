@@ -1,0 +1,104 @@
+# Rapoarte și Proporții
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Introducere</h3>
+  <p>
+    Ai vrut vreodată să împarți o sumă de bani corect între doi prieteni sau să ajustezi o rețetă de prăjituri pentru mai multe persoane? Aici intervin <strong>rapoartele</strong> și <strong>proporțiile</strong>!
+  </p>
+  <p className="mt-2">
+    Ele ne ajută să comparăm mărimi și să menținem un echilibru constant între ele.
+  </p>
+</div>
+
+## 1. Ce este un raport?
+
+Raportul a două numere $a$ și $b$ (unde $b \neq 0$) este câtul neefectuat al împărțirii lui $a$ la $b$.
+Se notează:
+$$ \frac{a}{b} \text{ sau } a : b $$
+
+*   $a$ și $b$ se numesc **termenii raportului**.
+*   Rezultatul împărțirii $a : b$ se numește **valoarea raportului**.
+
+*Exemplu:* Raportul numerelor 6 și 2 este $\frac{6}{2}$. Valoarea acestui raport este $3$.
+
+---
+
+## 2. Proporții
+
+O **proporție** este o egalitate între două rapoarte.
+$$ \frac{a}{b} = \frac{c}{d} $$
+*(unde $b \neq 0$ și $d \neq 0$)*
+
+### Termenii proporției:
+*   $a$ și $d$ se numesc **extremi** (sunt la marginile scrierii $a:b = c:d$).
+*   $b$ și $c$ se numesc **mezi** (sunt la mijloc).
+
+### ⚠️ Proprietatea fundamentală a proporțiilor
+Într-o proporție, produsul extremilor este egal cu produsul mezilor.
+
+$$ \frac{a}{b} = \frac{c}{d} \iff a \cdot d = b \cdot c $$
+
+<Alert type="warning">
+  Această regulă este "cheia magică" pentru a rezolva aproape orice exercițiu cu proporții! Dacă ai un termen necunoscut ($x$), folosești încrucișarea: înmulțești numerele de pe diagonala completă și împarți la numărul rămas singur.
+</Alert>
+
+---
+
+## 3. Mărimi Direct și Invers Proporționale
+
+### A. Mărimi Direct Proporționale (D.P.)
+Două mărimi sunt direct proporționale dacă depind una de cealaltă astfel încât, dacă una crește de un număr de ori, și cealaltă **crește** de același număr de ori.
+
+Numerele $x, y, z$ sunt direct proporționale cu numerele $a, b, c$ dacă se pot scrie ca rapoarte egale:
+$$ \frac{x}{a} = \frac{y}{b} = \frac{z}{c} = k $$
+*(unde $k$ este un număr numit coeficient de proporționalitate)*.
+
+*Exemplu din viață:* Dacă 1 kg de mere costă 5 lei, atunci 3 kg de mere vor costa 15 lei. (Cantitatea a crescut de 3 ori, prețul a crescut tot de 3 ori).
+
+### B. Mărimi Invers Proporționale (I.P.)
+Două mărimi sunt invers proporționale dacă, atunci când una crește de un număr de ori, cealaltă **scade** de același număr de ori.
+
+Numerele $x, y, z$ sunt invers proporționale cu numerele $a, b, c$ dacă produsele lor sunt egale:
+$$ x \cdot a = y \cdot b = z \cdot c = k $$
+
+*Exemplu din viață:* Dacă 2 muncitori termină o lucrare în 6 zile, 4 muncitori vor termina aceeași lucrare în 3 zile. (Numărul de muncitori s-a dublat, timpul de lucru s-a înjumătățit).
+
+---
+
+## 4. Exerciții Rezolvate
+
+<ExampleBlock title="Exercițiul 1: Aflarea unui termen necunoscut" type="math">
+  Să se afle numărul $x$ din proporția: $$ \frac{x}{4} = \frac{15}{6} $$
+
+  **Rezolvare:**
+  Folosim proprietatea fundamentală (înmulțim pe diagonală):
+  $$ x \cdot 6 = 4 \cdot 15 $$
+  $$ 6x = 60 $$
+  $$ x = \frac{60}{6} = 10 $$
+  
+  *Metoda scurtă:* $x = \frac{4 \cdot 15}{6} = \frac{60}{6} = 10$.
+</ExampleBlock>
+
+<ExampleBlock title="Exercițiul 2: Împărțire în părți D.P." type="math">
+  Împărțiți numărul 100 în trei părți direct proporționale (d.p.) cu numerele 2, 3 și 5.
+
+  **Rezolvare:**
+  Notăm cele trei părți cu $x, y, z$. 
+  Știm că suma lor este 100: $$ x + y + z = 100 $$
+  Ele sunt d.p. cu 2, 3 și 5, deci formăm rapoartele:
+  $$ \frac{x}{2} = \frac{y}{3} = \frac{z}{5} = k $$
+  
+  Exprimăm fiecare număr în funcție de litera $k$:
+  *   $x = 2k$
+  *   $y = 3k$
+  *   $z = 5k$
+  
+  Înlocuim în suma inițială:
+  $$ 2k + 3k + 5k = 100 $$
+  $$ 10k = 100 \implies k = 10 $$
+  
+  Acum aflăm numerele $x, y$ și $z$:
+  *   $x = 2 \cdot 10 = \mathbf{20}$
+  *   $y = 3 \cdot 10 = \mathbf{30}$
+  *   $z = 5 \cdot 10 = \mathbf{50}$
+</ExampleBlock>

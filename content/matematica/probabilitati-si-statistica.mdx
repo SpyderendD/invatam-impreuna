@@ -1,0 +1,96 @@
+# Probabilități și Statistică
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Despre ce este vorba?</h3>
+  <p>
+    <strong>Probabilitatea</strong> măsoară șansa ca un anumit eveniment să se întâmple (de exemplu, să dai un 6 la zar).
+  </p>
+  <p className="mt-2">
+    <strong>Statistica</strong> ne ajută să colectăm date, să le organizăm în tabele sau grafice și să tragem concluzii din ele (de exemplu, calcularea mediei clasei la matematică).
+  </p>
+</div>
+
+## 1. Probabilități
+
+Formula de bază a probabilității este una dintre cele mai importante și ușoare formule din matematică. Probabilitatea unui eveniment $A$ se notează cu $P(A)$.
+
+$$
+P = \frac{\text{numărul cazurilor FAVORABILE}}{\text{numărul cazurilor POSIBILE}}
+$$
+
+*   **Cazuri posibile:** Tot ce se poate întâmpla în acel experiment.
+*   **Cazuri favorabile:** Doar situațiile care ne interesează pe noi (care respectă cerința problemei).
+
+<Alert type="warning">
+  **Reguli de aur pentru probabilități:**
+  1. O probabilitate este mereu un număr între **0 și 1** (sau între 0% și 100%). $$ 0 \le P(A) \le 1 $$
+  2. **Evenimentul imposibil** are probabilitatea 0 (ex: să dai 7 cu un zar normal).
+  3. **Evenimentul sigur** are probabilitatea 1 (ex: să extragi o bilă roșie dintr-o urnă care are *doar* bile roșii).
+</Alert>
+
+---
+
+## 2. Exemple Clasice de Probabilități
+
+<ExampleBlock title="Exemplul 1: Aruncarea zarului" type="math">
+  **Problemă:** Aruncăm un zar normal (cu fețe de la 1 la 6). Care este probabilitatea să obținem un număr prim?
+
+  **Rezolvare:**
+  1.  **Cazuri posibile:** Zarul poate cădea pe 1, 2, 3, 4, 5 sau 6. 
+      Deci avem **6 cazuri posibile**.
+  2.  **Cazuri favorabile:** Numerele prime de pe zar sunt 2, 3 și 5. (Atenție: 1 nu este prim!). 
+      Deci avem **3 cazuri favorabile**.
+  3.  **Calculăm probabilitatea:**
+  $$ P = \frac{3}{6} $$
+  Simplificăm prin 3:
+  $$ P = \frac{1}{2} = 0,5 \text{ (sau 50\%)} $$
+</ExampleBlock>
+
+<ExampleBlock title="Exemplul 2: Extragerea din urnă" type="math">
+  **Problemă:** Într-o urnă sunt 4 bile albe, 5 bile roșii și 1 bilă neagră. Care este probabilitatea ca, extrăgând o bilă la întâmplare, aceasta să **NU** fie roșie?
+
+  **Rezolvare:**
+  1.  **Cazuri posibile:** Totalul bilelor este $4 + 5 + 1 = 10$.
+  2.  **Cazuri favorabile:** Vrem o bilă care "nu este roșie". Asta înseamnă că poate fi albă (4) sau neagră (1). Total favorabile = $4 + 1 = 5$.
+  3.  **Probabilitatea:**
+  $$ P = \frac{5}{10} = \frac{1}{2} = 50\% $$
+</ExampleBlock>
+
+---
+
+## 3. Elemente de Statistică
+
+Statistica înseamnă lucrul cu date. Cele mai comune cerințe sunt interpretarea unui grafic și calculul mediilor.
+
+### A. Media Aritmetică
+Se adună toate valorile și se împarte la numărul lor.
+$$ M_a = \frac{x_1 + x_2 + \dots + x_n}{n} $$
+
+### B. Media Ponderată
+Se folosește când anumite valori au "greutăți" sau "importanțe" diferite (numite ponderi - $p_1, p_2 \dots$). Este formula folosită pentru calcularea mediei la școală (dacă teza ar avea o pondere diferită, de exemplu).
+
+$$ M_p = \frac{x_1 \cdot p_1 + x_2 \cdot p_2 + \dots + x_n \cdot p_n}{p_1 + p_2 + \dots + p_n} $$
+
+<ExampleBlock title="Exercițiu de Statistică: Calculul Mediei" type="math">
+  **Problemă:** Notele obținute de elevii unei clase la un test sunt date în tabelul următor:
+  
+  ##| Nota obținută ($x$) | 4 | 5 | 7 | 9 | 10 |  
+  ##| **Număr elevi ($p$)** | 2 | 3 | 10 | 4 | 1 |
+
+  Calculați media clasei la acest test.
+
+  **Rezolvare:**
+  Aici folosim **media ponderată**, unde "Nota" este valoarea ($x$), iar "Numărul de elevi" este ponderea/frecvența ($p$).
+  
+  1.  **Suma produselor (Note $\cdot$ Elevi):**
+  $$ S = 4 \cdot 2 + 5 \cdot 3 + 7 \cdot 10 + 9 \cdot 4 + 10 \cdot 1 $$
+  $$ S = 8 + 15 + 70 + 36 + 10 = 139 $$
+  
+  2.  **Suma ponderilor (Total elevi):**
+  $$ P = 2 + 3 + 10 + 4 + 1 = 20 $$
+  
+  3.  **Media clasei:**
+  $$ M_p = \frac{139}{20} = 6,95 $$
+  
+  *Răspuns: Media clasei la test este 6,95.*
+</ExampleBlock>

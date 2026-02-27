@@ -6,6 +6,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Providers } from '@/components/Providers';
 import CustomCursor from '@/components/animations/CustomCursor';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import 'katex/dist/katex.min.css';
 
 // =======================================================================
 // 1. OPTIMIZARE FONTURI

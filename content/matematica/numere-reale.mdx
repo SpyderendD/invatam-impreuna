@@ -1,0 +1,120 @@
+# Mulțimea Numerelor Reale ($\mathbb{R}$)
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 De la Rațional la Real</h3>
+  <p>
+    Până acum am învățat despre numerele care pot fi scrise ca fracții (raționale). Dar există numere, precum $\sqrt{2}$ sau $\pi$, care au o infinitate de zecimale care <strong>nu se repetă periodic</strong>.
+  </p>
+  <p className="mt-2">
+    Acestea se numesc <strong>numere iraționale</strong>. Dacă le punem la un loc cu cele raționale, obținem <strong>mulțimea numerelor reale</strong>.
+  </p>
+</div>
+
+## 1. Structura Mulțimii $\mathbb{R}$
+
+Mulțimea numerelor reale este reuniunea dintre:
+1.  **Mulțimea numerelor raționale ($\mathbb{Q}$):** Fracții, numere întregi, zecimale finite sau periodice.
+2.  **Mulțimea numerelor iraționale ($\mathbb{R} \setminus \mathbb{Q}$):** Radicali care nu se extrag exact, numere precum $\pi$ (pi).
+
+$$
+\mathbb{R} = \mathbb{Q} \cup (\mathbb{R} \setminus \mathbb{Q})
+$$
+
+### Incluziunea mulțimilor (Matrioșka matematică)
+Orice număr natural este întreg, orice întreg este rațional, și orice rațional este real.
+
+$$
+\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}
+$$
+
+---
+
+## 2. Numere Iraționale
+
+Un număr este irațional dacă scrierea sa zecimală este **infinită și neperiodică**.
+
+<ExampleBlock title="Exemple de numere iraționale" type="math">
+  *   $\sqrt{2} \approx 1,41421356...$
+  *   $\sqrt{3} \approx 1,7320508...$
+  *   $\pi \approx 3,14159265...$
+  *   $0,1010010001...$ (nu are perioadă)
+</ExampleBlock>
+
+<Alert type="warning">
+  Atenție! Nu toți radicalii sunt numere iraționale.
+  *   $\sqrt{4} = 2$ (este rațional, chiar natural)
+  *   $\sqrt{0,25} = 0,5$ (este rațional)
+  
+  Doar radicalii din numere care **nu sunt pătrate perfecte** sunt iraționali.
+</Alert>
+
+---
+
+## 3. Modulul unui număr real
+
+Definiția este aceeași ca la numere întregi, dar aplicarea ei la radicali necesită atenție la comparare.
+
+$$
+|x| = \begin{cases} x, & \text{dacă } x \ge 0 \\ -x, & \text{dacă } x < 0 \end{cases}
+$$
+
+### Cum calculăm $|a - b|$ cu radicali?
+Trebuie să vedem dacă $a > b$ sau $a < b$.
+*   Dacă $a > b$, atunci $|a - b| = a - b$.
+*   Dacă $a < b$, atunci $|a - b| = -(a - b) = b - a$.
+
+<ExampleBlock title="Exemplu cu modul" type="math">
+  Calculați $|1 - \sqrt{2}|$.
+  
+  1. Comparăm $1$ cu $\sqrt{2}$. Știm că $1 = \sqrt{1}$.
+  2. Deoarece $\sqrt{1} < \sqrt{2}$, rezultă că $1 - \sqrt{2}$ este un număr **negativ**.
+  3. Modulul trebuie să fie pozitiv, deci schimbăm semnul:
+  
+  $$ |1 - \sqrt{2}| = -(1 - \sqrt{2}) = \sqrt{2} - 1 $$
+</ExampleBlock>
+
+---
+
+## 4. Reguli de calcul cu radicali
+
+Pentru $a, b \ge 0$:
+
+1.  **Produsul:** $\sqrt{a} \cdot \sqrt{b} = \sqrt{a \cdot b}$
+2.  **Câtul:** $\frac{\sqrt{a}}{\sqrt{b}} = \sqrt{\frac{a}{b}}$ (unde $b > 0$)
+3.  **Scoaterea factorilor de sub radical:** $\sqrt{a^2 \cdot b} = |a| \sqrt{b}$
+4.  **Introducerea factorilor sub radical:** $a \sqrt{b} = \sqrt{a^2 \cdot b}$ (dacă $a \ge 0$)
+
+<Alert type="warning">
+  **Greșeală frecventă:** Radicalul NU se distribuie la adunare sau scădere!
+  $$ \sqrt{a + b} \neq \sqrt{a} + \sqrt{b} $$
+  Exemplu: $\sqrt{9 + 16} = \sqrt{25} = 5$, pe când $\sqrt{9} + \sqrt{16} = 3 + 4 = 7$.
+</Alert>
+
+---
+
+## 5. Exercițiu Rezolvat (Operații în $\mathbb{R}$)
+
+<ExampleBlock title="Simplificați expresia" type="math">
+  $$ E = \sqrt{32} - 3\sqrt{8} + \sqrt{2} \cdot (3 + \sqrt{2}) $$
+
+  **Pasul 1: Scoatem factorii de sub radical**
+  *   $\sqrt{32} = \sqrt{16 \cdot 2} = 4\sqrt{2}$
+  *   $\sqrt{8} = \sqrt{4 \cdot 2} = 2\sqrt{2}$
+
+  Înlocuim în expresie:
+  $$ E = 4\sqrt{2} - 3(2\sqrt{2}) + \sqrt{2}(3 + \sqrt{2}) $$
+
+  **Pasul 2: Efectuăm înmulțirile**
+  *   $3 \cdot 2\sqrt{2} = 6\sqrt{2}$
+  *   $\sqrt{2} \cdot 3 = 3\sqrt{2}$
+  *   $\sqrt{2} \cdot \sqrt{2} = \sqrt{4} = 2$
+
+  Expresia devine:
+  $$ E = 4\sqrt{2} - 6\sqrt{2} + 3\sqrt{2} + 2 $$
+
+  **Pasul 3: Adunăm termenii asemenea (cei cu $\sqrt{2}$)**
+  $$ 4\sqrt{2} - 6\sqrt{2} + 3\sqrt{2} = (4 - 6 + 3)\sqrt{2} = 1\sqrt{2} = \sqrt{2} $$
+
+  **Rezultat final:**
+  $$ E = \sqrt{2} + 2 $$
+</ExampleBlock>

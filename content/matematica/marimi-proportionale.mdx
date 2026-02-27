@@ -1,0 +1,122 @@
+# Mărimi Direct și Invers Proporționale
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Cum le deosebim rapid?</h3>
+  <p>
+    Imaginează-ți două mărimi ca fiind conectate:
+  </p>
+  <ul className="mt-2 list-disc list-inside">
+    <li><strong>Direct Proporționale (D.P.):</strong> Dacă una crește, cealaltă <strong>crește</strong> și ea de același număr de ori. (Ex: Cumperi <em>mai multe</em> caiete, plătești <em>mai mulți</em> bani).</li>
+    <li><strong>Invers Proporționale (I.P.):</strong> Dacă una crește, cealaltă <strong>scade</strong> de același număr de ori. (Ex: Ai <em>mai mulți</em> muncitori, lucrarea se termină în <em>mai puține</em> zile).</li>
+  </ul>
+</div>
+
+## 1. Mărimi Direct Proporționale (D.P.)
+
+Numerele $x, y, z$ sunt direct proporționale cu numerele $a, b, c$ dacă formează **rapoarte egale**. 
+
+Formula matematică este:
+$$
+\frac{x}{a} = \frac{y}{b} = \frac{z}{c} = k
+$$
+*(unde $k$ este coeficientul de proporționalitate)*
+
+Din această relație, putem "scoate" fiecare necunoscută foarte ușor:
+$$ x = a \cdot k $$
+$$ y = b \cdot k $$
+$$ z = c \cdot k $$
+
+---
+
+## 2. Mărimi Invers Proporționale (I.P.)
+
+Numerele $x, y, z$ sunt invers proporționale cu numerele $a, b, c$ dacă **produsele lor sunt egale**.
+
+Formula matematică este:
+$$
+x \cdot a = y \cdot b = z \cdot c = k
+$$
+
+La fel ca mai sus, putem exprima necunoscutele în funcție de $k$, dar de data aceasta prin **împărțire**:
+$$ x = \frac{k}{a} $$
+$$ y = \frac{k}{b} $$
+$$ z = \frac{k}{c} $$
+
+<Alert type="warning">
+  **Atenție mare la confuzii!** 
+  *   Când auzi **D.P.** te gândești imediat la **FRAȚII** (împărțire).
+  *   Când auzi **I.P.** te gândești imediat la **PRODUS** (înmulțire).
+</Alert>
+
+---
+
+## 3. Probleme Rezolvate (Pas cu Pas)
+
+Acestea sunt modelele clasice de probleme care pică la teze și examene.
+
+<ExampleBlock title="Model 1: D.P. și perimetrul unui triunghi" type="math">
+  <strong>Problemă:</strong> Laturile unui triunghi sunt direct proporționale cu numerele 3, 4 și 5. Știind că perimetrul triunghiului este 60 cm, aflați lungimile laturilor.
+
+  **Pasul 1: Scriem datele problemei**
+  Fie $a, b, c$ laturile triunghiului.
+  $a, b, c$ sunt d.p. cu $3, 4, 5$.
+  Perimetrul: $a + b + c = 60$.
+
+  **Pasul 2: Aplicăm formula D.P.**
+  $$ \frac{a}{3} = \frac{b}{4} = \frac{c}{5} = k $$
+  Deci: $a = 3k$, $b = 4k$, $c = 5k$.
+
+  **Pasul 3: Înlocuim în relația perimetrului**
+  $$ 3k + 4k + 5k = 60 $$
+  $$ 12k = 60 \implies k = \frac{60}{12} = 5 $$
+
+  **Pasul 4: Aflăm laturile**
+  *   $a = 3 \cdot 5 = \mathbf{15 \text{ cm}}$
+  *   $b = 4 \cdot 5 = \mathbf{20 \text{ cm}}$
+  *   $c = 5 \cdot 5 = \mathbf{25 \text{ cm}}$
+</ExampleBlock>
+
+
+<ExampleBlock title="Model 2: I.P. și împărțirea unui număr" type="math">
+  <strong>Problemă:</strong> Împărțiți numărul 62 în trei părți invers proporționale cu numerele 2, 3 și 5.
+
+  **Pasul 1: Scriem datele**
+  Fie $x, y, z$ cele trei părți.
+  Suma lor este: $x + y + z = 62$.
+  Sunt i.p. cu $2, 3, 5$.
+
+  **Pasul 2: Aplicăm formula I.P.**
+  $$ x \cdot 2 = y \cdot 3 = z \cdot 5 = k $$
+  Deci: $x = \frac{k}{2}$, $y = \frac{k}{3}$, $z = \frac{k}{5}$.
+
+  **Pasul 3: Înlocuim în sumă și aducem la același numitor**
+  $$ \frac{k}{2} + \frac{k}{3} + \frac{k}{5} = 62 $$
+  
+  Numitorul comun pentru 2, 3 și 5 este **30**.
+  Amplificăm prima fracție cu 15, a doua cu 10, a treia cu 6:
+  $$ \frac{15k}{30} + \frac{10k}{30} + \frac{6k}{30} = 62 $$
+  $$ \frac{31k}{30} = 62 $$
+
+  **Pasul 4: Aflăm $k$ și apoi numerele**
+  $$ 31k = 62 \cdot 30 \implies 31k = 1860 \implies k = \frac{1860}{31} = 60 $$
+
+  *   $x = \frac{60}{2} = \mathbf{30}$
+  *   $y = \frac{60}{3} = \mathbf{20}$
+  *   $z = \frac{60}{5} = \mathbf{12}$
+  
+  *(Verificare: 30 + 20 + 12 = 62. Corect!)*
+</ExampleBlock>
+
+## 4. Regula de trei simplă
+
+Este o metodă practică derivată din proporționalitate, folosită pentru a afla o a patra mărime când cunoaștem alte trei.
+
+**Exemplu:** Dacă 5 kg de mere costă 15 lei, cât costă 8 kg de mere?
+Acestea sunt **mărimi direct proporționale** (mai multe mere = mai mulți bani).
+
+Scriem schematic:
+$5 \text{ kg} \dots\dots\dots 15 \text{ lei}$
+$8 \text{ kg} \dots\dots\dots x \text{ lei}$
+
+Când mărimile sunt D.P., înmulțim pe diagonală:
+$$ x = \frac{8 \cdot 15}{5} = \frac{120}{5} = 24 \text{ lei} $$

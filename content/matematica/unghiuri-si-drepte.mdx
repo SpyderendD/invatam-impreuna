@@ -1,0 +1,80 @@
+# Unghiuri și Drepte paralele
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce înseamnă drepte paralele?</h3>
+  <p>
+    Două drepte din același plan care nu au niciun punct comun se numesc <strong>drepte paralele</strong>. Notăm acest lucru cu simbolul $d_1 \parallel d_2$.
+  </p>
+</div>
+
+## 1. Unghiuri formate de două drepte cu o transversală
+
+Când o dreaptă $t$ (numită **transversală**) taie două drepte $a$ și $b$, se formează **8 unghiuri**. Acestea sunt grupate în perechi cu denumiri specifice:
+
+<div className="my-6 p-4 bg-white rounded-lg border shadow-sm">
+  <img 
+      src="https://mquest.ro/textcurriculum/159/image1.png" 
+      alt="Unghiuri formate de o transversală"
+      className="mx-auto max-w-full h-auto"
+  />
+  <p className="text-[10px] text-center text-gray-400 mt-2">Diagramă: Unghiuri alterne, corespondente și interne.</p>
+</div>
+
+### Tipuri de unghiuri:
+1.  **Alterne interne:** Perechi de unghiuri aflate între drepte, de o parte și de alta a transversalei (ex: $\hat{3}$ și $\hat{5}$).
+2.  **Alterne externe:** Perechi de unghiuri aflate în exteriorul dreptelor, de o parte și de alta a transversalei (ex: $\hat{1}$ și $\hat{7}$).
+3.  **Corespondente:** Unghiuri aflate în aceeași poziție față de intersecție (ex: $\hat{1}$ și $\hat{5}$).
+4.  **Interne de aceeași parte:** Unghiuri aflate între drepte, pe aceeași parte a transversalei (ex: $\hat{4}$ și $\hat{5}$).
+
+---
+
+## 2. Teorema dreptelor paralele
+
+Dacă dreptele $a$ și $b$ sunt **paralele**, atunci:
+
+*   Unghiurile **alterne interne** sunt **CONGRUENTE** (egale).
+*   Unghiurile **alterne externe** sunt **CONGRUENTE**.
+*   Unghiurile **corespondente** sunt **CONGRUENTE**.
+*   Unghiurile **interne de aceeași parte** sunt **SUPLEMENTARE** (suma lor este $180^\circ$).
+
+<Alert type="info">
+  **Reciproca:** Dacă într-un exercițiu demonstrezi că o pereche de unghiuri alterne interne sunt egale, atunci rezultă automat că dreptele sunt paralele!
+</Alert>
+
+---
+
+## 3. Unghiuri opuse la vârf și Alterne
+
+Nu uita de proprietățile de bază care se aplică mereu:
+*   **Unghiuri opuse la vârf:** Sunt întotdeauna egale.
+*   **Unghiuri suplementare (pe aceeași dreaptă):** Suma lor este $180^\circ$.
+
+---
+
+## 4. Exercițiu Rezolvat
+
+<ExampleBlock title="Aflarea măsurilor unghiurilor" type="math">
+  **Problemă:** Fie dreptele $a \parallel b$ tăiate de transversala $t$. Știind că măsura unghiului $\hat{1}$ este de $120^\circ$, aflați măsurile celorlalte unghiuri.
+
+  **Rezolvare:**
+  1.  **$\measuredangle 3 = 120^\circ$** (Opuse la vârf cu $\hat{1}$).
+  2.  **$\measuredangle 5 = 120^\circ$** (Alterne interne cu $\hat{3}$, deoarece $a \parallel b$).
+  3.  **$\measuredangle 7 = 120^\circ$** (Corespondent cu $\hat{3}$ sau opus la vârf cu $\hat{5}$).
+  
+  Acum aflăm unghiurile vecine:
+  4.  **$\measuredangle 2 = 180^\circ - 120^\circ = 60^\circ$** (Suplementar cu $\hat{1}$).
+  5.  **$\measuredangle 4 = 60^\circ$** (Opus la vârf cu $\hat{2}$).
+  6.  **$\measuredangle 6 = 60^\circ$** (Altern intern cu $\hat{4}$).
+  7.  **$\measuredangle 8 = 60^\circ$** (Opus la vârf cu $\hat{6}$).
+
+  **Concluzie:** Când două drepte paralele sunt tăiate de o transversală, obținem doar **două măsuri** diferite de unghiuri care se repetă!
+</ExampleBlock>
+
+---
+
+## 5. Criterii de paralelism (Cum demonstrăm că $a \parallel b$?)
+
+Putem spune că două drepte sunt paralele dacă transversala formează:
+1.  O pereche de unghiuri **alterne interne** egale.
+2.  O pereche de unghiuri **corespondente** egale.
+3.  O pereche de unghiuri **interne de aceeași parte** suplementare ($180^\circ$).

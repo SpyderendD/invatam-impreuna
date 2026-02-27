@@ -1,0 +1,59 @@
+# Mulțimi: Relații și Operații
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce este o mulțime?</h3>
+  <p>
+    O **mulțime** este o colecție de obiecte (numite elemente) bine determinate și distincte.
+  </p>
+</div>
+
+## 1. Relația de apartenență
+
+*   Dacă un element $x$ se află în mulțimea $A$, scriem: $$x \in A$$ (citim "$x$ aparține lui $A$").
+*   Dacă un element $y$ **NU** se află în mulțimea $A$, scriem: $$y \notin A$$ (citim "$y$ nu aparține lui $A$").
+
+{/* AICI FOLOSIM NOUL STIL 'MATH' */}
+<ExampleBlock title="Exemplu concret" type="math">
+  Fie mulțimea cifrelor pare: $$P = \{0, 2, 4, 6, 8\}$$
+  
+  *   $2 \in P$ (Adevărat)
+  *   $3 \notin P$ (Adevărat)
+  *   $10 \notin P$ (Fals, 10 este număr, nu cifră)
+</ExampleBlock>
+
+## 2. Relații între mulțimi
+
+### A. Incluziunea ($\subset$)
+$$A \subset B \iff (\forall x \in A \implies x \in B)$$
+
+### B. Egalitatea ($=$)
+$$A = B \iff (A \subset B \text{ și } B \subset A)$$
+
+## 3. Operații cu Mulțimi
+
+### 🔵 Reuniunea ($\cup$)
+Elementele care sunt în $A$ **SAU** în $B$.
+$$A \cup B = \{x \mid x \in A \text{ sau } x \in B\}$$
+
+### 🔴 Intersecția ($\cap$)
+Elementele care sunt în $A$ **ȘI** în $B$ (comune).
+$$A \cap B = \{x \mid x \in A \text{ și } x \in B\}$$
+
+### 🟢 Diferența ($\setminus$)
+Elementele care sunt în $A$, dar **NU** în $B$.
+$$A \setminus B = \{x \mid x \in A \text{ și } x \notin B\}$$
+
+---
+
+## 4. Exercițiu Rezolvat
+
+<ExampleBlock title="Problema" type="math">
+  <strong>Se dau mulțimile:</strong>
+  $$A = \{1, 2, 3, 4\}$$
+  $$B = \{3, 4, 5, 6\}$$
+  
+  <strong>Rezolvare:</strong>
+  1.  **Reuniunea:** $$A \cup B = \{1, 2, \mathbf{3, 4}, 5, 6\}$$
+  2.  **Intersecția:** $$A \cap B = \{3, 4\}$$
+  3.  **Diferența A-B:** $$A \setminus B = \{1, 2\}$$ (am tăiat 3 și 4)
+</ExampleBlock>

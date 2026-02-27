@@ -1,0 +1,123 @@
+# Operații cu numere reale reprezentate prin litere (Calcul algebric)
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 De ce folosim litere?</h3>
+  <p>
+    În matematică, literele ($x, y, a, b, \dots$) țin locul unor numere pe care nu le cunoaștem încă sau care se pot schimba. 
+  </p>
+  <p className="mt-2">
+    O expresie de forma $3x^2y$ se numește <strong>termen algebric</strong>. El este format din:
+    <br/>• <strong>Coeficient</strong> (numărul din față): $3$
+    <br/>• <strong>Partea literală</strong> (literele cu tot cu puteri): $x^2y$
+  </p>
+  <p className="mt-2 text-sm text-blue-600 dark:text-blue-400">
+    <em>*Atenție: Între număr și literă există mereu un semn de înmulțire invizibil. Deci $3x$ înseamnă $3 \cdot x$.</em>
+  </p>
+</div>
+
+## 1. Adunarea și Scăderea (Reducerea termenilor asemenea)
+
+Putem aduna sau scădea **DOAR termenii asemenea**. 
+Doi termeni sunt asemenea dacă au **exact aceeași parte literală** (aceleași litere la aceleași puteri).
+
+**Cum se face?** Adunăm sau scădem coeficienții (numerele) și copiem partea literală.
+
+*   ✅ $3x + 5x = 8x$ (Sunt asemenea)
+*   ✅ $7y^2 - 2y^2 = 5y^2$ (Sunt asemenea)
+*   ❌ $3x + 2y$ (NU se pot aduna, litere diferite)
+*   ❌ $4x^2 + 3x$ (NU se pot aduna, puteri diferite)
+
+<ExampleBlock title="Exemplu: Reducerea termenilor" type="math">
+  Simplificați expresia: $$ E = 5x + 3y - 2x + 7y - 4 $$
+  
+  Grupăm termenii asemenea ($x$ cu $x$, $y$ cu $y$, și numerele libere separat):
+  $$ E = (5x - 2x) + (3y + 7y) - 4 $$
+  $$ E = 3x + 10y - 4 $$
+</ExampleBlock>
+
+---
+
+## 2. Înmulțirea și Împărțirea
+
+Aici nu mai avem nevoie de termeni asemenea. Putem înmulți/împărți orice!
+**Regula:** Număr cu număr (coeficient cu coeficient) și literă cu literă (folosind regulile de la puteri: $x^a \cdot x^b = x^{a+b}$).
+
+### Înmulțirea:
+*   $2x \cdot 3y = (2 \cdot 3) \cdot (x \cdot y) = 6xy$
+*   $4x \cdot 5x^2 = (4 \cdot 5) \cdot (x^1 \cdot x^2) = 20x^3$
+
+### Împărțirea:
+*   $10x^3 : 2x = (10 : 2) \cdot (x^3 : x^1) = 5x^2$
+
+---
+
+## 3. Desfacerea Parantezelor (Distributivitatea)
+
+### A. Un termen înmulțit cu o paranteză
+Termenul din fața parantezei se înmulțește cu **fiecare** termen din interiorul ei.
+
+$$ a(b + c - d) = a \cdot b + a \cdot c - a \cdot d $$
+
+*Exemplu:* $3x(2x + 4) = 3x \cdot 2x + 3x \cdot 4 = 6x^2 + 12x$
+
+### B. O paranteză înmulțită cu altă paranteză
+Fiecare termen din prima paranteză se înmulțește cu fiecare termen din a doua paranteză.
+
+$$ (a + b)(c + d) = a \cdot c + a \cdot d + b \cdot c + b \cdot d $$
+
+*Exemplu:* $(x + 2)(x + 3) = x^2 + 3x + 2x + 6 = x^2 + 5x + 6$
+
+---
+
+## 4. Formule de Calcul Prescurtat 🔥
+
+Acestea trebuie știute pe de rost! Te salvează de calcule lungi și sunt prezente în fiecare test de Evaluare Națională.
+
+**1. Pătratul unei sume:**
+$$ (a + b)^2 = a^2 + 2ab + b^2 $$
+
+**2. Pătratul unei diferențe:**
+$$ (a - b)^2 = a^2 - 2ab + b^2 $$
+
+**3. Produsul sumei cu diferența (Diferența de pătrate):**
+$$ (a - b)(a + b) = a^2 - b^2 $$
+
+<Alert type="warning">
+  **Greșeală Fatală Frecventă!** ☠️
+  Paranteza la pătrat NU se distribuie pur și simplu!
+  $$ (x + 3)^2 \neq x^2 + 3^2 $$
+  Corect este: $(x + 3)^2 = x^2 + 2 \cdot x \cdot 3 + 3^2 = x^2 + 6x + 9$
+</Alert>
+
+---
+
+## 5. Exercițiu Rezolvat (Tip Evaluare Națională)
+
+<ExampleBlock title="Aducerea la o formă mai simplă a unei expresii E(x)" type="math">
+  Fie expresia $$ E(x) = (x + 2)^2 - (x - 1)(x + 1) + 3(x - 4) $$.
+  Arătați că $E(x) = 7x - 7$.
+
+  **Pasul 1: Calculăm prima paranteză (Formula $(a+b)^2$)**
+  $$ (x + 2)^2 = x^2 + 2 \cdot x \cdot 2 + 2^2 = x^2 + 4x + 4 $$
+
+  **Pasul 2: Calculăm produsul parantezelor (Formula $(a-b)(a+b)$)**
+  $$ (x - 1)(x + 1) = x^2 - 1^2 = x^2 - 1 $$
+
+  **Pasul 3: Desfacem a treia paranteză**
+  $$ 3(x - 4) = 3x - 12 $$
+
+  **Pasul 4: Înlocuim totul în expresia E(x) și fim atenți la semne!**
+  Deoarece în fața produsului $(x-1)(x+1)$ aveam un semn de MINUS, îl punem în paranteză pentru a nu greși semnele:
+  $$ E(x) = (x^2 + 4x + 4) - (x^2 - 1) + (3x - 12) $$
+
+  Desfacem parantezele. Minusul din față schimbă semnele din interior:
+  $$ E(x) = x^2 + 4x + 4 - x^2 + 1 + 3x - 12 $$
+
+  **Pasul 5: Reducem termenii asemenea**
+  *   $x^2 - x^2 = 0$ (se reduc)
+  *   $4x + 3x = 7x$
+  *   $4 + 1 - 12 = 5 - 12 = -7$
+
+  **Rezultat final:**
+  $$ E(x) = 7x - 7 $$ *(Ceea ce trebuia demonstrat)*
+</ExampleBlock>

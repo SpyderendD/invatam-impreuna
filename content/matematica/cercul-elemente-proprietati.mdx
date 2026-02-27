@@ -1,0 +1,95 @@
+# Cercul: Elemente și Proprietăți
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce este cercul?</h3>
+  <p>
+    Cercul este mulțimea tuturor punctelor din plan situate la aceeași distanță (numită <strong>rază</strong>) față de un punct fix (numit <strong>centru</strong>).
+  </p>
+</div>
+
+## 1. Elementele cercului
+
+Pentru un cerc cu centrul în $O$ și raza $r$ (notat $\mathcal{C}(O, r)$), definim:
+
+1.  **Raza ($r$):** Segmentul care unește centrul cu un punct de pe cerc ($OA, OB$).
+2.  **Coarda:** Segmentul care unește două puncte oarecare de pe cerc.
+3.  **Diametrul ($d$):** Coarda care trece prin centrul cercului. Este cea mai lungă coardă.
+    *   **Relație:** $$ d = 2r $$
+4.  **Arcul de cerc:** Porțiunea din cerc cuprinsă între două puncte.
+5.  **Tangenta:** Dreapta care are un singur punct comun cu cercul.
+
+---
+
+## 2. Unghiuri în cerc
+
+### A. Unghiul la centru
+Este unghiul care are vârful în centrul cercului.
+*   **Proprietate:** Măsura unghiului la centru este egală cu măsura arcului cuprins între laturile sale.
+    $$ \measuredangle AOB = \text{măsura arcului } AB $$
+
+### B. Unghiul înscris în cerc
+Este unghiul care are vârful pe cerc, iar laturile sale sunt coarde.
+*   **Proprietate:** Măsura unghiului înscris în cerc este **jumătate** din măsura arcului cuprins între laturile sale.
+    $$ \measuredangle AMB = \frac{\text{măsura arcului } AB}{2} $$
+
+<Alert type="info">
+  <strong>Caz special:</strong> Orice unghi înscris într-un semicerc (care se sprijină pe un diametru) are măsura de <strong>$90^\circ$</strong>.
+</Alert>
+
+---
+
+## 3. Proprietăți importante
+
+1.  **Tangenta la cerc:** Tangenta este întotdeauna **perpendiculară pe rază** în punctul de contact.
+2.  **Distanța de la centru la o coardă:** Perpendiculara din centrul cercului pe o coardă înjumătățește coarda respectivă.
+3.  **Arce și coarde:** La arce egale corespund coarde egale (și invers).
+
+---
+
+## 4. Formule fundamentale
+
+Pentru calcule, folosim numărul irațional $\pi$ (Pi), care este aproximativ $3,14$.
+
+### A. Lungimea cercului (Circumferința)
+Reprezintă "perimetrul" cercului.
+$$ L = 2 \cdot \pi \cdot r $$
+
+### B. Aria cercului
+Reprezintă suprafața din interiorul cercului.
+$$ \mathcal{A} = \pi \cdot r^2 $$
+
+---
+
+## 5. Exercițiu Rezolvat (Model EN)
+
+<ExampleBlock title="Problema: Calculul unghiurilor și lungimilor" type="math">
+  **Întrebare:** Fie un cerc cu raza de 6 cm. Un unghi la centru are măsura de $60^\circ$. 
+  1. Aflați lungimea arcului mic $AB$.
+  2. Aflați aria sectorului de cerc corespunzător.
+
+  **Rezolvare:**
+  Știm $r = 6$ cm și $n^\circ = 60^\circ$.
+
+  **1. Lungimea arcului ($L_{arc}$):**
+  Folosim formula fracționară din lungimea totală:
+  $$ L_{arc} = \frac{2 \pi r \cdot n^\circ}{360^\circ} $$
+  $$ L_{arc} = \frac{2 \pi \cdot 6 \cdot 60}{360} = \frac{720 \pi}{360} = \mathbf{2\pi \text{ cm}} \approx 6,28 \text{ cm} $$
+
+  **2. Aria sectorului ($A_{sect}$):**
+  Folosim formula fracționară din aria totală:
+  $$ \mathcal{A}_{sect} = \frac{\pi r^2 \cdot n^\circ}{360^\circ} $$
+  $$ \mathcal{A}_{sect} = \frac{\pi \cdot 6^2 \cdot 60}{360} = \frac{36 \pi \cdot 60}{360} = \frac{2160 \pi}{360} = \mathbf{6\pi \text{ cm}^2} \approx 18,84 \text{ cm}^2 $$
+</ExampleBlock>
+
+---
+
+## 6. Rezumat vizual
+
+| Element | Formula / Proprietate |
+| :--- | :--- |
+| **Diametru** | $d = 2r$ |
+| **Lungime Cerc** | $2\pi r$ |
+| **Arie Cerc** | $\pi r^2$ |
+| **Unghi la centru** | Măsura arcului |
+| **Unghi înscris** | Jumătate din măsura arcului |
+| **Tangentă** | $\perp$ pe rază |

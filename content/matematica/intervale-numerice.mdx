@@ -1,0 +1,95 @@
+# Intervale Numerice în $\mathbb{R}$
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Ce este un interval?</h3>
+  <p>
+    Un <strong>interval</strong> este o submulțime a mulțimii numerelor reale ($\mathbb{R}$) care conține <strong>toate</strong> numerele cuprinse între două puncte date (numite capete sau extremități).
+  </p>
+  <p className="mt-2">
+    Spre deosebire de mulțimea $\{1, 2\}$ care conține doar două numere, intervalul $[1, 2]$ conține o infinitate de numere reale (1; 1,1; 1,5; $\sqrt{2}$; etc.).
+  </p>
+</div>
+
+## 1. Intervale Mărginite
+
+Sunt intervalele care au ambele capete numere reale (finite). Fie $a, b \in \mathbb{R}$ cu $a < b$.
+
+### A. Intervalul Închis $[a, b]$
+Conține toate numerele dintre $a$ și $b$, **inclusiv** capetele $a$ și $b$.
+Parantezele pătrate $[ \dots ]$ înseamnă că elementul aparține intervalului ($\le$ sau $\ge$).
+
+$$
+[a, b] = \{ x \in \mathbb{R} \mid a \le x \le b \}
+$$
+
+### B. Intervalul Deschis $(a, b)$
+Conține toate numerele dintre $a$ și $b$, dar **NU** conține capetele.
+Parantezele rotunde $( \dots )$ înseamnă că elementul nu aparține intervalului ($<$ sau $>$).
+
+$$
+(a, b) = \{ x \in \mathbb{R} \mid a < x < b \}
+$$
+
+### C. Intervale Semideschise
+Conțin doar unul dintre capete.
+*   **Închis la stânga, deschis la dreapta:** $[a, b) = \{ x \in \mathbb{R} \mid a \le x < b \}$
+*   **Deschis la stânga, închis la dreapta:** $(a, b] = \{ x \in \mathbb{R} \mid a < x \le b \}$
+
+---
+
+## 2. Intervale Nemărginite
+
+Sunt intervalele care se întind la infinit spre stânga ($-\infty$) sau spre dreapta ($+\infty$).
+
+*   $[a, +\infty) = \{ x \in \mathbb{R} \mid x \ge a \}$
+*   $(a, +\infty) = \{ x \in \mathbb{R} \mid x > a \}$
+*   $(-\infty, b] = \{ x \in \mathbb{R} \mid x \le b \}$
+*   $(-\infty, b) = \{ x \in \mathbb{R} \mid x < b \}$
+
+<Alert type="warning">
+  **Atenție!** La infinit ($-\infty$ și $+\infty$) se pune **ÎNTOTDEAUNA** paranteză rotundă, deoarece infinitul nu este un număr pe care să îl putem "atinge" sau include.
+</Alert>
+
+**Observație:** Întreaga axă a numerelor reale se poate scrie ca un interval:
+$$ \mathbb{R} = (-\infty, +\infty) $$
+
+---
+
+## 3. Operații cu Intervale
+
+Deoarece intervalele sunt mulțimi, putem face aceleași operații cu ele: Reuniune ($\cup$), Intersecție ($\cap$) și Diferență ($\setminus$).
+
+Pentru a rezolva operații cu intervale, **regula de aur este să desenăm axa numerelor**!
+
+### Pași pentru rezolvare:
+1.  Desenăm axa numerelor.
+2.  Marcăm capetele ambelor intervale în ordine crescătoare.
+3.  Hașurăm primul interval (de ex. cu linii oblice spre dreapta `///`).
+4.  Hașurăm al doilea interval (de ex. cu linii oblice spre stânga `\\\`).
+5.  Citim rezultatul de pe desen.
+
+---
+
+## 4. Exercițiu Rezolvat
+
+<ExampleBlock title="Operații cu intervale" type="math">
+  Fie intervalele $A =[-2, 4)$ și $B = (1, 6]$. Calculați $A \cup B$, $A \cap B$ și $A \setminus B$.
+
+  **Pasul 1: Înțelegem intervalele**
+  *   $A$ conține numerele de la $-2$ (inclusiv) până aproape de $4$.
+  *   $B$ conține numerele mai mari decât $1$ până la $6$ (inclusiv).
+
+  **Pasul 2: Intersecția ($A \cap B$) - Porțiunea dublu hașurată**
+  Căutăm numerele care se află în **amândouă** intervalele în același timp. Ele se suprapun între 1 și 4.
+  La 1, intervalul B este deschis, deci punem `(`. La 4, intervalul A este deschis, deci punem `)`.
+  $$ A \cap B = (1, 4) $$
+
+  **Pasul 3: Reuniunea ($A \cup B$) - Toată porțiunea hașurată**
+  Luăm toate numerele, de la cel mai mic capăt până la cel mai mare capăt hașurat. Începe la $-2$ (închis) și se termină la $6$ (închis).
+  $$ A \cup B = [-2, 6] $$
+
+  **Pasul 4: Diferența ($A \setminus B$) - Ce este în A, dar nu e în B**
+  Luăm intervalul $A$ și îi "tăiem" porțiunea comună cu $B$. 
+  Rămâne bucata de la $-2$ până la $1$. Deoarece numărul $1$ **nu** este în $B$ (are paranteză rotundă), înseamnă că el rămâne în $A$. Deci, la $1$ închidem paranteza.
+  $$ A \setminus B = [-2, 1] $$
+</ExampleBlock>

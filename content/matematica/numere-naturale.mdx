@@ -1,0 +1,116 @@
+# Mulțimea Numerelor Naturale ($\mathbb{N}$)
+
+<div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700 my-6">
+  <h3 className="text-blue-700 dark:text-blue-300 font-bold mb-2">💡 Definiție</h3>
+  <p>
+    Mulțimea numerelor naturale este formată din numerele folosite la numărarea obiectelor: 0, 1, 2, 3, ...
+  </p>
+  <p className="mt-2">
+    Aceasta este o mulțime infinită.
+  </p>
+</div>
+
+## 1. Notații importante
+
+*   **Mulțimea numerelor naturale:**
+    $$ \mathbb{N} = \{0, 1, 2, 3, 4, \dots\} $$
+
+*   **Mulțimea numerelor naturale nenule (fără zero):**
+    $$ \mathbb{N}^* = \{1, 2, 3, 4, \dots\} $$
+
+## 2. Reprezentare și Comparare
+
+Orice număr natural are:
+1.  Un **succesor**: Numărul imediat următor ($n + 1$).
+2.  Un **predecesor**: Numărul imediat anterior ($n - 1$), cu excepția lui 0.
+
+<ExampleBlock title="Exemplu: Compararea numerelor" type="math">
+  Comparăm numerele $a = 12.345$ și $b = 12.354$.
+  
+  *   Ne uităm la cifre de la stânga la dreapta.
+  *   Primele 3 cifre sunt identice ($1, 2, 3$).
+  *   A patra cifră diferă: la $a$ este **4**, la $b$ este **5**.
+  *   Deoarece $4 < 5$, rezultă că $$12.345 < 12.354$$.
+</ExampleBlock>
+
+## 3. Operații cu Numere Naturale
+
+### A. Adunarea și Înmulțirea
+Acestea au proprietăți speciale care ne ajută la calcul rapid:
+
+*   **Comutativitate:** $a + b = b + a$ și $a \cdot b = b \cdot a$
+*   **Asociativitate:** $(a + b) + c = a + (b + c)$
+*   **Element neutru:** 0 la adunare ($a+0=a$) și 1 la înmulțire ($a \cdot 1 = a$).
+*   **Distributivitate:** $a \cdot (b + c) = a \cdot b + a \cdot c$ (Factorul comun).
+
+### B. Teorema Împărțirii cu Rest
+Oricare ar fi două numere naturale $D$ (deîmpărțit) și $Î$ (împărțitor), cu $Î \neq 0$, există două numere unice $C$ (cât) și $R$ (rest) astfel încât:
+
+$$
+D = Î \cdot C + R
+$$
+
+<Alert type="warning">
+  **Regulă de aur:** Restul trebuie să fie strict mai mic decât împărțitorul!
+  $$ 0 \leq R < Î $$
+</Alert>
+
+## 4. Ridicarea la Putere
+
+Puterea este o înmulțire repetată.
+$$ a^n = \underbrace{a \cdot a \cdot \dots \cdot a}_{\text{de } n \text{ ori}} $$
+
+Unde $a$ este **baza** și $n$ este **exponentul**.
+
+### Reguli de calcul cu puteri:
+
+1.  **Înmulțirea:** $a^m \cdot a^n = a^{m+n}$ (adunăm exponenții)
+2.  **Împărțirea:** $a^m : a^n = a^{m-n}$ (scădem exponenții)
+3.  **Puterea unei puteri:** $(a^m)^n = a^{m \cdot n}$ (înmulțim exponenții)
+4.  **Puterea unui produs:** $(a \cdot b)^n = a^n \cdot b^n$
+5.  **Cazuri particulare:**
+    *   $a^1 = a$
+    *   $a^0 = 1$ (pentru $a \neq 0$)
+    *   $1^n = 1$
+    *   $0^n = 0$ (pentru $n \neq 0$)
+
+---
+
+## 5. Ordinea Efectuării Operațiilor
+
+Dacă într-un exercițiu apar mai multe operații, le efectuăm în această ordine:
+
+1.  **Ridicarea la putere**
+2.  **Înmulțirea și Împărțirea** (în ordinea scrierii)
+3.  **Adunarea și Scăderea** (în ordinea scrierii)
+
+Dacă avem paranteze:
+1.  Parantezele rotunde $( \dots )$
+2.  Parantezele pătrate $[ \dots ]$
+3.  Acoladele $\{ \dots \}$
+
+---
+
+## 6. Exercițiu Rezolvat
+
+<ExampleBlock title="Calculați rezultatul" type="math">
+  $$E = [3 \cdot (2^3 + 2) - 10] : 4$$
+
+  **Pasul 1: Puterile**
+  $2^3 = 8$
+  $$E = [3 \cdot (8 + 2) - 10] : 4$$
+
+  **Pasul 2: Paranteza rotundă**
+  $8 + 2 = 10$
+  $$E = [3 \cdot 10 - 10] : 4$$
+
+  **Pasul 3: Paranteza pătrată (înmulțirea prima)**
+  $3 \cdot 10 = 30$
+  $$E = [30 - 10] : 4$$
+  
+  $30 - 10 = 20$
+  $$E = 20 : 4$$
+
+  **Pasul 4: Împărțirea finală**
+  $$E = 5$$
+</ExampleBlock>
