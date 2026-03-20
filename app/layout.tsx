@@ -26,10 +26,6 @@ const lora = Lora({
   display: 'swap',
 });
 
-// =======================================================================
-// 2. METADATE SEO COMPLETE
-// Configurare robustă pentru Google, Facebook, Twitter și WhatsApp
-// =======================================================================
 export const metadata: Metadata = {
   metadataBase: new URL('https://invatam-impreuna.vercel.app'),
 
@@ -48,7 +44,15 @@ export const metadata: Metadata = {
     'bacalaureat', 'evaluare nationala', 'elevi', 'pregatire examene', 'resurse scolare',
     'mate', 'romana', 'informatica', 'chimie', 'fizica', 'invatam impreuna',
     'platforma educatie', 'teste gratuite', 'lectii video', 'invatare online',
-    'Spyderend', 'Mera Alin David', 'Romania', 'scoala', 'educatie gratuita',],
+    'Spyderend', 'Mera Alin David', 'Romania', 'scoala', 'educatie gratuita', 'romania', 'elevi', 'studenti', 'profesori', 'parinti', 'resurse educative',
+     'platforma online', 'Romania', 'educatie', 'invatam impreuna', 'blog invatare', 'mera alin', 'spyderend', 'invatam impreuna echipa', 'echipa invatam impreuna', 'contact invatam impreuna', 'despre noi invatam impreuna',
+     'invatam impreuna contact', 'invatam impreuna despre noi', 'invatam impreuna blog', 'invatam impreuna echipa', 'invatam impreuna spyderend', 'invatam impreuna mera alin',
+     'invatam impreuna romania', 'invatam impreuna scoala', 'invatam impreuna educatie gratuita', 'invatam impreuna elevi', 'invatam impreuna studenti', 'invatam impreuna profesori', 'invatam impreuna parinti', 'invatam impreuna resurse educative', 
+    'scoala online', 'invatam pentru evaluare nationala', 'invatam pentru bacalaureat', 'invatam pentru examene', 'invatam pentru scoala', 'invatam pentru elevi', 'invatam pentru studenti', 'invatam pentru profesori', 'invatam pentru parinti', 'invatam pentru resurse educative',
+    'invatam impreuna scoala online', 'invatam impreuna pentru evaluare nationala', 'invatam impreuna pentru bacalaureat', 'invatam impreuna pentru examene', 'invatam impreuna pentru scoala', 'invatam impreuna pentru elevi', 'invatam impreuna pentru studenti', 'invatam impreuna pentru profesori', 'invatam impreuna pentru parinti', 'invatam impreuna pentru resurse educative',
+    'cum pot sa ma pregatesc pentru evaluare nationala', 'cum pot sa ma pregatesc pentru bacalaureat', 'cum pot sa ma pregatesc pentru examene', 'cum pot sa ma pregatesc pentru scoala', 'cum pot sa ma pregatesc pentru elevi', 'cum pot sa ma pregatesc pentru studenti', 'cum pot sa ma pregatesc pentru profesori', 'cum pot sa ma pregatesc pentru parinti', 'cum pot sa ma pregatesc pentru resurse educative',
+    'cum pot sa ma pregatesc pentru evaluare nationala cu invatam impreuna', 'cum pot sa ma pregatesc pentru bacalaureat cu invatam impreuna', 'cum pot sa ma pregatesc pentru examene cu invatam impreuna', 'cum pot sa ma pregatesc pentru scoala cu invatam impreuna', 'cum pot sa ma pregatesc pentru elevi cu invatam impreuna', 'cum pot sa ma pregatesc pentru studenti cu invatam impreuna', 'cum pot sa ma pregatesc pentru profesori cu invatam impreuna', 'cum pot sa ma pregatesc pentru parinti cu invatam impreuna', 'cum pot sa ma pregatesc pentru resurse educative cu invatam impreuna',
+  ],
 
   authors: [{ name: 'Echipa Învățăm Împreună' }],
   creator: 'Învățăm Împreună',
