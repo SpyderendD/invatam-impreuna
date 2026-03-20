@@ -13,7 +13,7 @@
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://invatam-impreuna.vercel.app/modele-teste-EN </loc>
+  <loc>https://invatam-impreuna.vercel.app/modele-teste-EN</loc>
   <lastmod>2026-01-17T16:39:41+00:00</lastmod>
   <priority>0.80</priority>
 </url>
@@ -47,6 +47,44 @@
   <lastmod>2026-01-17T16:39:41+00:00</lastmod>
   <priority>0.80</priority>
 </url>
-
-
+<url>
+  <loc>https://invatam-impreuna.vercel.app/materii/romana</loc>
+  <lastmod>2026-01-17T16:39:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://invatam-impreuna.vercel.app/materii/matematica</loc>
+  <lastmod>2026-01-17T16:39:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://invatam-impreuna.vercel.app/materii/informatica</loc>
+  <lastmod>2026-01-17T16:39:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://invatam-impreuna.vercel.app/studiu-inteligent</loc>
+  <lastmod>2026-01-17T16:39:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://invatam-impreuna.vercel.app/metode-invatare</loc>
+  <lastmod>2026-01-17T16:39:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://invatam-impreuna.vercel.app/eu</loc>
+  <lastmod>2026-01-17T16:39:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://invatam-impreuna.vercel.app/blog</loc>
+  <lastmod>2026-01-17T16:39:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://invatam-impreuna.vercel.app/materii</loc>
+  <lastmod>2026-01-17T16:39:41+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
 </urlset>

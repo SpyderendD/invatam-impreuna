@@ -32,7 +32,11 @@ export async function middleware(request: NextRequest) {
     '/metode-invatare',
     '/povestea-mea',
     '/modele-teste-EN',
-    "/eu"
+    "/eu",
+    "/blog",
+    "/materii",
+    "/studiu-inteligent"
+
   ];
 
   // Verificăm dacă e pagină publică

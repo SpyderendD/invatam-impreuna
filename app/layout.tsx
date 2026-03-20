@@ -1,3 +1,4 @@
+// layout.tsx
 import './globals.css';
 import { Inter, Lora } from 'next/font/google';
 import type { Metadata, Viewport } from 'next';

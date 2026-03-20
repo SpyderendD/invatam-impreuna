@@ -4,104 +4,202 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Scale } from 'lucide-react';
+import { ArrowLeft, Scale, Mail, Globe, FileText, ShieldAlert, Zap } from 'lucide-react';
 
 export default function TermsOfUsePage() {
-  const [language, setLanguage] = useState<'ro' | 'en'>('en'); 
+  // SETARE IMPLICITĂ: ROMÂNĂ
+  const [language, setLanguage] = useState<'ro' | 'en'>('ro');
+
+  const toggleLanguage = (lang: 'ro' | 'en') => setLanguage(lang);
 
   return (
-    <main className="min-h-screen bg-background py-24 px-4 md:px-8">
+    <main className="min-h-screen bg-background py-16 px-4 md:px-8 lg:py-24" lang={language}>
       <div className="max-w-5xl mx-auto">
         
-        {/* Header & Navigation */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
-          <div>
-            <Button asChild variant="ghost" className="mb-4 pl-0 hover:bg-transparent hover:text-primary">
-              <Link href="/" className="flex items-center gap-2">
-                <ArrowLeft className="w-4 h-4" /> {language === 'en' ? 'Back to Home' : 'Înapoi la prima pagină'}
+        {/* Header & Navigație */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
+          <div className="space-y-4">
+            <Button asChild variant="ghost" className="pl-0 hover:bg-transparent hover:text-primary transition-colors">
+              <Link href="/" className="flex items-center gap-2 font-medium">
+                <ArrowLeft className="w-4 h-4" /> 
+                {language === 'ro' ? 'Înapoi la Pagina Principală' : 'Back to Home'}
               </Link>
             </Button>
             
-            <div className="flex items-center gap-4 mb-2">
-              <div className="p-3 rounded-xl bg-primary/10 text-primary">
-                <Scale className="w-8 h-8" />
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-2xl bg-primary/10 text-primary shadow-sm">
+                <Scale className="w-10 h-10" />
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground font-lora">
-                {language === 'en' ? 'TERMS OF USE' : 'TERMENI ȘI CONDIȚII'}
-              </h1>
+              <div>
+                <h1 className="text-3xl md:text-5xl font-extrabold text-foreground font-lora tracking-tight">
+                  {language === 'ro' ? 'TERMENI ȘI CONDIȚII' : 'TERMS OF USE'}
+                </h1>
+                <p className="text-muted-foreground mt-1 font-medium">
+                  {language === 'ro' ? 'Ultima actualizare: 18 Decembrie 2025' : 'Last updated December 18, 2025'}
+                </p>
+              </div>
             </div>
-            <p className="text-muted-foreground">
-              {language === 'en' ? 'Last updated December 18, 2025' : 'Ultima actualizare: 18 Decembrie 2025'}
-            </p>
           </div>
 
-          {/* Language Switcher */}
-          <div className="flex items-center bg-muted p-1 rounded-lg self-start md:self-center">
+          {/* Selector Limbă */}
+          <div className="flex items-center bg-muted/50 backdrop-blur-sm p-1.5 rounded-xl border border-border self-start md:self-center shadow-inner">
             <button
-              type="button"
-              onClick={() => setLanguage('ro')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+              onClick={() => toggleLanguage('ro')}
+              aria-pressed={language === 'ro'}
+              className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 ${
                 language === 'ro' 
-                  ? 'bg-background text-foreground shadow-sm' 
+                  ? 'bg-background text-primary shadow-md scale-105' 
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
-              RO
+              ROMÂNĂ
             </button>
             <button
-              type="button"
-              onClick={() => setLanguage('en')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+              onClick={() => toggleLanguage('en')}
+              aria-pressed={language === 'en'}
+              className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 ${
                 language === 'en' 
-                  ? 'bg-background text-foreground shadow-sm' 
+                  ? 'bg-background text-primary shadow-md scale-105' 
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
-              EN
+              ENGLISH
             </button>
           </div>
         </div>
 
-        {/* Content Wrapper */}
+        {/* Conținut Termeni */}
         <AnimatePresence mode='wait'>
           <motion.div 
             key={language}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="prose prose-lg dark:prose-invert max-w-none 
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="prose prose-slate dark:prose-invert max-w-none 
               prose-headings:text-foreground prose-headings:font-bold prose-headings:font-lora
-              prose-p:text-muted-foreground prose-li:text-muted-foreground
-              prose-strong:text-foreground prose-a:text-primary hover:prose-a:underline
-              bg-card p-8 md:p-12 rounded-3xl border border-border shadow-sm"
+              prose-p:text-muted-foreground prose-p:leading-relaxed
+              prose-li:text-muted-foreground prose-strong:text-foreground 
+              prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+              bg-card/50 backdrop-blur-sm p-8 md:p-16 rounded-[2rem] border border-border shadow-xl mb-12"
           >
             
-            {language === 'en' ? (
-              // ================= ENGLISH CONTENT =================
-              <>
-                <h2>AGREEMENT TO OUR LEGAL TERMS</h2>
-                <p>
-                  We are the development team behind <strong>Învățăm Împreună</strong> (&quot;<strong>The Platform</strong>,&quot; &quot;<strong>we</strong>,&quot; &quot;<strong>us</strong>,&quot; &quot;<strong>our</strong>&quot;). This project is an independent educational initiative developed by students for students.
-                </p>
-                <p>
-                  We operate the website <a href="https://invatam-impreuna.vercel.app">https://invatam-impreuna.vercel.app</a>, as well as any other related products and services that refer or link to these legal terms (the &quot;<strong>Legal Terms</strong>&quot;) (collectively, the &quot;<strong>Services</strong>&quot;).
-                </p>
-                <p>
-                  You can contact us by email at <a href="mailto:spyderend0@gmail.com">spyderend0@gmail.com</a>.
-                </p>
-                <p>
-                  These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity (&quot;<strong>you</strong>&quot;), and the administrators of <strong>Învățăm Împreună</strong>, concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.
-                </p>
-                <p>
-                  We reserve the right, in our sole discretion, to make changes or modifications to these Legal Terms at any time and for any reason. We will alert you about any changes by updating the &quot;Last updated&quot; date of these Legal Terms.
-                </p>
+            {language === 'ro' ? (
+              /* ================= CONȚINUT COMPLET ÎN ROMÂNĂ ================= */
+              <div className="space-y-10">
+                <section>
+                  <h2 className="text-2xl border-b pb-2 flex items-center gap-2">
+                    <FileText className="w-6 h-6 text-primary" /> ACORD PRIVIND TERMENII LEGALI
+                  </h2>
+                  <p className="text-lg">
+                    Noi suntem echipa de dezvoltare din spatele platformei <strong>Învățăm Împreună</strong> (&quot;<strong>Platforma</strong>,&quot; &quot;<strong>noi</strong>,&quot; &quot;<strong>ne</strong>&quot;). Acesta este un proiect educațional independent, dezvoltat de elevi pentru elevi, cu scopul de a sprijini pregătirea pentru examenele naționale în România.
+                  </p>
+                  <p>
+                    Operăm website-ul <a href="https://invatam-impreuna.vercel.app">https://invatam-impreuna.vercel.app</a>, precum și orice alte produse sau servicii conexe (colectiv, &quot;<strong>Serviciile</strong>&quot;). Ne puteți contacta prin email la <a href="mailto:spyderend0@gmail.com">spyderend0@gmail.com</a>.
+                  </p>
+                  <div className="bg-destructive/5 p-6 rounded-2xl border border-destructive/20 mt-6">
+                    <p className="text-foreground font-bold flex items-center gap-2">
+                      <ShieldAlert className="w-5 h-5 text-destructive" /> ATENȚIE:
+                    </p>
+                    <p className="text-sm mt-1">
+                      Prin accesarea Serviciilor, confirmați că ați citit, înțeles și sunteți de acord să respectați acești Termeni Legali. DACĂ NU SUNTEȚI DE ACORD CU ACEȘTI TERMENI, VĂ ESTE INTERZISĂ UTILIZAREA SERVICIILOR ȘI TREBUIE SĂ ÎNCETAȚI IMEDIAT FOLOSIREA PLATFORMEI.
+                    </p>
+                  </div>
+                </section>
 
-                <div className="bg-muted/50 p-6 rounded-xl border border-border not-prose my-8">
-                  <h3 className="text-xl font-bold mb-4 font-lora text-foreground">TABLE OF CONTENTS</h3>
-                  <ol className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground list-decimal pl-5">
+                <div className="bg-muted/30 p-8 rounded-3xl border border-border not-prose my-12 shadow-inner">
+                  <h3 className="text-xl font-bold mb-6 font-lora text-foreground flex items-center gap-2">
+                    <Zap className="w-5 h-5 text-primary" /> CUPRINS
+                  </h3>
+                  <ol className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3 text-sm font-medium text-muted-foreground list-decimal pl-5">
+                    <li className="hover:text-primary transition-colors">SERVICIILE NOASTRE</li>
+                    <li className="hover:text-primary transition-colors">PROPRIETATE INTELECTUALĂ</li>
+                    <li className="hover:text-primary transition-colors">DECLARAȚIILE UTILIZATORULUI</li>
+                    <li className="hover:text-primary transition-colors">ACTIVITĂȚI INTERZISE</li>
+                    <li className="hover:text-primary transition-colors">TEHNOLOGIE ȘI SERVICII TERȚE</li>
+                    <li className="hover:text-primary transition-colors">LICENȚA PENTRU CONȚINUT</li>
+                    <li className="hover:text-primary transition-colors">TERMEN ȘI ÎNCETARE</li>
+                    <li className="hover:text-primary transition-colors">LEGEA APLICABILĂ</li>
+                    <li className="hover:text-primary transition-colors">DISCLAIMER (AVERTIZARE)</li>
+                    <li className="hover:text-primary transition-colors">LIMITAREA RĂSPUNDERII</li>
+                    <li className="hover:text-primary transition-colors">DATELE UTILIZATORULUI</li>
+                    <li className="hover:text-primary transition-colors">CONTACTAȚI-NE</li>
+                  </ol>
+                </div>
+
+                <section>
+                  <h2 className="text-2xl border-b pb-2">1. SERVICIILE NOASTRE</h2>
+                  <p>Informațiile furnizate sunt destinate exclusiv suportului educațional. Deși depunem eforturi pentru acuratețe, această platformă este un proiect condus de elevi și nu garantează succesul la examene.</p>
+                </section>
+
+                <section>
+                  <h2 className="text-2xl border-b pb-2">2. DREPTURI DE PROPRIETATE INTELECTUALĂ</h2>
+                  <p>Suntem proprietarii codului sursă, designului și materialelor educaționale originale de pe platformă. Acestea sunt protejate de legile drepturilor de autor. Puteți folosi materialele doar pentru <strong>uz personal, necomercial (studiu individual)</strong>.</p>
+                </section>
+
+                <section>
+                  <h2 className="text-2xl border-b pb-2">3. DECLARAȚIILE UTILIZATORULUI</h2>
+                  <p>Prin utilizarea platformei, confirmați că: (1) Aveți capacitatea legală de a accepta acești termeni sau aveți acordul părinților (pentru sub 16 ani); (2) Nu veți folosi platforma în scopuri ilegale; (3) Nu veți folosi script-uri sau boți pentru a extrage date.</p>
+                </section>
+
+                <section>
+                  <h2 className="text-2xl border-b pb-2">4. ACTIVITĂȚI INTERZISE</h2>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li>Copierea sistematică a conținutului pentru a crea baze de date concurente.</li>
+                    <li>Încercarea de a sparge securitatea site-ului sau a conturilor altor utilizatori.</li>
+                    <li>Postarea de conținut ofensator sau dăunător în secțiunile interactive.</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h2 className="text-2xl border-b pb-2">5. TEHNOLOGIE ȘI SERVICII TERȚE</h2>
+                  <p>Platforma utilizează infrastructură externă pentru funcționare:</p>
+                  <ul className="list-disc pl-6">
+                    <li><strong>Google Firebase:</strong> Pentru baza de date și securitatea contului.</li>
+                    <li><strong>Vercel:</strong> Pentru găzduire și viteză de încărcare.</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h2 className="text-2xl border-b pb-2 text-destructive">9. DISCLAIMER (LIMITAREA RESPONSABILITĂȚII)</h2>
+                  <div className="bg-muted p-6 rounded-2xl italic border-l-4 border-primary">
+                    &quot;Serviciile sunt furnizate CA ATARE. Utilizarea lor este pe propriul risc. Nu garantăm că materialele sunt fără erori. Nu ne asumăm responsabilitatea pentru notele obținute la examenele oficiale; platforma este doar un instrument de sprijin.&quot;
+                  </div>
+                </section>
+
+                <section>
+                  <h2 className="text-2xl border-b pb-2">12. CONTACTAȚI-NE</h2>
+                  <p>Pentru orice nelămurire sau reclamație, echipa noastră vă stă la dispoziție:</p>
+                  <div className="flex flex-col gap-3 mt-4">
+                    <a href="mailto:spyderend0@gmail.com" className="flex items-center gap-2 text-primary font-bold">
+                      <Mail className="w-5 h-5" /> spyderend0@gmail.com
+                    </a>
+                    <Link href="/contact" className="flex items-center gap-2 text-primary font-bold">
+                      <Globe className="w-5 h-5" /> Pagina Oficială de Contact
+                    </Link>
+                  </div>
+                </section>
+              </div>
+            ) : (
+              /* ================= CONȚINUT COMPLET ÎN ENGLEZĂ ================= */
+              <div className="space-y-10">
+                <section>
+                  <h2 className="text-2xl border-b pb-2 flex items-center gap-2">
+                    <FileText className="w-6 h-6 text-primary" /> AGREEMENT TO OUR LEGAL TERMS
+                  </h2>
+                  <p className="text-lg">
+                    We are the development team behind <strong>Învățăm Împreună</strong> (&quot;<strong>The Platform</strong>,&quot; &quot;<strong>we</strong>,&quot; &quot;<strong>us</strong>&quot;). This project is an independent educational initiative developed by students for students.
+                  </p>
+                  <p>
+                    We operate the website <a href="https://invatam-impreuna.vercel.app">https://invatam-impreuna.vercel.app</a>. Contact us at <a href="mailto:spyderend0@gmail.com">spyderend0@gmail.com</a>.
+                  </p>
+                </section>
+
+                <div className="bg-muted/30 p-8 rounded-3xl border border-border not-prose my-12">
+                  <h3 className="text-xl font-bold mb-6 font-lora text-foreground">TABLE OF CONTENTS</h3>
+                  <ol className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3 text-sm font-medium text-muted-foreground list-decimal pl-5">
                     <li>OUR SERVICES</li>
-                    <li>INTELLECTUAL PROPERTY RIGHTS</li>
+                    <li>INTELLECTUAL PROPERTY</li>
                     <li>USER REPRESENTATIONS</li>
                     <li>PROHIBITED ACTIVITIES</li>
                     <li>TECHNOLOGY & THIRD PARTIES</li>
@@ -115,216 +213,29 @@ export default function TermsOfUsePage() {
                   </ol>
                 </div>
 
-                <h2>1. OUR SERVICES</h2>
-                <p>
-                  The information provided when using the Services is not intended for distribution to or use by any person or entity in any jurisdiction or country where such distribution or use would be contrary to law or regulation.
-                </p>
-                <p>
-                  <strong>Nature of the Project:</strong> Please note that this Platform is an educational project developed by a student. While we strive to provide accurate and high-quality educational content for National Evaluation and Baccalaureate, the Services are provided &quot;AS IS&quot; and intended for study support purposes.
-                </p>
+                <section>
+                  <h2 className="text-2xl border-b pb-2">1. OUR SERVICES</h2>
+                  <p>Our platform provides educational resources for personal study. The Services are provided &quot;AS IS&quot; and intended for exam preparation support only.</p>
+                </section>
 
-                <h2>2. INTELLECTUAL PROPERTY RIGHTS</h2>
-                <h3>Our intellectual property</h3>
-                <p>
-                  We are the owner or the licensee of all intellectual property rights in our Services, including all source code, databases, functionality, software, website designs, audio, video, text, photographs, and graphics in the Services (collectively, the &quot;Content&quot;).
-                </p>
-                <p>
-                  The Content is protected by copyright and trademark laws. The Content is provided in or through the Services &quot;AS IS&quot; for your personal, non-commercial use or internal business purpose only.
-                </p>
+                <section>
+                  <h2 className="text-2xl border-b pb-2">2. INTELLECTUAL PROPERTY RIGHTS</h2>
+                  <p>We own the source code, design, and original materials. You are granted a limited license for personal, non-commercial use only.</p>
+                </section>
 
-                <h3>Your use of our Services</h3>
-                <p>
-                  Subject to your compliance with these Legal Terms, we grant you a non-exclusive, non-transferable, revocable license to access the Services and use the educational materials solely for your personal study and preparation for exams.
-                </p>
+                <section>
+                  <h2 className="text-2xl border-b pb-2">9. DISCLAIMER</h2>
+                  <p>THE SERVICES ARE PROVIDED ON AN AS-IS BASIS. WE DISCLAIM ALL WARRANTIES. WE DO NOT WARRANT THAT EDUCATIONAL CONTENT IS ERROR-FREE. WE ARE NOT RESPONSIBLE FOR EXAM RESULTS.</p>
+                </section>
 
-                <h2>3. USER REPRESENTATIONS</h2>
-                <p>
-                  By using the Services, you represent and warrant that: (1) If you are a minor under the age of 16, you confirm that you have obtained parental consent to use this Platform if not you have the legal capacity and you agree to comply with these Legal Terms; (2) you will not access the Services through automated or non-human means, whether through a bot, script or otherwise; (3) you will not use the Services for any illegal or unauthorized purpose.
-                </p>
-
-                <h2>4. PROHIBITED ACTIVITIES</h2>
-                <p>
-                  You may not access or use the Services for any purpose other than that for which we make the Services available. The Services may not be used in connection with any commercial endeavors except those that are specifically endorsed or approved by us.
-                </p>
-                <p>As a user of the Services, you agree not to:</p>
-                <ul>
-                  <li>Systematically retrieve data or other content from the Services to create or compile, directly or indirectly, a collection, compilation, database, or directory without written permission from us.</li>
-                  <li>Trick, defraud, or mislead us and other users.</li>
-                  <li>Circumvent, disable, or otherwise interfere with security-related features of the Services.</li>
-                  <li>Upload or transmit viruses, Trojan horses, or other material that interferes with any party&apos;s uninterrupted use and enjoyment of the Services.</li>
-                  <li>Attempt to impersonate another user.</li>
-                </ul>
-
-                <h2>5. TECHNOLOGY & THIRD PARTIES</h2>
-                <p>
-                  Our Platform utilizes third-party services to function effectively. By using our Services, you acknowledge and agree that:
-                </p>
-                <ul>
-                  <li><strong>Google Firebase:</strong> We use Google Firebase for authentication, database management, and hosting. Your data (such as login credentials and study progress) is stored securely on Google&apos;s infrastructure.</li>
-                  <li><strong>Vercel:</strong> The application is hosted and deployed via Vercel.</li>
-                  <li><strong>Analytics:</strong> We may use analytics tools to understand how users interact with the platform to improve the educational experience.</li>
-                </ul>
-
-                <h2>6. CONTRIBUTION LICENSE</h2>
-                <p>
-                  You agree that we may access, store, process, and use any information and personal data that you provide and your choices (including settings). By submitting suggestions or other feedback regarding the Services, you agree that we can use and share such feedback for any purpose without compensation to you.
-                </p>
-
-                <h2>7. TERM AND TERMINATION</h2>
-                <p>
-                  These Legal Terms shall remain in full force and effect while you use the Services. WE RESERVE THE RIGHT TO, IN OUR SOLE DISCRETION AND WITHOUT NOTICE OR LIABILITY, DENY ACCESS TO AND USE OF THE SERVICES TO ANY PERSON FOR ANY REASON, INCLUDING WITHOUT LIMITATION FOR BREACH OF ANY REPRESENTATION.
-                </p>
-
-                <h2>8. GOVERNING LAW</h2>
-                <p>
-                  These Legal Terms shall be governed by and defined following the laws of <strong>Romania</strong>.
-                </p>
-
-                <h2>9. DISCLAIMER</h2>
-                <p>
-                  THE SERVICES ARE PROVIDED ON AN AS-IS AND AS-AVAILABLE BASIS. YOU AGREE THAT YOUR USE OF THE SERVICES WILL BE AT YOUR SOLE RISK. AS THIS IS A STUDENT-LED EDUCATIONAL PROJECT, WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, IN CONNECTION WITH THE SERVICES. WE DO NOT WARRANT THAT THE EDUCATIONAL CONTENT IS ERROR-FREE, THOUGH WE STRIVE FOR ACCURACY.
-                </p>
-
-                <h2>10. LIMITATIONS OF LIABILITY</h2>
-                <p>
-                  IN NO EVENT WILL WE BE LIABLE TO YOU OR ANY THIRD PARTY FOR ANY DIRECT, INDIRECT, CONSEQUENTIAL, EXEMPLARY, INCIDENTAL, SPECIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF THE SERVICES.
-                </p>
-
-                <h2>11. USER DATA</h2>
-                <p>
-                  We will maintain certain data that you transmit to the Services for the purpose of managing the performance of the Services. Although we perform regular routine backups of data (facilitated by Firebase), you are solely responsible for all data that you transmit.
-                </p>
-
-                <h2>12. CONTACT US</h2>
-                <p>
-                  In order to resolve a complaint regarding the Services or to receive further information regarding use of the Services, please contact us at:
-                </p>
-                <div className="bg-muted p-4 rounded-lg not-prose text-sm">
-                  <p className="font-bold text-foreground">Învățăm Împreună Team</p>
-                  <p className="mt-2">Email: <a href="mailto:spyderend0@gmail.com" className="text-primary hover:underline">spyderend0@gmail.com</a></p>
-                </div>
-              </>
-            ) : (
-              // ================= ROMANIAN CONTENT =================
-              <>
-                <h2>ACORD PRIVIND TERMENII LEGALI</h2>
-                <p>
-                  Noi suntem echipa de dezvoltare din spatele platformei <strong>Învățăm Împreună</strong> (&quot;<strong>Platforma</strong>,&quot; &quot;<strong>noi</strong>&quot;). Acesta este un proiect educațional independent, dezvoltat de elevi pentru elevi, cu scopul de a sprijini educația în România.
-                </p>
-                <p>
-                  Operăm website-ul <a href="https://invatam-impreuna.vercel.app">https://invatam-impreuna.vercel.app</a>, precum și alte produse și servicii conexe (colectiv, &quot;<strong>Serviciile</strong>&quot;).
-                </p>
-                <p>
-                  Ne puteți contacta exclusiv prin email la <a href="mailto:spyderend0@gmail.com">spyderend0@gmail.com</a>.
-                </p>
-                <p>
-                  Acești Termeni Legali constituie un acord obligatoriu din punct de vedere juridic încheiat între dvs. (&quot;<strong>dvs.</strong>&quot;) și administratorii <strong>Învățăm Împreună</strong>, privind accesul și utilizarea Serviciilor. Sunteți de acord că, prin accesarea Serviciilor, ați citit, înțeles și sunteți de acord să respectați toți acești Termeni Legali. DACĂ NU SUNTEȚI DE ACORD CU TOȚI ACEȘTI TERMENI, VĂ ESTE INTERZISĂ ÎN MOD EXPRES UTILIZAREA SERVICIILOR ȘI TREBUIE SĂ ÎNCETAȚI IMEDIAT UTILIZAREA LOR.
-                </p>
-
-                <div className="bg-muted/50 p-6 rounded-xl border border-border not-prose my-8">
-                  <h3 className="text-xl font-bold mb-4 font-lora text-foreground">CUPRINS</h3>
-                  <ol className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground list-decimal pl-5">
-                    <li>SERVICIILE NOASTRE</li>
-                    <li>DREPTURI DE PROPRIETATE INTELECTUALĂ</li>
-                    <li>DECLARAȚIILE UTILIZATORULUI</li>
-                    <li>ACTIVITĂȚI INTERZISE</li>
-                    <li>TEHNOLOGIE ȘI SERVICII TERȚE</li>
-                    <li>LICENȚA PENTRU CONTRIBUȚII</li>
-                    <li>TERMEN ȘI ÎNCETARE</li>
-                    <li>LEGEA APLICABILĂ</li>
-                    <li>DISCLAIMER</li>
-                    <li>LIMITAREA RĂSPUNDERII</li>
-                    <li>DATELE UTILIZATORULUI</li>
-                    <li>CONTACTAȚI-NE</li>
-                  </ol>
-                </div>
-
-                <h2>1. SERVICIILE NOASTRE</h2>
-                <p>
-                  Informațiile furnizate la utilizarea Serviciilor nu sunt destinate distribuirii sau utilizării de către nicio persoană sau entitate în nicio jurisdicție sau țară în care o astfel de distribuire sau utilizare ar fi contrară legii.
-                </p>
-                <p>
-                  <strong>Natura Proiectului:</strong> Vă rugăm să rețineți că această Platformă este un proiect educațional dezvoltat de un elev. Deși depunem toate eforturile pentru a furniza conținut educațional corect și de înaltă calitate pentru Evaluarea Națională și Bacalaureat, Serviciile sunt furnizate &quot;CA ATARE&quot; (AS-IS) și au scop strict de suport în studiu.
-                </p>
-
-                <h2>2. DREPTURI DE PROPRIETATE INTELECTUALĂ</h2>
-                <h3>Proprietatea noastră intelectuală</h3>
-                <p>
-                  Suntem proprietarul sau licențiatul tuturor drepturilor de proprietate intelectuală din Serviciile noastre, inclusiv codul sursă, bazele de date, funcționalitatea, software-ul, designul site-ului, audio, video, text, fotografii și grafică (&quot;Conținutul&quot;).
-                </p>
-                <p>
-                  Conținutul este protejat de legile privind drepturile de autor. Acesta este furnizat &quot;CA ATARE&quot; doar pentru uzul dvs. personal, necomercial (studiu individual).
-                </p>
-
-                <h3>Utilizarea Serviciilor noastre</h3>
-                <p>
-                  Sub rezerva respectării acestor Termeni Legali, vă acordăm o licență neexclusivă, netransferabilă și revocabilă pentru a accesa Serviciile și a utiliza materialele educaționale strict în scop personal.
-                </p>
-
-                <h2>3. DECLARAȚIILE UTILIZATORULUI</h2>
-                <p>
-                  Prin utilizarea Serviciilor, declarați că: (1) Dacă sunteți minor cu vârsta sub 16 ani, confirmați că ați obținut consimțământul părinților pentru a utiliza această Platformă, dacă nu aveți capacitate legală, și sunteți de acord să respectați acești Termeni Legali; (2) nu veți accesa Serviciile prin mijloace automate (bot, script); (3) nu veți utiliza Serviciile în niciun scop ilegal.
-                </p>
-
-                <h2>4. ACTIVITĂȚI INTERZISE</h2>
-                <p>Ca utilizator al Serviciilor, sunteți de acord să nu:</p>
-                <ul>
-                  <li>Preluati sistematic date sau alt conținut din Servicii pentru a crea o colecție sau bază de date fără permisiune.</li>
-                  <li>Înșelați, fraudați sau induceți în eroare alți utilizatori.</li>
-                  <li>Ocoliți caracteristicile de securitate.</li>
-                  <li>Încărcați viruși sau alte materiale dăunătoare.</li>
-                  <li>Încercați să vă dați drept alt utilizator.</li>
-                </ul>
-
-                <h2>5. TEHNOLOGIE ȘI SERVICII TERȚE</h2>
-                <p>
-                  Platforma noastră utilizează servicii terțe pentru a funcționa eficient. Prin utilizarea Serviciilor, luați la cunoștință că:
-                </p>
-                <ul>
-                  <li><strong>Google Firebase:</strong> Utilizăm Firebase pentru autentificare, baza de date și stocare. Datele dvs. (precum progresul școlar) sunt stocate securizat pe infrastructura Google.</li>
-                  <li><strong>Vercel:</strong> Aplicația este găzduită prin Vercel.</li>
-                  <li><strong>Analiză:</strong> Putem folosi instrumente de analiză pentru a îmbunătăți experiența educațională.</li>
-                </ul>
-
-                <h2>6. LICENȚA PENTRU CONTRIBUȚII</h2>
-                <p>
-                  Sunteți de acord că putem accesa, stoca și procesa orice informație și date personale pe care le furnizați conform alegerilor dvs. Prin trimiterea de sugestii sau feedback, sunteți de acord că le putem utiliza fără compensații.
-                </p>
-
-                <h2>7. TERMEN ȘI ÎNCETARE</h2>
-                <p>
-                  Acești Termeni rămân în vigoare cât timp utilizați Serviciile. NE REZERVĂM DREPTUL DE A REFUZA ACCESUL LA SERVICII ORICĂREI PERSOANE, DIN ORICE MOTIV, INCLUSIV PENTRU ÎNCĂLCAREA ACESTOR TERMENI.
-                </p>
-
-                <h2>8. LEGEA APLICABILĂ</h2>
-                <p>
-                  Acești Termeni Legali vor fi guvernați și definiți în conformitate cu legile din <strong>România</strong>.
-                </p>
-
-                <h2>9. DISCLAIMER (LIMITAREA RESPONSABILITĂȚII)</h2>
-                <p>
-                  SERVICIILE SUNT FURNIZATE &quot;CA ATARE&quot;. SUNTEȚI DE ACORD CĂ UTILIZAREA SERVICIILOR VA FI PE RISCUL DVS. FIIND UN PROIECT EDUCAȚIONAL DEZVOLTAT DE ELEVI, NU GARANTĂM CĂ MATERIALELE SUNT COMPLET LIPSITE DE ERORI, DEȘI DEPUNEM TOATE EFORTURILE PENTRU ACURATEȚE. NU NE ASUMĂM RĂSPUNDEREA PENTRU REZULTATELE LA EXAMENE SAU LA TESTE.
-                </p>
-
-                <h2>10. LIMITAREA RĂSPUNDERII</h2>
-                <p>
-                  ÎN NICIUN CAZ NOI NU VOM FI RĂSPUNZĂTORI FAȚĂ DE DVS. PENTRU ORICE DAUNE DIRECTE, INDIRECTE SAU ACCIDENTALE CARE REZULTĂ DIN UTILIZAREA SERVICIILOR.
-                </p>
-
-                <h2>11. DATELE UTILIZATORULUI</h2>
-                <p>
-                  Vom menține anumite date pe care le transmiteți Serviciilor pentru a gestiona performanța (progres, cont). Deși efectuăm backup-uri regulate (prin Firebase), sunteți singurul responsabil pentru datele pe care le transmiteți.
-                </p>
-
-                <h2>12. CONTACTAȚI-NE</h2>
-                <p>
-                  Pentru a rezolva o reclamație privind Serviciile sau pentru a primi informații suplimentare, vă rugăm să ne contactați la:
-                </p>
-                <div className="bg-muted p-4 rounded-lg not-prose text-sm">
-                  <p className="font-bold text-foreground">Echipa Învățăm Împreună</p>
-                  <p className="mt-2">Email: <a href="mailto:spyderend0@gmail.com" className="text-primary hover:underline">spyderend0@gmail.com</a></p>
-                </div>
-              </>
+                <section>
+                  <h2 className="text-2xl border-b pb-2">12. CONTACT US</h2>
+                  <p>For inquiries, please contact the team:</p>
+                  <a href="mailto:spyderend0@gmail.com" className="flex items-center gap-2 text-primary font-bold">
+                    <Mail className="w-5 h-5" /> spyderend0@gmail.com
+                  </a>
+                </section>
+              </div>
             )}
 
           </motion.div>

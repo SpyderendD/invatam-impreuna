@@ -4,253 +4,271 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Cookie, Globe } from 'lucide-react';
+import { ArrowLeft, Cookie, Mail, Globe, Info, Lock, Settings, CheckCircle2 } from 'lucide-react';
 
 export default function CookiePolicyPage() {
-  const [language, setLanguage] = useState<'ro' | 'en'>('en'); // Default engleză (cum e textul original)
+  // SETARE IMPLICITĂ: ROMÂNĂ
+  const [language, setLanguage] = useState<'ro' | 'en'>('ro');
+
+  const toggleLanguage = (lang: 'ro' | 'en') => setLanguage(lang);
 
   return (
-    <main className="min-h-screen bg-background py-24 px-4 md:px-8">
+    <main className="min-h-screen bg-background py-16 px-4 md:px-8 lg:py-24" lang={language}>
       <div className="max-w-4xl mx-auto">
         
-        {/* Header & Navigation */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
-          <div>
-            <Button asChild variant="ghost" className="mb-4 pl-0 hover:bg-transparent hover:text-primary">
-              <Link href="/" className="flex items-center gap-2">
-                <ArrowLeft className="w-4 h-4" /> {language === 'en' ? 'Back to Home' : 'Înapoi la prima pagină'}
+        {/* Header & Navigație */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
+          <div className="space-y-4">
+            <Button asChild variant="ghost" className="pl-0 hover:bg-transparent hover:text-primary transition-colors">
+              <Link href="/" className="flex items-center gap-2 font-medium">
+                <ArrowLeft className="w-4 h-4" /> 
+                {language === 'ro' ? 'Înapoi la Pagina Principală' : 'Back to Home'}
               </Link>
             </Button>
             
-            <div className="flex items-center gap-4 mb-2">
-              <div className="p-3 rounded-xl bg-primary/10 text-primary">
-                <Cookie className="w-8 h-8" />
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-2xl bg-primary/10 text-primary shadow-sm">
+                <Cookie className="w-10 h-10" />
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground font-lora">
-                {language === 'en' ? 'COOKIE POLICY' : 'POLITICA DE COOKIES'}
-              </h1>
+              <div>
+                <h1 className="text-3xl md:text-5xl font-extrabold text-foreground font-lora tracking-tight">
+                  {language === 'ro' ? 'POLITICA DE COOKIES' : 'COOKIE POLICY'}
+                </h1>
+                <p className="text-muted-foreground mt-1 font-medium">
+                  {language === 'ro' ? 'Ultima actualizare: 18 Decembrie 2025' : 'Last updated December 18, 2025'}
+                </p>
+              </div>
             </div>
-            <p className="text-muted-foreground">
-              {language === 'en' ? 'Last updated December 18, 2025' : 'Ultima actualizare: 18 Decembrie 2025'}
-            </p>
           </div>
 
-          {/* Language Switcher */}
-          <div className="flex items-center bg-muted p-1 rounded-lg self-start md:self-center">
+          {/* Selector Limbă */}
+          <div className="flex items-center bg-muted/50 backdrop-blur-sm p-1.5 rounded-xl border border-border self-start md:self-center shadow-inner">
             <button
-              onClick={() => setLanguage('ro')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+              onClick={() => toggleLanguage('ro')}
+              aria-pressed={language === 'ro'}
+              className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 ${
                 language === 'ro' 
-                  ? 'bg-background text-foreground shadow-sm' 
+                  ? 'bg-background text-primary shadow-md scale-105' 
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
-              RO
+              ROMÂNĂ
             </button>
             <button
-              onClick={() => setLanguage('en')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+              onClick={() => toggleLanguage('en')}
+              aria-pressed={language === 'en'}
+              className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 ${
                 language === 'en' 
-                  ? 'bg-background text-foreground shadow-sm' 
+                  ? 'bg-background text-primary shadow-md scale-105' 
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
-              EN
+              ENGLISH
             </button>
           </div>
         </div>
 
-        {/* Content Wrapper with Animation */}
+        {/* Conținut Politică */}
         <AnimatePresence mode='wait'>
           <motion.div 
-            key={language} // Cheia forțează re-randarea animației la schimbarea limbii
-            initial={{ opacity: 0, y: 10 }}
+            key={language}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="prose prose-lg dark:prose-invert max-w-none 
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="prose prose-slate dark:prose-invert max-w-none 
               prose-headings:text-foreground prose-headings:font-bold prose-headings:font-lora
-              prose-p:text-muted-foreground prose-li:text-muted-foreground
-              prose-strong:text-foreground prose-a:text-primary hover:prose-a:underline
-              bg-card p-8 md:p-12 rounded-3xl border border-border shadow-sm"
+              prose-p:text-muted-foreground prose-p:leading-relaxed
+              prose-li:text-muted-foreground prose-strong:text-foreground 
+              prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+              bg-card/50 backdrop-blur-sm p-8 md:p-16 rounded-[2rem] border border-border shadow-xl mb-12"
           >
             
-            {language === 'en' ? (
-              // ================= ENGLISH CONTENT =================
-              <>
-                <p>
-                  This Cookie Policy explains how <strong>Învățăm Împreună</strong> (&quot;<strong>The Platform</strong>, &quot;<strong>The Project</strong>, &quot; &quot;<strong>we</strong>,&quot; &quot;<strong>us</strong>,&quot; and &quot;<strong>our</strong>&quot;) uses cookies and similar technologies to recognize you when you visit our website at <a href="https://invatam-impreuna.vercel.app">https://invatam-impreuna.vercel.app</a> (&quot;<strong>Website</strong>&quot;). It explains what these technologies are and why we use them, as well as your rights to control our use of them.
-                </p>
-                <p>
-                  In some cases we may use cookies to collect personal information, or that becomes personal information if we combine it with other information.
-                </p>
+            {language === 'ro' ? (
+              /* ================= CONȚINUT COMPLET ÎN ROMÂNĂ ================= */
+              <div className="space-y-10">
+                <section>
+                  <p className="text-lg">
+                    Această Politică de Cookie-uri explică modul în care <strong>Învățăm Împreună</strong> (&quot;<strong>Platforma</strong>,&quot; &quot;<strong>Proiectul</strong>,&quot; &quot;<strong>noi</strong>,&quot; &quot;<strong>ne</strong>&quot;) utilizează cookie-uri și tehnologii similare pentru a vă recunoaște atunci când vizitați site-ul nostru la <a href="https://invatam-impreuna.vercel.app">https://invatam-impreuna.vercel.app</a> (&quot;<strong>Website-ul</strong>&quot;).
+                  </p>
+                  <div className="bg-primary/5 p-6 rounded-2xl border-l-4 border-primary mt-6 italic">
+                    Utilizăm aceste tehnologii pentru a asigura funcționarea corectă a platformei, pentru a analiza traficul și pentru a vă oferi o experiență personalizată de învățare.
+                  </div>
+                </section>
 
-                <h2 id="what-are-cookies">What are cookies?</h2>
-                <p>
-                  Cookies are small data files that are placed on your computer or mobile device when you visit a website. Cookies are widely used by website owners in order to make their websites work, or to work more efficiently, as well as to provide reporting information.
-                </p>
-                <p>
-                  Cookies set by the website owner (in this case, Învățăm Împreună) are called &quot;first-party cookies.&quot; Cookies set by parties other than the website owner are called &quot;third-party cookies.&quot; Third-party cookies enable third-party features or functionality to be provided on or through the website (e.g., advertising, interactive content, and analytics). The parties that set these third-party cookies can recognize your computer both when it visits the website in question and also when it visits certain other websites.
-                </p>
+                <section>
+                  <h2 className="text-2xl border-b pb-2 flex items-center gap-2">
+                    <Info className="w-6 h-6 text-primary" /> CE SUNT COOKIE-URILE?
+                  </h2>
+                  <p>Cookie-urile sunt fișiere text mici plasate pe dispozitivul dvs. la vizitarea unui site. Ele sunt esențiale pentru ca site-ul să &quot;țină minte&quot; acțiunile dvs. (cum ar fi logarea sau preferințele de temă).</p>
+                  <ul className="list-disc pl-6 space-y-3">
+                    <li><strong>Cookie-uri First-party:</strong> Setate direct de noi (Învățăm Împreună).</li>
+                    <li><strong>Cookie-uri Third-party:</strong> Setate de parteneri externi (ex. Google pentru analize sau publicitate).</li>
+                  </ul>
+                </section>
 
-                <h2 id="why-cookies">Why do we use cookies?</h2>
-                <p>
-                  We use first- and third-party cookies for several reasons. Some cookies are required for technical reasons in order for our Website to operate, and we refer to these as &quot;essential&quot; or &quot;strictly necessary&quot; cookies. Other cookies also enable us to track and target the interests of our users to enhance the experience on our Online Properties. Third parties serve cookies through our Website for advertising, analytics, and other purposes. This is described in more detail below.
-                </p>
+                <section>
+                  <h2 className="text-2xl border-b pb-2 flex items-center gap-2">
+                    <Settings className="w-6 h-6 text-primary" /> DE CE LE FOLOSIM?
+                  </h2>
+                  <p>Folosim cookie-uri din următoarele motive:</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <div className="p-4 rounded-xl bg-muted/50 border border-border">
+                      <h4 className="font-bold flex items-center gap-2 text-foreground">
+                        <Lock className="w-4 h-4" /> Tehnice (Esențiale)
+                      </h4>
+                      <p className="text-sm mt-2">Sunt necesare pentru funcționarea site-ului, logare și securitate.</p>
+                    </div>
+                    <div className="p-4 rounded-xl bg-muted/50 border border-border">
+                      <h4 className="font-bold flex items-center gap-2 text-foreground">
+                        <CheckCircle2 className="w-4 h-4" /> Preferințe
+                      </h4>
+                      <p className="text-sm mt-2">Ne permit să salvăm setările dvs., cum ar fi modul Dark/Light.</p>
+                    </div>
+                  </div>
+                </section>
 
-                <h2 id="control-cookies">How can I control cookies?</h2>
-                <p>
-                  You have the right to decide whether to accept or reject cookies. You can exercise your cookie rights by setting your preferences in the Cookie Consent Manager. The Cookie Consent Manager allows you to select which categories of cookies you accept or reject. Essential cookies cannot be rejected as they are strictly necessary to provide you with services.
-                </p>
-                <p>
-                  The specific types of first- and third-party cookies served through our Website and the purposes they perform are described in the table below:
-                </p>
+                <section>
+                  <h3 className="text-xl font-bold mb-4">Cookie-uri de performanță și personalizare:</h3>
+                  <div className="overflow-x-auto border border-border rounded-2xl mb-8 not-prose shadow-sm">
+                    <table className="min-w-full text-sm text-left">
+                      <thead className="bg-muted/50 border-b border-border">
+                        <tr>
+                          <th className="p-4 font-bold text-foreground">Element</th>
+                          <th className="p-4 font-bold text-foreground">Detalii</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-border">
+                        <tr>
+                          <td className="p-4 font-semibold bg-muted/20">Nume:</td>
+                          <td className="p-4 font-mono text-primary font-bold">_ga</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-semibold bg-muted/20">Scop:</td>
+                          <td className="p-4">Utilizat de Google Analytics pentru a genera date statistice despre modul în care elevii folosesc platforma.</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-semibold bg-muted/20">Furnizor:</td>
+                          <td className="p-4">.invatam-impreuna.vercel.app</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-semibold bg-muted/20">Nume:</td>
+                          <td className="p-4 font-mono text-primary font-bold">themePreference</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-semibold bg-muted/20">Scop:</td>
+                          <td className="p-4">Stochează alegerea dvs. între modul Întunecat sau Luminos.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
 
-                {/* TABLE EN */}
-                <h3>Performance and functionality cookies:</h3>
-                <div className="overflow-x-auto border border-border rounded-lg mb-8 not-prose">
-                  <table className="min-w-full text-sm text-left">
-                    <tbody className="divide-y divide-border">
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold w-32 text-foreground">Name:</th>
-                        <td className="p-3 font-mono text-primary">rc::h</td>
-                      </tr>
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold text-foreground">Provider:</th>
-                        <td className="p-3 text-muted-foreground">www.google.com</td>
-                      </tr>
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold text-foreground">Type:</th>
-                        <td className="p-3 text-muted-foreground">html_local_storage</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <section>
+                  <h2 className="text-2xl border-b pb-2">CUM POT CONTROLA COOKIE-URILE?</h2>
+                  <p>Aveți dreptul de a accepta sau refuza cookie-urile. Cele esențiale (pentru logare) nu pot fi refuzate deoarece platforma nu ar putea funcționa fără ele. Puteți însă modifica setările din browserul dvs.:</p>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Chrome</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Firefox</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Safari</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Edge</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Opera</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Brave</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Internet Samsung</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">etc.</span>
+                  </div>
+                </section>
 
-                <h3>Analytics and customization cookies:</h3>
-                <div className="overflow-x-auto border border-border rounded-lg mb-8 not-prose">
-                  <table className="min-w-full text-sm text-left">
-                    <tbody className="divide-y divide-border">
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold w-32 text-foreground">Name:</th>
-                        <td className="p-3 font-mono text-primary">_ga</td>
-                      </tr>
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold text-foreground">Purpose:</th>
-                        <td className="p-3 text-muted-foreground">Records a particular ID used to come up with data about website usage by the user</td>
-                      </tr>
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold text-foreground">Provider:</th>
-                        <td className="p-3 text-muted-foreground">.invatam-impreuna.vercel.app</td>
-                      </tr>
-                      <tr><td colSpan={2} className="bg-background h-2 border-none"></td></tr>
-                      <tr className="border-t border-border">
-                        <th className="bg-muted/50 p-3 font-semibold text-foreground">Name:</th>
-                        <td className="p-3 font-mono text-primary">themePreference</td>
-                      </tr>
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold text-foreground">Purpose:</th>
-                        <td className="p-3 text-muted-foreground">Stores user theme preference (dark/light mode).</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <h2 id="browser-control">How can I control cookies on my browser?</h2>
-                <p>
-                  As the means by which you can refuse cookies through your web browser controls vary from browser to browser, you should visit your browser&apos;s help menu for more information.
-                </p>
-
-                <h2 id="more-info">Where can I get further information?</h2>
-                <p>
-                  If you have any questions about our use of cookies or other technologies, please contact us at: <a href="mailto:spyderend0@gmail.com">spyderend0@gmail.com</a>
-                </p>
-              </>
+                <section>
+                  <h2 className="text-2xl border-b pb-2">CONTACT</h2>
+                  <p>Pentru întrebări suplimentare despre modul în care protejăm datele dvs., ne puteți contacta la:</p>
+                  <a href="mailto:spyderend0@gmail.com" className="flex items-center gap-2 text-primary font-bold mt-2">
+                    <Mail className="w-5 h-5" /> spyderend0@gmail.com
+                  </a>
+                </section>
+              </div>
             ) : (
-              // ================= ROMANIAN CONTENT =================
-              <>
-                <p>
-                  Această Politică de Cookie-uri explică modul în care <strong>Învățăm Împreună</strong> (&quot;<strong>Platforma</strong>,&quot;,&quot;<strong>Proiectul</strong>,&quot; &quot;<strong>noi</strong>,&quot;) utilizează cookie-uri și tehnologii similare pentru a vă recunoaște atunci când vizitați site-ul nostru la <a href="https://invatam-impreuna.vercel.app">https://invatam-impreuna.vercel.app</a> (&quot;<strong>Website-ul</strong>&quot;). Explică ce sunt aceste tehnologii și de ce le folosim, precum și drepturile dvs. de a controla utilizarea lor.
-                </p>
+              /* ================= CONȚINUT COMPLET ÎN ENGLEZĂ ================= */
+              <div className="space-y-10">
+                <section>
+                  <p className="text-lg">
+                    This Cookie Policy explains how <strong>Învățăm Împreună</strong> (&quot;<strong>The Platform</strong>,&quot; &quot;<strong>The Project</strong>,&quot; &quot;<strong>we</strong>,&quot; &quot;<strong>us</strong>&quot;) uses cookies and similar technologies when you visit our website at <a href="https://invatam-impreuna.vercel.app">https://invatam-impreuna.vercel.app</a>.
+                  </p>
+                </section>
 
-                <h2 id="ce-sunt-cookie">Ce sunt cookie-urile?</h2>
-                <p>
-                  Cookie-urile sunt fișiere mici de date care sunt plasate pe computerul sau dispozitivul dvs. mobil atunci când vizitați un site web. Cookie-urile sunt utilizate pe scară largă de proprietarii de site-uri web pentru a face ca site-urile lor să funcționeze, sau să funcționeze mai eficient, precum și pentru a furniza informații de raportare.
-                </p>
-                <p>
-                  Cookie-urile setate de proprietarul site-ului (în acest caz, Învățăm Împreună) se numesc &quot;cookie-uri first-party&quot;. Cookie-urile setate de alte părți decât proprietarul site-ului se numesc &quot;cookie-uri third-party&quot;. Cookie-urile terțe permit furnizarea de caracteristici sau funcționalități terțe pe sau prin intermediul site-ului web (de exemplu, publicitate, conținut interactiv și analize).
-                </p>
+                <section>
+                  <h2 className="text-2xl border-b pb-2 flex items-center gap-2">
+                    <Info className="w-6 h-6 text-primary" /> WHAT ARE COOKIES?
+                  </h2>
+                  <p>Cookies are small data files placed on your device. They are essential for recognizing you and remembering your settings (like login status or UI theme).</p>
+                </section>
 
-                <h2 id="de-ce-cookie">De ce folosim cookie-uri?</h2>
-                <p>
-                  Folosim cookie-uri first-party și third-party din mai multe motive. Unele cookie-uri sunt necesare din motive tehnice pentru ca site-ul nostru să funcționeze, iar noi ne referim la acestea ca fiind cookie-uri &quot;esențiale&quot; sau &quot;strict necesare&quot;. Alte cookie-uri ne permit, de asemenea, să urmărim și să vizăm interesele utilizatorilor noștri pentru a îmbunătăți experiența pe proprietățile noastre online.
-                </p>
+                <section>
+                  <h2 className="text-2xl border-b pb-2 flex items-center gap-2">
+                    <Settings className="w-6 h-6 text-primary" /> WHY DO WE USE THEM?
+                  </h2>
+                  <ul className="list-disc pl-6 space-y-2">
+                    <li><strong>Essential:</strong> Required for technical reasons (security, authentication).</li>
+                    <li><strong>Analytics:</strong> Helping us understand how students use the platform.</li>
+                    <li><strong>Functionality:</strong> Storing preferences like Dark/Light mode.</li>
+                  </ul>
+                </section>
 
-                <h2 id="control-cookie">Cum pot controla cookie-urile?</h2>
-                <p>
-                  Aveți dreptul de a decide dacă acceptați sau respingeți cookie-urile. Vă puteți exercita drepturile privind cookie-urile setând preferințele în browserul dumneavoastră. Cookie-urile esențiale nu pot fi respinse, deoarece sunt strict necesare pentru a vă oferi servicii.
-                </p>
+                <section>
+                  <h3 className="text-xl font-bold mb-4">Specific Cookies We Use:</h3>
+                  <div className="overflow-x-auto border border-border rounded-2xl mb-8 not-prose">
+                    <table className="min-w-full text-sm text-left">
+                      <thead className="bg-muted/50 border-b border-border">
+                        <tr>
+                          <th className="p-4 font-bold text-foreground">Attribute</th>
+                          <th className="p-4 font-bold text-foreground">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-border">
+                        <tr>
+                          <td className="p-4 font-semibold bg-muted/20">Name:</td>
+                          <td className="p-4 font-mono text-primary font-bold">_ga</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-semibold bg-muted/20">Purpose:</td>
+                          <td className="p-4">Records a particular ID used for website usage analytics via Google Analytics.</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-semibold bg-muted/20">Name:</td>
+                          <td className="p-4 font-mono text-primary font-bold">themePreference</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-semibold bg-muted/20">Purpose:</td>
+                          <td className="p-4">Stores your dark/light mode preference.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
 
-                {/* TABLE RO */}
-                <h3>Cookie-uri de performanță și funcționalitate:</h3>
-                <div className="overflow-x-auto border border-border rounded-lg mb-8 not-prose">
-                  <table className="min-w-full text-sm text-left">
-                    <tbody className="divide-y divide-border">
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold w-32 text-foreground">Nume:</th>
-                        <td className="p-3 font-mono text-primary">rc::h</td>
-                      </tr>
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold text-foreground">Furnizor:</th>
-                        <td className="p-3 text-muted-foreground">www.google.com</td>
-                      </tr>
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold text-foreground">Tip:</th>
-                        <td className="p-3 text-muted-foreground">stocare locală HTML</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <section>
+                  <h2 className="text-2xl border-b pb-2">HOW CAN I CONTROL COOKIES?</h2>
+                  <p>You have the right to accept or refuse cookies. Essential cookies (for logging in) cannot be refused because the platform would not be able to function without them. However, you can change the settings in your browser:</p>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Chrome</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Firefox</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Safari</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Edge</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Opera</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Brave</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">Internet Samsung</span>
+                    <span className="px-3 py-1 bg-muted border rounded-full text-xs font-bold">etc.</span>
+                  </div>
+                </section>
 
-                <h3>Cookie-uri de analiză și personalizare:</h3>
-                <div className="overflow-x-auto border border-border rounded-lg mb-8 not-prose">
-                  <table className="min-w-full text-sm text-left">
-                    <tbody className="divide-y divide-border">
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold w-32 text-foreground">Nume:</th>
-                        <td className="p-3 font-mono text-primary">_ga</td>
-                      </tr>
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold text-foreground">Scop:</th>
-                        <td className="p-3 text-muted-foreground">Înregistrează un ID unic pentru a genera date statistice despre utilizarea site-ului.</td>
-                      </tr>
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold text-foreground">Furnizor:</th>
-                        <td className="p-3 text-muted-foreground">.invatam-impreuna.vercel.app</td>
-                      </tr>
-                      <tr><td colSpan={2} className="bg-background h-2 border-none"></td></tr>
-                      <tr className="border-t border-border">
-                        <th className="bg-muted/50 p-3 font-semibold text-foreground">Nume:</th>
-                        <td className="p-3 font-mono text-primary">themePreference</td>
-                      </tr>
-                      <tr>
-                        <th className="bg-muted/50 p-3 font-semibold text-foreground">Scop:</th>
-                        <td className="p-3 text-muted-foreground">Stochează preferința utilizatorului pentru tema site-ului (întunecat/luminos).</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <h2 id="control-browser">Cum pot controla cookie-urile din browser?</h2>
-                <p>
-                  Deoarece mijloacele prin care puteți refuza cookie-urile prin intermediul controalelor browserului web variază de la un browser la altul, ar trebui să vizitați meniul de ajutor al browserului dvs. pentru mai multe informații.
-                </p>
-
-                <h2 id="info-suplimentare">Unde pot obține informații suplimentare?</h2>
-                <p>
-                  Dacă aveți întrebări despre utilizarea cookie-urilor sau a altor tehnologii, vă rugăm să ne trimiteți un e-mail la: <a href="mailto:spyderend0@gmail.com">spyderend0@gmail.com</a>
-                </p>
-              </>
+                <section>
+                  <h2 className="text-2xl border-b pb-2">CONTACT</h2>
+                  <p>For any questions regarding our use of cookies, please email us at:</p>
+                  <a href="mailto:spyderend0@gmail.com" className="flex items-center gap-2 text-primary font-bold">
+                    <Mail className="w-5 h-5" /> spyderend0@gmail.com
+                  </a>
+                </section>
+              </div>
             )}
 
           </motion.div>
