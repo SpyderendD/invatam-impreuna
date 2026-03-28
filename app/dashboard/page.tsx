@@ -3,173 +3,131 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
-import { useTaskPlanner, Task, achievementsList, AchievementId } from '@/hooks/useTaskPlanner'; 
+// AM ADĂUGAT TaskStatus în importul de mai jos
+import { useTaskPlanner, achievementsList, AchievementId, Task, TaskStatus } from '@/hooks/useTaskPlanner'; 
 import { format, addDays, startOfWeek, isToday, isPast } from 'date-fns';
 import { ro } from 'date-fns/locale';
 import { QuoteOfTheDay } from '@/components/dashboard/QuoteOfTheDay';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Skeleton } from '@/components/ui/skeleton';
-import { 
-    Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter 
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { Switch } from '@/components/ui/switch';
-import { 
-    Check, X, Plus, Trash2, Edit, ChevronLeft, ChevronRight, Settings as SettingsIcon, 
-    History, Trophy, Download, Upload, Info, Sparkles, Zap, Flame, LayoutDashboard, Loader2,
-    HelpCircle, Lock
-} from 'lucide-react';
+import { Check, X, Plus, Trash2, ChevronLeft, ChevronRight, Settings as SettingsIcon, History, Trophy, Info, Sparkles, Zap, Flame, LayoutDashboard, Loader2, Lock, HelpCircle, Download, Upload, Trash } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from "@/lib/utils";
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
-// --- BACKGROUND ---
 const AmbientBackground = () => (
   <div className="fixed inset-0 z-[-1] overflow-hidden bg-[#030712]">
     <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-900/20 rounded-full blur-[120px]" />
     <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-violet-900/20 rounded-full blur-[120px]" />
-    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] mix-blend-overlay"></div>
   </div>
 );
 
-// --- GLASS CARD ---
 const GlassCard = ({ children, className }: { children: React.ReactNode, className?: string }) => (
-  <div className={cn(
-    "relative overflow-hidden rounded-2xl border border-white/5 bg-[#0f172a]/60 p-5 backdrop-blur-xl transition-all duration-300 hover:border-white/10 hover:bg-[#0f172a]/80 hover:shadow-2xl",
-    className
-  )}>
+  <div className={cn("relative overflow-hidden rounded-2xl border border-white/5 bg-[#0f172a]/60 p-5 backdrop-blur-xl transition-all", className)}>
     {children}
   </div>
 );
-
-type UserGamification = {
-    xp?: number;
-    level?: number;
-    streak?: number;
-    completedLessons?: string[];
-};
-
-// --- FUNCȚIE CALCUL RANG (TITLU) ---
-const getRankTitle = (level: number) => {
-    if (level >= 50) return { title: "ZEU AL PRODUCTIVITĂȚII", color: "text-amber-400" };
-    if (level >= 30) return { title: "TITAN", color: "text-red-400" };
-    if (level >= 20) return { title: "LEGENDĂ", color: "text-purple-400" };
-    if (level >= 10) return { title: "MAESTRU", color: "text-indigo-400" };
-    if (level >= 5) return { title: "EXPERT", color: "text-blue-400" };
-    return { title: "ÎNVĂȚĂCEL", color: "text-slate-400" };
-};
 
 export default function DashboardPage() {
     const { user, loading: isAuthLoading } = useAuth();
     const planner = useTaskPlanner();
     const [weekOffset, setWeekOffset] = useState(0);
-    const [gameStats, setGameStats] = useState<UserGamification>({ xp: 0, level: 1, streak: 0 });
+    const [stats, setStats] = useState({ xp: 0, level: 1 });
     const [showTutorial, setShowTutorial] = useState(false);
 
-    // --- ASCULTĂ XP-UL ÎN TIMP REAL ---
+    // EROARE REZOLVATĂ: Am adăugat 'planner' în array-ul de dependențe de la finalul useEffect
     useEffect(() => {
-        if (!user) return;
-        const ref = doc(db, "progress", user.uid);
-        const unsub = onSnapshot(ref, (snap) => {
-            const data = snap.data() as UserGamification;
-            if (data) {
-                const calculatedXP = (data.completedLessons?.length || 0) * 100;
-                setGameStats({
-                    xp: data.xp ?? calculatedXP,
-                    level: data.level ?? (Math.floor(calculatedXP / 1000) + 1),
-                    streak: data.streak ?? 0
+        if (planner.isLoading || !user) return;
+        const today = new Date();
+        if (today.getDate() === 1) {
+            const key = `reset-${today.getMonth()}-${today.getFullYear()}`;
+            if (localStorage.getItem('last_reset') !== key) {
+                planner.resetMonthlyPlan().then(() => {
+                    localStorage.setItem('last_reset', key);
+                    planner.applyScheduleToWeek(startOfWeek(new Date(), { weekStartsOn: 1 }));
+                    toast({ title: "Lună nouă! Calendarul a fost curățat. 🚀" });
                 });
             }
+        }
+    }, [planner.isLoading, user, planner]); 
+
+    useEffect(() => {
+        if (!user) return;
+        const unsub = onSnapshot(doc(db, "progress", user.uid), (snap) => {
+            if (snap.exists()) setStats({ xp: snap.data().xp || 0, level: snap.data().level || 1 });
         });
         return () => unsub();
     }, [user]);
 
-    // --- CALCUL DATĂ ---
-    const { weekDates, weekLabel, weekStartDate } = useMemo((): { 
-        weekDates: string[]; 
-        weekLabel: string; 
-        weekStartDate: Date; 
-    } => {
+    const { weekDates, weekLabel, weekStartDate } = useMemo(() => {
         const start = startOfWeek(addDays(new Date(), weekOffset * 7), { weekStartsOn: 1 });
         const end = addDays(start, 6);
-        
-        // Am redenumit variabila internă din `dates` în `dateStrings`
-        const dateStrings = Array.from({ length: 7 }).map((_, i) => format(addDays(start, i), 'yyyy-MM-dd'));
-        const label = `${format(start, 'd MMM', { locale: ro })} — ${format(end, 'd MMM yyyy', { locale: ro })}`;
-        
-        // Acum returnăm variabilele cu nume diferite, deci nu mai e conflict
-        return { weekDates: dateStrings, weekLabel: label, weekStartDate: start };
+        return { 
+            weekDates: Array.from({ length: 7 }).map((_, i) => format(addDays(start, i), 'yyyy-MM-dd')),
+            weekLabel: `${format(start, 'd MMM', { locale: ro })} — ${format(end, 'd MMM yyyy', { locale: ro })}`,
+            weekStartDate: start
+        };
     }, [weekOffset]);
 
-    // --- CALCUL XP BAR ---
-    const currentLevel = gameStats.level || 1;
-    const currentXP = gameStats.xp || 0;
-    const nextLevelXP = currentLevel * 1000;
-    const prevLevelXP = (currentLevel - 1) * 1000;
-    const progressPercent = Math.min(100, Math.max(0, ((currentXP - prevLevelXP) / 1000) * 100));
-    const rank = getRankTitle(currentLevel);
+    if (isAuthLoading || planner.isLoading) return <div className="min-h-screen flex items-center justify-center bg-[#030712]"><Loader2 className="animate-spin text-indigo-500 w-12 h-12" /></div>;
 
-    if (isAuthLoading || planner.isLoading) return <DashboardSkeleton />;
+    const progressPercent = ((stats.xp % 1000) / 1000) * 100;
 
     return (
-        <div className="min-h-screen relative text-slate-200 font-sans selection:bg-indigo-500/30 selection:text-white pb-20">
+        <div className="min-h-screen relative text-slate-200 pb-20 font-sans selection:bg-indigo-500/30 selection:text-white">
             <AmbientBackground />
             {showTutorial && <TutorialOverlay onClose={() => setShowTutorial(false)} />}
-
+            
             <main className="container mx-auto px-4 py-8 relative z-10">
                 
-                {/* --- HEADER GAMIFICAT --- */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                    <div className="lg:col-span-2">
-                        <GlassCard className="h-full flex flex-col justify-center relative overflow-hidden group">
-                            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity"><LayoutDashboard className="w-32 h-32 text-indigo-500" /></div>
-                            
-                            <div className="relative z-10">
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="bg-indigo-600/20 p-3 rounded-xl border border-indigo-500/30"><Zap className="w-6 h-6 text-indigo-400" /></div>
-                                    <div>
-                                        <h1 className="text-2xl font-bold text-white">Salut, {user?.displayName?.split(' ')[0]}!</h1>
-                                        <p className={cn("text-sm font-bold tracking-widest uppercase", rank.color)}>{rank.title}</p>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-2">
-                                    <div className="flex justify-between text-xs font-bold tracking-widest uppercase">
-                                        <span className="text-indigo-300">Level {currentLevel}</span>
-                                        <span className="text-slate-500">{currentXP} / {nextLevelXP} XP</span>
-                                    </div>
-                                    <div className="h-3 w-full bg-[#020617] rounded-full overflow-hidden border border-white/5">
-                                        <motion.div 
-                                            className="h-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 shadow-[0_0_15px_#8b5cf6]"
-                                            initial={{ width: 0 }}
-                                            animate={{ width: `${progressPercent}%` }}
-                                            transition={{ duration: 1.5, ease: "circOut" }}
-                                        />
-                                    </div>
+                    <GlassCard className="lg:col-span-2 flex flex-col justify-center relative group overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity"><LayoutDashboard className="w-32 h-32 text-indigo-500" /></div>
+                        <div className="relative z-10">
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="bg-indigo-600/20 p-3 rounded-xl border border-indigo-500/30"><Zap className="text-indigo-400 w-8 h-8" /></div>
+                                <div>
+                                    <h1 className="text-2xl font-bold text-white">Salut, {user?.displayName?.split(' ')[0]}!</h1>
+                                    <p className="text-xs text-indigo-300 uppercase font-bold tracking-widest">Nivel {stats.level} — Student Dedicat</p>
                                 </div>
                             </div>
-                        </GlassCard>
-                    </div>
+                            <div className="space-y-2">
+                                <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest">
+                                    <span className="text-indigo-300">Progres Nivel</span>
+                                    <span className="text-slate-500">{stats.xp} / {stats.level * 1000} XP</span>
+                                </div>
+                                <div className="h-3 w-full bg-black/40 rounded-full overflow-hidden border border-white/5">
+                                    <motion.div 
+                                        className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 shadow-[0_0_15px_#6366f1]" 
+                                        initial={{ width: 0 }} 
+                                        animate={{ width: `${progressPercent}%` }} 
+                                        transition={{ duration: 1.5, ease: "easeOut" }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </GlassCard>
 
                     <div className="grid grid-cols-2 gap-4">
-                         <GlassCard className="flex flex-col items-center justify-center text-center bg-orange-900/10 border-orange-500/20">
+                        <GlassCard className="flex flex-col items-center justify-center text-center bg-orange-500/10 border-orange-500/20">
                             <Flame className="w-8 h-8 text-orange-500 mb-2 animate-pulse" />
-                            <span className="text-3xl font-black text-white">{gameStats.streak}</span>
-                            <span className="text-[10px] text-orange-300/60 uppercase font-bold tracking-widest">Zile Streak</span>
-                         </GlassCard>
-                         <GlassCard className="flex flex-col items-center justify-center text-center">
+                            <span className="text-3xl font-black text-white">{planner.achievements.streakCurrent}</span>
+                            <span className="text-[10px] text-orange-300 uppercase font-bold tracking-widest">Zile Streak</span>
+                        </GlassCard>
+                        <GlassCard className="flex flex-col items-center justify-center bg-yellow-500/5 border-yellow-500/20">
                             <Trophy className="w-8 h-8 text-yellow-500 mb-2" />
                             <span className="text-3xl font-black text-white">{planner.achievements.unlocked.size}</span>
-                            <span className="text-[10px] text-yellow-200/60 uppercase font-bold tracking-widest">Premii</span>
-                         </GlassCard>
+                            <span className="text-[10px] text-yellow-200 uppercase font-bold tracking-widest">Premii</span>
+                        </GlassCard>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
-                    
                     <div className="xl:col-span-8 2xl:col-span-9 space-y-6">
                         <QuoteOfTheDay />
                         
@@ -177,46 +135,29 @@ export default function DashboardPage() {
                             <div className="flex items-center gap-2">
                                 <Button variant="ghost" size="icon" onClick={() => setWeekOffset(w => w - 1)} className="hover:bg-white/5"><ChevronLeft className="w-5 h-5" /></Button>
                                 <Button variant="ghost" size="icon" onClick={() => setWeekOffset(w => w + 1)} className="hover:bg-white/5"><ChevronRight className="w-5 h-5" /></Button>
-                                <h2 className="font-bold text-white ml-2 flex items-center gap-2">
-                                    <Sparkles className="w-4 h-4 text-indigo-400" /> {weekLabel}
-                                </h2>
+                                <h2 className="font-bold text-white ml-2 flex items-center gap-2"><Sparkles className="w-4 h-4 text-indigo-400" /> {weekLabel}</h2>
                             </div>
                             <div className="flex items-center gap-2">
-                                <Button variant="secondary" size="sm" onClick={() => setWeekOffset(0)} className="bg-white/5 hover:bg-white/10 text-xs">Azi</Button>
-                                <Button size="sm" onClick={() => { planner.applyScheduleToWeek(weekStartDate); toast({ title: 'Program aplicat!' }); }} className="bg-indigo-600 hover:bg-indigo-700 text-xs">
-                                    Aplică Program
-                                </Button>
+                                <Button variant="secondary" size="sm" onClick={() => setWeekOffset(0)} className="bg-white/5 text-xs">Azi</Button>
+                                <Button size="sm" onClick={() => { planner.applyScheduleToWeek(weekStartDate); toast({ title: "Program aplicat!" }); }} className="bg-indigo-600 hover:bg-indigo-700 text-xs shadow-lg shadow-indigo-500/20">Aplică Program</Button>
                             </div>
                         </GlassCard>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                            {weekDates.map((dateStr) => (
-                                <DayColumn key={dateStr} dateStr={dateStr} planner={planner} />
-                            ))}
+                            {weekDates.map((dateStr) => <DayColumn key={dateStr} dateStr={dateStr} planner={planner} />)}
                         </div>
                     </div>
-                    
-                    <aside className="xl:col-span-4 2xl:col-span-3 space-y-6 xl:sticky xl:top-8">
-                       
-                       <UnplannedTaskCard addTask={planner.addUnplannedTask} />
 
+                    <aside className="xl:col-span-4 2xl:col-span-3 space-y-6 xl:sticky xl:top-8">
+                       <UnplannedTaskCard addTask={planner.addUnplannedTask} />
                        <GlassCard>
-                          <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-widest flex items-center gap-2">
-                             <SettingsIcon className="w-4 h-4" /> Unelte
-                          </h3>
+                          <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-widest flex items-center gap-2 border-b border-white/5 pb-2"><SettingsIcon className="w-4 h-4 text-indigo-400" /> Panou Unelte</h3>
                           <div className="grid grid-cols-2 gap-3">
                              <HistoryDialog planner={planner} />
                              <AchievementsDialog achievements={planner.achievements} />
-                             <div className="col-span-2">
-                                <SettingsDialog taskPlanner={planner} onShowTutorial={() => setShowTutorial(true)} />
-                             </div>
+                             <div className="col-span-2"><SettingsDialog taskPlanner={planner} onShowTutorial={() => setShowTutorial(true)} /></div>
                           </div>
                        </GlassCard>
-
-                       <div className="p-4 rounded-xl border border-indigo-500/20 bg-indigo-500/5 text-xs text-indigo-300 leading-relaxed">
-                          <p className="font-bold mb-1">💡 Sfat:</p> Fii atent la trofeele &quot;Time-based&quot;! Încearcă să termini un task sâmbăta sau foarte devreme dimineața.
-                       </div>
-
                     </aside>
                 </div>
             </main>
@@ -224,77 +165,185 @@ export default function DashboardPage() {
     );
 }
 
-// --- SUB-COMPONENTE ---
-
-function DayColumn({ dateStr, planner }: { dateStr: string; planner: ReturnType<typeof useTaskPlanner> }) {
-    const [newTaskDesc, setNewTaskDesc] = useState('');
-    const dayPlan = planner.plan[dateStr] || { tasks: [], goalReached: false };
+function DayColumn({ dateStr, planner }: any) {
+    const [val, setVal] = useState('');
+    const day = planner.plan[dateStr] || { tasks: [], goalReached: false };
     const date = new Date(dateStr + 'T12:00:00');
-    const isCurrentDay = isToday(date);
-    const dayIsPast = isPast(date) && !isCurrentDay;
-    const handleAddTask = () => { if (newTaskDesc.trim()) { planner.addTask(dateStr, newTaskDesc.trim()); setNewTaskDesc(''); } };
-    const completedCount = dayPlan.tasks.filter(t => t.status === 'completed').length;
-    const progress = dayPlan.tasks.length > 0 ? (completedCount / dayPlan.tasks.length) * 100 : 0;
+    const isTodayCol = isToday(date);
+    const dayIsPast = isPast(date) && !isTodayCol;
+    const progress = day.tasks.length > 0 ? (day.tasks.filter((t:any) => t.status === 'completed').length / day.tasks.length) * 100 : 0;
+
     return (
-        <GlassCard className={cn("flex flex-col h-full min-h-[300px] transition-all !p-0 border-white/5", isCurrentDay ? "border-indigo-500/50 bg-indigo-500/5 ring-1 ring-indigo-500/30" : "bg-[#0f172a]/40", dayIsPast && "opacity-60 grayscale-[0.5]")}>
-            <div className="p-4 border-b border-white/5 bg-white/5">
-                <div className="flex justify-between items-center mb-2"><span className="text-sm font-bold text-white capitalize">{format(date, 'EEEE', { locale: ro })}</span>{dayPlan.goalReached && <Sparkles className="w-4 h-4 text-yellow-400 animate-pulse" />}</div>
-                <div className="flex justify-between items-end text-xs text-slate-400"><span>{format(date, 'd MMM', { locale: ro })}</span><span>{Math.round(progress)}%</span></div>
-                <div className="h-1 w-full bg-[#020617] rounded-full mt-2 overflow-hidden"><div className="h-full bg-indigo-500 transition-all duration-500" style={{ width: `${progress}%` }} /></div>
+        <GlassCard className={cn("flex flex-col h-full min-h-[350px] !p-0 border-white/5 transition-all", isTodayCol && "border-indigo-500/50 bg-indigo-500/10 ring-1 ring-indigo-500/20", dayIsPast && "opacity-60")}>
+            <div className="p-4 bg-white/5 border-b border-white/5">
+                <div className="flex justify-between items-center mb-1"><span className="text-xs font-bold text-white capitalize">{format(date, 'EEEE', { locale: ro })}</span>{day.goalReached && <Sparkles className="w-4 h-4 text-yellow-400 animate-pulse" />}</div>
+                <div className="flex justify-between text-[10px] text-slate-400 font-mono"><span>{format(date, 'd MMM')}</span><span>{Math.round(progress)}%</span></div>
+                <div className="h-1.5 w-full bg-black/40 rounded-full mt-2 overflow-hidden"><motion.div className="h-full bg-indigo-500 shadow-[0_0_10px_#6366f1]" initial={{ width: 0 }} animate={{ width: `${progress}%` }} /></div>
             </div>
-            <div className="p-3 flex-1 overflow-y-auto space-y-2 max-h-[300px] scrollbar-thin scrollbar-thumb-white/10"><AnimatePresence>{dayPlan.tasks.map((task) => <TaskItem key={task.id} dateStr={dateStr} task={task} planner={planner} />)}{dayPlan.tasks.length === 0 && <div className="text-center py-8 text-xs text-slate-600 italic">Niciun plan.</div>}</AnimatePresence></div>
-            <div className="p-3 border-t border-white/5 bg-white/[0.02]"><div className="flex gap-2"><Input placeholder="Task..." value={newTaskDesc} onChange={e => setNewTaskDesc(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleAddTask()} className="h-8 text-xs bg-[#020617] border-white/10 focus:border-indigo-500"/><Button size="icon" className="h-8 w-8 bg-indigo-600 hover:bg-indigo-700" onClick={handleAddTask}><Plus className="w-4 h-4" /></Button></div></div>
+            <div className="p-3 flex-1 overflow-y-auto space-y-2 scrollbar-thin scrollbar-thumb-white/10 min-h-[150px]">
+                <AnimatePresence mode="popLayout">
+                    {day.tasks.map((task: any) => <TaskItem key={task.id} dateStr={dateStr} task={task} planner={planner} />)}
+                    {day.tasks.length === 0 && <p className="text-[10px] text-slate-600 italic text-center py-10">Fără sarcini planificate.</p>}
+                </AnimatePresence>
+            </div>
+            <div className="p-3 border-t border-white/5 bg-white/[0.02] flex gap-2">
+                <Input value={val} onChange={e => setVal(e.target.value)} onKeyDown={e => e.key === 'Enter' && (planner.addTask(dateStr, val), setVal(''))} placeholder="Adaugă task..." className="h-8 text-xs bg-black/40 border-white/10" />
+                <Button size="icon" className="h-8 w-8 bg-indigo-600 hover:bg-indigo-700" onClick={() => { if(val.trim()){planner.addTask(dateStr, val); setVal('');} }}><Plus className="w-4 h-4" /></Button>
+            </div>
         </GlassCard>
     );
 }
 
-function TaskItem({ dateStr, task, planner }: { dateStr: string; task: Task; planner: ReturnType<typeof useTaskPlanner> }) {
+function TaskItem({ dateStr, task, planner }: { dateStr: string, task: Task, planner: any }) {
     const [isEditing, setIsEditing] = useState(false);
     const [editText, setEditText] = useState(task.description);
-    const style = { pending: 'border-white/5 hover:bg-white/5 text-slate-300', completed: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300 line-through opacity-70', failed: 'border-rose-500/30 bg-rose-500/10 text-rose-300' }[task.status];
-    const cycle = () => planner.toggleTaskStatus(dateStr, task.id);
-    const onUpdate = () => { if (!editText.trim()) return planner.deleteTask(dateStr, task.id); planner.updateTaskDescription(dateStr, task.id, editText); setIsEditing(false); };
+
+    // EROARE REZOLVATĂ: Am definit tipul explicit pentru obiectul de stiluri
+    const styles: Record<TaskStatus, string> = {
+        pending: 'border-white/5 text-slate-300',
+        completed: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300 line-through opacity-70',
+        failed: 'border-rose-500/30 bg-rose-500/10 text-rose-300'
+    };
+
+    const currentStyle = styles[task.status] || styles.pending;
+    
+    const onUpdate = () => { 
+        if (!editText.trim()) return planner.deleteTask(dateStr, task.id); 
+        planner.updateTaskDescription(dateStr, task.id, editText); 
+        setIsEditing(false); 
+    };
+
     return (
-        <motion.div layout initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className={`group flex items-center gap-2 p-2 rounded-lg border text-xs transition-all cursor-pointer ${style}`}><button onClick={cycle} className="shrink-0">{task.status === 'completed' ? <div className="bg-emerald-500 rounded p-0.5"><Check className="w-3 h-3 text-black" /></div> : task.status === 'failed' ? <div className="bg-rose-500 rounded p-0.5"><X className="w-3 h-3 text-black" /></div> : <div className="w-4 h-4 rounded border border-slate-500 hover:border-indigo-400" />}</button>{isEditing ? <Input value={editText} onChange={e => setEditText(e.target.value)} onBlur={onUpdate} autoFocus className="h-6 text-xs bg-black/50" /> : <span className="flex-grow truncate" onDoubleClick={() => setIsEditing(true)}>{task.description}</span>}<button onClick={() => planner.deleteTask(dateStr, task.id)} className="opacity-0 group-hover:opacity-100 text-slate-500 hover:text-rose-500 transition-opacity"><Trash2 className="w-3 h-3" /></button></motion.div>
+        <motion.div layout initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, scale: 0.95 }} className={cn("group flex items-center gap-2 p-2 rounded-xl border text-[11px] cursor-pointer hover:scale-[1.02] transition-all", currentStyle)}>
+            <button onClick={() => planner.toggleTaskStatus(dateStr, task.id)} className="shrink-0">
+                {task.status === 'completed' ? <Check className="w-3 h-3 text-emerald-400" /> : task.status === 'failed' ? <X className="w-3 h-3 text-rose-400" /> : <div className="w-3.5 h-3.5 border border-white/20 rounded-sm" />}
+            </button>
+            {isEditing ? <Input value={editText} onChange={e => setEditText(e.target.value)} onBlur={onUpdate} autoFocus className="h-6 text-[10px] bg-black/50 border-none p-1" /> : <span className="flex-grow truncate" onDoubleClick={() => setIsEditing(true)}>{task.description}</span>}
+            <button onClick={() => planner.deleteTask(dateStr, task.id)} className="opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="w-3 h-3 text-rose-500/70 hover:text-rose-500" /></button>
+        </motion.div>
     );
 }
 
-function UnplannedTaskCard({ addTask }: { addTask: (desc: string, type: 'verde' | 'rosu') => void }) {
+function UnplannedTaskCard({ addTask }: any) {
     const [desc, setDesc] = useState('');
-    const onAdd = (type: 'verde' | 'rosu') => { if (!desc.trim()) return; addTask(desc.trim(), type); setDesc(''); toast({ title: "Adăugat!" }); };
     return (
-        <GlassCard><div className="flex items-center gap-2 mb-3 text-white font-bold text-sm"><Info className="w-4 h-4 text-indigo-400" /> Activitate Rapidă</div><div className="space-y-2"><Input placeholder="Ce ai făcut spontan?" value={desc} onChange={e => setDesc(e.target.value)} className="bg-[#020617] border-white/10 text-sm" /><div className="grid grid-cols-2 gap-2"><Button size="sm" onClick={() => onAdd('verde')} className="bg-emerald-600 hover:bg-emerald-700 h-8 text-xs">Reușită</Button><Button size="sm" onClick={() => onAdd('rosu')} variant="outline" className="border-rose-500/50 text-rose-400 hover:bg-rose-500/10 h-8 text-xs">Eșec</Button></div></div></GlassCard>
+        <GlassCard className="space-y-4 shadow-xl">
+            <h3 className="text-xs font-bold flex items-center gap-2"><Info className="w-4 h-4 text-indigo-400" /> Activitate Rapidă</h3>
+            <Input value={desc} onChange={e => setDesc(e.target.value)} placeholder="Ce ai reușit să faci azi spontan?" className="text-xs bg-black/40 border-white/10 h-9" />
+            <div className="grid grid-cols-2 gap-3">
+                <Button size="sm" onClick={() => { if(desc.trim()){addTask(desc, 'verde'); setDesc('');} }} className="bg-emerald-600 hover:bg-emerald-700 h-9 text-[10px] font-bold">REUȘITĂ</Button>
+                <Button size="sm" onClick={() => { if(desc.trim()){addTask(desc, 'rosu'); setDesc('');} }} variant="outline" className="h-9 text-[10px] border-rose-500/30 text-rose-400 hover:bg-rose-500/10 font-bold">EȘEC</Button>
+            </div>
+        </GlassCard>
     );
 }
 
-function SettingsDialog({ taskPlanner, onShowTutorial }: { taskPlanner: ReturnType<typeof useTaskPlanner>, onShowTutorial: () => void }) {
+function SettingsDialog({ taskPlanner, onShowTutorial }: any) {
     const [settings, setSettings] = useState(taskPlanner.settings);
-    const [currentScheduleDay, setCurrentScheduleDay] = useState(0);
-    const [newScheduleTaskDesc, setNewScheduleTaskDesc] = useState('');
+    const [currDay, setCurrDay] = useState(0);
+    const [newDesc, setNewDesc] = useState('');
     const days = ['Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă', 'Duminică'];
+
     useEffect(() => { setSettings(taskPlanner.settings); }, [taskPlanner.settings]);
-    const handleAdd = () => { if (!newScheduleTaskDesc.trim()) return; taskPlanner.addRecurringTask(currentScheduleDay, newScheduleTaskDesc); setNewScheduleTaskDesc(''); };
-    const handleSave = () => { taskPlanner.updateSettings(settings); toast({ title: "Setări Salvate!" }); };
+
     return (
-        <Dialog><DialogTrigger asChild><Button variant="secondary" className="w-full justify-start bg-white/5 hover:bg-white/10 text-slate-300"><SettingsIcon className="mr-2 h-4 w-4" /> Setări</Button></DialogTrigger><DialogContent className="bg-[#0f172a] border-white/10 text-slate-200 sm:max-w-xl"><DialogHeader><DialogTitle>Setări Planner</DialogTitle></DialogHeader><Tabs defaultValue="general" className="w-full"><TabsList className="grid w-full grid-cols-3 bg-black/40"><TabsTrigger value="general">Generale</TabsTrigger><TabsTrigger value="schedule">Program</TabsTrigger><TabsTrigger value="data">Date</TabsTrigger></TabsList><TabsContent value="general" className="py-4 space-y-4"><div className="flex justify-between items-center p-3 bg-white/5 rounded border border-white/5"><Label>Țintă zilnică (Task-uri)</Label><Input type="number" className="w-20 bg-black/50" value={settings.dailyGoal} onChange={e => setSettings(s => ({...s, dailyGoal: Number(e.target.value)}))} /></div><div className="flex justify-between items-center p-3 bg-white/5 rounded border border-white/5"><Label>Aplică Program Automat</Label><Switch checked={settings.autoApplySchedule} onCheckedChange={c => setSettings(s => ({...s, autoApplySchedule: c}))} /></div><div className="flex justify-between items-center p-3 bg-white/5 rounded border border-white/5"><Label>Resetare Lunară</Label><Switch checked={settings.autoDelete} onCheckedChange={c => setSettings(s => ({...s, autoDelete: c}))} /></div><Button variant="outline" className="w-full" onClick={onShowTutorial}><HelpCircle className="mr-2 h-4 w-4" /> Vezi Tutorialul</Button></TabsContent><TabsContent value="schedule" className="py-4 space-y-4"><div className="flex gap-2"><select value={currentScheduleDay} onChange={e => setCurrentScheduleDay(Number(e.target.value))} className="h-9 rounded bg-black border border-white/10 px-2 text-sm text-white">{days.map((d, i) => <option key={i} value={i}>{d}</option>)}</select><Input placeholder="Task recurent..." value={newScheduleTaskDesc} onChange={e => setNewScheduleTaskDesc(e.target.value)} className="h-9 bg-black/50" /><Button size="sm" onClick={handleAdd}><Plus className="h-4 w-4" /></Button></div><div className="space-y-1 max-h-48 overflow-y-auto">{taskPlanner.schedule[currentScheduleDay]?.map(t => <div key={t.id} className="flex justify-between items-center p-2 bg-white/5 rounded text-xs"><span>{t.description}</span><Button size="icon" variant="ghost" className="h-5 w-5" onClick={() => taskPlanner.deleteRecurringTask(currentScheduleDay, t.id)}><Trash2 className="h-3 w-3 text-rose-500" /></Button></div>)}</div></TabsContent><TabsContent value="data" className="py-4 space-y-3"><div className="grid grid-cols-2 gap-2"><Button variant="secondary" onClick={taskPlanner.exportData}><Download className="mr-2 h-4 w-4" /> Export</Button><div className="relative"><Button variant="secondary" className="w-full pointer-events-none"><Upload className="mr-2 h-4 w-4" /> Import</Button><input type="file" accept=".json" className="absolute inset-0 opacity-0 cursor-pointer pointer-events-auto" onChange={e => e.target.files?.[0] && taskPlanner.importData(e.target.files[0])} /></div></div><Button variant="destructive" className="w-full" onClick={taskPlanner.resetAllData}><Trash2 className="mr-2 h-4 w-4" /> Reset Complet</Button></TabsContent></Tabs><DialogFooter><Button onClick={handleSave} className="bg-indigo-600 hover:bg-indigo-700">Salvează</Button></DialogFooter></DialogContent></Dialog>
+        <Dialog>
+            <DialogTrigger asChild><Button variant="secondary" className="w-full text-[10px] justify-start bg-white/5 border-white/5 hover:bg-white/10 font-bold"><SettingsIcon className="mr-2 h-4 w-4 text-indigo-400" /> SETĂRI COMPLETE</Button></DialogTrigger>
+            <DialogContent className="bg-[#0f172a] text-slate-200 sm:max-w-xl border-white/10 backdrop-blur-3xl shadow-2xl">
+                <DialogHeader><DialogTitle className="flex items-center gap-2 font-lora"><SettingsIcon className="w-5 h-5 text-indigo-400" /> Configurare Platformă</DialogTitle></DialogHeader>
+                <Tabs defaultValue="general" className="mt-4">
+                    <TabsList className="grid grid-cols-3 bg-black/40 p-1 rounded-xl h-11 border border-white/5">
+                        <TabsTrigger value="general" className="text-xs font-bold data-[state=active]:bg-indigo-600">General</TabsTrigger>
+                        <TabsTrigger value="schedule" className="text-xs font-bold data-[state=active]:bg-indigo-600">Program</TabsTrigger>
+                        <TabsTrigger value="data" className="text-xs font-bold data-[state=active]:bg-indigo-600">Date & Cloud</TabsTrigger>
+                    </TabsList>
+                    
+                    <TabsContent value="general" className="py-6 space-y-5">
+                        <div className="flex justify-between items-center p-4 bg-white/5 rounded-2xl border border-white/5">
+                            <div><Label className="text-sm font-bold">Țintă Zilnică</Label><p className="text-[10px] text-slate-500">Câte task-uri vrei să bifezi pe zi?</p></div>
+                            <Input type="number" className="w-20 bg-black/50" value={settings.dailyGoal} onChange={e => setSettings({...settings, dailyGoal: Number(e.target.value)})} />
+                        </div>
+                        <div className="flex justify-between items-center p-4 bg-white/5 rounded-2xl border border-white/5">
+                            <div><Label className="text-sm font-bold">Auto-aplicare Program</Label><p className="text-[10px] text-slate-500">Pune automat task-urile recurente.</p></div>
+                            <Switch checked={settings.autoApplySchedule} onCheckedChange={v => setSettings({...settings, autoApplySchedule: v})} />
+                        </div>
+                        <Button variant="outline" className="w-full border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/10 h-11" onClick={onShowTutorial}><HelpCircle className="mr-2 h-4 w-4" /> REVEZI TUTORIAL</Button>
+                    </TabsContent>
+
+                    <TabsContent value="schedule" className="py-6 space-y-4">
+                        <div className="flex gap-2 p-1 bg-black/30 rounded-xl border border-white/5">
+                            <select value={currDay} onChange={e => setCurrDay(Number(e.target.value))} className="bg-transparent border-none text-xs font-bold px-3 outline-none">{days.map((d, i) => <option key={i} value={i} className="bg-[#0f172a]">{d}</option>)}</select>
+                            <Input value={newDesc} onChange={e => setNewDesc(e.target.value)} placeholder="Nume task recurent..." className="bg-transparent border-none text-xs h-10 shadow-none focus-visible:ring-0" />
+                            <Button size="icon" className="h-9 w-9 bg-indigo-600" onClick={() => { if(newDesc.trim()){taskPlanner.addRecurringTask(currDay, newDesc); setNewDesc('');} }}><Plus className="w-4 h-4"/></Button>
+                        </div>
+                        <div className="space-y-2 max-h-52 overflow-y-auto pr-2 scrollbar-thin">
+                            {taskPlanner.schedule[currDay]?.map((t:any) => <div key={t.id} className="flex justify-between items-center p-3 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors">
+                                <span className="text-xs font-medium">{t.description}</span>
+                                <button onClick={() => taskPlanner.deleteRecurringTask(currDay, t.id)} className="p-1 hover:bg-rose-500/20 rounded-md transition-colors"><Trash2 className="w-4 h-4 text-rose-500"/></button>
+                            </div>)}
+                            {(!taskPlanner.schedule[currDay] || taskPlanner.schedule[currDay].length === 0) && <p className="text-center text-[10px] text-slate-600 py-10 italic">Nicio sarcină setată pentru {days[currDay]}.</p>}
+                        </div>
+                    </TabsContent>
+
+                    <TabsContent value="data" className="py-6 space-y-4 text-center">
+                        <div className="grid grid-cols-2 gap-4">
+                            <Button variant="outline" className="border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/10 h-11" onClick={() => { taskPlanner.exportData(); toast({ title: "Backup generat!" }); }}><Download className="w-4 h-4 mr-2"/> EXPORTĂ DATELE</Button>
+                            <label className="flex items-center justify-center px-4 py-2 border border-blue-500/20 text-blue-400 hover:bg-blue-500/10 rounded-md cursor-pointer text-xs font-bold h-11"><Upload className="w-4 h-4 mr-2"/> IMPORTĂ JSON<input type="file" className="hidden" accept=".json" onChange={e => e.target.files?.[0] && taskPlanner.importData(e.target.files[0])} /></label>
+                        </div>
+                        <div className="bg-rose-500/5 border border-rose-500/10 p-4 rounded-2xl mt-4">
+                            <p className="text-[10px] text-rose-400/70 mb-3">⚠️ ATENȚIE: Ștergerea de mai jos elimină DOAR planul (calendarul), nu și XP-ul sau premiile.</p>
+                            <Button variant="destructive" className="w-full bg-rose-900/40 hover:bg-rose-900/60 border border-rose-500/20 h-11" onClick={() => { taskPlanner.resetMonthlyPlan(); toast({ title: "Calendar curățat!" }); }}><Trash className="w-4 h-4 mr-2"/> ȘTERGE CALENDARUL</Button>
+                        </div>
+                    </TabsContent>
+                </Tabs>
+                <DialogFooter className="mt-4"><Button onClick={() => { taskPlanner.updateSettings(settings); toast({ title: "Configurație salvată cu succes!" }); }} className="bg-indigo-600 hover:bg-indigo-700 w-full h-11 font-bold">SALVEAZĂ TOATE SETĂRILE</Button></DialogFooter>
+            </DialogContent>
+        </Dialog>
     );
 }
 
-function HistoryDialog({ planner }: { planner: ReturnType<typeof useTaskPlanner> }) {
+function HistoryDialog({ planner }: any) {
     return (
-        <Dialog><DialogTrigger asChild><Button variant="secondary" className="w-full justify-start bg-white/5 hover:bg-white/10 text-slate-300"><History className="mr-2 h-4 w-4" /> Istoric</Button></DialogTrigger><DialogContent className="bg-[#0f172a] border-white/10 text-slate-200 max-h-[80vh] overflow-y-auto"><DialogHeader><DialogTitle>Istoric Activități</DialogTitle></DialogHeader><div className="space-y-2">{Object.keys(planner.plan).sort().reverse().map(date => <div key={date} className="p-2 border border-white/5 rounded bg-white/5"><div className="font-bold text-xs mb-1">{date}</div>{planner.plan[date].tasks.map((t: Task) => <div key={t.id} className="text-xs text-slate-400 flex gap-2"><span>{t.status === 'completed' ? '✅' : '❌'}</span> {t.description}</div>)}</div>)}</div></DialogContent></Dialog>
+        <Dialog><DialogTrigger asChild><Button variant="secondary" className="w-full text-[10px] justify-start bg-white/5 border-white/5 hover:bg-white/10 font-bold"><History className="mr-2 h-4 w-4 text-slate-400" /> ISTORIC</Button></DialogTrigger><DialogContent className="bg-[#0f172a] text-white border-white/10 max-h-[80vh] overflow-y-auto backdrop-blur-2xl"><DialogHeader><DialogTitle className="font-lora">Arhivă Activități</DialogTitle></DialogHeader>
+        <div className="space-y-3 mt-4">
+            {Object.keys(planner.plan).sort().reverse().map(date => (<div key={date} className="p-3 border border-white/5 rounded-2xl bg-white/[0.02] shadow-sm"><p className="font-bold text-xs text-indigo-300 mb-2">{format(new Date(date + 'T12:00:00'), 'd MMMM yyyy', { locale: ro })}</p><div className="space-y-1">{planner.plan[date].tasks.map((t:any) => <p key={t.id} className="text-[10px] text-slate-400 flex items-center gap-2">{t.status === 'completed' ? <Check className="w-3 h-3 text-emerald-500"/> : <X className="w-3 h-3 text-rose-500"/>} {t.description}</p>)}</div></div>))}
+            {Object.keys(planner.plan).length === 0 && <p className="text-center py-20 text-slate-600 italic">Nu există activități în arhivă.</p>}
+        </div></DialogContent></Dialog>
     );
 }
 
-function AchievementsDialog({ achievements }: { achievements: any }) {
-    const allItems = Object.entries(achievementsList).map(([id, data]) => ({ id, ...data, unlocked: achievements.unlocked.has(id as AchievementId) }));
+function AchievementsDialog({ achievements }: any) {
+    const list = Object.entries(achievementsList).map(([id, data]) => ({ id, ...data, unlocked: achievements.unlocked.has(id) }));
     return (
-        <Dialog><DialogTrigger asChild><Button variant="secondary" className="w-full justify-start bg-white/5 hover:bg-white/10 text-slate-300"><Trophy className="mr-2 h-4 w-4" /> Realizări</Button></DialogTrigger><DialogContent className="bg-[#0f172a] border-white/10 text-slate-200 sm:max-w-2xl"><DialogHeader><DialogTitle>Sala Trofeelor</DialogTitle></DialogHeader><div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[60vh] overflow-y-auto pr-2 py-4">{allItems.map((ach: any) => <div key={ach.id} className={cn("flex flex-col items-center text-center p-3 rounded-xl border transition-all", ach.unlocked ? `bg-white/5 ${ach.color} border-white/10` : "bg-white/5 border-white/5 opacity-50 grayscale")}><div className="text-3xl mb-2">{ach.icon}</div><p className={cn("text-xs font-bold mb-1", ach.unlocked ? ach.color : "text-slate-400")}>{ach.title}</p><p className="text-[10px] text-slate-500 leading-tight">{ach.description}</p>{!ach.unlocked && <Lock className="w-3 h-3 mt-2 text-slate-600" />}</div>)}</div></DialogContent></Dialog>
+        <Dialog><DialogTrigger asChild><Button variant="secondary" className="w-full text-[10px] justify-start bg-white/5 border-white/5 hover:bg-white/10 font-bold"><Trophy className="mr-2 h-4 w-4 text-yellow-500" /> PREMII</Button></DialogTrigger><DialogContent className="bg-[#0f172a] text-white border-white/10 sm:max-w-3xl backdrop-blur-2xl"><DialogHeader><DialogTitle className="font-lora">Vitrina de Aur</DialogTitle></DialogHeader>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-h-[70vh] overflow-y-auto p-4 scrollbar-thin">
+            {list.map((ach: any) => (<div key={ach.id} className={cn("p-4 rounded-2xl border flex flex-col items-center text-center transition-all group", ach.unlocked ? "bg-white/5 border-white/20 shadow-lg scale-100" : "opacity-20 grayscale scale-95")}><span className="text-4xl mb-3 group-hover:scale-110 transition-transform">{ach.icon}</span><p className={cn("text-[10px] font-bold uppercase tracking-tight", ach.unlocked ? ach.color : "text-white")}>{ach.title}</p><p className="text-[9px] text-slate-500 leading-tight mt-1 px-1">{ach.description}</p></div>))}
+        </div></DialogContent></Dialog>
     );
 }
 
-function TutorialOverlay({ onClose }: { onClose: () => void }) {
-    return <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={onClose}><div className="bg-[#0f172a] border border-white/10 p-6 rounded-2xl max-w-md text-center space-y-4" onClick={e => e.stopPropagation()}><h2 className="text-xl font-bold text-white">Bun venit la Planner! 🚀</h2><div className="text-sm text-slate-300 space-y-2 text-left"><p>1. 📅 <b>Planifică:</b> Adaugă task-uri.</p><p>2. ✅ <b>Completează:</b> Bifează pentru XP.</p><p>3. 🔥 <b>Streak:</b> Fii constant!</p></div><Button onClick={onClose} className="w-full bg-indigo-600 hover:bg-indigo-700">Gata!</Button></div></div>;
+function TutorialOverlay({ onClose }: any) {
+    return (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-6" onClick={onClose}>
+            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} className="bg-[#0f172a] p-8 rounded-[2.5rem] border border-white/10 max-w-lg w-full text-center space-y-6 shadow-3xl" onClick={e => e.stopPropagation()}>
+                <div className="bg-indigo-600/20 w-16 h-16 rounded-3xl flex items-center justify-center mx-auto mb-2"><Sparkles className="w-8 h-8 text-indigo-400" /></div>
+                <h2 className="text-2xl font-bold text-white font-lora">Bine ai venit la Planner Pro! 🚀</h2>
+                <div className="space-y-4 text-left">
+                    <div className="flex gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
+                        <div className="text-indigo-400 font-black text-xl">01</div>
+                        <div><p className="text-sm font-bold text-white">Planifică-ți Succesul</p><p className="text-[11px] text-slate-400 leading-relaxed">Adaugă obiective în calendar sau folosește &quot;Programul Recurent&quot; pentru rutine automate.</p></div>
+                    </div>
+                    <div className="flex gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
+                        <div className="text-emerald-400 font-black text-xl">02</div>
+                        <div><p className="text-sm font-bold text-white">Evoluează zilnic</p><p className="text-[11px] text-slate-400 leading-relaxed">Bifează sarcinile pentru XP. Atinge-ți obiectivul zilnic (ex: 3 task-uri) pentru a menține Streak-ul.</p></div>
+                    </div>
+                    <div className="flex gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
+                        <div className="text-yellow-400 font-black text-xl">03</div>
+                        <div><p className="text-sm font-bold text-white"> Fresh Start Lunar</p><p className="text-[11px] text-slate-400 leading-relaxed">Pe data de 1 a fiecărei luni, calendarul se golește automat pentru a te ajuta să începi proaspăt.</p></div>
+                    </div>
+                </div>
+                <Button onClick={onClose} className="w-full bg-indigo-600 hover:bg-indigo-700 h-12 text-sm font-bold rounded-2xl shadow-xl shadow-indigo-500/20">AM ÎNȚELES, SĂ ÎNCEPEM!</Button>
+            </motion.div>
+        </motion.div>
+    );
 }
-
-function DashboardSkeleton() { return <div className="min-h-screen bg-[#030712] flex items-center justify-center text-white"><Loader2 className="animate-spin w-10 h-10" /></div>; }

@@ -9,12 +9,15 @@ const withPWA = require('@ducanh2912/next-pwa').default({
   disable: process.env.NODE_ENV === 'development',
 });
 
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  // output: 'standalone', // <-- Am comentat această linie
   typescript: {
     ignoreBuildErrors: true,
+  },
+  images: {
+    domains: ['lh3.googleusercontent.com'],
   },
 };
 

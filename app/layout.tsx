@@ -182,17 +182,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       <body className="antialiased selection:bg-primary/30 selection:text-foreground">
         <Providers>
-          {/* Cursorul personalizat global */}
           <CustomCursor />
-
-          {/* Conținutul Paginii */}
           {children}
         </Providers>
-
-        {/* Monitorizare Performanță Vercel */}
         <SpeedInsights />
-
-          {/* Google Analytics */}
         <GoogleAnalytics gaId="G-4T2MY0SSCB" />
       </body>
     </html>
