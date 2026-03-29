@@ -18,6 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from "@/lib/utils";
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { Footer } from '@/components/layout/footer';
 
 // --- FUNDAL ADAPTIV ---
 const AmbientBackground = () => (
@@ -83,84 +84,86 @@ export default function DashboardPage() {
     const progressPercent = ((stats.xp % 1000) / 1000) * 100;
 
     return (
-        <div className="min-h-screen relative text-foreground font-sans selection:bg-indigo-500/30 transition-colors duration-500 pb-20">
-            <AmbientBackground />
-            {showTutorial && <TutorialOverlay onClose={() => setShowTutorial(false)} />}
-            
-            <main className="container mx-auto px-4 py-8 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                    <GlassCard className="lg:col-span-2 flex flex-col justify-center relative group overflow-hidden">
-                        <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity"><LayoutDashboard className="w-32 h-32 text-indigo-500" /></div>
-                        <div className="relative z-10">
-                            <div className="flex items-center gap-4 mb-4">
-                                <div className="bg-indigo-600/10 dark:bg-indigo-600/20 p-3 rounded-xl border border-indigo-500/20"><Zap className="text-indigo-600 dark:text-indigo-400 w-8 h-8" /></div>
-                                <div>
-                                    <h1 className="text-2xl font-bold">Salut, {user?.displayName?.split(' ')[0]}!</h1>
-                                    <p className="text-xs text-indigo-600 dark:text-indigo-300 uppercase font-bold tracking-widest">Nivel {stats.level} — Student Dedicat</p>
+        <>
+            <div className="min-h-screen relative text-foreground font-sans selection:bg-indigo-500/30 transition-colors duration-500 pb-20">
+                <AmbientBackground />
+                {showTutorial && <TutorialOverlay onClose={() => setShowTutorial(false)} />}
+                
+                <main className="container mx-auto px-4 py-8 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <GlassCard className="lg:col-span-2 flex flex-col justify-center relative group overflow-hidden">
+                            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity"><LayoutDashboard className="w-32 h-32 text-indigo-500" /></div>
+                            <div className="relative z-10">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <div className="bg-indigo-600/10 dark:bg-indigo-600/20 p-3 rounded-xl border border-indigo-500/20"><Zap className="text-indigo-600 dark:text-indigo-400 w-8 h-8" /></div>
+                                    <div>
+                                        <h1 className="text-2xl font-bold">Salut, {user?.displayName?.split(' ')[0]}!</h1>
+                                        <p className="text-xs text-indigo-600 dark:text-indigo-300 uppercase font-bold tracking-widest">Nivel {stats.level} — Student Dedicat</p>
+                                    </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest">
+                                        <span className="text-indigo-600 dark:text-indigo-300">Progres Nivel</span>
+                                        <span className="text-muted-foreground">{stats.xp} / {stats.level * 1000} XP</span>
+                                    </div>
+                                    <div className="h-3 w-full bg-muted dark:bg-black/40 rounded-full overflow-hidden border border-border/50 dark:border-white/5 p-0.5">
+                                        <motion.div 
+                                            className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-xl shadow-[0_0_15px_rgba(99,102,241,0.4)]" 
+                                            initial={{ width: 0 }} animate={{ width: `${progressPercent}%` }} transition={{ duration: 1.5, ease: "easeOut" }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                            <div className="space-y-2">
-                                <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest">
-                                    <span className="text-indigo-600 dark:text-indigo-300">Progres Nivel</span>
-                                    <span className="text-muted-foreground">{stats.xp} / {stats.level * 1000} XP</span>
-                                </div>
-                                <div className="h-3 w-full bg-muted dark:bg-black/40 rounded-full overflow-hidden border border-border/50 dark:border-white/5 p-0.5">
-                                    <motion.div 
-                                        className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 rounded-xl shadow-[0_0_15px_rgba(99,102,241,0.4)]" 
-                                        initial={{ width: 0 }} animate={{ width: `${progressPercent}%` }} transition={{ duration: 1.5, ease: "easeOut" }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </GlassCard>
+                        </GlassCard>
 
-                    <div className="grid grid-cols-2 gap-4">
-                        <GlassCard className="flex flex-col items-center justify-center text-center bg-orange-500/[0.05] border-orange-500/20">
-                            <Flame className="w-8 h-8 text-orange-500 mb-2 animate-pulse" />
-                            <span className="text-3xl font-black">{planner.achievements.streakCurrent}</span>
-                            <span className="text-[10px] text-orange-600 dark:text-orange-300 uppercase font-bold tracking-widest">Zile Streak</span>
-                        </GlassCard>
-                        <GlassCard className="flex flex-col items-center justify-center bg-yellow-500/[0.05] border-yellow-500/20">
-                            <Trophy className="w-8 h-8 text-yellow-500 mb-2" />
-                            <span className="text-3xl font-black">{planner.achievements.unlocked.size}</span>
-                            <span className="text-[10px] text-yellow-600 dark:text-yellow-200 uppercase font-bold tracking-widest">Premii</span>
-                        </GlassCard>
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
-                    <div className="xl:col-span-8 2xl:col-span-9 space-y-6">
-                        <QuoteOfTheDay />
-                        <GlassCard className="flex flex-wrap gap-3 items-center justify-between !p-3">
-                            <div className="flex items-center gap-2">
-                                <Button variant="ghost" size="icon" onClick={() => setWeekOffset(w => w - 1)} className="hover:bg-muted"><ChevronLeft className="w-5 h-5" /></Button>
-                                <Button variant="ghost" size="icon" onClick={() => setWeekOffset(w => w + 1)} className="hover:bg-muted"><ChevronRight className="w-5 h-5" /></Button>
-                                <h2 className="font-bold text-sm ml-2 flex items-center gap-2"><Sparkles className="w-4 h-4 text-indigo-500" /> {weekLabel}</h2>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Button variant="secondary" size="sm" onClick={() => setWeekOffset(0)} className="text-xs bg-muted">Azi</Button>
-                                <Button size="sm" onClick={() => { planner.applyScheduleToWeek(weekStartDate); toast({ title: "Program aplicat!" }); }} className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs">Aplică Program</Button>
-                            </div>
-                        </GlassCard>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                            {weekDates.map((dateStr) => <DayColumn key={dateStr} dateStr={dateStr} planner={planner} />)}
+                        <div className="grid grid-cols-2 gap-4">
+                            <GlassCard className="flex flex-col items-center justify-center text-center bg-orange-500/[0.05] border-orange-500/20">
+                                <Flame className="w-8 h-8 text-orange-500 mb-2 animate-pulse" />
+                                <span className="text-3xl font-black">{planner.achievements.streakCurrent}</span>
+                                <span className="text-[10px] text-orange-600 dark:text-orange-300 uppercase font-bold tracking-widest">Zile Streak</span>
+                            </GlassCard>
+                            <GlassCard className="flex flex-col items-center justify-center bg-yellow-500/[0.05] border-yellow-500/20">
+                                <Trophy className="w-8 h-8 text-yellow-500 mb-2" />
+                                <span className="text-3xl font-black">{planner.achievements.unlocked.size}</span>
+                                <span className="text-[10px] text-yellow-600 dark:text-yellow-200 uppercase font-bold tracking-widest">Premii</span>
+                            </GlassCard>
                         </div>
                     </div>
 
-                    <aside className="xl:col-span-4 2xl:col-span-3 space-y-6 xl:sticky xl:top-8">
-                       <UnplannedTaskCard addTask={planner.addUnplannedTask} />
-                       <GlassCard>
-                          <h3 className="text-sm font-bold mb-4 uppercase tracking-widest flex items-center gap-2 border-b border-border/50 pb-2"><SettingsIcon className="w-4 h-4 text-indigo-500" /> Panou Unelte</h3>
-                          <div className="grid grid-cols-2 gap-3">
-                             <HistoryDialog planner={planner} />
-                             <AchievementsDialog achievements={planner.achievements} />
-                             <div className="col-span-2"><SettingsDialog planner={planner} onShowTutorial={() => setShowTutorial(true)} /></div>
-                          </div>
-                       </GlassCard>
-                    </aside>
-                </div>
-            </main>
-        </div>
+                    <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+                        <div className="xl:col-span-8 2xl:col-span-9 space-y-6">
+                            <QuoteOfTheDay />
+                            <GlassCard className="flex flex-wrap gap-3 items-center justify-between !p-3">
+                                <div className="flex items-center gap-2">
+                                    <Button variant="ghost" size="icon" onClick={() => setWeekOffset(w => w - 1)} className="hover:bg-muted"><ChevronLeft className="w-5 h-5" /></Button>
+                                    <Button variant="ghost" size="icon" onClick={() => setWeekOffset(w => w + 1)} className="hover:bg-muted"><ChevronRight className="w-5 h-5" /></Button>
+                                    <h2 className="font-bold text-sm ml-2 flex items-center gap-2"><Sparkles className="w-4 h-4 text-indigo-500" /> {weekLabel}</h2>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Button variant="secondary" size="sm" onClick={() => setWeekOffset(0)} className="text-xs bg-muted">Azi</Button>
+                                    <Button size="sm" onClick={() => { planner.applyScheduleToWeek(weekStartDate); toast({ title: "Program aplicat!" }); }} className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs">Aplică Program</Button>
+                                </div>
+                            </GlassCard>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                                {weekDates.map((dateStr) => <DayColumn key={dateStr} dateStr={dateStr} planner={planner} />)}
+                            </div>
+                        </div>
+
+                        <aside className="xl:col-span-4 2xl:col-span-3 space-y-6 xl:sticky xl:top-8">
+                           <UnplannedTaskCard addTask={planner.addUnplannedTask} />
+                           <GlassCard>
+                              <h3 className="text-sm font-bold mb-4 uppercase tracking-widest flex items-center gap-2 border-b border-border/50 pb-2"><SettingsIcon className="w-4 h-4 text-indigo-500" /> Panou Unelte</h3>
+                              <div className="grid grid-cols-2 gap-3">
+                                 <HistoryDialog planner={planner} />
+                                 <AchievementsDialog achievements={planner.achievements} />
+                                 <div className="col-span-2"><SettingsDialog planner={planner} onShowTutorial={() => setShowTutorial(true)} /></div>
+                              </div>
+                           </GlassCard>
+                        </aside>
+                    </div>
+                </main>
+            </div>
+        </>
     );
 }
 
