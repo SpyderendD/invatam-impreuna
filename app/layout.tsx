@@ -1,5 +1,4 @@
 // layout.tsx
-import './globals.css';
 import { Inter, Lora } from 'next/font/google';
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
@@ -7,6 +6,13 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Providers } from '@/components/Providers';
 import CustomCursor from '@/components/animations/CustomCursor';
 import { GoogleAnalytics } from '@next/third-parties/google';
+
+// =======================================================================
+// REZOLVARE ERORI TYPESCRIPT: Ignorăm verificarea strictă pentru CSS
+// =======================================================================
+// @ts-ignore
+import './globals.css';
+// @ts-ignore
 import 'katex/dist/katex.min.css';
 
 // =======================================================================
@@ -26,6 +32,9 @@ const lora = Lora({
   display: 'swap',
 });
 
+// =======================================================================
+// 2. METADATE SEO COMPLETE
+// =======================================================================
 export const metadata: Metadata = {
   metadataBase: new URL('https://invatam-impreuna.vercel.app'),
 
@@ -36,7 +45,8 @@ export const metadata: Metadata = {
 
   description: 'Platformă educațională online gratuită pentru pregătire la Evaluarea Națională, Bacalaureat și alte materii. Lecții interactive, teste grilă, flashcarduri și resurse AI.',
 
-  keywords: ['educatie', 'invatam impreuna', 'bacalaureat', 'evaluare nationala', 'teste', 'lectii online', 'matematica', 'romana', 'ai educatie',
+  keywords: [
+    'educatie', 'invatam impreuna', 'bacalaureat', 'evaluare nationala', 'teste', 'lectii online', 'matematica', 'romana', 'ai educatie',
     'educatie online', 'evaluare nationala', 'bacalaureat', 'lectii video',
     'teste online', 'mate', 'romana', 'informatica', 'chimie', 'fizica',
     'invatam impreuna', 'platforma elevi', 'pregatire examene', 'resurse scolare',
@@ -45,9 +55,9 @@ export const metadata: Metadata = {
     'mate', 'romana', 'informatica', 'chimie', 'fizica', 'invatam impreuna',
     'platforma educatie', 'teste gratuite', 'lectii video', 'invatare online',
     'Spyderend', 'Mera Alin David', 'Romania', 'scoala', 'educatie gratuita', 'romania', 'elevi', 'studenti', 'profesori', 'parinti', 'resurse educative',
-     'platforma online', 'Romania', 'educatie', 'invatam impreuna', 'blog invatare', 'mera alin', 'spyderend', 'invatam impreuna echipa', 'echipa invatam impreuna', 'contact invatam impreuna', 'despre noi invatam impreuna',
-     'invatam impreuna contact', 'invatam impreuna despre noi', 'invatam impreuna blog', 'invatam impreuna echipa', 'invatam impreuna spyderend', 'invatam impreuna mera alin',
-     'invatam impreuna romania', 'invatam impreuna scoala', 'invatam impreuna educatie gratuita', 'invatam impreuna elevi', 'invatam impreuna studenti', 'invatam impreuna profesori', 'invatam impreuna parinti', 'invatam impreuna resurse educative', 
+    'platforma online', 'Romania', 'educatie', 'invatam impreuna', 'blog invatare', 'mera alin', 'spyderend', 'invatam impreuna echipa', 'echipa invatam impreuna', 'contact invatam impreuna', 'despre noi invatam impreuna',
+    'invatam impreuna contact', 'invatam impreuna despre noi', 'invatam impreuna blog', 'invatam impreuna echipa', 'invatam impreuna spyderend', 'invatam impreuna mera alin',
+    'invatam impreuna romania', 'invatam impreuna scoala', 'invatam impreuna educatie gratuita', 'invatam impreuna elevi', 'invatam impreuna studenti', 'invatam impreuna profesori', 'invatam impreuna parinti', 'invatam impreuna resurse educative', 
     'scoala online', 'invatam pentru evaluare nationala', 'invatam pentru bacalaureat', 'invatam pentru examene', 'invatam pentru scoala', 'invatam pentru elevi', 'invatam pentru studenti', 'invatam pentru profesori', 'invatam pentru parinti', 'invatam pentru resurse educative',
     'invatam impreuna scoala online', 'invatam impreuna pentru evaluare nationala', 'invatam impreuna pentru bacalaureat', 'invatam impreuna pentru examene', 'invatam impreuna pentru scoala', 'invatam impreuna pentru elevi', 'invatam impreuna pentru studenti', 'invatam impreuna pentru profesori', 'invatam impreuna pentru parinti', 'invatam impreuna pentru resurse educative',
     'cum pot sa ma pregatesc pentru evaluare nationala', 'cum pot sa ma pregatesc pentru bacalaureat', 'cum pot sa ma pregatesc pentru examene', 'cum pot sa ma pregatesc pentru scoala', 'cum pot sa ma pregatesc pentru elevi', 'cum pot sa ma pregatesc pentru studenti', 'cum pot sa ma pregatesc pentru profesori', 'cum pot sa ma pregatesc pentru parinti', 'cum pot sa ma pregatesc pentru resurse educative',
@@ -58,10 +68,8 @@ export const metadata: Metadata = {
   creator: 'Învățăm Împreună',
   publisher: 'Învățăm Împreună',
 
-  // Configurare PWA (Progressive Web App)
   manifest: '/manifest.json',
 
-  // Iconițe pentru toate dispozitivele
   icons: {
     icon: '/images/favicon.ico',
     shortcut: '/images/favicon.ico',
@@ -72,7 +80,6 @@ export const metadata: Metadata = {
     },
   },
 
-  // Open Graph (Cum arată link-ul când îl dai pe Facebook/WhatsApp)
   openGraph: {
     type: 'website',
     locale: 'ro_RO',
@@ -90,7 +97,6 @@ export const metadata: Metadata = {
     ],
   },
 
-  // Twitter Cards
   twitter: {
     card: 'summary_large_image',
     title: 'Învățăm Împreună',
@@ -98,7 +104,6 @@ export const metadata: Metadata = {
     images: ['/images/og-image.png'],
   },
 
-  // Indexare (Spunem roboților Google că au voie să scaneze tot)
   robots: {
     index: true,
     follow: true,
@@ -121,10 +126,10 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 5, // Lăsăm userul să facă zoom (accesibilitate)
+  maximumScale: 5,
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0F172A' }, // Dark mode color match
+    { media: '(prefers-color-scheme: dark)', color: '#0F172A' },
   ],
 };
 
@@ -133,7 +138,6 @@ export const viewport: Viewport = {
 // =======================================================================
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
-  // Schema.org pentru Google (Structured Data)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -153,25 +157,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${inter.variable} ${lora.variable}`}
     >
       <head>
-
         <meta name="google-site-verification" content="sOjUUt5BdjJ2F4A64Tw9HkCX8kxANp8fKncbXCoXnvA" />
-
-        {/* A. JSON-LD pentru SEO Structurat */}
+        
         <Script
           id="json-ld-website"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          strategy="worker" // Îl încărcăm în fundal să nu blocheze site-ul
+          strategy="worker"
         />
 
-        {/* B. Script pentru evitarea Flash-ului de Temă (Dark/Light) */}
         {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
         <Script id="theme-init" strategy="beforeInteractive">
           {`(function(){try{var t=localStorage.getItem('theme');var e=window.matchMedia('(prefers-color-scheme: dark)').matches;var d=document.documentElement;d.classList.add(t==='dark'||(!t&&e)?'dark':'light');d.classList.remove(t==='dark'||(!t&&e)?'light':'dark');}catch(t){}})()`}
         </Script>
 
-        {/* C. GOOGLE ADSENSE - Optimizat */}
-        {/* Folosim strategy="afterInteractive" pentru a nu încetini încărcarea inițială a paginii */}
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8380681272847895"
