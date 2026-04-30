@@ -1,12 +1,15 @@
-// app/materii/informatica/clasa-5/[lessonSlug]/page.tsx
 'use client';
 
-import React, { useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
-// NOU: Am importat o iconiță pentru buton
-import { Download } from 'lucide-react';
+import React from 'react';
+import { Download, ArrowLeft } from 'lucide-react'; // NOU: Am importat ArrowLeft
+import dynamic from 'next/dynamic';
+import Link from 'next/link'; // NOU: Importăm Link pentru butonul de înapoi
 
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+// AICI SE ÎNTÂMPLĂ MAGIA: Importăm vizualizatorul FĂRĂ SSR
+const PDFViewer = dynamic(() => import('@/components/PDFViewer'), {
+  ssr: false,
+  loading: () => <div className="p-20 text-center text-muted-foreground animate-pulse">Se pregătește vizualizatorul...</div>
+});
 
 interface PdfViewerPageProps {
     params: {
@@ -14,10 +17,6 @@ interface PdfViewerPageProps {
     };
 }
 
-// NOU: Nu mai este nevoie de fileMap aici, deoarece informația este în pagina principală.
-// Vom construi calea PDF direct, dar pentru a păstra funcționalitatea
-// paginii, este mai sigur să o păstrăm sau să refactorizăm ambele pagini
-// pentru a citi dintr-un fișier comun. Păstrăm fileMap deocamdată pentru simplitate.
 const fileMap: { [key: string]: string } = {
     'sistem-de-calcul': 'sistem de calcul.pdf',
     'istoric-calculatoare': 'Sisteme de calcul_Istoric.pdf',
@@ -46,91 +45,64 @@ const fileMap: { [key: string]: string } = {
 };
 
 export default function PdfViewerPage({ params }: PdfViewerPageProps) {
-  const [numPages, setNumPages] = useState<number | null>(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [error, setError] = useState<string | null>(null);
-
   const { lessonSlug } = params; 
   const fileName = fileMap[lessonSlug] || null;
 
   if (!fileName) {
       return (
-        <div className="p-12 text-center">
-            <h1 className="text-3xl font-bold text-red-600">Eroare: 404 Lecție negăsită</h1>
-            <p className="mt-4 text-muted-foreground">Slug: {lessonSlug}</p>
+        <div className="flex flex-col items-center justify-center min-h-[60vh] p-12 text-center animate-in fade-in duration-500">
+            <h1 className="text-4xl font-extrabold text-red-600 mb-4">Eroare: 404</h1>
+            <p className="text-xl text-muted-foreground mb-8">Lecția &quot;{lessonSlug}&quot; nu a fost găsită.</p>
+            <Link href="/materii/informatica/clasa-5" className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+                Întoarce-te la lista de lecții
+            </Link>
         </div>
       );
   }
-
-  const pdfPath = `/lectii/informatica/clasa-5/${fileName}`; 
-
-  function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
-    setNumPages(numPages);
-    setPageNumber(1);
-    setError(null);
-  }
-
-  function onDocumentLoadError(error: Error) {
-    console.error('Eroare la încărcarea PDF:', error);
-    setError(`Eroare la încărcarea documentului: ${error.message}. Asigură-te că fișierul ${pdfPath} există în folderul public.`);
-  }
-
-  const changePage = (offset: number) => {
-    if (numPages) {
-        setPageNumber(prevPageNumber => {
-            const newPage = (prevPageNumber || 1) + offset;
-            if (newPage >= 1 && newPage <= numPages) { return newPage; }
-            return prevPageNumber || 1;
-        });
-    }
-  };
-
-  const previousPage = () => changePage(-1);
-  const nextPage = () => changePage(1);
   
+  const pdfPath = encodeURI(`/lectii/informatica/clasa-5/${fileName}`); 
   const formattedTitle = lessonSlug.replace(/-/g, ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
   return (
-    <div className="pdf-viewer-page p-5 md:p-10 bg-background min-h-screen flex flex-col items-center">
+    <div className="pdf-viewer-page p-4 md:p-8 bg-background min-h-screen flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-700">
       
-      {/* NOU: Am grupat titlul și butonul de descărcare */}
-      <div className="w-full max-w-4xl flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-        <h1 className="text-2xl md:text-3xl font-bold text-primary text-center sm:text-left">
-          Lecție: {formattedTitle}
-        </h1>
-        <a 
-          href={pdfPath} 
-          download 
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-lg shadow-md transition-transform hover:scale-105"
-        >
-          <Download className="h-5 w-5" />
-          Descarcă PDF
-        </a>
-      </div>
-
-      {error && (
-        <div className="text-red-600 border border-red-600 bg-red-50 p-3 rounded-md mb-6 text-center w-full max-w-2xl">
-          {error}
+      <div className="w-full max-w-5xl flex flex-col gap-6 mb-8">
+        {/* NOU: Buton de înapoi */}
+        <div className="self-start">
+            <Link 
+                href="/materii/informatica/clasa-5" 
+                className="group flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 hover:bg-secondary text-secondary-foreground transition-all duration-300"
+            >
+                <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                <span className="font-medium">Înapoi la lecții</span>
+            </Link>
         </div>
-      )}
 
-      <div className="flex justify-center mb-4 gap-4">
-          <button onClick={previousPage} disabled={pageNumber <= 1} className="px-4 py-2 bg-secondary text-secondary-foreground font-semibold rounded-lg transition-colors hover:bg-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed">
-              &larr; Pagina anterioară
-          </button>
-          <span className="px-4 py-2 text-foreground font-medium">
-              Pagina {pageNumber} din {numPages || '--'}
-          </span>
-          <button onClick={nextPage} disabled={pageNumber >= (numPages || 1)} className="px-4 py-2 bg-secondary text-secondary-foreground font-semibold rounded-lg transition-colors hover:bg-secondary/80 disabled:opacity-50 disabled:cursor-not-allowed">
-              Pagina următoare &rarr;
-          </button>
+        {/* NOU: Container modern pentru Titlu și Buton Descărcare */}
+        <div className="flex flex-col sm:flex-row justify-between items-center p-6 bg-card border border-border shadow-sm rounded-2xl gap-4 relative overflow-hidden">
+            {/* Un mic accent vizual de design */}
+            <div className="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+            
+            <h1 className="text-2xl md:text-3xl font-extrabold text-foreground text-center sm:text-left">
+                <span className="text-primary mr-2">|</span> {formattedTitle}
+            </h1>
+            
+            <a 
+                href={pdfPath} 
+                download 
+                className="group flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-xl shadow-lg shadow-primary/25 transition-all duration-300 hover:scale-105 hover:shadow-primary/40 active:scale-95"
+            >
+                <Download className="h-5 w-5 transition-transform group-hover:-translate-y-1" />
+                Descarcă PDF
+            </a>
+        </div>
       </div>
 
-      <div className="border border-border shadow-xl mb-10">
-          <Document file={pdfPath} onLoadSuccess={onDocumentLoadSuccess} onLoadError={onDocumentLoadError} loading={<div className="p-20 text-center text-muted-foreground">Se încarcă documentul...</div>} error={error ? null : "Eroare la încărcare."}>
-            <Page pageNumber={pageNumber} width={typeof window !== 'undefined' ? Math.min(window.innerWidth * 0.9, 900) : 900} />
-          </Document>
+      {/* COMPONENTA DINAMICĂ PDF */}
+      <div className="w-full max-w-5xl bg-card p-2 md:p-6 rounded-2xl border border-border shadow-sm">
+          <PDFViewer pdfPath={pdfPath} />
       </div>
+
     </div>
   );
 }

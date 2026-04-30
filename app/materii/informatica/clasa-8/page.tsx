@@ -1,4 +1,3 @@
-// app/materii/informatica/clasa-8/page.tsx
 'use client';
 
 import Link from 'next/link';
@@ -8,13 +7,10 @@ import {
     faAtom, faVial, faTable, faFillDrip, faCalculator, faChartPie, faCode, faWindowMaximize, 
     faSitemap, faEdit, faListUl, faPaintRoller, faStream, faDigitalTachograph, faDivide, 
     faSortNumericUp, faRandom, faKeyboard, faMicroscope, faRobot, faSatelliteDish, faRoad, faMapSigns,
-    faDownload // NOU: Am importat iconița de descărcare
+    faDownload 
 } from '@fortawesome/free-solid-svg-icons';
 import { faCss3Alt } from '@fortawesome/free-brands-svg-icons';
 
-import './Clasa8.css';
-
-// NOU: Am adăugat proprietatea `pdfFile` la fiecare lecție
 const lessons = [
     { slug: "test-initial", icon: faVial, title: "1. Test Inițial Aprofundat", pdfFile: "TEST_DE_EVALUARE_INIȚIALĂ_a_8-a.pdf" },
     { slug: "aplicatia-calcul-tabelar", icon: faTable, title: "2. Calcul Tabelar: Expertiză", pdfFile: "Aplicatia de calcul tabelar.pdf" },
@@ -52,53 +48,127 @@ export default function Clasa8Page() {
     const pathname = usePathname();
 
     return (
-        <div className="clasa8-page-wrapper">
-            <main>
-                <div className="container">
-                    <h1>
-                        <span className="title-text">LECȚII DE INFORMATICĂ</span>
-                        <span className="title-icon"><FontAwesomeIcon icon={faAtom} /></span>
+        <div className="relative min-h-screen bg-background text-foreground py-10 overflow-hidden">
+            {/* ANIMAȚII CSS ADAPTIVE */}
+            <style jsx>{`
+                @keyframes float-slow {
+                    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+                    33% { transform: translate(2vw, -3vh) rotate(2deg); }
+                    66% { transform: translate(-1vw, 2vh) rotate(-1deg); }
+                }
+                .animate-float-slow {
+                    animation: float-slow 15s ease-in-out infinite;
+                }
+
+                @keyframes gradient-bg {
+                    0% { background-position: 0% 50%; }
+                    50% { background-position: 100% 50%; }
+                    100% { background-position: 0% 50%; }
+                }
+                .animate-gradient-text {
+                    background-size: 200% auto;
+                    animation: gradient-bg 3s linear infinite;
+                }
+
+                @keyframes entrance {
+                    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+                    to { opacity: 1; transform: scale(1) translateY(0); }
+                }
+                .lesson-card {
+                    opacity: 0;
+                    animation: entrance 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+                }
+            `}</style>
+
+            {/* FUNDAL ADAPTIV - Folosește culorile temei tale (Primary și Accent) */}
+            <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-primary/10 rounded-full blur-[120px] animate-float-slow"></div>
+            <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-primary/5 rounded-full blur-[120px] animate-float-slow" style={{ animationDelay: '-5s' }}></div>
+
+            <div className="container mx-auto px-4 max-w-6xl relative z-10">
+                
+                {/* HEADER - Textul se adaptează culorii primare a temei */}
+                <header className="text-center mb-16 lesson-card" style={{ animationDelay: '0ms' }}>
+                    <div className="inline-flex items-center justify-center p-4 mb-6 rounded-3xl bg-primary/10 border border-primary/20 shadow-inner">
+                        <FontAwesomeIcon icon={faAtom} className="text-4xl text-primary animate-spin" style={{ animationDuration: '8s' }} />
+                    </div>
+                    <h1 className="text-4xl md:text-7xl font-black tracking-tight mb-4">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-foreground to-primary animate-gradient-text">
+                            LECȚII DE INFORMATICĂ
+                        </span>
                     </h1>
-                    <h2>Clasa a VIII-a</h2>
+                    <h2 className="text-sm md:text-base font-bold tracking-[0.4em] uppercase opacity-60">
+                         • Clasa a VIII-a •
+                    </h2>
+                </header>
 
-                    <nav className="class-selector-nav" aria-label="Selectează clasa">
-                        {navigationLinks.map((link) => (
-                            <Link 
-                                key={link.name}
-                                href={link.href}
-                                className={pathname === link.href ? 'active-class' : ''}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
-                    </nav>
+                {/* NAVIGARE - Complet integrată cu tema */}
+                <nav className="flex flex-wrap justify-center gap-2 mb-16 bg-card/40 backdrop-blur-xl p-2 rounded-2xl border border-border shadow-xl lesson-card" style={{ animationDelay: '100ms' }}>
+                    {navigationLinks.map((link) => (
+                        <Link 
+                            key={link.name}
+                            href={link.href}
+                            className={`px-6 py-2.5 rounded-xl font-bold transition-all duration-300 ${
+                                pathname === link.href 
+                                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105' 
+                                    : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
+                            }`}
+                        >
+                            {link.name}
+                        </Link>
+                    ))}
+                </nav>
 
-                    <ol className="lista-lectii">
+                <main>
+                    {/* GRID DE LECȚII - Stil Glassmorphism curat */}
+                    <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {lessons.map((lesson, index) => (
-                            <li key={index} className={`lesson-item item-index-${index}`}>
-                                {/* NOU: Link-ul principal are acum o clasă specifică */}
-                                <Link href={`${pathname}/${lesson.slug}`} className="lesson-link-c8">
-                                    <i><FontAwesomeIcon icon={lesson.icon} /></i>
-                                    <span>{lesson.title}</span>
+                            <li 
+                                key={index} 
+                                style={{ animationDelay: `${150 + index * 40}ms` }}
+                                className="lesson-card group relative flex items-center justify-between bg-card/40 backdrop-blur-md border border-border/80 rounded-[2rem] p-5 transition-all duration-500 hover:-translate-y-2 hover:border-primary/50 hover:bg-card/80 hover:shadow-2xl hover:shadow-primary/10"
+                            >
+                                <Link href={`${pathname}/${lesson.slug}`} className="flex items-center gap-5 flex-1 pr-4"> 
+                                    
+                                    {/* Icon Container */}
+                                    <div className="flex-shrink-0 flex items-center justify-center w-14 h-14 rounded-2xl bg-secondary/80 text-primary transition-all duration-500 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground group-hover:rotate-6 shadow-sm">
+                                        <FontAwesomeIcon icon={lesson.icon} className="text-2xl" />
+                                    </div>
+
+                                    {/* Info Text */}
+                                    <div className="flex flex-col">
+                                        <span className="font-bold text-[15px] leading-tight text-foreground transition-colors group-hover:text-primary">
+                                            {lesson.title}
+                                        </span>
+                                        <span className="text-[10px] font-semibold text-muted-foreground uppercase mt-1 tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                                            Explorează modulul
+                                        </span>
+                                    </div>
                                 </Link>
-                                {/* NOU: Butonul de descărcare, special stilizat pentru clasa a 8-a */}
-                                <a
-                                    href={`/lectii/informatica/clasa-8/${lesson.pdfFile}`}
+
+                                {/* Buton Descărcare */}
+                                <a 
+                                    href={`/lectii/informatica/clasa-8/${encodeURI(lesson.pdfFile)}`}
                                     download
-                                    className="download-link-c8"
-                                    aria-label={`Descarcă lecția ${lesson.title}`}
-                                    title={`Descarcă lecția ${lesson.title}`}
-                                    onClick={(e) => e.stopPropagation()}
+                                    className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-primary/5 text-primary border border-primary/10 hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110 active:scale-90"
+                                    aria-label={`Descarcă ${lesson.title}`}
+                                    onClick={(e) => e.stopPropagation()} 
                                 >
                                     <FontAwesomeIcon icon={faDownload} />
                                 </a>
                             </li>
                         ))}
-                    </ol>
-                    <a>#Prof. Cosin Daniel</a>
+                    </ul>
+                </main>
+                
+                {/* FOOTER BADGE - Adaptive */}
+                <div className="mt-24 flex justify-center pb-10 lesson-card" style={{ animationDelay: '1000ms' }}>
+                    <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-card/60 backdrop-blur-md text-foreground font-bold text-sm border border-border shadow-lg transition-transform hover:scale-105">
+                        <span className="text-primary animate-pulse text-lg">●</span> 
+                        Prof. Cosin Daniel
+                    </div>
                 </div>
-            </main>
-            
+
+            </div>
         </div>
     );
 }
