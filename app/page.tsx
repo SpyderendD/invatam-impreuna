@@ -1,515 +1,219 @@
 'use client';
 
+import React, { useRef, useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
+import Image from 'next/image';
+import { motion, useScroll, useSpring } from 'framer-motion';
 
-// --- Componente UI/Custom ---
+// --- Componente UI ---
 import { Button } from '@/components/ui/button';
-import { CardTitle } from '@/components/ui/card';
 import CustomCursor from '@/components/animations/CustomCursor';
 import { ConfettiButton } from '@/components/animations/confetti-button';
 import HeartRating from '@/components/HeartRating';
-// Importul critic pentru animația cu cartea
 import InteractiveHeroIllustration from '@/components/animations/InteractiveHeroIllustration'; 
 
 // --- Iconițe ---
 import { 
     Code, PenTool, Sparkles, Rocket, ArrowRight, 
-    BookOpenCheck, Calculator, Lightbulb, FlaskConical,
-    History, Lock, Zap, Layers, BrainCircuit, CalendarCheck, ClipboardCheck, Newspaper, UserPlus, TrendingUp, Share2, Heart
+    Zap, Lock, Laptop, Calculator, RotateCcw, 
+    BrainCircuit, ClipboardCheck, BookOpenCheck, Check, Star, ShieldCheck
 } from 'lucide-react'; 
-import { hr } from 'date-fns/locale';
 
-// --- Varianțe de animație ---
 const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
-  },
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const staggerContainer = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-  },
-};
-
-// =======================================================================
-// Date
-// =======================================================================
-
-const featuresData = [
-  { 
-    title: "Structură Logică", 
-    description: "Lecții clare care urmăresc exact programa școlară.", 
-    icon: <BookOpenCheck className="h-6 w-6 text-white" />,
-    gradient: "from-blue-500 to-cyan-500"
-  },
-  { 
-    title: "Interactivitate", 
-    description: "Teste și quiz-uri integrate pentru a învăța activ.", 
-    icon: <Zap className="h-6 w-6 text-white" />,
-    gradient: "from-purple-500 to-pink-500"
-  },
-
-  { 
-    title: "Studiu Inteligent", 
-    description: "Creează flashcard-uri personalizate, cronometrează-ți sesiunile și învață eficient cu tehnicile noastre." , 
-    icon: <BrainCircuit className="h-6 w-6 text-white" />,
-    gradient: "from-violet-500 to-fuchsia-500",
-    href: "/studiu"
-  },
-  { 
-    title: "Monitorizare Progres", 
-    description: "Planifică-ți săptămâna cu un calendar interactiv. Bifează task-uri, câștigă XP și deblochează premii.", 
-    icon: <CalendarCheck className="h-6 w-6 text-white" />,
-    gradient: "from-blue-500 to-cyan-500",
-    href: "/dashboard"
-  },
-  { 
-    title: "Modele de Teste E.N.", 
-    description: "Exersează pe modele de teste reale pentru Evaluarea Națională și verifică-ți cunoștințele înainte de examen.", 
-    icon: <ClipboardCheck className="h-6 w-6 text-white" />,
-    gradient: "from-emerald-500 to-green-500",
-    href: "/modele-teste-EN"
-  },
-  { 
-    title: "Blog & Noutăți", 
-    description: "Fii la curent cu cele mai noi articole, tutoriale video de pe YouTube și sfaturi utile pentru învățare.", 
-    icon: <Newspaper className="h-6 w-6 text-white" />,
-    gradient: "from-orange-500 to-amber-500",
-    href: "/blog"
-  },
-
-  { 
-    title: "Creează-ți Cont Gratuit", 
-    description: "Alătură-te comunității noastre. Salvează-ți progresul, deblochează premii și urmărește-ți evoluția de la un singur loc.", 
-    icon: <UserPlus className="h-6 w-6 text-white" />,
-    gradient: "from-blue-500 to-cyan-500",
-    href: "/register"
-  },
-  { 
-    title: "Monitorizează-ți Progresul", 
-    description: "Vezi exact câte lecții ai finalizat și cât XP ai acumulat. Stabilește-ți ținte zilnice și menține-ți seria de productivitate (streak).", 
-    icon: <TrendingUp className="h-6 w-6 text-white" />,
-    gradient: "from-violet-500 to-fuchsia-500",
-    href: "/profil"
-  },
-  { 
-    title: "Exportează-ți Profilul", 
-    description: "Fii mândru de munca ta! Generează un card de profil elegant, perfect pentru a-l posta pe Instagram Story sau a-l împărtăși cu prietenii.", 
-    icon: <Share2 className="h-6 w-6 text-white" />,
-    gradient: "from-emerald-500 to-green-500",
-    href: "/profil"
-  },
-  { 
-    title: "Creat de Elevi, pentru Elevi", 
-    description: "Acesta nu este un site corporatist. Este un proiect făcut cu pasiune, care încearcă să ofere tot ce este mai bun și mai frumos, gratuit.", 
-    icon: <Heart className="h-6 w-6 text-white" />,
-    gradient: "from-rose-500 to-pink-500",
-    href: "/eu",
-  },
-];
-
-// 1. Materii Evaluare Națională
-const evaluationSubjects = [
-  { 
-    title: "Limba Română", 
-    icon: <PenTool className="h-8 w-8" />, 
-    href: "/materii/romana", 
-    isActive: true 
-  },
-  { 
-    title: "Matematică", 
-    icon: <Calculator className="h-8 w-8" />, 
-    href: "/materii/matematica", 
-    isActive: true 
-  },
-  { 
-    title: "Informatică", 
-    icon: <Code className="h-8 w-8" />, 
-    href: "/materii/informatica", 
-    isActive: true 
-  },
-  { 
-    title: "Chimie", 
-    icon: <FlaskConical className="h-8 w-8" />, 
-    href: "https://www.fizichim.ro/docs/chimie/clasa7/capitolul1-chimia-stiinta-a-naturii/I-1-ce-este-chimia/", 
-    isActive: true, 
-    openInNewTab: true 
-  },
-  { 
-    title: "Fizică", 
-    icon: <Lightbulb className="h-8 w-8" />,  
-    href: "https://www.fizichim.ro/docs/fizica/clasa6/capitolul1-introducere-in-studiul-fizicii/I-1-ce-este-fizica", 
-    isActive: true, 
-    openInNewTab: true 
-  },
-];
-
-// 2. Materii Bacalaureat (Configurația cerută)
-const baccalaureateSubjects = [
-  { 
-    title: "Limba Română (BAC)", 
-    icon: <PenTool className="h-8 w-8" />, 
-    href: "#", 
-    isActive: false 
-  },
-  { 
-    title: "Matematică (BAC)", 
-    icon: <Calculator className="h-8 w-8" />, 
-    href: "#", 
-    isActive: false 
-  },
-  { 
-    title: "Informatică", 
-    icon: <Code className="h-8 w-8" />, 
-    href: "/materii/informatica", 
-    isActive: true 
-  },
-  { 
-    title: "Chimie", 
-    icon: <FlaskConical className="h-8 w-8" />, 
-    href: "https://www.fizichim.ro/docs/chimie/clasa7/capitolul1-chimia-stiinta-a-naturii/I-1-ce-este-chimia/", 
-    isActive: true, 
-    openInNewTab: true 
-  },
-  { 
-    title: "Fizică", 
-    icon: <Lightbulb className="h-8 w-8" />,  
-    href: "https://www.fizichim.ro/docs/fizica/clasa6/capitolul1-introducere-in-studiul-fizicii/I-1-ce-este-fizica", 
-    isActive: true, 
-    openInNewTab: true 
-  },
-  { 
-    title: "Contabilitate", 
-    icon: <Calculator className="h-8 w-8" />, 
-    href: "#", 
-    isActive: false 
-  },
-];
-
-// =======================================================================
-// Componenta SubjectCard - Design "Glass"
-// =======================================================================
-interface SubjectCardProps {
-  title: string;
-  icon: ReactNode;
-  href: string;
-  isActive: boolean;
-  delay: number;
-  openInNewTab?: boolean;
-}
-
-const SubjectCard = ({ title, icon, href, isActive, delay, openInNewTab = false }: SubjectCardProps) => {
-  const isExternal = openInNewTab || href.startsWith('http') || href.startsWith('https');
-
-  const CardContent = (
-    <motion.div
-      whileHover={isActive ? { y: -8, scale: 1.02 } : {}}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: delay / 1000, duration: 0.5 }}
-      className={`
-        group relative h-full flex flex-col justify-between p-8 overflow-hidden rounded-3xl border transition-all duration-500
-        ${isActive 
-          ? 'bg-gradient-to-br from-card/90 to-card/40 backdrop-blur-md border-white/10 hover:border-primary/50 shadow-lg hover:shadow-2xl hover:shadow-primary/20' 
-          : 'bg-muted/10 border-white/5 opacity-60 hover:opacity-80 cursor-not-allowed'}
-      `}
-    >
-      {/* Glow effect fundal */}
-      {isActive && (
-        <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      )}
-      
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-50"></div>
-
-      <div className="relative z-10">
-        <div className="flex justify-between items-start mb-6">
-            <div className={`
-                p-4 rounded-2xl transition-all duration-500 relative shadow-sm
-                ${isActive 
-                    ? 'bg-gradient-to-br from-primary/20 to-primary/5 text-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-110 group-hover:rotate-3' 
-                    : 'bg-muted/50 text-muted-foreground'}
-            `}>
-                {icon}
-            </div>
-            
-            {!isActive && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/20 text-muted-foreground text-[10px] font-bold border border-white/5 backdrop-blur-md uppercase tracking-wide">
-                    <Lock className="w-3 h-3" /> În lucru
-                </div>
-            )}
-        </div>
-        
-        <h3 className={`text-xl font-bold tracking-tight mb-2 ${isActive ? 'text-foreground group-hover:text-primary transition-colors' : 'text-muted-foreground'}`}>
-            {title}
-        </h3>
-      </div>
-
-      <div className="relative z-10 mt-6">
-        {isActive ? (
-            <div className="flex items-center text-sm font-bold text-primary group-hover:translate-x-1 transition-transform duration-300">
-                Accesează Lecțiile <ArrowRight className="ml-2 w-4 h-4" />
-            </div>
-        ) : (
-            <div className="h-1 w-12 bg-muted-foreground/30 rounded-full"></div>
-        )}
-      </div>
-    </motion.div>
-  );
-  
-  return (
-    <div className="h-full">
-      {isActive ? (
-        isExternal ? (
-          <a href={href} className="block h-full outline-none" target="_blank" rel="noopener noreferrer">
-            {CardContent}
-          </a>
-        ) : (
-          <Link href={href} className="block h-full outline-none">
-            {CardContent}
-          </Link>
-        )
-      ) : (
-        <div className="h-full select-none">
-          {CardContent}
-        </div>
-      )}
-    </div>
-  );
-};
-
-// =======================================================================
-// Componenta Principală
-// =======================================================================
 export default function Home() {
-  return (
-    <>
-      <CustomCursor />
-      
-      {/* --- HERO SECTION --- */}
-      <section className="relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32 bg-background">
-        
-        {/* Animated Background Blobs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <motion.div 
-                animate={{ x: [0, 50, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                className="absolute -top-[20%] -left-[10%] w-[50vw] h-[50vw] bg-primary/10 rounded-full blur-[100px]" 
-            />
-            <motion.div 
-                animate={{ x: [0, -50, 0], y: [0, 30, 0] }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                className="absolute top-[20%] -right-[10%] w-[40vw] h-[40vw] bg-blue-500/10 rounded-full blur-[100px]" 
-            />
-        </div>
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
+  return (
+    <div className="relative min-h-screen bg-background text-foreground transition-colors duration-500 overflow-x-hidden font-sans">
+      <CustomCursor />
+      <motion.div className="fixed top-0 left-0 right-0 h-[3px] bg-primary z-[1000] origin-left" style={{ scaleX }} />
+
+      {/* --- HERO SECTION --- */}
+      <section className="relative min-h-screen flex items-center pt-20 px-6 overflow-hidden">
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            
-            <motion.div
-              className="flex flex-col justify-center text-center lg:text-left"
-              initial="hidden"
-              animate="visible"
-              variants={staggerContainer}
-            >
-              
-
-              <motion.h1
-                className="font-lora text-5xl md:text-7xl font-bold tracking-tight text-foreground leading-[1.1] mb-6"
-                variants={fadeInUp}
-              >
-                Pregătire <br/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-500 to-primary animate-gradient">
-                  pentru Succes
-                </span>
+            <motion.div initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="text-center lg:text-left">
+              <motion.div variants={fadeInUp} className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
+                <Sparkles className="w-3 h-3" /> 
+              </motion.div>
+              <motion.h1 variants={fadeInUp} className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] uppercase mb-8">
+                Învață <br /> <span className="text-primary italic">Inteligent.</span>
               </motion.h1>
-              
-              <motion.p variants={fadeInUp} className="text-lg md:text-xl text-muted-foreground max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed">
-                Platforma unde materia devine clară. Resurse complete pentru Evaluare Națională și Bacalaureat, explicate simplu și vizual.
+              <motion.p variants={fadeInUp} className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-10">
+                Am luat tot continutul de la școală și l-am transformat în lecții interactive și concise și am mai pus și niște unelte folositoare pentru a te ajuta să înveți mai rapid și mai eficient. Fără să pierzi timp căutându-le.
               </motion.p>
-              
-              <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
-                <Button asChild size="lg" className="h-14 px-8 text-base rounded-2xl shadow-xl shadow-primary/25 hover:shadow-2xl hover:shadow-primary/40 transition-all hover:-translate-y-1 bg-primary text-primary-foreground border-0">
-                  <Link href="/register"><Rocket className="mr-2 h-5 w-5" /> Începe Gratuit</Link>
+              <motion.div variants={fadeInUp} className="flex justify-center lg:justify-start">
+                <Button asChild size="lg" className="h-16 md:h-20 px-12 text-xl rounded-full shadow-2xl hover:scale-105 transition-all font-bold">
+                  <Link href="/register">Vreau să încep <Rocket className="ml-3 w-6 h-6" /></Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="h-14 px-8 text-base rounded-2xl border-2 hover:bg-muted/50 backdrop-blur-sm">
-                  <Link href="#materii">Vezi Materiile</Link>
+                <Button asChild variant="outline" size="lg" className="h-16 md:h-20 px-12 text-xl rounded-full shadow-2xl hover:scale-105 transition-all font-bold ml-4">
+                  <Link href="/#materii">Vezi materiile <ArrowRight className="ml-3 w-6 h-6" /></Link>
                 </Button>
               </motion.div>
             </motion.div>
-
-            {/* AICI ESTE ILUSTRAȚIA JECHERA (FIXATĂ) */}
-            {/* Am adăugat w-full și min-h-[500px] pentru a forța containerul să nu colapseze */}
-            <motion.div 
-                className="hidden lg:flex items-center justify-center relative z-20 w-full h-full min-h-[500px]"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1 }}
-            >
-              <div className="scale-110 drop-shadow-2xl w-full h-full flex items-center justify-center">
-                <InteractiveHeroIllustration />
-              </div>
-            </motion.div>
+            <div className="hidden lg:flex items-center justify-center relative"><InteractiveHeroIllustration /></div>
           </div>
         </div>
-
-        <div className="mt-16 text-center">
-            <p className="text-sm text-muted-foreground mb-2">
-              Feedback-ul tău contează:
-            </p>
-            <HeartRating slug="contact-feedback" />
-          </div>
       </section>
 
-      
-{/* --- FEATURES SECTION --- */}
-<section className="py-24 bg-background relative z-10 border-y border-white/5">
-  <div className="container">
-    <motion.div 
-      className="text-center mb-16 max-w-3xl mx-auto" 
-      initial="hidden" 
-      whileInView="visible" 
-      viewport={{ once: true, amount: 0.3 }} 
-      variants={fadeInUp}
-    >
-      <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">O platformă completă pentru succesul tău</h2>
-      <p className="text-lg text-muted-foreground">De la planificare la practică, ai toate uneltele într-un singur loc.</p>
-    </motion.div>
-    
-    <motion.div 
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" 
-      initial="hidden" 
-      whileInView="visible" 
-      viewport={{ once: true, amount: 0.2 }} 
-      variants={staggerContainer}
-    >
-      {featuresData.map((feature) => (
-        <Link href={feature.href || '#'} key={feature.title} className="block">
-          <motion.div 
-            variants={fadeInUp}
-            whileHover={{ y: -5, scale: 1.02 }} // Putem adăuga animația aici
-            className="group h-full relative p-8 rounded-3xl bg-card border border-border hover:border-primary/20 transition-all duration-300 shadow-lg hover:shadow-2xl overflow-hidden"
-          >
-            <div className="absolute -right-10 -bottom-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all duration-500" />
-            
-            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 shadow-lg shadow-black/10 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300`}>
-              {feature.icon}
+      {/* --- SECTION: CE ADUCEM NOU (Diferențierea) --- */}
+      <section className="py-24 bg-muted/30">
+        <div className="container px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-4">Cu ce suntem diferiți?</h2>
+            <p className="text-muted-foreground italic text-lg">Toate lectiile la un loc și gratuit.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-10 rounded-[3rem] bg-card border border-border shadow-sm group hover:border-primary transition-all">
+                <BrainCircuit className="w-12 h-12 text-primary mb-6 group-hover:scale-110 transition-transform" />
+                <h3 className="text-2xl font-bold mb-4 uppercase tracking-tighter">Logică, nu memorare</h3>
+                <p className="text-muted-foreground leading-relaxed">Te învățăm mecanismul din spatele exercițiilor, ca să știi să rezolvi orice, nu doar să reții un șablon.</p>
             </div>
-            
-            <h3 className="text-xl font-bold text-foreground mb-3">{feature.title}</h3>
-            <p className="text-muted-foreground leading-relaxed text-sm">{feature.description}</p>
-          </motion.div>
-        </Link>
-      ))}
-    </motion.div>
-  </div>
-</section>
+            <div className="p-10 rounded-[3rem] bg-card border border-border shadow-sm group hover:border-primary transition-all">
+                <Zap className="w-12 h-12 text-primary mb-6 group-hover:scale-110 transition-transform" />
+                <h3 className="text-2xl font-bold mb-4 uppercase tracking-tighter">Viteză de procesare</h3>
+                <p className="text-muted-foreground leading-relaxed">Sintetizăm materia. Ceea ce în clasă durează 2 ore, aici înțelegi în 15 minute prin scheme vizuale.</p>
+            </div>
+            <div className="p-10 rounded-[3rem] bg-card border border-border shadow-sm group hover:border-primary transition-all">
+                <Star className="w-12 h-12 text-primary mb-6 group-hover:scale-110 transition-transform" />
+                <h3 className="text-2xl font-bold mb-4 uppercase tracking-tighter">Interactivitate</h3>
+                <p className="text-muted-foreground leading-relaxed">Ai quiz-uri rapide, flashcard-uri, monitorizare a progresului și multe alte resurse. Înveți jucându-te.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* --- MATERII SECTION --- */}
-      <section id="materii" className="py-32 relative overflow-hidden bg-background">
-        <div className="absolute top-[20%] left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
-        <div className="absolute top-[20%] -right-[20%] w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
-
-        <div className="container relative z-10">
-          <motion.div className="text-center mb-24 max-w-4xl mx-auto" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} variants={fadeInUp}>
-            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground mb-6">Explorează Materiile</h2>
-            <p className="text-xl text-muted-foreground">Structurate perfect pentru nivelul tău.</p>
-          </motion.div>
-          
-          {/* 1. EVALUARE NATIONALA */}
-          <div className="mb-24 relative">
-             <motion.div 
-              className="flex items-center gap-6 mb-12 pl-2"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="h-12 w-1.5 bg-gradient-to-b from-primary to-transparent rounded-full shadow-[0_0_15px_hsl(var(--primary))]"></div>
-              <div>
-                <h3 className="text-3xl font-bold text-foreground">Evaluarea Națională</h3>
-                <p className="text-muted-foreground font-medium uppercase tracking-widest text-sm">Clasele V - VIII</p>
-              </div>
-            </motion.div>
-
-            <motion.div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer}>
-              {evaluationSubjects.map((subject, index) => (
-                <SubjectCard 
-                  key={subject.title}
-                  title={subject.title} 
-                  icon={subject.icon} 
-                  href={subject.href} 
-                  isActive={subject.isActive} 
-                  delay={index * 100}
-                  openInNewTab={subject.openInNewTab}
-                />
-              ))}
-            </motion.div>
+      <section id="materii" className="py-24">
+        <div className="container px-6">
+          <div className="mb-16">
+             <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase italic opacity-1">Materiile.</h2>
           </div>
-
-          {/* 2. BACALAUREAT */}
-          <div className="relative">
-            <div className="absolute -top-12 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50"></div>
-
-            <motion.div 
-              className="flex items-center gap-6 mb-12 pl-2"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="h-12 w-1.5 bg-gradient-to-b from-blue-500 to-transparent rounded-full"></div>
-              <div>
-                <h3 className="text-3xl font-bold text-foreground">Bacalaureat</h3>
-                <div className="flex items-center gap-3">
-                    <p className="text-muted-foreground font-medium uppercase tracking-widest text-sm">Liceu (IX - XII)</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer}>
-              {baccalaureateSubjects.map((subject, index) => (
-                <SubjectCard 
-                  key={subject.title}
-                  title={subject.title} 
-                  icon={subject.icon} 
-                  href={subject.href} 
-                  isActive={subject.isActive} 
-                  delay={index * 100}
-                />
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* --- CTA SECTION --- */}
-      <section className="py-24 bg-background">
-        <div className="container">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }} variants={fadeInUp}>
-            <div className="relative rounded-3xl bg-primary p-12 md:p-20 text-center text-primary-foreground overflow-hidden shadow-2xl shadow-primary/25">
-              <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
-              <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-white/10 blur-3xl rounded-full"></div>
-              
-              <div className="relative z-10">
-                <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-6">Viitorul tău începe azi.</h2>
-                <p className="mx-auto max-w-2xl text-lg sm:text-xl opacity-90 mb-10 font-medium leading-relaxed">
-                    Alătură-te comunității noastre și transformă modul în care înveți. Totul este gratuit și la un click distanță.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <ConfettiButton asChild size="lg" variant="secondary" className="text-lg px-10 py-7 rounded-xl shadow-xl hover:scale-105 transition-transform font-bold text-primary">
-                      <Link href="/register"><Sparkles className="mr-2 h-5 w-5" /> Creează Cont Gratuit</Link>
-                    </ConfettiButton>
-                </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div className="p-8 md:p-12 rounded-[3rem] border border-border bg-card">
+              <h4 className="text-[10px] font-black tracking-[0.4em] uppercase opacity-95 mb-10 text-primary">Evaluare Națională</h4>
+              <div className="space-y-4">
+                {['Limba Română'].map((m) => (
+                  <Link key={m} href="/materii/romana" className="flex items-center justify-between py-6 border-b border-border group">
+                    <span className="text-2xl md:text-4xl font-bold tracking-tighter group-hover:translate-x-2 transition-transform uppercase">{m}</span>
+                    <ArrowRight className="opacity-20 group-hover:opacity-100 transition-all" />
+                  </Link>
+                ))}
+                {['Matematică'].map((m) => (
+                  <Link key={m} href="/materii/matematica" className="flex items-center justify-between py-6 border-b border-border group">
+                    <span className="text-2xl md:text-4xl font-bold tracking-tighter group-hover:translate-x-2 transition-transform uppercase">{m}</span>
+                    <ArrowRight className="opacity-20 group-hover:opacity-100 transition-all" />
+                  </Link>
+                ))}
+                {['Informatică'].map((m) => (
+                  <Link key={m} href="/materii/informatica" className="flex items-center justify-between py-6 border-b border-border group">
+                    <span className="text-2xl md:text-4xl font-bold tracking-tighter group-hover:translate-x-2 transition-transform uppercase">{m}</span>
+                    <ArrowRight className="opacity-20 group-hover:opacity-100 transition-all" />
+                  </Link>
+                ))}
+                {['Chimie'].map((m) => (
+                  <Link key={m} href="https://www.fizichim.ro/docs/chimie/clasa7/capitolul1-chimia-stiinta-a-naturii/I-1-ce-este-chimia" className="flex items-center justify-between py-6 border-b border-border group">
+                    <span className="text-2xl md:text-4xl font-bold tracking-tighter group-hover:translate-x-2 transition-transform uppercase">{m}</span>
+                    <ArrowRight className="opacity-20 group-hover:opacity-100 transition-all" />
+                  </Link>
+                ))}
+                {['Fizică'].map((m) => (
+                  <Link key={m} href="https://www.fizichim.ro/docs/fizica/clasa6/capitolul1-introducere-in-studiul-fizicii/I-1-ce-este-fizica" className="flex items-center justify-between py-6 border-b border-border group">
+                    <span className="text-2xl md:text-4xl font-bold tracking-tighter group-hover:translate-x-2 transition-transform uppercase">{m}</span>
+                    <ArrowRight className="opacity-20 group-hover:opacity-100 transition-all" />
+                  </Link>
+                ))}
               </div>
             </div>
-          </motion.div>
+            <div className="p-8 md:p-12 rounded-[3rem] border border-border bg-card opacity-60">
+              <h4 className="text-[10px] font-black tracking-[0.4em] uppercase opacity-100 mb-10 text-primary">Bacalaureat</h4>
+              <div className="space-y-4">
+                {['Română', 'Matematică'].map((m) => (
+                  <div key={m} className="flex items-center justify-between py-6 border-b border-border opacity-50">
+                    <span className="text-2xl md:text-4xl font-bold tracking-tighter uppercase">{m}</span>
+                    <Lock size={18} />
+                  </div>
+                ))}
+                {['Informatică'].map((m) => (
+                  <Link key={m} href="/materii/informatica" className="flex items-center justify-between py-6 border-b border-border group">
+                    <span className="text-2xl md:text-4xl font-bold tracking-tighter group-hover:translate-x-2 transition-transform uppercase">{m}</span>
+                    <ArrowRight className="opacity-20 group-hover:opacity-100 transition-all" />
+                  </Link>
+                ))}
+                {['Chimie'].map((m) => (
+                  <Link key={m} href="https://www.fizichim.ro/docs/chimie/clasa7/capitolul1-chimia-stiinta-a-naturii/I-1-ce-este-chimia" className="flex items-center justify-between py-6 border-b border-border group">
+                    <span className="text-2xl md:text-4xl font-bold tracking-tighter group-hover:translate-x-2 transition-transform uppercase">{m}</span>
+                    <ArrowRight className="opacity-20 group-hover:opacity-100 transition-all" />
+                  </Link>
+                ))}
+                {['Fizică'].map((m) => (
+                  <Link key={m} href="https://www.fizichim.ro/docs/fizica/clasa6/capitolul1-introducere-in-studiul-fizicii/I-1-ce-este-fizica" className="flex items-center justify-between py-6 border-b border-border group">
+                    <span className="text-2xl md:text-4xl font-bold tracking-tighter group-hover:translate-x-2 transition-transform uppercase">{m}</span>
+                    <ArrowRight className="opacity-20 group-hover:opacity-100 transition-all" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-    </>
+
+      {/* --- SECTION: EU (REPARAT IMAGINEA) --- */}
+      <section className="py-32 container px-6 flex flex-col items-center">
+        <div className="max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="flex justify-center">
+                <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[3rem] overflow-hidden border-8 border-muted shadow-2xl">
+                    <Image 
+                      src="/images/EU.jpg"
+                      alt="David" 
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover"
+                      priority
+                    />
+                </div>
+            </div>
+            <div className="text-center lg:text-left space-y-6">
+                <h2 className="text-4xl md:text-6xl font-black tracking-tighter italic">&quot;Am făcut asta pentru noi.&quot;</h2>
+                <p className="text-lg text-muted-foreground font-medium italic">
+                    Sunt David, fondatorul platformei și elev la rândul meu. Știu cum e să te simți pierdut printre manuale. De aceea, am creat acest loc unde materia are logică și învățatul nu e o povară.
+                </p>
+                <div className="pt-4">
+                    <p className="font-bold text-xl uppercase tracking-widest text-primary">Mera Alin David </p>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      {/* --- CTA FINAL & FEEDBACK (REPARAT ALINIEREA) --- */}
+      <section className="pb-40 container flex flex-col items-center px-6">
+        <div className="mb-20 text-center space-y-8 p-12 rounded-[4rem] border border-border bg-card w-full max-w-3xl relative overflow-hidden">
+           <p className="text-[10px] font-black uppercase tracking-[0.5em] opacity-30">Vrem să știm ce crezi:</p>
+           
+           {/* Containere forțate să rămână pe o singură linie */}
+           <div className="flex flex-col items-center justify-center w-full">
+              <div className="w-full overflow-hidden flex justify-center py-4">
+                 <div className="flex flex-nowrap items-center justify-center">
+                    <HeartRating slug="contact-feedback" />
+                 </div>
+              </div>
+           </div>
+
+           <button onClick={() => {}} className="absolute bottom-6 right-6 opacity-[0.02] hover:opacity-100 transition-opacity"><RotateCcw size={12} /></button>
+        </div>
+
+        <ConfettiButton asChild size="lg" className="w-64 h-64 md:w-96 md:h-96 rounded-full bg-foreground text-background shadow-2xl group transition-transform hover:scale-105 active:scale-95">
+            <Link href="/register" className="flex flex-col items-center justify-center gap-4">
+                <span className="text-5xl md:text-7xl font-black tracking-tighter italic">Înscrie-te.</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40">Gratuit, pentru totdeauna</span>
+            </Link>
+        </ConfettiButton>
+      </section>
+    </div>
   );
 }
