@@ -169,9 +169,10 @@ export default function Home() {
             <div className="flex justify-center">
                 <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[3rem] overflow-hidden border-8 border-muted shadow-2xl">
                     <Image 
-                      src="/images/EU.jpg"
+                      src="/images/SPY.jpeg"
                       alt="David" 
                       fill
+                      unoptimized
                       sizes="(max-width: 768px) 100vw, 33vw"
                       className="object-cover"
                       priority
