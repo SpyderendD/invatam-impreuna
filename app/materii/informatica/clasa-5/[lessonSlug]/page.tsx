@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Download, ArrowLeft } from 'lucide-react'; // NOU: Am importat ArrowLeft
+import { Download, ArrowLeft } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import Link from 'next/link'; // NOU: Importăm Link pentru butonul de înapoi
+import Link from 'next/link';
 
 // AICI SE ÎNTÂMPLĂ MAGIA: Importăm vizualizatorul FĂRĂ SSR
 const PDFViewer = dynamic(() => import('@/components/PDFViewer'), {
@@ -18,30 +18,31 @@ interface PdfViewerPageProps {
 }
 
 const fileMap: { [key: string]: string } = {
-    'sistem-de-calcul': 'sistem de calcul.pdf',
-    'istoric-calculatoare': 'Sisteme de calcul_Istoric.pdf',
-    'dispozitive-de-intrare': 'Dispozitive de intrare.pdf',
-    'dispozitive-de-iesire': 'Dispozitive_de_iesire.pdf',
-    'dispozitive-mixte': 'Dispozitive de intrare-iesire.pdf',
-    'descrierea-software': 'Descrierea componentei software.pdf',
-    'internetul': 'Internetul.pdf',
-    'world-wide-web': 'Serviciul WORLD WIDE WEB.pdf',
-    'cautarea-informatiilor': 'căutarea_informațiilor_pe_Internet.pdf',
-    'editare-grafica': 'Editoare grafice.pdf',
-    'instrumente-de-desenare': 'instrumente de desenare.pdf',
+    'test-evaluare-initiala-clasa-5': 'test-evaluare-initiala-clasa-5.pdf',
+    'sistem-de-calcul': 'sistem_de_calcul.pdf',
+    'istoric-calculatoare': 'sisteme de calcul_istoric.pdf',
+    'dispozitive-de-intrare': 'dispozitive de intrare.pdf',
+    'dispozitive-de-iesire': 'dispozitive_de_iesire.pdf',
+    'dispozitive-mixte': 'dispozitive_de_intrare-iesire.pdf',
+    'descrierea-software': 'descrierea_componentei_software.pdf',
+    'internetul': 'internetul.pdf',
+    'world-wide-web': 'serviciul_world_wide_web.pdf',
+    'cautarea-informatiilor': 'cautarea_informatiilor_pe_internet.pdf',
+    'editare-grafica': 'editoare_grafice.pdf',
+    'instrumente-de-desenare': 'instrumente_de_desenare.pdf',
     'inserare-formatare-text': 'inserarea_și_formatarea_textului.pdf',
-    'algoritmi-proprietati': 'Algoritmi- proprietăți.pdf',
-    'clasificarea-datelor': 'clasificarea datelor algoritmilor.pdf',
-    'expresii-aritmetice': 'expresii  aritmetice.pdf',
-    'expresii-logice': 'expresii logice.pdf',
-    'operatori-relationali': 'Operatori_relaționali.pdf',
-    'structura-liniara': 'structura_liniară.pdf',
-    'mediu-grafic-interactiv': 'prezentarea mediului grafic interactiv.pdf',
-    'structura-alternativa': 'structura alternativa.pdf',
-    'reprezentarea-deciziilor': 'Reprezentarea_structurii_alternative_înt.pdf',
-    'aplicatii-scratch': 'Aplicații_Scratch.pdf',
-    'recapitulare-generala': 'Recapitulare.pdf',
-    'recapitulare-finala': 'recapitulare_finală.pdf',
+    'algoritmi-proprietati': 'algoritmi_proprietăți.pdf',
+    'clasificarea-datelor': 'clasificarea_datelor_algoritmilor.pdf',
+    'expresii-aritmetice': 'expresii_aritmetice.pdf',
+    'expresii-logice': 'expresii_logice.pdf',
+    'operatori-relationali': 'operatori_relationali.pdf',
+    'structura-liniara': 'structura_liniara.pdf',
+    'mediu-grafic-interactiv': 'prezentarea_mediuului_grafic_interactiv.pdf',
+    'structura-alternativa': 'structura_alternativa.pdf',
+    'reprezentarea-deciziilor': 'reprezentarea_structurii_alternative_int.pdf',
+    'aplicatii-scratch': 'aplicatii_scratch.pdf',
+    'recapitulare-generala': 'recapitulare.pdf',
+    'recapitulare-finala': 'recapitulare_finala.pdf',
 };
 
 export default function PdfViewerPage({ params }: PdfViewerPageProps) {

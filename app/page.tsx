@@ -78,7 +78,7 @@ export default function Home() {
               { icon: BrainCircuit, title: 'Logică', desc: 'Înțelegi mecanismul din spatele exercițiilor, nu doar formulele.' },
               { icon: Zap, title: 'Viteză', desc: 'Lecții optimizate pentru a învăța mai mult în mai puțin timp.' },
               { icon: Star, title: 'Interactiv', desc: 'Quiz-uri și experiențe create să te țină concentrat și activ.' },
-              { icon: Star, title: 'Personalizat', desc: 'Quiz-uri și experiențe create să te țină concentrat și activ.' },
+              { icon: Star, title: 'Hub Complet', desc: 'Nu mai pierde timpul căutând. Ai toate resursele necesare pentru succes într-un singur loc.' },
             ].map((f, i) => (
               <motion.div key={i} whileHover={{ y: -10 }} className="p-12 rounded-[3.5rem] border border-border bg-card shadow-sm group">
                 <f.icon className="w-14 h-14 text-primary mb-8 group-hover:scale-110 transition-transform" />
