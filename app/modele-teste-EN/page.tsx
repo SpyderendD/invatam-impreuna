@@ -89,7 +89,7 @@ export default function ModeleTesteLinksPage() {
   const [copied, setCopied] = useState<string | null>(null);
 
   // !! --- DATA ȚINTĂ PENTRU EXAMEN ---
-  const examDate = useMemo(() => new Date('2026-06-22T09:00:00'), []);
+  const examDate = useMemo(() => new Date('2027-06-20T09:00:00'), []);
 
   const filtered = useMemo(() => {
     const text = q.trim().toLowerCase();
