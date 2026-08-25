@@ -24,7 +24,7 @@ export default function Preloader({ onFinish }: { onFinish?: () => void }) {
       setTimeout(() => {
         if (onFinish) onFinish();
       }, 1000); 
-    }, 2000); // Timp total mai lung pentru a savura animația
+    }, 1000); // Timp total
 
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [onFinish]);
