@@ -141,7 +141,7 @@ export function Footer() {
               <span className="text-xl font-bold text-foreground">Învățăm Împreună</span>
             </Link>
             <p className="text-muted-foreground text-sm mb-6">
-              Platforma pentru a explora, învăța și excela. Resurse complete pentru examene și materii esențiale.
+              Platforma pentru a explora, învăța și excela. Resurse complete pentru examene și materii esențiale. Abilități pentru viață.
             </p>
             <div className="flex space-x-2">
               {socialLinks.map(link => (

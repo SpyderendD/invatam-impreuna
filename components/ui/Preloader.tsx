@@ -15,7 +15,7 @@ export default function Preloader({ onFinish }: { onFinish?: () => void }) {
 
   useEffect(() => {
     // Pasul 1: Mesaj Text (0 - 800ms)
-    const t1 = setTimeout(() => setStep(1), 800);
+    const t1 = setTimeout(() => setStep(1), 400);
     
     // Pasul 2: Creionul apare (800ms - 2000ms)
     const t2 = setTimeout(() => {
@@ -23,8 +23,8 @@ export default function Preloader({ onFinish }: { onFinish?: () => void }) {
       // După ce se termină cortina (800ms + 200ms delay), declanșăm finish
       setTimeout(() => {
         if (onFinish) onFinish();
-      }, 1000); 
-    }, 1000); // Timp total
+      }, 500); 
+    }, 900); // Timp total
 
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [onFinish]);

@@ -33,34 +33,24 @@ export async function POST(req: NextRequest) {
 
   // 1. Identificăm utilizatorul după IP
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown';
-  
-  // Dacă suntem pe localhost, IP-ul e ::1, e ok pentru teste, dar în producție va fi IP real.
-  
-  // Cheia unde ținem minte cine a votat pentru pagina asta
   const votersKey = `voters:${slug}`;
 
-  // 2. Verificăm dacă a mai votat (SISMEMBER verifică dacă IP-ul e în set)
+  // 2. Verificăm dacă a mai votat
   const hasVoted = await kv.sismember(votersKey, ip);
 
   if (hasVoted) {
-    // Dacă a votat deja, returnăm eroare 429 (Too Many Requests) sau 403
     return NextResponse.json(
       { error: 'Ai votat deja! Mulțumim oricum. ❤️' }, 
       { status: 429 }
     );
   }
 
-  // 3. Dacă e curat, salvăm votul
+  // 3. Salvăm votul
   const key = `rating:${slug}`;
-  
-  // Adăugăm IP-ul în lista celor care au votat
   await kv.sadd(votersKey, ip);
-  
-  // Incrementăm statistica
   await kv.hincrby(key, 'count', 1);
   await kv.hincrby(key, 'sum', val);
 
-  // Returnăm noile date
   const [count, sum] = await Promise.all([
     kv.hget(key, 'count'),
     kv.hget(key, 'sum'),
@@ -73,20 +63,30 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ count: totalCount, average: parseFloat(average.toFixed(1)) });
 }
 
+// RESETARE CU PAROLĂ
 export async function DELETE(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const slug = searchParams.get('slug') || 'global';
-  const secret = req.headers.get('x-admin-secret');
   
-  if (secret !== process.env.ADMIN_SECRET) {
-    return NextResponse.json({ error: 'Nu ai voie aici! ⛔' }, { status: 401 });
+  // Citim parola trimisă din frontend
+  const secret = req.headers.get('x-admin-secret');
+  const expectedSecret = process.env.ADMIN_SECRET;
+
+  if (!expectedSecret || secret !== expectedSecret) {
+    return NextResponse.json(
+      { error: 'Parolă incorectă! Acces interzis. ⛔' }, 
+      { status: 401 }
+    );
   }
 
   const key = `rating:${slug}`;
-  const votersKey = `voters:${slug}`; // Trebuie să ștergem și lista de votanți ca să poți testa iar
+  const votersKey = `voters:${slug}`;
 
-  await kv.del(key);
-  await kv.del(votersKey); // Ștergem și istoricul de IP-uri
+  // Ștergem și statisticile, și lista de IP-uri ca să se poată vota din nou
+  await Promise.all([
+    kv.del(key),
+    kv.del(votersKey)
+  ]);
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ success: true, message: 'Rating resetat complet!' });
 }

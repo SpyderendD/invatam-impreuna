@@ -1,19 +1,52 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { Sparkles, Rocket, ArrowRight, Zap, Lock, Star, BrainCircuit, ChevronRight, GraduationCap, RotateCcw } from 'lucide-react';
+import { 
+  Sparkles, 
+  Rocket, 
+  ArrowRight, 
+  Zap, 
+  Lock, 
+  Star, 
+  BrainCircuit, 
+  ChevronRight, 
+  GraduationCap,
+  Flame,
+  Compass,
+  TrendingUp,
+  MessageSquare,
+  Clock,
+  ShieldCheck,
+  CheckCircle2,
+  ArrowUpRight,
+  Lightbulb,
+  Shield,
+  Target,
+  Award,
+  BookMarked,
+  BarChart3,
+  HeartHandshake,
+  BookOpen,
+  Code2,
+  Atom,
+  Binary
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import CustomCursor from '@/components/animations/CustomCursor';
 import { ConfettiButton } from '@/components/animations/confetti-button';
 import HeartRating from '@/components/HeartRating';
 import InteractiveHeroIllustration from '@/components/animations/InteractiveHeroIllustration';
+import BlurText from '@/components/animations/BlurText';
+import ScrollExpand from '@/components/animations/ScrollExpand';
 
 const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } 
+  }
 };
 
 const links = {
@@ -26,237 +59,717 @@ const links = {
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+  // Modal Admin pentru resetare notă
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!password) return;
+
+    setLoading(true);
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/rating?slug=home-feedback', {
+        method: 'DELETE',
+        headers: {
+          'x-admin-secret': password.trim(),
+        },
+      });
+
+      if (res.ok) {
+        localStorage.removeItem('heart-rating-home-feedback');
+        localStorage.removeItem('heart-rating-contact-feedback');
+        setIsAdminOpen(false);
+        window.location.reload();
+      } else {
+        const data = await res.json();
+        setErrorMsg(data.error || 'Parolă incorectă!');
+      }
+    } catch {
+      setErrorMsg('Eroare de conexiune la server.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-background text-foreground font-sans">
-      <CustomCursor />
-      <motion.div className="fixed top-0 left-0 right-0 z-[9999] h-[3px] origin-left bg-primary" style={{ scaleX }} />
+    <div className="relative min-h-screen overflow-x-clip bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary">
+      
+      {/* Setare z-index pentru footerul global */}
+      <style>{`
+        footer {
+          position: relative !important;
+          z-index: 50 !important;
+          pointer-events: auto !important;
+        }
+        .content-auto {
+          content-visibility: auto;
+          contain-intrinsic-size: 700px;
+        }
+      `}</style>
 
-      {/* BACKGROUND EFFECTS */}
-      <div className="fixed inset-0 -z-50 opacity-20">
-        <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-primary/20 blur-[120px]" />
-        <div className="absolute inset-0 [background-image:linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] [background-size:40px_40px]" />
+      {/* Bară scroll neon optimizată */}
+      <motion.div 
+        className="fixed top-0 left-0 right-0 z-[9999] h-[3px] origin-left bg-gradient-to-r from-primary via-cyan-400 to-indigo-500 pointer-events-none transform-gpu shadow-[0_0_12px_rgba(var(--primary-rgb,59,130,246),0.5)]" 
+        style={{ scaleX }} 
+      />
+
+      {/* AMBIENT LIGHTS OPTIMIZATE (GPU Native, 0 lag) */}
+      <div className="fixed inset-0 -z-50 opacity-25 pointer-events-none transform-gpu overflow-hidden">
+        <div 
+          className="absolute left-1/2 -top-28 h-[680px] w-[680px] -translate-x-1/2 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(var(--primary-rgb, 59, 130, 246), 0.28) 0%, transparent 68%)'
+          }}
+        />
+        <div 
+          className="absolute -right-24 top-1/3 h-[520px] w-[520px] rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(99, 102, 241, 0.16) 0%, transparent 70%)'
+          }}
+        />
+        <div className="absolute inset-0 [background-image:linear-gradient(to_right,#8080800c_1px,transparent_1px),linear-gradient(to_bottom,#8080800c_1px,transparent_1px)] [background-size:44px_44px]" />
       </div>
 
-      {/* HERO SECTION (ÎMBUNĂTĂȚITĂ) */}
-      <section className="relative min-h-screen flex items-center pt-24 pb-20 px-6">
+      {/* ========================================================================= */}
+      {/* 1. HERO SECTION */}
+      {/* ========================================================================= */}
+      <section className="relative min-h-[92vh] sm:min-h-screen flex items-center pt-24 pb-16 sm:pb-24 px-4 sm:px-6">
         <div className="container mx-auto relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="text-center lg:text-left">
-              <motion.div variants={fadeInUp} className="mb-8 inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-md">
-                <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-primary">Platformă Next-Gen</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+            
+            <motion.div 
+              initial="hidden" 
+              animate="visible" 
+              variants={{ visible: { transition: { staggerChildren: 0.08 } } }} 
+              className="text-center lg:text-left lg:col-span-7"
+            >
+              {/* Badge Top */}
+              <motion.div variants={fadeInUp} className="mb-6 sm:mb-8 inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/[0.08] backdrop-blur-md shadow-[0_0_20px_rgba(var(--primary-rgb,59,130,246),0.12)]">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                </span>
+                <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.35em] text-primary">
+                  Proiect Independent • 100% Gratuit
+                </span>
               </motion.div>
-              <motion.h1 variants={fadeInUp} className="text-6xl sm:text-8xl lg:text-[9rem] font-black tracking-[-0.06em] leading-[0.85] uppercase">
-                Învață <br /> <span className="italic bg-gradient-to-r from-primary via-blue-400 to-purple-400 bg-clip-text text-transparent">Inteligent.</span>
+
+              {/* Titlu Masiv */}
+              <motion.h1 variants={fadeInUp} className="text-5xl sm:text-7xl lg:text-8xl xl:text-[8.5rem] font-black tracking-[-0.05em] leading-[0.88] uppercase">
+                Învață <br /> 
+                <span className="italic bg-gradient-to-r from-primary via-sky-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(var(--primary-rgb,59,130,246),0.25)]">
+                  Inteligent.
+                </span>
               </motion.h1>
-              <motion.p variants={fadeInUp} className="text-lg md:text-2xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mt-10 mb-12 font-medium">
-                Am distilat materia în experiențe interactive moderne. Fără balast, fără timp pierdut. Doar logică și progres real.
-              </motion.p>
-              <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row justify-center lg:justify-start gap-6">
-                <Button asChild size="lg" className="h-20 px-12 rounded-full text-xl font-black uppercase shadow-[0_0_40px_rgba(var(--primary-rgb),0.3)] hover:scale-105 transition-all">
-                  <Link href="/register">Începe Acum <Rocket className="ml-3 w-6 h-6" /></Link>
+
+              {/* Descriere animată cu BlurText (pornește după loading) */}
+              <motion.div variants={fadeInUp} className="max-w-2xl mx-auto lg:mx-0 mt-6 sm:mt-8 mb-8 sm:mb-10 font-normal leading-relaxed text-base sm:text-xl lg:text-2xl text-muted-foreground min-h-[5rem]">
+                <BlurText
+                  text="Învață inteligent. Dezvoltă abilități practice prin experiențe interactive moderne. Fără teorie de umplutură, fără timp pierdut. Doar logică și progres real."
+                  effect="blur"
+                  animateBy="words"
+                  direction="top"
+                  trigger="view"
+                  startDelay={800}
+                  delay={75}
+                  stepDuration={0.3}
+                  blur={12}
+                  distance={25}
+                  className="inline"
+                />
+              </motion.div>
+
+              {/* Cluster Butoane */}
+              <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-3.5 sm:gap-4">
+                <Button 
+                  asChild 
+                  size="lg" 
+                  className="h-16 sm:h-18 px-8 sm:px-10 rounded-full text-base sm:text-lg font-black uppercase shadow-[0_0_30px_rgba(var(--primary-rgb,59,130,246),0.35)] hover:shadow-[0_0_45px_rgba(var(--primary-rgb,59,130,246),0.55)] hover:scale-[1.02] active:scale-95 transition-all transform-gpu"
+                >
+                  <Link href="/register">Începe Acum <Rocket className="ml-2.5 w-5 h-5 sm:w-6 sm:h-6" /></Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="h-20 px-12 rounded-full text-xl font-black uppercase hover:bg-primary/10 transition-all">
-                  <Link href="/#materii">Materii <ArrowRight className="ml-3 w-6 h-6" /></Link>
+                
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  size="lg" 
+                  className="h-16 sm:h-18 px-7 sm:px-9 rounded-full text-base sm:text-lg font-black uppercase border-border/70 hover:bg-muted/40 hover:border-primary/40 transition-all"
+                >
+                  <Link href="/#materii">Materii <ArrowRight className="ml-2.5 w-5 h-5" /></Link>
                 </Button>
+
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  size="lg" 
+                  className="h-16 sm:h-18 px-7 sm:px-9 rounded-full text-base sm:text-lg font-black uppercase border-primary/30 bg-primary/[0.04] hover:bg-primary/[0.1] hover:border-primary/60 transition-all"
+                >
+                  <Link href="/#skills">Skill-uri <Compass className="ml-2.5 w-5 h-5 text-primary" /></Link>
+                </Button>
+              </motion.div>
+
+              {/* Indicatori de încredere */}
+              <motion.div variants={fadeInUp} className="mt-12 pt-8 border-t border-border/40 flex items-center justify-center lg:justify-start gap-8 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                  <span>Fără reclame</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-primary" />
+                  <span>Explicații logice</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Star className="w-4 h-4 text-amber-400" />
+                  <span>În ritmul tău</span>
+                </div>
               </motion.div>
             </motion.div>
-            <div className="hidden lg:flex items-center justify-center relative scale-110">
+            
+            {/* Ilustrația Hero */}
+            <div className="hidden lg:flex items-center justify-center relative scale-105 transform-gpu lg:col-span-5">
               <InteractiveHeroIllustration />
             </div>
+
           </div>
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="py-32 border-y border-border/30 bg-muted/20">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+      {/* ========================================================================= */}
+      {/* 2. MATERII - PUSE DIRECT SUS DUPĂ HERO */}
+      {/* ========================================================================= */}
+      <section id="materii" className="py-20 sm:py-28 border-t border-border/40 content-auto relative">
+        <div className="container mx-auto px-4 sm:px-6">
+          
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 gap-4">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.4em] text-primary mb-2">Programă Școlară Oficială</p>
+              <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-tight">Alege Materia</h2>
+            </div>
+            <p className="text-sm text-muted-foreground max-w-sm">
+              Conținut condensat și structurat pe logică, pregătit special pentru examene.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            {/* EVALUARE NAȚIONALĂ */}
+            <div className="p-7 sm:p-10 rounded-[3rem] border border-border/80 bg-card/80 backdrop-blur-md shadow-lg relative overflow-hidden group hover:border-emerald-500/40 transition-colors">
+              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none text-emerald-500">
+                <GraduationCap size={150} />
+              </div>
+
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <h4 className="text-sm sm:text-base font-black tracking-[0.35em] uppercase text-foreground">
+                    Evaluare Națională
+                  </h4>
+                </div>
+                <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  Clasele VII - VIII
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                {[
+                  { n: 'Limba Română', sub: 'Gramatică, text la prima vedere și compuneri', l: links.romana, icon: BookOpen }, 
+                  { n: 'Matematică', sub: 'Algebră, geometrie plană și în spațiu', l: links.mate, icon: Binary }, 
+                  { n: 'Informatică', sub: 'Algoritmică, C++ și gândire computațională', l: links.info, icon: Code2 }, 
+                  { n: 'Chimie', sub: 'Reacții, tabelul periodic și calcule chimice', l: links.chimie, icon: Atom }, 
+                  { n: 'Fizică', sub: 'Mecanică, optică, fenomene termice și electrice', l: links.fizica, icon: Zap }
+                ].map((m) => (
+                  <Link 
+                    key={m.n} 
+                    href={m.l} 
+                    className="flex items-center justify-between p-4 sm:p-5 rounded-2xl border border-border/60 bg-muted/20 hover:bg-emerald-500/[0.08] hover:border-emerald-500/40 transition-all group/item"
+                  >
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover/item:scale-110 transition-transform">
+                        <m.icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <span className="text-lg sm:text-xl font-black uppercase tracking-tight block">{m.n}</span>
+                        <span className="text-xs text-muted-foreground">{m.sub}</span>
+                      </div>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-emerald-500 group-hover/item:translate-x-1.5 transition-transform" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* BACALAUREAT */}
+            <div className="p-7 sm:p-10 rounded-[3rem] border border-border/80 bg-card/80 backdrop-blur-md shadow-lg hover:border-blue-500/40 transition-colors">
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
+                  <h4 className="text-sm sm:text-base font-black tracking-[0.35em] uppercase text-foreground">
+                    Bacalaureat
+                  </h4>
+                </div>
+                <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                  Clasele IX - XII
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                {['Română (Eseuri)', 'Matematică (M1 / M2)'].map((m) => (
+                  <div key={m} className="flex items-center justify-between p-4 sm:p-5 rounded-2xl border border-border/40 opacity-40 cursor-not-allowed">
+                    <div>
+                      <span className="text-lg sm:text-xl font-black uppercase tracking-tight block">{m}</span>
+                      <span className="text-xs text-muted-foreground">În curs de actualizare pentru sesiunea curentă</span>
+                    </div>
+                    <Lock size={18} />
+                  </div>
+                ))}
+                {[
+                  { n: 'Informatică', sub: 'Grafuri, recursivitate și algoritmi avansați', l: links.info, icon: Code2 }, 
+                  { n: 'Chimie', sub: 'Chimie organică și anorganică pentru BAC', l: links.chimie, icon: Atom }, 
+                  { n: 'Fizică', sub: 'Termodinamică, electricitate și mecanică avansată', l: links.fizica, icon: Zap }
+                ].map((m) => (
+                  <Link 
+                    key={m.n} 
+                    href={m.l} 
+                    className="flex items-center justify-between p-4 sm:p-5 rounded-2xl border border-border/60 bg-muted/20 hover:bg-blue-500/[0.08] hover:border-blue-500/40 transition-all group/item"
+                  >
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover/item:scale-110 transition-transform">
+                        <m.icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <span className="text-lg sm:text-xl font-black uppercase tracking-tight block">{m.n}</span>
+                        <span className="text-xs text-muted-foreground">{m.sub}</span>
+                      </div>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-blue-500 group-hover/item:translate-x-1.5 transition-transform" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 3. ABILITĂȚI PENTRU VIAȚĂ (SKILLS HUB) */}
+      {/* ========================================================================= */}
+      <section id="skills" className="py-24 sm:py-32 border-t border-border/40 bg-muted/15 content-auto">
+        <div className="container mx-auto px-4 sm:px-6">
+          
+          <div className="max-w-3xl mb-16 sm:mb-20">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/25 bg-primary/10 backdrop-blur-sm shadow-sm mb-4">
+              <Compass className="w-3.5 h-3.5 text-primary" />
+              <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.35em] text-primary">
+                Competențe Reale • Dincolo de Școală
+              </span>
+            </div>
+
+            <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight mb-6">
+              Abilități Pentru <span className="bg-gradient-to-r from-primary via-sky-400 to-indigo-400 bg-clip-text text-transparent">Viață.</span>
+            </h2>
+
+            <p className="text-base sm:text-xl text-muted-foreground leading-relaxed font-normal">
+              Dezvoltă abilități practice prin experiențe interactive moderne. Fără teorie de umplutură, fără timp pierdut. Doar logică și progres real.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: BrainCircuit, title: 'Logică', desc: 'Înțelegi mecanismul din spatele exercițiilor, nu doar formulele.' },
-              { icon: Zap, title: 'Viteză', desc: 'Lecții optimizate pentru a învăța mai mult în mai puțin timp.' },
-              { icon: Star, title: 'Interactiv', desc: 'Quiz-uri și experiențe create să te țină concentrat și activ.' },
-              { icon: Star, title: 'Hub Complet', desc: 'Nu mai pierde timpul căutând. Ai toate resursele necesare pentru succes într-un singur loc.' },
-            ].map((f, i) => (
-              <motion.div key={i} whileHover={{ y: -10 }} className="p-12 rounded-[3.5rem] border border-border bg-card shadow-sm group">
-                <f.icon className="w-14 h-14 text-primary mb-8 group-hover:scale-110 transition-transform" />
-                <h3 className="text-3xl font-black uppercase mb-4 tracking-tighter">{f.title}</h3>
-                <p className="text-muted-foreground text-lg leading-relaxed">{f.desc}</p>
-              </motion.div>
+              {
+                icon: TrendingUp,
+                tag: 'Finanțe',
+                title: 'Educație Financiară',
+                desc: 'Cum funcționează banii, investițiile timpurii, economisirea și inflația, fără jargon bancar.'
+              },
+              {
+                icon: BrainCircuit,
+                tag: 'Gândire & AI',
+                title: 'Gândire Critică & AI',
+                desc: 'Învață să folosești instrumentele AI în avantajul tău, să scrii prompturi bune și să filtrezi știrile false.'
+              },
+              {
+                icon: MessageSquare,
+                tag: 'Comunicare',
+                title: 'Public Speaking',
+                desc: 'Depășește emoțiile, structurează argumente solide și vorbește convingător în fața oricărui public.'
+              },
+              {
+                icon: Clock,
+                tag: 'Productivitate',
+                title: 'Managementul Timpului',
+                desc: 'Blocuri de concentrare profundă (Deep Work), prioritizare clară și scăparea definitivă de procrastinare.'
+              },
+              {
+                icon: HeartHandshake,
+                tag: 'Mindset',
+                title: 'Control Emoțional',
+                desc: 'Gestionarea stresului și a fricii de eșec în timpul examenelor, reziliență și atitudine calmă.'
+              },
+              {
+                icon: Shield,
+                tag: 'Securitate',
+                title: 'Siguranță Digitală',
+                desc: 'Protejarea conturilor, identității online, confidențialitatea datelor și evitarea fraudelor de pe internet.'
+              },
+              {
+                icon: Lightbulb,
+                tag: 'Creativitate',
+                title: 'Rezolvare de Probleme',
+                desc: 'Deconstruirea provocărilor grele în pași simpli și găsirea soluțiilor inventive din unghiuri neașteptate.'
+              },
+              {
+                icon: Target,
+                tag: 'Inițiativă',
+                title: 'Antreprenoriat',
+                desc: 'Cum transformi o idee într-un proiect funcțional, leadership de echipă și gândire orientată pe rezultate.'
+              }
+            ].map((skill, idx) => (
+              <div
+                key={idx}
+                className="group relative p-7 sm:p-8 rounded-[2.5rem] border border-border/80 bg-card/85 backdrop-blur-md shadow-sm hover:border-primary/50 hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(var(--primary-rgb,59,130,246),0.08)] transition-all duration-300 transform-gpu flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
+                      <skill.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-muted/60 text-muted-foreground border border-border/40">
+                      {skill.tag}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl sm:text-2xl font-black uppercase mb-3 tracking-tight">
+                    {skill.title}
+                  </h3>
+
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                    {skill.desc}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-border/40 flex items-center justify-between text-xs font-bold uppercase tracking-wider text-primary opacity-80 group-hover:opacity-100 transition-opacity">
+                  <span>Ghid Practic</span>
+                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 4. UNELTE UTILE */}
+      {/* ========================================================================= */}
+      <section className="py-24 sm:py-32 border-t border-border/40 bg-muted/10 content-auto">
+        <div className="container mx-auto px-4 sm:px-6">
+          
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-16 gap-4">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.4em] text-primary mb-2">Instrumente Utile</p>
+              <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-tight">Unelte de Studiu</h2>
+            </div>
+            <p className="text-sm text-muted-foreground max-w-xs">
+              Mici unelte create să-ți facă sesiunile de studiu mai ușoare și mai plăcute.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                icon: BarChart3,
+                name: 'Subiecte de Antrenament',
+                info: 'Exersezi pe modele de examen cu rezolvări pas cu pas și explicații pe înțelesul tău.'
+              },
+              {
+                icon: BookMarked,
+                name: 'Flashcard-uri',
+                info: 'Carduri scurte pentru a repeta definițiile și formulele cheie fără stres.'
+              },
+              {
+                icon: Clock,
+                name: 'Timer de Concentrare',
+                info: 'Sesiuni scurte de focus (tehnica Pomodoro) ca să nu obosești și să ai timp liber.'
+              },
+              {
+                icon: Award,
+                name: 'Sinteze Esențiale',
+                info: 'Scheme curate pe o singură pagină cu esența materiei, ideale înainte de orice test.'
+              }
+            ].map((tool, i) => (
+              <div 
+                key={i}
+                className="p-8 rounded-[2.5rem] border border-border/80 bg-card/85 backdrop-blur-md hover:border-primary/50 hover:shadow-lg transition-all"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 text-primary">
+                  <tool.icon className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-black uppercase tracking-tight mb-2">{tool.name}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{tool.info}</p>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 5. CUM ABORDĂM ÎNVĂȚAREA (3 PAȘI) */}
+      {/* ========================================================================= */}
+      <section className="py-24 sm:py-32 border-t border-border/40 content-auto">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
+            <span className="text-xs font-black uppercase tracking-[0.4em] text-primary">Abordare Simplă</span>
+            <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-tight mt-2">Cum Învățăm Aici</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                step: '01',
+                title: 'Vezi unde te împotmolești',
+                desc: 'Teste scurte care îți arată direct noțiunile care îți pun probleme, fără să pierzi vremea cu ce știi deja.'
+              },
+              {
+                step: '02',
+                title: 'Înțelegi logica din spate',
+                desc: 'Explicații condensate și exemple practice. Fără memorat pagini întregi pe de rost.'
+              },
+              {
+                step: '03',
+                title: 'Exersezi fără teamă',
+                desc: 'Simulări fără notare punitivă. Înveți din greșeli într-un spațiu sigur și capeți încredere.'
+              }
+            ].map((p, idx) => (
+              <div 
+                key={idx}
+                className="relative p-8 sm:p-10 rounded-[3rem] border border-border/70 bg-card/70 backdrop-blur-sm hover:border-primary/40 transition-colors"
+              >
+                <span className="text-5xl sm:text-6xl font-black italic text-primary/20 block mb-6">{p.step}</span>
+                <h3 className="text-2xl font-black uppercase mb-3 tracking-tight">{p.title}</h3>
+                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">{p.desc}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SUBJECTS (BAC MAPPED TO EN) */}
-      <section id="materii" className="py-32">
-        <div className="container mx-auto px-6">
-          <h2 className="text-7xl md:text-[10rem] font-black uppercase tracking-tighter italic opacity-5 leading-none mb-24">Materii.</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* EN */}
-            <div className="p-10 md:p-14 rounded-[4rem] border border-border bg-card shadow-xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity"><GraduationCap size={150} /></div>
-              <h4 className="text-[20px] font-black tracking-[0.5em] uppercase text-primary mb-12">Evaluare Națională</h4>
-              <div className="space-y-3">
-                {[{ n: 'Limba Română', l: links.romana }, { n: 'Matematică', l: links.mate }, { n: 'Informatică', l: links.info }, { n: 'Chimie', l: links.chimie }, { n: 'Fizică', l: links.fizica }].map((m) => (
-                  <Link key={m.n} href={m.l} className="flex items-center justify-between p-7 rounded-3xl border border-border bg-muted/30 hover:bg-primary/5 hover:border-primary/30 transition-all group/item">
-                    <span className="text-2xl md:text-4xl font-black uppercase tracking-tight">{m.n}</span>
-                    <ChevronRight className="text-primary group-hover/item:translate-x-2 transition-transform" />
-                  </Link>
-                ))}
+      {/* ========================================================================= */}
+      {/* 6. PRINCIPIILE PLATFORMEI */}
+      {/* ========================================================================= */}
+      <section className="py-16 border-t border-border/40 bg-muted/15 content-auto">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                icon: Clock,
+                title: 'În ritmul tău',
+                desc: 'Fără presiune sau comparații. Înveți când vrei, reiei lecția de câte ori ai nevoie.',
+              },
+              {
+                icon: CheckCircle2,
+                title: '100% Deschis & Liber',
+                desc: 'Fără conturi plătite sau conținut blocat. Toate resursele sunt accesibile tuturor.',
+              },
+              {
+                icon: HeartHandshake,
+                title: 'De la elev la elev',
+                desc: 'Creat din experiența reală de învățare, nu din birourile vreunei companii.',
+              },
+              {
+                icon: Lightbulb,
+                title: 'Fiecare învață ceva',
+                desc: 'Indiferent de unde pornești, fiecare temă este explicată pe o logică simplă și clară.',
+              },
+            ].map((p, i) => (
+              <div 
+                key={i} 
+                className="flex items-start gap-4 p-5 rounded-2xl border border-border/50 bg-card/60 backdrop-blur-sm"
+              >
+                <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 text-primary mt-0.5">
+                  <p.icon className="w-5 h-5" />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-base font-black uppercase tracking-tight">{p.title}</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{p.desc}</p>
+                </div>
               </div>
-            </div>
-            {/* BAC */}
-            <div className="p-10 md:p-14 rounded-[4rem] border border-border bg-card shadow-xl opacity-90">
-              <h4 className="text-[20px] font-black tracking-[0.5em] uppercase text-blue-500 mb-12">Bacalaureat</h4>
-              <div className="space-y-3">
-                {['Română', 'Matematică'].map((m) => (
-                  <div key={m} className="flex items-center justify-between p-7 rounded-3xl border border-border opacity-30 cursor-not-allowed">
-                    <span className="text-2xl md:text-4xl font-black uppercase tracking-tight">{m}</span>
-                    <Lock size={22} />
-                  </div>
-                ))}
-                {[{ n: 'Informatică', l: links.info }, { n: 'Chimie', l: links.chimie }, { n: 'Fizică', l: links.fizica }].map((m) => (
-                  <Link key={m.n} href={m.l} className="flex items-center justify-between p-7 rounded-3xl border border-border bg-muted/30 hover:bg-blue-500/5 hover:border-blue-500/30 transition-all group/item">
-                    <span className="text-2xl md:text-4xl font-black uppercase tracking-tight">{m.n}</span>
-                    <ChevronRight className="text-blue-500 group-hover/item:translate-x-2 transition-transform" />
-                  </Link>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* FOUNDER */}
-      <section className="py-40 container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-          <div className="flex justify-center relative">
-            <div className="absolute h-[500px] w-[500px] rounded-full bg-primary/10 blur-[150px]" />
-            <motion.div whileHover={{ scale: 1.02 }} className="relative w-80 h-[450px] md:w-[420px] md:h-[550px] rounded-[4rem] overflow-hidden border-8 border-muted shadow-2xl">
-              <Image src="/images/SPY.png" alt="David" fill priority className="object-cover" unoptimized />
-            </motion.div>
-          </div>
-          <div className="text-center lg:text-left">
-            <h2 className="text-6xl md:text-8xl font-black uppercase leading-[0.85] tracking-tighter italic">&quot;Am făcut asta <br/> pentru noi.&quot;</h2>
-            <p className="mt-10 text-xl md:text-2xl leading-relaxed text-muted-foreground font-medium italic">Sunt David. Am creat această platformă pentru că educația merită să pară modernă, logică și captivantă, diferită şi chiar să ajute. Vreau să ajutăm elevii să învețe cu plăcere.</p>
-            <div className="mt-12">
-              <p className="text-3xl font-black uppercase tracking-tight text-primary">Mera Alin David</p>
-              <p className="text-xs uppercase tracking-[0.5em] opacity-40 mt-2">Founder • Lead Developer</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FEEDBACK */}
-      <section className="pb-40 container mx-auto flex flex-col items-center px-6 relative z-10">
-
-        <div
-          className="
-            mb-32
-            text-center
-            space-y-12
-            p-16
-            md:p-24
-            rounded-[5rem]
-            border
-            border-white/10
-            bg-white/[0.03]
-            backdrop-blur-2xl
-            w-full
-            max-w-4xl
-            relative
-            overflow-hidden
-            shadow-[0_0_80px_rgba(0,0,0,0.45)]
-          "
+      {/* ========================================================================= */}
+      {/* 7. SCROLL EXPAND - POZA LUI DAVID 100% COMPLETĂ */}
+      {/* ========================================================================= */}
+      <section className="relative w-full border-t border-border/40">
+        <ScrollExpand
+          src="/images/SPY.png"
+          alt="Mera Alin David"
+          title="Învățăm Împreună"
+          scrollHint="Derulează pentru poveste"
+          useWindowScroll={true}
+          startWidth={42}
+          startHeight={58}
+          startRadius={32}
+          endRadius={0}
+          mediaZoom={1.0} // Imaginea nu este mărită, se vede completă
+          scrollDistance={1.6}
+          holdDistance={0.8}
+          smoothing={0.1}
         >
+          {/* Cardul cu textul lui David la baza ecranului ca să nu acopere fața */}
+          <div className="max-w-2xl text-center p-6 sm:p-8 rounded-3xl bg-zinc-950/85 backdrop-blur-md border border-white/10 shadow-2xl mx-4 mb-4">
+            <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight mb-3 text-white">
+              &quot;Am făcut asta pentru noi.&quot;
+            </h2>
+            <p className="text-sm sm:text-base text-zinc-300 leading-relaxed font-normal">
+              Sunt David. Am creat această platformă pentru că educația merită să pară modernă, logică și captivantă. Vreau să ajutăm fiecare elev să învețe cu plăcere și încredere.
+            </p>
+            <p className="mt-4 text-xs font-black uppercase tracking-[0.4em] text-primary flex items-center justify-center gap-1.5">
+              Mera Alin David <ShieldCheck className="w-4 h-4 text-emerald-500" />
+            </p>
+          </div>
+        </ScrollExpand>
+      </section>
 
-          {/* glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
-
+      {/* ========================================================================= */}
+      {/* 8. FEEDBACK & CTA SECTION */}
+      {/* ========================================================================= */}
+      <section className="py-28 container mx-auto flex flex-col items-center px-4 sm:px-6 relative z-10 content-auto">
+        
+        {/* Card Feedback */}
+        <div className="mb-20 sm:mb-24 text-center space-y-7 sm:space-y-9 p-8 sm:p-14 md:p-18 rounded-[3.5rem] border border-border/80 bg-card/85 backdrop-blur-md w-full max-w-3xl relative overflow-hidden shadow-xl">
+          
           <div className="relative z-10">
-
-            <p
-              className="
-                text-[11px]
-                font-black
-                uppercase
-                tracking-[0.7em]
-                text-primary
-                opacity-70
-              "
-            >
+            <p className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.5em] text-primary opacity-80 mb-2">
               Părerea ta contează
             </p>
 
-            <h3
-              className="
-                text-4xl
-                md:text-7xl
-                font-black
-                uppercase
-                tracking-tighter
-                leading-none
-              "
-            >
+            <h3 className="text-3xl sm:text-5xl font-black uppercase tracking-tight leading-none mb-4">
               CE NOTĂ NE DAI?
             </h3>
 
-            <div className="flex justify-center py-10 relative">
-
-              <motion.div
-                animate={{
-                  scale: [1, 1.05, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                }}
-              >
-                <HeartRating slug="contact-feedback" />
-              </motion.div>
-
-              {/* RESET */}
-              <button
-                onClick={() => {
-                  localStorage.removeItem(
-                    'heart-rating-contact-feedback'
-                  );
-
-                  window.location.reload();
-                }}
-                className="
-                  absolute
-                  right-0
-                  top-1/2
-                  -translate-y-1/2
-                  opacity-20
-                  hover:opacity-100
-                  transition-all
-                "
-              >
-                <RotateCcw size={20} />
-              </button>
+            <div className="flex justify-center items-center py-3 relative">
+              <HeartRating slug="home-feedback" />
             </div>
           </div>
+
+          {/* Trigger Admin Camuflat */}
+          <button
+            type="button"
+            onClick={() => {
+              setErrorMsg('');
+              setPassword('');
+              setIsAdminOpen(true);
+            }}
+            className="absolute bottom-4 right-5 opacity-5 hover:opacity-75 transition-opacity p-2 text-muted-foreground hover:text-red-500 cursor-pointer z-30"
+            title="Admin"
+          >
+            <Lock size={16} />
+          </button>
         </div>
 
-
-        {/* CTA */}
-        <div className="relative group">
-          <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full group-hover:bg-primary/40 transition-all duration-700" />
-          <ConfettiButton asChild className="w-80 h-80 md:w-[500px] md:h-[500px] rounded-full bg-foreground text-background shadow-2xl hover:scale-105 transition-transform relative z-10">
-            <Link href="/register" className="flex flex-col items-center justify-center p-12">
-              <span className="text-6xl md:text-[6rem] font-black tracking-tighter italic uppercase leading-none mb-4">Înscrie-te.</span>
-              <span className="text-xs font-black uppercase tracking-[0.5em] opacity-50">Gratuit. Acum și mereu.</span>
-            </Link>
+        {/* CTA BUTON ÎNSCRIE-TE */}
+        <div className="relative group flex items-center justify-center">
+          
+          <div 
+            className="absolute inset-0 rounded-full opacity-35 group-hover:opacity-75 transition-opacity duration-500 pointer-events-none transform-gpu"
+            style={{
+              background: 'radial-gradient(circle, rgba(var(--primary-rgb, 59, 130, 246), 0.38) 0%, transparent 70%)'
+            }}
+          />
+          
+          <ConfettiButton
+            type="button"
+            onClick={() => window.location.assign('/register')}
+            className="w-72 h-72 sm:w-80 sm:h-80 md:w-[420px] md:h-[420px] rounded-full bg-foreground text-background shadow-2xl ring-1 ring-primary/20 ring-offset-4 ring-offset-background hover:scale-[1.03] active:scale-95 transition-all duration-300 flex flex-col items-center justify-center p-6 sm:p-8 cursor-pointer relative z-10 transform-gpu"
+          >
+            <span className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter italic uppercase leading-none mb-2 text-background">
+              Înscrie-te.
+            </span>
+            <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.4em] opacity-60 text-background">
+              Gratuit. Acum și mereu.
+            </span>
           </ConfettiButton>
         </div>
+
       </section>
 
-      <footer className="py-20 border-t border-border/20 text-center opacity-20 text-xs font-black uppercase tracking-[1.5em]">Învățăm Împreună</footer>
+      {/* ========================================================================= */}
+      {/* 9. POP-UP MODAL ADMIN PERSONALIZAT */}
+      {/* ========================================================================= */}
+      {isAdminOpen && (
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-150">
+          <div className="relative w-full max-w-sm sm:max-w-md rounded-3xl border border-red-500/30 bg-zinc-950 p-6 sm:p-8 shadow-2xl">
+            
+            <button
+              onClick={() => setIsAdminOpen(false)}
+              className="absolute top-4 right-4 text-zinc-400 hover:text-white transition-colors p-1"
+            >
+              ✕
+            </button>
+
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-500">
+                <Lock size={18} />
+              </div>
+              <div>
+                <h4 className="text-base font-black uppercase tracking-tight text-white">Resetare Notă</h4>
+                <p className="text-xs text-zinc-400">Panou Securizat Administrator</p>
+              </div>
+            </div>
+
+            <form onSubmit={handleReset} className="space-y-4">
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
+                  Parolă Secretă
+                </label>
+                <input
+                  type="password"
+                  autoFocus
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Introdu parola..."
+                  className="w-full px-4 py-2.5 rounded-xl bg-zinc-900 border border-red-500/30 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-red-500 transition-colors"
+                />
+              </div>
+
+              {errorMsg && (
+                <p className="text-xs font-medium text-red-400 bg-red-950/40 border border-red-500/30 rounded-lg p-2">
+                  {errorMsg}
+                </p>
+              )}
+
+              <div className="flex gap-2.5 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setIsAdminOpen(false)}
+                  className="flex-1 py-2.5 rounded-xl border border-zinc-800 text-zinc-300 hover:bg-zinc-900 text-xs sm:text-sm font-semibold transition-colors"
+                >
+                  Anulează
+                </button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs sm:text-sm font-bold transition-all disabled:opacity-50"
+                >
+                  {loading ? 'Resetare...' : 'Resetează'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
