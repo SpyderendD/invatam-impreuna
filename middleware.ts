@@ -35,8 +35,8 @@ export async function middleware(request: NextRequest) {
     "/eu",
     "/blog",
     "/materii",
-    "/studiu-inteligent"
-
+    "/studiu-inteligent",
+    "/educatie-financiara",
   ];
 
   // Verificăm dacă e pagină publică

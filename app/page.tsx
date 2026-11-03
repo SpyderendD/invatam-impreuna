@@ -45,7 +45,7 @@ const fadeInUp = {
   visible: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } 
+    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } 
   }
 };
 
@@ -169,7 +169,7 @@ export default function Home() {
                 </span>
               </motion.h1>
 
-              {/* Descriere animată cu BlurText (pornește după loading) */}
+              {/* Descriere animată cu BlurText */}
               <motion.div variants={fadeInUp} className="max-w-2xl mx-auto lg:mx-0 mt-6 sm:mt-8 mb-8 sm:mb-10 font-normal leading-relaxed text-base sm:text-xl lg:text-2xl text-muted-foreground min-h-[5rem]">
                 <BlurText
                   text="Învață inteligent. Dezvoltă abilități practice prin experiențe interactive moderne. Fără teorie de umplutură, fără timp pierdut. Doar logică și progres real."
@@ -387,61 +387,83 @@ export default function Home() {
                 icon: TrendingUp,
                 tag: 'Finanțe',
                 title: 'Educație Financiară',
-                desc: 'Cum funcționează banii, investițiile timpurii, economisirea și inflația, fără jargon bancar.'
+                desc: 'Cum funcționează banii, investițiile timpurii, economisirea și inflația, fără jargon bancar.',
+                href: '/abilitati/educatie-financiara', // LINK DIRECT CĂTRE PAGINĂ
+                isHighlight: true
               },
               {
                 icon: BrainCircuit,
                 tag: 'Gândire & AI',
                 title: 'Gândire Critică & AI',
-                desc: 'Învață să folosești instrumentele AI în avantajul tău, să scrii prompturi bune și să filtrezi știrile false.'
+                desc: 'Învață să folosești instrumentele AI în avantajul tău, să scrii prompturi bune și să filtrezi știrile false.',
+                href: '#skills'
               },
               {
                 icon: MessageSquare,
                 tag: 'Comunicare',
                 title: 'Public Speaking',
-                desc: 'Depășește emoțiile, structurează argumente solide și vorbește convingător în fața oricărui public.'
+                desc: 'Depășește emoțiile, structurează argumente solide și vorbește convingător în fața oricărui public.',
+                href: '#skills'
               },
               {
                 icon: Clock,
                 tag: 'Productivitate',
                 title: 'Managementul Timpului',
-                desc: 'Blocuri de concentrare profundă (Deep Work), prioritizare clară și scăparea definitivă de procrastinare.'
+                desc: 'Blocuri de concentrare profundă (Deep Work), prioritizare clară și scăparea definitivă de procrastinare.',
+                href: '#skills'
               },
               {
                 icon: HeartHandshake,
                 tag: 'Mindset',
                 title: 'Control Emoțional',
-                desc: 'Gestionarea stresului și a fricii de eșec în timpul examenelor, reziliență și atitudine calmă.'
+                desc: 'Gestionarea stresului și a fricii de eșec în timpul examenelor, reziliență și atitudine calmă.',
+                href: '#skills'
               },
               {
                 icon: Shield,
                 tag: 'Securitate',
                 title: 'Siguranță Digitală',
-                desc: 'Protejarea conturilor, identității online, confidențialitatea datelor și evitarea fraudelor de pe internet.'
+                desc: 'Protejarea conturilor, identității online, confidențialitatea datelor și evitarea fraudelor de pe internet.',
+                href: '#skills'
               },
               {
                 icon: Lightbulb,
                 tag: 'Creativitate',
                 title: 'Rezolvare de Probleme',
-                desc: 'Deconstruirea provocărilor grele în pași simpli și găsirea soluțiilor inventive din unghiuri neașteptate.'
+                desc: 'Deconstruirea provocărilor grele în pași simpli și găsirea soluțiilor inventive din unghiuri neașteptate.',
+                href: '#skills'
               },
               {
                 icon: Target,
                 tag: 'Inițiativă',
                 title: 'Antreprenoriat',
-                desc: 'Cum transformi o idee într-un proiect funcțional, leadership de echipă și gândire orientată pe rezultate.'
+                desc: 'Cum transformi o idee într-un proiect funcțional, leadership de echipă și gândire orientată pe rezultate.',
+                href: '#skills'
               }
             ].map((skill, idx) => (
-              <div
+              <Link
                 key={idx}
-                className="group relative p-7 sm:p-8 rounded-[2.5rem] border border-border/80 bg-card/85 backdrop-blur-md shadow-sm hover:border-primary/50 hover:-translate-y-1 hover:shadow-[0_15px_30px_rgba(var(--primary-rgb,59,130,246),0.08)] transition-all duration-300 transform-gpu flex flex-col justify-between"
+                href={skill.href}
+                className={`group relative p-7 sm:p-8 rounded-[2.5rem] border backdrop-blur-md shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300 transform-gpu flex flex-col justify-between ${
+                  skill.isHighlight 
+                    ? 'border-emerald-500/40 bg-card/90 hover:border-emerald-500/70 hover:shadow-emerald-500/10' 
+                    : 'border-border/80 bg-card/85 hover:border-primary/50 hover:shadow-primary/5'
+                }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
-                      <skill.icon className="w-6 h-6 text-primary" />
+                    <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center group-hover:scale-110 transition-all duration-300 ${
+                      skill.isHighlight 
+                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 group-hover:bg-emerald-500/20' 
+                        : 'bg-primary/10 border-primary/20 text-primary group-hover:bg-primary/20'
+                    }`}>
+                      <skill.icon className="w-6 h-6" />
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-muted/60 text-muted-foreground border border-border/40">
+                    <span className={`text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full border ${
+                      skill.isHighlight
+                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                        : 'bg-muted/60 text-muted-foreground border-border/40'
+                    }`}>
                       {skill.tag}
                     </span>
                   </div>
@@ -455,11 +477,15 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-border/40 flex items-center justify-between text-xs font-bold uppercase tracking-wider text-primary opacity-80 group-hover:opacity-100 transition-opacity">
-                  <span>Ghid Practic</span>
+                <div className={`pt-4 border-t flex items-center justify-between text-xs font-bold uppercase tracking-wider transition-opacity ${
+                  skill.isHighlight 
+                    ? 'border-emerald-500/20 text-emerald-400 opacity-90 group-hover:opacity-100' 
+                    : 'border-border/40 text-primary opacity-80 group-hover:opacity-100'
+                }`}>
+                  <span>{skill.isHighlight ? 'Deschide Modulul' : 'Ghid Practic'}</span>
                   <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
@@ -621,12 +647,11 @@ export default function Home() {
           startHeight={58}
           startRadius={32}
           endRadius={0}
-          mediaZoom={1.0} // Imaginea nu este mărită, se vede completă
+          mediaZoom={1.0}
           scrollDistance={1.6}
           holdDistance={0.8}
           smoothing={0.1}
         >
-          {/* Cardul cu textul lui David la baza ecranului ca să nu acopere fața */}
           <div className="max-w-2xl text-center p-6 sm:p-8 rounded-3xl bg-zinc-950/85 backdrop-blur-md border border-white/10 shadow-2xl mx-4 mb-4">
             <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight mb-3 text-white">
               &quot;Am făcut asta pentru noi.&quot;
